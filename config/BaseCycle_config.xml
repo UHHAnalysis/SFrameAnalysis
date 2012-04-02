@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd">
+
+<JobConfiguration JobName="BaseCycleJob" OutputLevel="DEBUG">
+	<Library Name="libAnalysis" />
+	<Library Name="libSFramePlugIns" />
+
+	<Package Name="SFrameCore.par" />
+	<Package Name="SFramePlugIns.par" />
+	<Package Name="Analysis.par" />
+ 
+	<Cycle Name="BaseCycle"  OutputDirectory="./" PostFix="" TargetLumi="10">
+		<InputData Lumi="50" NEventsMax="-1" Type="MC" Version="TTbar">
+			<In FileName="/space/peiffer/ttbar.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
+<!--		<InputData Lumi="10" NEventsMax="-1" Type="DATA" Version="DATA">
+			<In FileName="/space/peiffer/data.root" Lumi="0.0"/>
+			<InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData>-->
+		<UserConfig>
+		   <Item Name="JetCollection" Value="goodPatJets" />
+		   <Item Name="ElectronCollection" Value="patElectrons" />
+		   <Item Name="MuonCollection" Value="patMuons" />
+		   <Item Name="TauCollection" Value="patTaus" />
+		   <Item Name="PhotonCollection" Value="patPhotons" /> 
+		   <Item Name="PrimaryVertexCollection" Value="goodOfflinePrimaryVertices" /> 
+		   <Item Name="METName" Value="patMETs" /> 
+		   <Item Name="addGenInfo" Value="True" />
+		   <Item Name="TopJetCollection" Value="goodPatJetsTopTagPF" />
+		   <Item Name="PrunedJetCollection" Value="goodPatJetsPrunedPF" />
+		   <Item Name="GenParticleCollection" Value="GenParticles" /> 
+		</UserConfig>
+	</Cycle>
+</JobConfiguration>

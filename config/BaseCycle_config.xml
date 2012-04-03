@@ -11,7 +11,7 @@
  
 	<Cycle Name="BaseCycle"  OutputDirectory="./" PostFix="" TargetLumi="10">
 		<InputData Lumi="50" NEventsMax="-1" Type="MC" Version="TTbar">
-			<In FileName="/space/peiffer/ttbar.root" Lumi="0.0"/> 
+			<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ttbar.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" />
 			<OutputTree Name="AnalysisTree" />
 		</InputData>

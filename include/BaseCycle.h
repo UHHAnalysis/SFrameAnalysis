@@ -1,12 +1,14 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: CycleCreators.py 159 2010-04-13 09:44:22Z krasznaa $
+// $Id: BaseCycle.h,v 1.1 2012/04/02 15:28:00 peiffer Exp $
 #ifndef BaseCycle_H
 #define BaseCycle_H
 
 // SFrame include(s):
 #include "core/include/SCycleBase.h"
-#include "plug-ins/include/SParticle.h"
+
 #include "Objects.h"
+#include "Selection.h"
+#include "BaseCycleContainer.h"
 
 /**
  *   @short Put short description of class here
@@ -14,8 +16,10 @@
  *          Put a longer description over here...
  *
  *  @author Put your name here
- * @version $Revision: 159 $
+ * @version $Revision: 1.1 $
  */
+
+
 class BaseCycle : public SCycleBase {
 
 public:
@@ -48,34 +52,7 @@ private:
   std::string JetCollection, ElectronCollection, MuonCollection, TauCollection, PhotonCollection, PrimaryVertexCollection, METName, TopJetCollection, PrunedJetCollection, GenParticleCollection;
   bool addGenInfo;
 
-  //input variables
-  int run;
-  int luminosityBlock;
-  int event;
-  bool isRealData;
-  bool HBHENoiseFilterResult;
-
-  float beamspot_x0;
-  float beamspot_y0;
-  float beamspot_z0;
-  
-  std::vector< Electron >* electrons;  
-  std::vector< Muon >* muons;
-  std::vector< Tau >* taus;
-  std::vector< Photon >* photons;
-  std::vector< PrimaryVertex >* pvs;
-  std::vector< Jet >* jets;
-  std::vector< TopJet >* topjets;
-  std::vector< TopJet >* prunedjets;
-  std::vector< GenParticle >* genparticles;
-  MET* met;
-  
-  GenInfo* genInfo;
- 
-  std::vector<std::string>* triggerNames;
-  std::vector<bool>* triggerResults;
-  std::vector<int>* L1_prescale;
-  std::vector<int>* HLT_prescale;
+  BaseCycleContainer bcc;
 
   //output variables
   std::vector< Electron > o_electrons;  

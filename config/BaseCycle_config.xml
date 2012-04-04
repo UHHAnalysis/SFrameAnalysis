@@ -11,15 +11,21 @@
  
 	<Cycle Name="BaseCycle"  OutputDirectory="./" PostFix="" TargetLumi="10">
 		<InputData Lumi="50" NEventsMax="-1" Type="MC" Version="TTbar">
-			<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ttbar.root" Lumi="0.0"/> 
+<!--			<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ttbar.root" Lumi="0.0"/> -->
+                        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_556_ttbar.root" Lumi="0.0"/>
+		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_497_ttbar.root" Lumi="0.0"/>
+		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_482_ttbar.root" Lumi="0.0"/>
+			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_484_ttbar.root" Lumi="0.0"/>
+			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_6_ttbar.root" Lumi="0.0"/>
+			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_889_ttbar.root" Lumi="0.0"/>	
 			<InputTree Name="AnalysisTree" />
 			<OutputTree Name="AnalysisTree" />
 		</InputData>
-<!--		<InputData Lumi="10" NEventsMax="-1" Type="DATA" Version="DATA">
-			<In FileName="/space/peiffer/data.root" Lumi="0.0"/>
-			<InputTree Name="AnalysisTree" />
-			<OutputTree Name="AnalysisTree" />
-		</InputData>-->
+<!--		<InputData Lumi="10" NEventsMax="-1" Type="DATA" Version="DATA"> -->
+<!--			<In FileName="/space/peiffer/data.root" Lumi="0.0"/>-->
+<!--			<InputTree Name="AnalysisTree" />-->
+<!--			<OutputTree Name="AnalysisTree" />-->
+<!--		</InputData>-->
 		<UserConfig>
 		   <Item Name="JetCollection" Value="goodPatJets" />
 		   <Item Name="ElectronCollection" Value="patElectrons" />

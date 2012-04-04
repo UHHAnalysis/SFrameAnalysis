@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: BaseCycle.h,v 1.1 2012/04/02 15:28:00 peiffer Exp $
+// $Id: BaseCycle.h,v 1.2 2012/04/03 13:23:53 peiffer Exp $
 #ifndef BaseCycle_H
 #define BaseCycle_H
 
@@ -16,7 +16,7 @@
  *          Put a longer description over here...
  *
  *  @author Put your name here
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 
@@ -70,6 +70,8 @@ private:
   std::vector<int> o_HLT_prescale;
   std::vector< GenParticle > o_genparticles;
   GenInfo o_genInfo;
+
+  bool newrun;
   
   // Macro adding the functions for dictionary generation
   ClassDef( BaseCycle, 0 );

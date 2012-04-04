@@ -31,6 +31,10 @@ struct BaseCycleContainer{
   std::vector<bool>* triggerResults;
   std::vector<int>* L1_prescale;
   std::vector<int>* HLT_prescale;
+
+  //use this vector since triggerNames is only filled for first event of new run
+  std::vector<std::string> triggerNames_actualrun;
+
 };
 
 

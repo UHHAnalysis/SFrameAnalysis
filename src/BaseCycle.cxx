@@ -1,4 +1,4 @@
-// $Id: BaseCycle.cxx,v 1.1 2012/04/02 15:28:01 peiffer Exp $
+// $Id: BaseCycle.cxx,v 1.2 2012/04/03 13:23:53 peiffer Exp $
 
 // Local include(s):
 #include "../include/BaseCycle.h"
@@ -10,6 +10,7 @@ BaseCycle::BaseCycle()
    : SCycleBase() {
 
    SetLogName( GetName() );
+   newrun=true;
 }
 
 BaseCycle::~BaseCycle() {
@@ -72,7 +73,11 @@ void BaseCycle::BeginInputData( const SInputData& ) throw( SError ) {
   //
   Book( TH1F( "N_lep_hist", "N^{lep}", 10,0,10 ) );
   Book( TH1F( "pt_lep_hist", "p_{T}^{lep}", 100,0,500 ) );
-   
+  Book( TH1F( "Mjet_hist", "m_{jet}", 100,0,500 ) );
+  Book( TH1F( "Mmin_hist", "m_{min}", 100,0,200 ) );
+  Book( TH1F( "Nsubjet_hist", "N^{subjet}", 10,0,10 ) );
+
+
   return;
 
 }
@@ -117,14 +122,19 @@ void BaseCycle::BeginInputFile( const SInputData& ) throw( SError ) {
 
 void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError ) {
  
-  // for(unsigned int i=0; i<triggerNames->size();++i){
-  //   std::cout << triggerNames->at(i) << "   " << triggerResults->at(i) << std::endl;
-  // }
- 
+//   for(unsigned int i=0; i<bcc.triggerNames->size();++i){
+//     std::cout << bcc.triggerNames->at(i) << "   " << bcc.triggerResults->at(i) << std::endl;
+//   }
+  
   if(bcc.isRealData && addGenInfo){
     std::cout << "WARNING : this seems to be real data but addGenInfo=True in config file" << std::endl;
   }
 
+  //fill list of trigger names
+  if(bcc.triggerNames->size()!=0){
+    bcc.triggerNames_actualrun = *bcc.triggerNames;
+    newrun=true;
+  }
 
   //clean collections here
   
@@ -139,10 +149,33 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   //selection
 
   Selection selection(&bcc);
+
+  //HBHE noise filter only for data
+  if(bcc.isRealData)
+    if(!selection.HBHENoiseFilter()) throw SError( SError::SkipEvent );
+
+  //trigger
+  if(!selection.TriggerSelection("HLT_Jet300_v5"))  throw SError( SError::SkipEvent );
+
+  //at least two CA 0.8 fat jets
+  if(!selection.NTopJetSelection(2,350,2.5)) throw SError( SError::SkipEvent );
  
-  int min_toptag=1;
-  if(!selection.TopTagging(min_toptag)) throw SError( SError::SkipEvent );
+  for(unsigned int i=0; i< bcc.topjets->size(); ++i){
+    TopJet topjet =  bcc.topjets->at(i);
+    double mmin=0;
+    double mjet=0;
+    int nsubjets=0;
+    selection.TopTag(topjet,mjet,nsubjets,mmin);
+    Hist( "Mjet_hist" )->Fill( mjet, weight );
+    if(nsubjets>=3) Hist( "Mmin_hist" )->Fill( mmin, weight );
+    Hist( "Nsubjet_hist" )->Fill( nsubjets, weight ); 
+  }
+
+  //at least 2 top tags
+  int min_toptag=2;
+  if(!selection.NTopTagSelection(min_toptag)) throw SError( SError::SkipEvent );
   
+
   //analysis code
 
   std::vector<Particle> leptons;
@@ -171,6 +204,10 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   o_topjets.clear();
   o_prunedjets.clear();
   o_genparticles.clear();
+  o_triggerNames.clear();
+  o_triggerResults.clear();
+  o_L1_prescale.clear();
+  o_HLT_prescale.clear();
 
   if(PhotonCollection.size()>0) o_photons=*bcc.photons;
   if(JetCollection.size()>0) o_jets=*bcc.jets;
@@ -184,7 +221,8 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   if(PrunedJetCollection.size()>0) o_prunedjets=*bcc.prunedjets;
   if(GenParticleCollection.size()>0) o_genparticles=*bcc.genparticles;
 
-  o_triggerNames = *bcc.triggerNames;
+  if(newrun) o_triggerNames = bcc.triggerNames_actualrun;//store trigger names only for new runs
+  newrun=false;
   o_triggerResults = *bcc.triggerResults;
   o_L1_prescale = *bcc.L1_prescale;
   o_HLT_prescale = *bcc.HLT_prescale;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd">
+
+<JobConfiguration JobName="PileUpHistoCycleJob" OutputLevel="DEBUG">
+	<Library Name="libAnalysis" />
+	<Library Name="libSFramePlugIns" />
+
+	<Package Name="SFrameCore.par" />
+	<Package Name="SFramePlugIns.par" />
+	<Package Name="Analysis.par" />
+
+	<Cycle Name="PileUpHistoCycle"  OutputDirectory="./" PostFix="" TargetLumi="10" > 
+		<InputData Lumi="50" NEventsMax="-1" Type="MC" Version="TTbar">
+<!--			<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ttbar.root" Lumi="0.0"/> -->
+                        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_99_ttbar.root" Lumi="0.0"/>
+                        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_106_ttbar.root" Lumi="0.0"/>
+                        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_242_ttbar.root" Lumi="0.0"/>
+                        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_556_ttbar.root" Lumi="0.0"/>
+		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_497_ttbar.root" Lumi="0.0"/>
+		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_482_ttbar.root" Lumi="0.0"/>
+			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_484_ttbar.root" Lumi="0.0"/>
+			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_6_ttbar.root" Lumi="0.0"/>
+			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_889_ttbar.root" Lumi="0.0"/>	
+			<InputTree Name="AnalysisTree" />
+
+		</InputData>
+		<UserConfig>
+
+		</UserConfig>
+	</Cycle>
+</JobConfiguration>

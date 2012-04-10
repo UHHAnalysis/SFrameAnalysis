@@ -1,4 +1,4 @@
-// $Id: BaseCycle.cxx,v 1.2 2012/04/03 13:23:53 peiffer Exp $
+// $Id: BaseCycle.cxx,v 1.3 2012/04/04 13:08:56 peiffer Exp $
 
 // Local include(s):
 #include "../include/BaseCycle.h"
@@ -30,6 +30,11 @@ void BaseCycle::BeginCycle() throw( SError ) {
   DeclareProperty( "PrunedJetCollection", PrunedJetCollection );
   DeclareProperty( "addGenInfo", addGenInfo);
   DeclareProperty( "GenParticleCollection", GenParticleCollection);
+
+  DeclareProperty( "pu_filename_mc" ,pu_filename_mc);
+  DeclareProperty( "pu_filename_data" ,pu_filename_data);
+  DeclareProperty( "pu_histname_mc" ,pu_histname_mc);
+  DeclareProperty( "pu_histname_data" ,pu_histname_data);
 
   return;
 
@@ -68,6 +73,10 @@ void BaseCycle::BeginInputData( const SInputData& ) throw( SError ) {
   DeclareVariable( o_L1_prescale, "L1_prescale");  
   DeclareVariable( o_HLT_prescale, "HLT_prescale");  
 
+  if(pu_filename_mc.size()>0 && pu_filename_data.size()>0 && pu_histname_mc.size()>0 && pu_histname_data.size()>0){
+    puwp = new PUWeightProducer(pu_filename_mc, pu_filename_data, pu_histname_mc, pu_histname_data);
+  }
+
   //
   // Declare the output histograms:
   //
@@ -76,7 +85,7 @@ void BaseCycle::BeginInputData( const SInputData& ) throw( SError ) {
   Book( TH1F( "Mjet_hist", "m_{jet}", 100,0,500 ) );
   Book( TH1F( "Mmin_hist", "m_{min}", 100,0,200 ) );
   Book( TH1F( "Nsubjet_hist", "N^{subjet}", 10,0,10 ) );
-
+  Book( TH1F( "N_pileup_hist", "N^{PU}", 1000,0,25 ) );
 
   return;
 
@@ -138,6 +147,18 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
 
   //clean collections here
   
+
+  if(bcc.genInfo){
+    if(puwp){
+      weight *= puwp->produceWeight(bcc.genInfo);
+      //std::cout << bcc.genInfo->pileup_TrueNumInteractions << "   " << puwp->produceWeight(bcc.genInfo) <<std::endl;
+    }
+    double npu = bcc.genInfo->pileup_TrueNumInteractions;
+    if(npu>25) npu=24.9999;
+    Hist( "N_pileup_hist" )->Fill( npu, weight );
+  }
+
+
   for(unsigned int i=0; i<bcc.jets->size(); ++i){
     //std::cout << jets->at(i).v4().pt() << "   " << jets->at(i).pt << std::endl;
     if(bcc.jets->at(i).v4().pt()<30){
@@ -192,6 +213,7 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   for(unsigned int i=0; i<leptons.size(); ++i){
     Hist( "pt_lep_hist" )->Fill( leptons[i].pt, weight );
   }
+
 
   //write out all objects
 

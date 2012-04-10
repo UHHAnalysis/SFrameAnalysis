@@ -1,4 +1,4 @@
-// $Id: PileUpHistoCycle.cxx,v 1.3 2012/04/04 13:08:56 peiffer Exp $
+// $Id: PileUpHistoCycle.cxx,v 1.1 2012/04/05 09:42:35 peiffer Exp $
 
 // Local include(s):
 #include "../include/PileUpHistoCycle.h"
@@ -34,7 +34,7 @@ void PileUpHistoCycle::BeginInputData( const SInputData& ) throw( SError ) {
   //
   // Declare the output histograms:
   //
-  Book( TH1F( "N_pileup_hist", "N^{PU}", 1000,0,50 ) );
+  Book( TH1F( "N_pileup_hist", "N^{PU}", 1000,0,25 ) );
 
   return;
 
@@ -56,7 +56,9 @@ void PileUpHistoCycle::BeginInputFile( const SInputData& ) throw( SError ) {
 
 void PileUpHistoCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError ) {
  
-  Hist( "N_pileup_hist" )->Fill( bcc.genInfo->pileup_TrueNumInteractions, weight );
+  double npu = bcc.genInfo->pileup_TrueNumInteractions;
+  if(npu>25) npu=24.9999;
+  Hist( "N_pileup_hist" )->Fill( npu, weight );
 
   return;
 

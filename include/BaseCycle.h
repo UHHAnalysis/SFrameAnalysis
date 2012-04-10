@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: BaseCycle.h,v 1.2 2012/04/03 13:23:53 peiffer Exp $
+// $Id: BaseCycle.h,v 1.3 2012/04/04 13:08:57 peiffer Exp $
 #ifndef BaseCycle_H
 #define BaseCycle_H
 
@@ -9,6 +9,7 @@
 #include "Objects.h"
 #include "Selection.h"
 #include "BaseCycleContainer.h"
+#include "PUWeightProducer.h"
 
 /**
  *   @short Put short description of class here
@@ -16,7 +17,7 @@
  *          Put a longer description over here...
  *
  *  @author Put your name here
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 
@@ -51,6 +52,7 @@ private:
 
   std::string JetCollection, ElectronCollection, MuonCollection, TauCollection, PhotonCollection, PrimaryVertexCollection, METName, TopJetCollection, PrunedJetCollection, GenParticleCollection;
   bool addGenInfo;
+  std::string pu_filename_mc,  pu_filename_data,  pu_histname_mc, pu_histname_data;
 
   BaseCycleContainer bcc;
 
@@ -72,6 +74,8 @@ private:
   GenInfo o_genInfo;
 
   bool newrun;
+
+  PUWeightProducer *puwp;
   
   // Macro adding the functions for dictionary generation
   ClassDef( BaseCycle, 0 );

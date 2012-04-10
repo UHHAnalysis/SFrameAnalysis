@@ -2,6 +2,8 @@
 #ifndef BaseCycleContainer_H
 #define BaseCycleContainer_H
 
+#include "Objects.h"
+
 struct BaseCycleContainer{
   //input variables
   int run;

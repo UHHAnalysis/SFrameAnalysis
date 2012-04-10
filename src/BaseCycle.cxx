@@ -1,4 +1,4 @@
-// $Id: BaseCycle.cxx,v 1.3 2012/04/04 13:08:56 peiffer Exp $
+// $Id: BaseCycle.cxx,v 1.4 2012/04/10 13:18:29 peiffer Exp $
 
 // Local include(s):
 #include "../include/BaseCycle.h"
@@ -9,15 +9,8 @@ ClassImp( BaseCycle );
 BaseCycle::BaseCycle()
    : SCycleBase() {
 
-   SetLogName( GetName() );
-   newrun=true;
-}
-
-BaseCycle::~BaseCycle() {
-
-}
-
-void BaseCycle::BeginCycle() throw( SError ) {
+  SetLogName( GetName() );
+  newrun=true;
   
   DeclareProperty( "JetCollection", JetCollection );
   DeclareProperty( "ElectronCollection", ElectronCollection );
@@ -30,11 +23,20 @@ void BaseCycle::BeginCycle() throw( SError ) {
   DeclareProperty( "PrunedJetCollection", PrunedJetCollection );
   DeclareProperty( "addGenInfo", addGenInfo);
   DeclareProperty( "GenParticleCollection", GenParticleCollection);
-
+  
   DeclareProperty( "pu_filename_mc" ,pu_filename_mc);
   DeclareProperty( "pu_filename_data" ,pu_filename_data);
   DeclareProperty( "pu_histname_mc" ,pu_histname_mc);
   DeclareProperty( "pu_histname_data" ,pu_histname_data);
+
+}
+
+BaseCycle::~BaseCycle() {
+
+}
+
+void BaseCycle::BeginCycle() throw( SError ) {
+  
 
   return;
 
@@ -136,7 +138,7 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
 //   }
   
   if(bcc.isRealData && addGenInfo){
-    std::cout << "WARNING : this seems to be real data but addGenInfo=True in config file" << std::endl;
+    m_logger << WARNING<< "this seems to be real data but addGenInfo=True in config file" << SLogger::endmsg;
   }
 
   //fill list of trigger names
@@ -176,7 +178,9 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
     if(!selection.HBHENoiseFilter()) throw SError( SError::SkipEvent );
 
   //trigger
-  if(!selection.TriggerSelection("HLT_Jet300_v5"))  throw SError( SError::SkipEvent );
+
+  //DO NOT use trigger selection in PROOF mode for the moment
+  //if(!selection.TriggerSelection("HLT_Jet300_v5"))  throw SError( SError::SkipEvent );
 
   //at least two CA 0.8 fat jets
   if(!selection.NTopJetSelection(2,350,2.5)) throw SError( SError::SkipEvent );

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd">
+
+<JobConfiguration JobName="TauEffiCycleJob" OutputLevel="DEBUG">
+	<Library Name="libAnalysis" />
+	<Library Name="libSFramePlugIns" />
+
+	<Package Name="SFrameCore.par" />
+	<Package Name="SFramePlugIns.par" />
+	<Package Name="Analysis.par" />
+
+	<Cycle Name="TauEffiCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/afs/naf.desy.de/group/cms/scratch/peiffer/PROOF/" OutputDirectory="./" PostFix="" TargetLumi="1" > 
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarTest_TauEffi">
+<!--		<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ttbar52.root" Lumi="0.0"/> -->
+
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_0_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_1_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_2_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_3_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_4_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_5_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_6_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_7_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_8_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_9_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_10_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_11_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_12_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_13_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_14_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_15_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_16_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_17_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_18_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_19_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_20_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_21_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_22_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_23_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_24_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_25_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_26_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_27_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_28_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_29_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_30_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_31_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_32_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_33_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_34_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_35_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_36_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_37_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_38_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_39_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_40_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_41_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_42_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_43_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_44_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_45_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_46_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_47_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_48_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_49_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_50_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_51_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_52_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_53_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_54_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_55_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_56_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_57_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_58_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_59_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_60_ntuple.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_61_ntuple.root" Lumi="0.0"/>
+
+			<InputTree Name="AnalysisTree" />
+
+		</InputData>
+		<UserConfig>
+
+		</UserConfig>
+	</Cycle>
+</JobConfiguration>

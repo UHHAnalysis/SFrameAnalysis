@@ -1,4 +1,4 @@
-// $Id: BaseCycle.cxx,v 1.4 2012/04/10 13:18:29 peiffer Exp $
+// $Id: BaseCycle.cxx,v 1.5 2012/04/10 15:36:44 peiffer Exp $
 
 // Local include(s):
 #include "../include/BaseCycle.h"
@@ -87,8 +87,10 @@ void BaseCycle::BeginInputData( const SInputData& ) throw( SError ) {
   Book( TH1F( "Mjet_hist", "m_{jet}", 100,0,500 ) );
   Book( TH1F( "Mmin_hist", "m_{min}", 100,0,200 ) );
   Book( TH1F( "Nsubjet_hist", "N^{subjet}", 10,0,10 ) );
-  Book( TH1F( "N_pileup_hist", "N^{PU}", 1000,0,25 ) );
-
+  Book( TH1F( "N_pileup_hist", "N^{PU}", 1000,0,50 ) );
+  Book( TH1F( "DR_jj_hist", "#Delta R(jj)", 100,0,6 ) );
+  Book( TH1F( "DR_tau_nextjet", "#Delta R(#tau j)",100,0,6));
+  Book( TH1F( "DR_tau_nexttau", "#Delta R(#tau #tau)",100,0,6)); 
   return;
 
 }
@@ -147,8 +149,6 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
     newrun=true;
   }
 
-  //clean collections here
-  
 
   if(bcc.genInfo){
     if(puwp){
@@ -156,10 +156,16 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
       //std::cout << bcc.genInfo->pileup_TrueNumInteractions << "   " << puwp->produceWeight(bcc.genInfo) <<std::endl;
     }
     double npu = bcc.genInfo->pileup_TrueNumInteractions;
-    if(npu>25) npu=24.9999;
+    if(npu>50) npu=49.9999;
     Hist( "N_pileup_hist" )->Fill( npu, weight );
   }
 
+  //clean collections here
+
+  Cleaner cleaner(&bcc);
+
+  bcc.electrons = cleaner.ElectronCleaner();
+  bcc.muons = cleaner.MuonCleaner();
 
   for(unsigned int i=0; i<bcc.jets->size(); ++i){
     //std::cout << jets->at(i).v4().pt() << "   " << jets->at(i).pt << std::endl;
@@ -168,9 +174,54 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
       i--;
     }
   }
+  for(unsigned int i=0; i<bcc.taus->size(); ++i){
+    if(bcc.taus->at(i).v4().pt()<0 || !bcc.taus->at(i).decayModeFinding /*|| !bcc.taus->at(i).byMediumCombinedIsolationDeltaBetaCorr ||  !bcc.taus->at(i).againstElectronTight ||  !bcc.taus->at(i).againstMuonTight*/){
+      bcc.taus->erase(bcc.taus->begin()+i);
+      i--;
+    }
+  }
+
+  for(unsigned int i=0;i<bcc.taus->size(); ++i){
+    //std::cout << i << ":  " <<  bcc.taus->at(i).pt << "  " << bcc.taus->at(i).eta << "  " << bcc.taus->at(i).phi << std::endl;
+    double mindrjet=9999;
+    double mindrtau=9999;
+
+    for(unsigned int j=0; j<bcc.jets->size(); ++j){
+      if(bcc.taus->at(i).deltaR(bcc.jets->at(j))<mindrjet)
+	mindrjet= bcc.taus->at(i).deltaR(bcc.jets->at(j));
+    }
+    for(unsigned int j=0;j<bcc.taus->size(); ++j){
+      if(i==j) continue;
+      if(bcc.taus->at(i).deltaR(bcc.taus->at(j))<mindrtau)
+ 	mindrtau= bcc.taus->at(i).deltaR(bcc.taus->at(j));
+    }
+
+    Hist( "DR_tau_nextjet" )->Fill( mindrjet, weight );
+    Hist( "DR_tau_nexttau" )->Fill( mindrtau, weight );
+  }
+
+
+
+//   for(unsigned int i=0; i<bcc.genparticles->size(); ++i){
+//     GenParticle genp = bcc.genparticles->at(i);
+//     std::cout << genp.index <<"  pdgId = " << genp.pdgId << "  mo1 = " << genp.mother1 << "  mo2 = " << genp.mother2 <<"  da1 = " << genp.daughter1 << "  da2 = " << genp.daughter2 <<std::endl;
+//     if(genp.mother(bcc.genparticles,1)){
+//       std::cout << "  Mother1: " << genp.mother(bcc.genparticles,1)->pdgId << "  " << genp.mother(bcc.genparticles,1)->pt <<std::endl;
+//     }
+//     if(genp.mother(bcc.genparticles,2)){
+//       std::cout << "  Mother2: " << genp.mother(bcc.genparticles,2)->pdgId << "  " << genp.mother(bcc.genparticles,2)->pt <<std::endl;
+//     }
+//     if(genp.daughter(bcc.genparticles,1)){
+//       std::cout << "  Daughter1: " << genp.daughter(bcc.genparticles,1)->pdgId << "  " << genp.daughter(bcc.genparticles,1)->pt <<std::endl;
+//     }
+//     if(genp.daughter(bcc.genparticles,2)){
+//       std::cout << "  Daughter2: " << genp.daughter(bcc.genparticles,2)->pdgId << "  " << genp.daughter(bcc.genparticles,2)->pt <<std::endl;
+//     }
+//   }
 
   //selection
-
+  
+  /*
   Selection selection(&bcc);
 
   //HBHE noise filter only for data
@@ -199,7 +250,7 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   //at least 2 top tags
   int min_toptag=2;
   if(!selection.NTopTagSelection(min_toptag)) throw SError( SError::SkipEvent );
-  
+  */
 
   //analysis code
 
@@ -216,6 +267,9 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   Hist( "N_lep_hist" )->Fill( leptons.size(), weight );
   for(unsigned int i=0; i<leptons.size(); ++i){
     Hist( "pt_lep_hist" )->Fill( leptons[i].pt, weight );
+  }
+  if(bcc.topjets->size()>=2){
+    Hist( "DR_jj_hist" )->Fill( bcc.topjets->at(0).deltaR(bcc.topjets->at(1)), weight ); 
   }
 
 

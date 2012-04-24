@@ -1,7 +1,8 @@
-// $Id: PileUpHistoCycle.cxx,v 1.2 2012/04/10 13:18:29 peiffer Exp $
+// $Id: LeptoquarkCycle.cxx,v 1.1 2012/04/23 12:19:00 mmeyer Exp $
 
 // Local include(s):
 #include "../include/LeptoquarkCycle.h"
+#include "../include/FJet.h"
 
 ClassImp( LeptoquarkCycle );
 
@@ -35,7 +36,7 @@ void LeptoquarkCycle::EndCycle() throw( SError ) {
 }
 
 void LeptoquarkCycle::BeginInputData( const SInputData& ) throw( SError ) {
-  
+ 
 
   //
   // Declare the output histograms:
@@ -54,11 +55,6 @@ void LeptoquarkCycle::BeginInputData( const SInputData& ) throw( SError ) {
   Book( TH2F( "R_pT_top", "R_pT(top)", 50, 0, 2000, 50, 0, 5) );
   Book( TH2F( "R_pT_W", "R_pT(W)", 50, 0, 1000, 50, 0, 5) );
   Book( TH1F( "P_TMiss","P_TMiss", 100,0,600 ));
-
-
-  
-  
-  
 
   return;
 
@@ -84,21 +80,44 @@ void LeptoquarkCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( S
   //double npu = bcc.genInfo->pileup_TrueNumInteractions;
   //if(npu>25) npu=24.9999;
   //Hist( "N_pileup_hist" )->Fill( npu, weight );
-   
-  
-  
+     
   double R = 0;
   double deltaphi = 0;
   double deltaeta = 0;
   TLorentzVector pTMiss;
   pTMiss.SetPtEtaPhiE( 0, 0, 0, 0);
 
+  
+  // ------------------------ example for jet finding --------------------
+  FJet jetfinder;
+
+  // find jets
+  vector<GenParticle> genparts = *(bcc.genparticles);
+  vector<Particle*> jetfinder_input;
+  jetfinder_input.reserve(genparts.size());
+  vector<Jet*> jets;
+  jetfinder.PrepareInput(genparts, jetfinder_input);
+  jetfinder.FindJets(jetfinder_input, jets);
+
+ 
+  cout << "number of found jets: " << jets.size() << endl;
+  vector<int> partjet_ind = jetfinder.GetPartJetAssoc();
+  for(unsigned int i=0; i<bcc.genparticles->size(); ++i){
+    cout << "particle " << i << " is in jet " << partjet_ind[i] << endl;
+    if (partjet_ind[i]>-1){
+      Jet* myjet = jets[partjet_ind[i]];
+      Particle* mypart= jetfinder_input[i];
+      double r2 = pow(myjet->eta - mypart->eta,2) + pow(myjet->phi - mypart->phi,2);
+      cout << "  phi(part) = " << jetfinder_input[i]->phi << " phi(jet) = " << jets[partjet_ind[i]]->phi << " DeltaR = " << sqrt(r2) << endl;
+    }
+  }
+  // ------------------------ end example for jet finding --------------------
+
   for(unsigned int i=0; i<bcc.genparticles->size(); ++i)
     {
       GenParticle genp = bcc.genparticles->at(i);
       // std::cout << genp.index <<"  pdgId = " << genp.pdgId << "  status = " << genp.status << "  mo1 = " << genp.mother1 << "  mo2 = " << genp.mother2 <<"  da1 = " << genp.daughter1 << "  da2 = " << genp.daughter2 <<std::endl;
       
-
       
       if (genp.pdgId == 42 || genp.pdgId == -42 ) 
 	{

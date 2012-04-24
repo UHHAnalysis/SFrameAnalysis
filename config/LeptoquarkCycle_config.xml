@@ -2,6 +2,7 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd">
 
 <JobConfiguration JobName="LeptoquarkCycleJob" OutputLevel="DEBUG">
+	<Library Name="libfastjet" />
 	<Library Name="libAnalysis" />
 	<Library Name="libSFramePlugIns" />
 

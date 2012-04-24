@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: LeptoquarkCycle.h,v 1.1 2012/04/05 09:42:35 peiffer Exp $
+// $Id: LeptoquarkCycle.h,v 1.1 2012/04/23 12:21:06 mmeyer Exp $
 #ifndef LeptoquarkCycle_H
 #define LeptoquarkCycle_H
 
@@ -11,6 +11,8 @@
 #include "Selection.h"
 #include "TH2.h"
 #include "TLorentzVector.h"
+#include "Cleaner.h"
+#include "FJet.h"
 
 /**
  *   @short Put short description of class here

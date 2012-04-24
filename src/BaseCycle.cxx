@@ -1,4 +1,4 @@
-// $Id: BaseCycle.cxx,v 1.5 2012/04/10 15:36:44 peiffer Exp $
+// $Id: BaseCycle.cxx,v 1.6 2012/04/23 12:51:28 peiffer Exp $
 
 // Local include(s):
 #include "../include/BaseCycle.h"
@@ -164,8 +164,11 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
 
   Cleaner cleaner(&bcc);
 
+  cleaner.JetEnergyResolutionShifter();
   bcc.electrons = cleaner.ElectronCleaner();
   bcc.muons = cleaner.MuonCleaner();
+  bcc.jets = cleaner.JetCleaner(35,2.5,true);
+  bcc.topjets = cleaner.TopJetCleaner(350,2.5,false);
 
   for(unsigned int i=0; i<bcc.jets->size(); ++i){
     //std::cout << jets->at(i).v4().pt() << "   " << jets->at(i).pt << std::endl;
@@ -221,7 +224,7 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
 
   //selection
   
-  /*
+  
   Selection selection(&bcc);
 
   //HBHE noise filter only for data
@@ -234,7 +237,7 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   //if(!selection.TriggerSelection("HLT_Jet300_v5"))  throw SError( SError::SkipEvent );
 
   //at least two CA 0.8 fat jets
-  if(!selection.NTopJetSelection(2,350,2.5)) throw SError( SError::SkipEvent );
+  if(!selection.NTopJetSelection(2)) throw SError( SError::SkipEvent );
  
   for(unsigned int i=0; i< bcc.topjets->size(); ++i){
     TopJet topjet =  bcc.topjets->at(i);
@@ -247,10 +250,10 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
     Hist( "Nsubjet_hist" )->Fill( nsubjets, weight ); 
   }
 
-  //at least 2 top tags
-  int min_toptag=2;
+  //at least min_toptag top tags
+  int min_toptag=0;
   if(!selection.NTopTagSelection(min_toptag)) throw SError( SError::SkipEvent );
-  */
+  
 
   //analysis code
 

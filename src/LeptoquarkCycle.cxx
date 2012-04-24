@@ -1,8 +1,7 @@
-// $Id: LeptoquarkCycle.cxx,v 1.1 2012/04/23 12:19:00 mmeyer Exp $
+// $Id: LeptoquarkCycle.cxx,v 1.2 2012/04/24 09:04:31 rkogler Exp $
 
 // Local include(s):
 #include "../include/LeptoquarkCycle.h"
-#include "../include/FJet.h"
 
 ClassImp( LeptoquarkCycle );
 
@@ -56,6 +55,12 @@ void LeptoquarkCycle::BeginInputData( const SInputData& ) throw( SError ) {
   Book( TH2F( "R_pT_W", "R_pT(W)", 50, 0, 1000, 50, 0, 5) );
   Book( TH1F( "P_TMiss","P_TMiss", 100,0,600 ));
 
+
+  Book( TH1F( "Mjet_hist", "m_{jet}", 100,0,500 ) );
+  Book( TH1F( "Mmin_hist", "m_{min}", 100,0,200 ) );
+  Book( TH2F( "Mjet_Mmin_hist", "m_{jet} : m_{min}", 100,0,500,100,0,200 ) );
+  Book( TH1F( "Nsubjet_hist", "N^{subjet}", 10,0,10 ) );
+  
   return;
 
 }
@@ -70,6 +75,7 @@ void LeptoquarkCycle::BeginInputFile( const SInputData& ) throw( SError ) {
 
   // ConnectVariable( "AnalysisTree", "genInfo" , bcc.genInfo);
   ConnectVariable( "AnalysisTree", "GenParticles" , bcc.genparticles);
+  ConnectVariable("AnalysisTree", "caTopTagGen", bcc.topjets);
   return;
 
 }
@@ -77,10 +83,36 @@ void LeptoquarkCycle::BeginInputFile( const SInputData& ) throw( SError ) {
 void LeptoquarkCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError ) 
 {
  
-  //double npu = bcc.genInfo->pileup_TrueNumInteractions;
-  //if(npu>25) npu=24.9999;
-  //Hist( "N_pileup_hist" )->Fill( npu, weight );
-     
+  // ------------------------ example for top jet selection --------------------
+  
+  Cleaner cleaner(&bcc);
+  Selection selection(&bcc);
+
+  bcc.topjets = cleaner.TopJetCleaner(350,2.5,false);
+  
+  //at least two CA 0.8 fat jets
+  if(!selection.NTopJetSelection(2,350,2.5)) throw SError( SError::SkipEvent );
+  
+  for(unsigned int i=0; i< bcc.topjets->size(); ++i){
+    TopJet topjet =  bcc.topjets->at(i);
+    double mmin=0;
+    double mjet=0;
+    int nsubjets=0;
+    selection.TopTag(topjet,mjet,nsubjets,mmin);
+    Hist( "Mjet_hist" )->Fill( mjet, weight );
+    if(nsubjets>=3) {
+      Hist( "Mmin_hist" )->Fill( mmin, weight );
+      Hist( "Mjet_Mmin_hist" )->Fill(mjet,mmin);
+    }
+    Hist( "Nsubjet_hist" )->Fill( nsubjets, weight ); 
+  }
+
+  //at least 1 or 2 top tags
+  int min_toptag=1;
+  if(!selection.NTopTagSelection(min_toptag)) throw SError( SError::SkipEvent );
+
+  // ------------------------ end example for top jet selection --------------------
+
   double R = 0;
   double deltaphi = 0;
   double deltaeta = 0;

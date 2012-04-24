@@ -7,6 +7,83 @@ Cleaner::Cleaner( BaseCycleContainer* input_){
 
 }
 
+void Cleaner::JetEnergyResolutionShifter(int syst_shift){
+
+  double met = bcc->met->pt;
+
+  for(unsigned int i=0; i<bcc->jets->size(); ++i){
+    Jet jet = bcc->jets->at(i);
+    float gen_pt = jet.genjet_pt;
+    //ignore unmatched jets (which have zero vector) or jets with very low pt:
+    if(gen_pt < 15.0) continue;
+
+    met += jet.pt*jet.JEC_factor_raw;
+    
+    float recopt = jet.pt;
+    double factor = -10;
+    double abseta = fabs(jet.eta);
+
+    //numbers taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
+    if(syst_shift==0){
+      if(abseta < 0.5)
+	factor = 0.052;
+      else if(abseta >= 0.5 && abseta <1.1)
+	factor = 0.057;
+      else if(abseta >= 1.1 && abseta <1.7)
+	factor = 0.096;
+      else if(abseta >= 1.7 && abseta <2.3)
+	factor = 0.134;
+      else if(abseta >= 2.3)
+	factor = 0.288;
+    }
+    else if(syst_shift>0){
+      if(abseta < 0.5)
+	factor = 0.11;
+      else if(abseta >= 0.5 && abseta <1.1)
+	factor = 0.12;
+      else if(abseta >= 1.1 && abseta <1.7)
+	factor = 0.16;
+      else if(abseta >= 1.7 && abseta <2.3)
+	factor = 0.23;
+      else if(abseta >= 2.3)
+	factor = 0.49;
+    }
+    else{
+      if(abseta < 0.5)
+	factor = -0.01;
+      else if(abseta >= 0.5 && abseta <1.1)
+	factor = 0.00;
+      else if(abseta >= 1.1 && abseta <1.7)
+	factor = 0.04;
+      else if(abseta >= 1.7 && abseta <2.3)
+	factor = 0.03;
+      else if(abseta >= 2.3)
+	factor = 0.09;
+    }
+
+    float deltapt = (recopt - gen_pt) * factor;
+    float ptscale = std::max(0.0f, (recopt + deltapt) / recopt);
+    jet.pt *= ptscale;
+    bcc->jets->at(i).pt = jet.pt;
+
+    //propagate JER shifts to MET
+    met -= jet.pt*jet.JEC_factor_raw;
+  }
+  
+  //store changed MET, flip phi if new MET is negative
+  if(met>=0){
+    bcc->met->pt = met;
+  }
+  else{
+    bcc->met->pt = -1*met;
+    if(bcc->met->phi<=0)
+      bcc->met->phi = bcc->met->phi+PI;
+    else
+      bcc->met->phi = bcc->met->phi-PI;
+  }
+ 
+}
+
 
 //tight ele ID from https://twiki.cern.ch/twiki/bin/view/CMS/EgammaCutBasedIdentification
 bool Cleaner::eleID(Electron ele){
@@ -22,6 +99,26 @@ bool Cleaner::eleID(Electron ele){
 
   return pass;
 
+}
+
+//pf ID has already been applied when using goodPatJets
+bool Cleaner::pfID(Jet jet){
+
+  if(jet.numberOfDaughters>1 
+     && jet.neutralHadronEnergyFraction<0.99
+     && jet.neutralEmEnergyFraction<0.99){
+    
+    if(fabs(jet.eta)>=2.4)
+      return true;
+    
+    if(jet.chargedEmEnergyFraction<0.99
+       && jet.chargedHadronEnergyFraction>0
+       && jet.chargedMultiplicity>0)
+      return true;
+
+  }
+  return false;
+     
 }
 
 
@@ -61,7 +158,7 @@ std::vector<Muon>* Cleaner::MuonCleaner(double ptmin, double etamax){
   for(unsigned int i=0; i<bcc->muons->size(); ++i){
     Muon mu = bcc->muons->at(i);
     if(mu.pt>ptmin){
-      if(fabs(mu.eta)>etamax){
+      if(fabs(mu.eta)<etamax){
 	if(mu.isGlobalMuon){
 	  if(mu.globalTrack_chi2/mu.globalTrack_ndof<10){
 	    if(mu.innerTrack_trackerLayersWithMeasurement>8){
@@ -84,5 +181,41 @@ std::vector<Muon>* Cleaner::MuonCleaner(double ptmin, double etamax){
   }
   
   return good_mus;
+
+}
+
+std::vector<Jet>* Cleaner::JetCleaner(double ptmin, double etamax, bool doPFID){
+
+  std::vector<Jet>* good_jets = new std::vector<Jet>;
+  for(unsigned int i=0; i<bcc->jets->size(); ++i){
+    Jet jet = bcc->jets->at(i);
+    if(jet.pt>ptmin){
+      if(fabs(jet.eta)<etamax){
+	if(!doPFID || pfID(jet)){
+	  good_jets->push_back(jet);
+	}
+      }
+    }
+  }
+
+  return good_jets;
+
+}
+
+std::vector<TopJet>* Cleaner::TopJetCleaner(double ptmin, double etamax, bool doPFID){
+
+  std::vector<TopJet>* good_topjets = new std::vector<TopJet>;
+  for(unsigned int i=0; i<bcc->topjets->size(); ++i){
+    TopJet topjet = bcc->topjets->at(i);
+    if(topjet.pt>ptmin){
+      if(fabs(topjet.eta)<etamax){
+	if(!doPFID || pfID(topjet)){
+	  good_topjets->push_back(topjet);
+	}
+      }
+    }
+  }
+
+  return good_topjets;
 
 }

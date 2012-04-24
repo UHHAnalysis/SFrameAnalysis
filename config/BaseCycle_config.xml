@@ -2,6 +2,7 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd">
 
 <JobConfiguration JobName="BaseCycleJob" OutputLevel="DEBUG">
+	<Library Name="libfastjet" />
 	<Library Name="libAnalysis" />
 	<Library Name="libSFramePlugIns" />
 
@@ -9,9 +10,10 @@
 	<Package Name="SFramePlugIns.par" />
 	<Package Name="Analysis.par" />
 
-	<Cycle Name="BaseCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/afs/naf.desy.de/group/cms/scratch/peiffer/PROOF/" OutputDirectory="./" PostFix="" TargetLumi="10" > 
-<!--	<Cycle Name="BaseCycle"  OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="10" > -->
+<!--	<Cycle Name="BaseCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/afs/naf.desy.de/group/cms/scratch/peiffer/PROOF/" OutputDirectory="./" PostFix="" TargetLumi="10" > -->
+	<Cycle Name="BaseCycle"  OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="10" > 
 		<InputData Lumi="50" NEventsMax="-1" Type="MC" Version="TTbarTest">
+
 		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_0_ntuple.root" Lumi="0.0"/> 
 		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_1_ntuple.root" Lumi="0.0"/> 
 		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_2_ntuple.root" Lumi="0.0"/> 

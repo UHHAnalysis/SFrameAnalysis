@@ -14,10 +14,14 @@ bool Selection::HBHENoiseFilter(){
 bool Selection::TriggerSelection(std::string name){
 
   for(unsigned int i=0; i<bcc->triggerNames_actualrun.size(); ++i){
-    if(bcc->triggerNames_actualrun.at(i)==name)
+    if(!bcc->triggerNames_actualrun.at(i).find(name)){
       return bcc->triggerResults->at(i);
+    }
   }
   std::cout<< "WARNING: trigger not found: " << name <<"; reject this event." << std::endl;
+  for(unsigned int i=0; i<bcc->triggerNames_actualrun.size(); ++i){
+    std::cout << "   "  << bcc->triggerNames_actualrun.at(i) << std::endl;
+  }
   return false;
 }
 

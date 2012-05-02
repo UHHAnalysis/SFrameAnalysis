@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: BaseCycle.h,v 1.4 2012/04/10 13:18:30 peiffer Exp $
+// $Id: BaseCycle.h,v 1.5 2012/04/23 12:51:31 peiffer Exp $
 #ifndef BaseCycle_H
 #define BaseCycle_H
 
@@ -11,14 +11,14 @@
 #include "BaseCycleContainer.h"
 #include "PUWeightProducer.h"
 #include "Cleaner.h"
-
+#include "LuminosityHandler.h"
 /**
  *   @short Put short description of class here
  *
  *          Put a longer description over here...
  *
  *  @author Put your name here
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 
@@ -69,14 +69,15 @@ private:
   MET o_met;
   std::vector<std::string> o_triggerNames;
   std::vector<bool> o_triggerResults;
-  std::vector<int> o_L1_prescale;
-  std::vector<int> o_HLT_prescale;
   std::vector< GenParticle > o_genparticles;
   GenInfo o_genInfo;
 
   bool newrun;
 
   PUWeightProducer *puwp;
+
+  // wrapper to LuminosityHandler
+  LuminosityHandler *LumiHandler() { return (LuminosityHandler*)GetConfigObject("LuminosityHandler"); }
   
   // Macro adding the functions for dictionary generation
   ClassDef( BaseCycle, 0 );

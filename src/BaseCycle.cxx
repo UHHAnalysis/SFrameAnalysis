@@ -1,4 +1,4 @@
-// $Id: BaseCycle.cxx,v 1.6 2012/04/23 12:51:28 peiffer Exp $
+// $Id: BaseCycle.cxx,v 1.7 2012/04/24 14:15:28 peiffer Exp $
 
 // Local include(s):
 #include "../include/BaseCycle.h"
@@ -37,7 +37,22 @@ BaseCycle::~BaseCycle() {
 
 void BaseCycle::BeginCycle() throw( SError ) {
   
-
+  // Set-Up LumiHandler
+  LuminosityHandler *lumiHandler = new LuminosityHandler();
+  // Declared Properties readable not before BeginCycle
+  
+  lumiHandler->SetGRLPath( "../CMSSW_5_2_3_patch4/src/UHHAnalysis/NtupleWriter/" );
+  lumiHandler->SetLumiFileName( "GoodRun.root" );
+  lumiHandler->SetTrigger( "HLT_PFJet320_v" );
+  lumiHandler->SetIntLumiPerBin( 50 );
+  
+  // Initialise, checks also if LumiFile is specified and readable
+  lumiHandler->Initialise();
+  // dump lumi information in text file
+  // lumiHandler->DumpLumiInfoIntoTxtFile();
+  
+  // adding luminosity handler to gloabl config
+  AddConfigObject( lumiHandler );
   return;
 
 }
@@ -49,6 +64,22 @@ void BaseCycle::EndCycle() throw( SError ) {
 }
 
 void BaseCycle::BeginInputData( const SInputData& ) throw( SError ) {
+
+
+   // check if LumiHandler is set up correctly
+   if( LumiHandler() == NULL ){
+      m_logger << FATAL << "Luminosity Handler not properly added to Configuration!" << SLogger::endmsg;
+      exit(-1);
+   }
+
+   // Overwrite target Luminosity
+   // has to be done for every input data 
+   if( LumiHandler()->IsLumiCalc() ){
+      m_logger << WARNING << "--- Not a WARNING! --- Overwrite Target Lumi with Lumi from LumiFile: " 
+               << LumiHandler()->GetTargetLumi() << " (pb^-1)!" << SLogger::endmsg;
+      GetConfig().SetTargetLumi( LumiHandler()->GetTargetLumi() );
+   } 
+
   
   DeclareVariable( bcc.run, "run" );
   DeclareVariable( bcc.luminosityBlock, "luminosityBlock" );
@@ -72,8 +103,6 @@ void BaseCycle::BeginInputData( const SInputData& ) throw( SError ) {
   if(addGenInfo) DeclareVariable( o_genInfo, "genInfo" );
   DeclareVariable( o_triggerNames, "triggerNames");
   DeclareVariable( o_triggerResults, "triggerResults");  
-  DeclareVariable( o_L1_prescale, "L1_prescale");  
-  DeclareVariable( o_HLT_prescale, "HLT_prescale");  
 
   if(pu_filename_mc.size()>0 && pu_filename_data.size()>0 && pu_histname_mc.size()>0 && pu_histname_data.size()>0){
     puwp = new PUWeightProducer(pu_filename_mc, pu_filename_data, pu_histname_mc, pu_histname_data);
@@ -97,8 +126,28 @@ void BaseCycle::BeginInputData( const SInputData& ) throw( SError ) {
 
 void BaseCycle::EndInputData( const SInputData& ) throw( SError ) {
 
-   return;
-
+  LumiHandler()->PrintUsedSetup();
+  
+  // LumiBins vs. integrated luminosity for that bin
+  if( LumiHandler()->IsLumiCalc() ){
+    m_logger << INFO << "Target Lumi in data files and used for weighting: " 
+	     << LumiHandler()->GetTargetLumi() << " (pb^-1)!" << SLogger::endmsg;
+    
+    // store lumi hist to file
+    WriteObj( *(LumiHandler()->GetLumiPerLumiBinHist()) ); 
+    
+    // store target luminosity (luminosity in data)
+    TTree *tree = new TTree( "LuminosityTree", "luminosity tree" );
+    Double_t lumi = LumiHandler()->GetTargetLumi();
+    tree->Branch( "targetLuminosity", &lumi );
+    tree->Fill();
+    WriteObj( *tree );
+    
+    // store the luminosity collected in each run
+    WriteObj( *(LumiHandler()->GetTreeLuminosityPerRun()) ); 
+  }
+  return;
+  
 }
 
 void BaseCycle::BeginInputFile( const SInputData& ) throw( SError ) {
@@ -107,8 +156,6 @@ void BaseCycle::BeginInputFile( const SInputData& ) throw( SError ) {
 
   ConnectVariable( "AnalysisTree", "triggerResults" , bcc.triggerResults);
   ConnectVariable( "AnalysisTree", "triggerNames" , bcc.triggerNames);
-  ConnectVariable( "AnalysisTree", "L1_prescale" , bcc.L1_prescale);
-  ConnectVariable( "AnalysisTree", "HLT_prescale" , bcc.HLT_prescale);
   if(ElectronCollection.size()>0) ConnectVariable( "AnalysisTree", ElectronCollection.c_str() ,bcc. electrons);
   if(MuonCollection.size()>0) ConnectVariable( "AnalysisTree", MuonCollection.c_str() , bcc.muons); 
   if(TauCollection.size()>0) ConnectVariable( "AnalysisTree", TauCollection.c_str() , bcc.taus);
@@ -134,11 +181,7 @@ void BaseCycle::BeginInputFile( const SInputData& ) throw( SError ) {
 }
 
 void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError ) {
- 
-//   for(unsigned int i=0; i<bcc.triggerNames->size();++i){
-//     std::cout << bcc.triggerNames->at(i) << "   " << bcc.triggerResults->at(i) << std::endl;
-//   }
-  
+
   if(bcc.isRealData && addGenInfo){
     m_logger << WARNING<< "this seems to be real data but addGenInfo=True in config file" << SLogger::endmsg;
   }
@@ -148,6 +191,12 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
     bcc.triggerNames_actualrun = *bcc.triggerNames;
     newrun=true;
   }
+
+  // generate random run Nr for MC samples (consider luminosity of each run)
+  // e.g. for proper OTX cut in MC, and needs to be done only once per event
+  if( !bcc.isRealData && LumiHandler()->IsLumiCalc() )
+    bcc.run = LumiHandler()->GetRandomRunNr() ;
+
 
 
   if(bcc.genInfo){
@@ -170,13 +219,6 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   bcc.jets = cleaner.JetCleaner(35,2.5,true);
   bcc.topjets = cleaner.TopJetCleaner(350,2.5,false);
 
-  for(unsigned int i=0; i<bcc.jets->size(); ++i){
-    //std::cout << jets->at(i).v4().pt() << "   " << jets->at(i).pt << std::endl;
-    if(bcc.jets->at(i).v4().pt()<30){
-      bcc.jets->erase(bcc.jets->begin()+i);
-      i--;
-    }
-  }
   for(unsigned int i=0; i<bcc.taus->size(); ++i){
     if(bcc.taus->at(i).v4().pt()<0 || !bcc.taus->at(i).decayModeFinding /*|| !bcc.taus->at(i).byMediumCombinedIsolationDeltaBetaCorr ||  !bcc.taus->at(i).againstElectronTight ||  !bcc.taus->at(i).againstMuonTight*/){
       bcc.taus->erase(bcc.taus->begin()+i);
@@ -227,6 +269,11 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   
   Selection selection(&bcc);
 
+  //select only good runs
+  if(bcc.isRealData && LumiHandler()->IsLumiCalc() ){
+    if( !LumiHandler()->PassGoodRunsList( bcc.run, bcc.luminosityBlock )) throw SError( SError::SkipEvent );
+  }
+
   //HBHE noise filter only for data
   if(bcc.isRealData)
     if(!selection.HBHENoiseFilter()) throw SError( SError::SkipEvent );
@@ -234,10 +281,10 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   //trigger
 
   //DO NOT use trigger selection in PROOF mode for the moment
-  //if(!selection.TriggerSelection("HLT_Jet300_v5"))  throw SError( SError::SkipEvent );
+  if(!selection.TriggerSelection("HLT_PFJet320_v"))  throw SError( SError::SkipEvent );
 
   //at least two CA 0.8 fat jets
-  if(!selection.NTopJetSelection(2)) throw SError( SError::SkipEvent );
+  //if(!selection.NTopJetSelection(2)) throw SError( SError::SkipEvent );
  
   for(unsigned int i=0; i< bcc.topjets->size(); ++i){
     TopJet topjet =  bcc.topjets->at(i);
@@ -252,7 +299,7 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
 
   //at least min_toptag top tags
   int min_toptag=0;
-  if(!selection.NTopTagSelection(min_toptag)) throw SError( SError::SkipEvent );
+  //if(!selection.NTopTagSelection(min_toptag)) throw SError( SError::SkipEvent );
   
 
   //analysis code
@@ -289,8 +336,6 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   o_genparticles.clear();
   o_triggerNames.clear();
   o_triggerResults.clear();
-  o_L1_prescale.clear();
-  o_HLT_prescale.clear();
 
   if(PhotonCollection.size()>0) o_photons=*bcc.photons;
   if(JetCollection.size()>0) o_jets=*bcc.jets;
@@ -307,8 +352,6 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   if(newrun) o_triggerNames = bcc.triggerNames_actualrun;//store trigger names only for new runs
   newrun=false;
   o_triggerResults = *bcc.triggerResults;
-  o_L1_prescale = *bcc.L1_prescale;
-  o_HLT_prescale = *bcc.HLT_prescale;
 
   return;
 

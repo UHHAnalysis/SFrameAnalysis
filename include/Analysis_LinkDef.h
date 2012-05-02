@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: Analysis_LinkDef.h,v 1.4 2012/04/23 12:53:18 peiffer Exp $
+// $Id: Analysis_LinkDef.h,v 1.5 2012/04/23 15:04:40 mmeyer Exp $
 #ifdef __CINT__
 
 #pragma link off all globals;
@@ -40,6 +40,7 @@
 #pragma link C++ class GenParticle+;
 #pragma link C++ class std::vector<GenParticle>+;
 
+#pragma link C++ class LuminosityHandler+;
 #pragma link C++ struct BaseCycleContainer+;
 
 //PROOF braucht das (warum auch immer):

@@ -1,4 +1,4 @@
-// $Id: BaseCycle.cxx,v 1.7 2012/04/24 14:15:28 peiffer Exp $
+// $Id: BaseCycle.cxx,v 1.8 2012/05/02 07:38:45 peiffer Exp $
 
 // Local include(s):
 #include "../include/BaseCycle.h"
@@ -44,7 +44,7 @@ void BaseCycle::BeginCycle() throw( SError ) {
   lumiHandler->SetGRLPath( "../CMSSW_5_2_3_patch4/src/UHHAnalysis/NtupleWriter/" );
   lumiHandler->SetLumiFileName( "GoodRun.root" );
   lumiHandler->SetTrigger( "HLT_PFJet320_v" );
-  lumiHandler->SetIntLumiPerBin( 50 );
+  lumiHandler->SetIntLumiPerBin( 25 );
   
   // Initialise, checks also if LumiFile is specified and readable
   lumiHandler->Initialise();
@@ -120,11 +120,25 @@ void BaseCycle::BeginInputData( const SInputData& ) throw( SError ) {
   Book( TH1F( "DR_jj_hist", "#Delta R(jj)", 100,0,6 ) );
   Book( TH1F( "DR_tau_nextjet", "#Delta R(#tau j)",100,0,6));
   Book( TH1F( "DR_tau_nexttau", "#Delta R(#tau #tau)",100,0,6)); 
+
+  Book( TH1F( "N_events_perLumiBin_hist", "N^{evt}", 20,1,21 ) );
+  Book( TH1F( "N_pv_perLumiBin_hist", "N^{PV}", 20,1,21 ) );
+
   return;
 
 }
 
 void BaseCycle::EndInputData( const SInputData& ) throw( SError ) {
+
+//   int nbins =  Hist( "N_pv_perLumiBin_hist")->GetNbinsX();
+//   for(int i=1; i<=nbins;++i){
+//     if(Hist( "N_events_perLumiBin_hist")->GetBinContent(i)!=0)
+//       Hist( "N_pv_perLumiBin_hist")->SetBinContent( i,Hist( "N_pv_perLumiBin_hist")->GetBinContent(i)/Hist( "N_events_perLumiBin_hist")->GetBinContent(i));
+//   }
+
+  
+  Hist( "N_pv_perLumiBin_hist")->Divide(   Hist( "N_pv_perLumiBin_hist") ,Hist( "N_events_perLumiBin_hist"));
+
 
   LumiHandler()->PrintUsedSetup();
   
@@ -303,6 +317,10 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   
 
   //analysis code
+
+  Hist( "N_pv_perLumiBin_hist")->Fill( LumiHandler()->GetLumiBin(bcc.run, bcc.luminosityBlock), bcc.pvs->size()*weight);
+  Hist( "N_events_perLumiBin_hist")->Fill( LumiHandler()->GetLumiBin(bcc.run, bcc.luminosityBlock),weight);
+ 
 
   std::vector<Particle> leptons;
   for(unsigned int i=0; i<bcc.electrons->size(); ++i){

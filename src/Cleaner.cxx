@@ -122,9 +122,9 @@ bool Cleaner::pfID(Jet jet){
 }
 
 
-std::vector<Electron>* Cleaner::ElectronCleaner(double ptmin, double etamax){
+void Cleaner::ElectronCleaner(double ptmin, double etamax){
 
-  std::vector<Electron>* good_eles = new std::vector<Electron>;
+  std::vector<Electron> good_eles;
   for(unsigned int i=0; i<bcc->electrons->size(); ++i){
     Electron ele = bcc->electrons->at(i);
     if(ele.pt>ptmin){
@@ -136,7 +136,7 @@ std::vector<Electron>* Cleaner::ElectronCleaner(double ptmin, double etamax){
 		//if(ele.mvaTrigV0>0.0){
 		if(eleID(ele)){
 		  if(ele.relIso()<0.1){
-		    good_eles->push_back(ele);
+		    good_eles.push_back(ele);
 		  }
 		}
 		//}
@@ -148,13 +148,18 @@ std::vector<Electron>* Cleaner::ElectronCleaner(double ptmin, double etamax){
     }
   }
 
-  return good_eles;
+  bcc->electrons->clear();
+
+  for(unsigned int i=0; i<good_eles.size(); ++i){
+    bcc->electrons->push_back(good_eles[i]);
+  }
 
 }
 
-std::vector<Muon>* Cleaner::MuonCleaner(double ptmin, double etamax){
 
-  std::vector<Muon>* good_mus = new std::vector<Muon>;
+void Cleaner::MuonCleaner(double ptmin, double etamax){
+
+  std::vector<Muon> good_mus;
   for(unsigned int i=0; i<bcc->muons->size(); ++i){
     Muon mu = bcc->muons->at(i);
     if(mu.pt>ptmin){
@@ -167,7 +172,7 @@ std::vector<Muon>* Cleaner::MuonCleaner(double ptmin, double etamax){
 		  if(fabs(mu.vertex_z-bcc->pvs->at(0).z)<1){
 		    if(mu.innerTrack_numberOfValidPixelHits>0){
 		      if(mu.numberOfMatchedStations>1){
-			good_mus->push_back(mu);
+			good_mus.push_back(mu);
 		      }
 		    }
 		  }
@@ -179,43 +184,54 @@ std::vector<Muon>* Cleaner::MuonCleaner(double ptmin, double etamax){
       }
     }
   }
-  
-  return good_mus;
+  bcc->muons->clear();
+
+  for(unsigned int i=0; i<good_mus.size(); ++i){
+    bcc->muons->push_back(good_mus[i]);
+  }
 
 }
 
-std::vector<Jet>* Cleaner::JetCleaner(double ptmin, double etamax, bool doPFID){
 
-  std::vector<Jet>* good_jets = new std::vector<Jet>;
+void Cleaner::JetCleaner(double ptmin, double etamax, bool doPFID){
+
+  std::vector<Jet> good_jets;
   for(unsigned int i=0; i<bcc->jets->size(); ++i){
     Jet jet = bcc->jets->at(i);
     if(jet.pt>ptmin){
       if(fabs(jet.eta)<etamax){
 	if(!doPFID || pfID(jet)){
-	  good_jets->push_back(jet);
+	  good_jets.push_back(jet);
 	}
       }
     }
   }
 
-  return good_jets;
+  bcc->jets->clear();
+
+  for(unsigned int i=0; i<good_jets.size(); ++i){
+    bcc->jets->push_back(good_jets[i]);
+  }
 
 }
 
-std::vector<TopJet>* Cleaner::TopJetCleaner(double ptmin, double etamax, bool doPFID){
+void Cleaner::TopJetCleaner(double ptmin, double etamax, bool doPFID){
 
-  std::vector<TopJet>* good_topjets = new std::vector<TopJet>;
+  std::vector<TopJet> good_topjets;
   for(unsigned int i=0; i<bcc->topjets->size(); ++i){
     TopJet topjet = bcc->topjets->at(i);
     if(topjet.pt>ptmin){
       if(fabs(topjet.eta)<etamax){
 	if(!doPFID || pfID(topjet)){
-	  good_topjets->push_back(topjet);
+	  good_topjets.push_back(topjet);
 	}
       }
     }
   }
+  bcc->topjets->clear();
 
-  return good_topjets;
+  for(unsigned int i=0; i<good_topjets.size(); ++i){
+    bcc->topjets->push_back(good_topjets[i]);
+  }
 
 }

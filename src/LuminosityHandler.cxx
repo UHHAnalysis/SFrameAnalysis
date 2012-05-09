@@ -58,7 +58,7 @@ LuminosityHandler::~LuminosityHandler()
 bool LuminosityHandler::Initialise()
 {
    // retrieve sframe main directory
-   TString grl_dir = (TString)std::getenv( "SFRAME_DIR" ) + "/" + m_grlPath + "/";
+  TString grl_dir = /*(TString)std::getenv( "SFRAME_DIR" ) + "/" +*/ m_grlPath + "/";
  
    // retrieve lumi and GoodRunsList information
 //    if( !m_grlName.empty() ) {

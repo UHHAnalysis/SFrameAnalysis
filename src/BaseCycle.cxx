@@ -1,4 +1,4 @@
-// $Id: BaseCycle.cxx,v 1.8 2012/05/02 07:38:45 peiffer Exp $
+// $Id: BaseCycle.cxx,v 1.9 2012/05/07 14:25:56 peiffer Exp $
 
 // Local include(s):
 #include "../include/BaseCycle.h"
@@ -41,7 +41,7 @@ void BaseCycle::BeginCycle() throw( SError ) {
   LuminosityHandler *lumiHandler = new LuminosityHandler();
   // Declared Properties readable not before BeginCycle
   
-  lumiHandler->SetGRLPath( "../CMSSW_5_2_3_patch4/src/UHHAnalysis/NtupleWriter/" );
+  lumiHandler->SetGRLPath( "/afs/naf.desy.de/user/p/peiffer/CMSSW_5_2_3_patch4/src/UHHAnalysis/NtupleWriter/" );
   lumiHandler->SetLumiFileName( "GoodRun.root" );
   lumiHandler->SetTrigger( "HLT_PFJet320_v" );
   lumiHandler->SetIntLumiPerBin( 25 );
@@ -108,65 +108,37 @@ void BaseCycle::BeginInputData( const SInputData& ) throw( SError ) {
     puwp = new PUWeightProducer(pu_filename_mc, pu_filename_data, pu_histname_mc, pu_histname_data);
   }
 
-  //
-  // Declare the output histograms:
-  //
-  Book( TH1F( "N_lep_hist", "N^{lep}", 10,0,10 ) );
-  Book( TH1F( "pt_lep_hist", "p_{T}^{lep}", 100,0,500 ) );
-  Book( TH1F( "Mjet_hist", "m_{jet}", 100,0,500 ) );
-  Book( TH1F( "Mmin_hist", "m_{min}", 100,0,200 ) );
-  Book( TH1F( "Nsubjet_hist", "N^{subjet}", 10,0,10 ) );
-  Book( TH1F( "N_pileup_hist", "N^{PU}", 1000,0,50 ) );
-  Book( TH1F( "DR_jj_hist", "#Delta R(jj)", 100,0,6 ) );
-  Book( TH1F( "DR_tau_nextjet", "#Delta R(#tau j)",100,0,6));
-  Book( TH1F( "DR_tau_nexttau", "#Delta R(#tau #tau)",100,0,6)); 
-
-  Book( TH1F( "N_events_perLumiBin_hist", "N^{evt}", 20,1,21 ) );
-  Book( TH1F( "N_pv_perLumiBin_hist", "N^{PV}", 20,1,21 ) );
-
   return;
 
 }
 
 void BaseCycle::EndInputData( const SInputData& ) throw( SError ) {
 
-//   int nbins =  Hist( "N_pv_perLumiBin_hist")->GetNbinsX();
-//   for(int i=1; i<=nbins;++i){
-//     if(Hist( "N_events_perLumiBin_hist")->GetBinContent(i)!=0)
-//       Hist( "N_pv_perLumiBin_hist")->SetBinContent( i,Hist( "N_pv_perLumiBin_hist")->GetBinContent(i)/Hist( "N_events_perLumiBin_hist")->GetBinContent(i));
-//   }
-
-  
-  Hist( "N_pv_perLumiBin_hist")->Divide(   Hist( "N_pv_perLumiBin_hist") ,Hist( "N_events_perLumiBin_hist"));
-
-
-  LumiHandler()->PrintUsedSetup();
+  // LumiHandler()->PrintUsedSetup();
   
   // LumiBins vs. integrated luminosity for that bin
-  if( LumiHandler()->IsLumiCalc() ){
-    m_logger << INFO << "Target Lumi in data files and used for weighting: " 
-	     << LumiHandler()->GetTargetLumi() << " (pb^-1)!" << SLogger::endmsg;
+//   if( LumiHandler()->IsLumiCalc() ){
+//     m_logger << INFO << "Target Lumi in data files and used for weighting: " 
+// 	     << LumiHandler()->GetTargetLumi() << " (pb^-1)!" << SLogger::endmsg;
     
-    // store lumi hist to file
-    WriteObj( *(LumiHandler()->GetLumiPerLumiBinHist()) ); 
+//     // store lumi hist to file
+//     WriteObj( *(LumiHandler()->GetLumiPerLumiBinHist()) ); 
     
-    // store target luminosity (luminosity in data)
-    TTree *tree = new TTree( "LuminosityTree", "luminosity tree" );
-    Double_t lumi = LumiHandler()->GetTargetLumi();
-    tree->Branch( "targetLuminosity", &lumi );
-    tree->Fill();
-    WriteObj( *tree );
+//     // store target luminosity (luminosity in data)
+//     TTree *tree = new TTree( "LuminosityTree", "luminosity tree" );
+//     Double_t lumi = LumiHandler()->GetTargetLumi();
+//     tree->Branch( "targetLuminosity", &lumi );
+//     tree->Fill();
+//     WriteObj( *tree );
     
-    // store the luminosity collected in each run
-    WriteObj( *(LumiHandler()->GetTreeLuminosityPerRun()) ); 
-  }
+//     // store the luminosity collected in each run
+//     WriteObj( *(LumiHandler()->GetTreeLuminosityPerRun()) ); 
+//   }
   return;
   
 }
 
 void BaseCycle::BeginInputFile( const SInputData& ) throw( SError ) {
-  //ConnectVariable( "JetTree", "pt_jet_1", pt_jet_1 );
-  //ConnectVariable( "JetTree", "pt_jet_2", pt_jet_2 );
 
   ConnectVariable( "AnalysisTree", "triggerResults" , bcc.triggerResults);
   ConnectVariable( "AnalysisTree", "triggerNames" , bcc.triggerNames);
@@ -181,8 +153,19 @@ void BaseCycle::BeginInputFile( const SInputData& ) throw( SError ) {
   if(PrunedJetCollection.size()>0) ConnectVariable( "AnalysisTree", PrunedJetCollection.c_str() , bcc.prunedjets);
   if(GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", GenParticleCollection.c_str() , bcc.genparticles);
   if(addGenInfo) ConnectVariable( "AnalysisTree", "genInfo" , bcc.genInfo);
+  
+//     unsigned int myrun=0;
+//     ConnectVariable( "AnalysisTree", "run" , myrun);
+//     bcc.run = (int)myrun;
+//     unsigned int mylb=0;
+//     ConnectVariable( "AnalysisTree", "luminosityBlock" , mylb);
+//     bcc.luminosityBlock = (int) mylb;
+  
+  
+  
   ConnectVariable( "AnalysisTree", "run" , bcc.run);
   ConnectVariable( "AnalysisTree", "luminosityBlock" , bcc.luminosityBlock);
+  
   ConnectVariable( "AnalysisTree" ,"event" ,bcc.event);
   ConnectVariable( "AnalysisTree" ,"isRealData", bcc.isRealData);
   ConnectVariable( "AnalysisTree" ,"HBHENoiseFilterResult", bcc.HBHENoiseFilterResult);
@@ -212,75 +195,26 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
     bcc.run = LumiHandler()->GetRandomRunNr() ;
 
 
-
   if(bcc.genInfo){
     if(puwp){
       weight *= puwp->produceWeight(bcc.genInfo);
       //std::cout << bcc.genInfo->pileup_TrueNumInteractions << "   " << puwp->produceWeight(bcc.genInfo) <<std::endl;
     }
-    double npu = bcc.genInfo->pileup_TrueNumInteractions;
-    if(npu>50) npu=49.9999;
-    Hist( "N_pileup_hist" )->Fill( npu, weight );
   }
 
   //clean collections here
 
   Cleaner cleaner(&bcc);
 
-  cleaner.JetEnergyResolutionShifter();
-  bcc.electrons = cleaner.ElectronCleaner();
-  bcc.muons = cleaner.MuonCleaner();
-  bcc.jets = cleaner.JetCleaner(35,2.5,true);
-  bcc.topjets = cleaner.TopJetCleaner(350,2.5,false);
-
-  for(unsigned int i=0; i<bcc.taus->size(); ++i){
-    if(bcc.taus->at(i).v4().pt()<0 || !bcc.taus->at(i).decayModeFinding /*|| !bcc.taus->at(i).byMediumCombinedIsolationDeltaBetaCorr ||  !bcc.taus->at(i).againstElectronTight ||  !bcc.taus->at(i).againstMuonTight*/){
-      bcc.taus->erase(bcc.taus->begin()+i);
-      i--;
-    }
-  }
-
-  for(unsigned int i=0;i<bcc.taus->size(); ++i){
-    //std::cout << i << ":  " <<  bcc.taus->at(i).pt << "  " << bcc.taus->at(i).eta << "  " << bcc.taus->at(i).phi << std::endl;
-    double mindrjet=9999;
-    double mindrtau=9999;
-
-    for(unsigned int j=0; j<bcc.jets->size(); ++j){
-      if(bcc.taus->at(i).deltaR(bcc.jets->at(j))<mindrjet)
-	mindrjet= bcc.taus->at(i).deltaR(bcc.jets->at(j));
-    }
-    for(unsigned int j=0;j<bcc.taus->size(); ++j){
-      if(i==j) continue;
-      if(bcc.taus->at(i).deltaR(bcc.taus->at(j))<mindrtau)
- 	mindrtau= bcc.taus->at(i).deltaR(bcc.taus->at(j));
-    }
-
-    Hist( "DR_tau_nextjet" )->Fill( mindrjet, weight );
-    Hist( "DR_tau_nexttau" )->Fill( mindrtau, weight );
-  }
-
-
-
-//   for(unsigned int i=0; i<bcc.genparticles->size(); ++i){
-//     GenParticle genp = bcc.genparticles->at(i);
-//     std::cout << genp.index <<"  pdgId = " << genp.pdgId << "  mo1 = " << genp.mother1 << "  mo2 = " << genp.mother2 <<"  da1 = " << genp.daughter1 << "  da2 = " << genp.daughter2 <<std::endl;
-//     if(genp.mother(bcc.genparticles,1)){
-//       std::cout << "  Mother1: " << genp.mother(bcc.genparticles,1)->pdgId << "  " << genp.mother(bcc.genparticles,1)->pt <<std::endl;
-//     }
-//     if(genp.mother(bcc.genparticles,2)){
-//       std::cout << "  Mother2: " << genp.mother(bcc.genparticles,2)->pdgId << "  " << genp.mother(bcc.genparticles,2)->pt <<std::endl;
-//     }
-//     if(genp.daughter(bcc.genparticles,1)){
-//       std::cout << "  Daughter1: " << genp.daughter(bcc.genparticles,1)->pdgId << "  " << genp.daughter(bcc.genparticles,1)->pt <<std::endl;
-//     }
-//     if(genp.daughter(bcc.genparticles,2)){
-//       std::cout << "  Daughter2: " << genp.daughter(bcc.genparticles,2)->pdgId << "  " << genp.daughter(bcc.genparticles,2)->pt <<std::endl;
-//     }
-//   }
+  if(!bcc.isRealData && bcc.jets) cleaner.JetEnergyResolutionShifter();
+  //if(bcc.electrons) cleaner.ElectronCleaner(20,2.5);
+  //if(bcc.muons) cleaner.MuonCleaner(20,2.1);
+  //if(bcc.jets) cleaner.JetCleaner(35,2.5,true);
+  //if(bcc.topjets) cleaner.TopJetCleaner(350,2.5,false);
+  //if(bcc.taus) cleaner.TauCleaner(20,2.1);
 
   //selection
-  
-  
+
   Selection selection(&bcc);
 
   //select only good runs
@@ -295,54 +229,10 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   //trigger
 
   //DO NOT use trigger selection in PROOF mode for the moment
-  if(!selection.TriggerSelection("HLT_PFJet320_v"))  throw SError( SError::SkipEvent );
-
-  //at least two CA 0.8 fat jets
-  //if(!selection.NTopJetSelection(2)) throw SError( SError::SkipEvent );
- 
-  for(unsigned int i=0; i< bcc.topjets->size(); ++i){
-    TopJet topjet =  bcc.topjets->at(i);
-    double mmin=0;
-    double mjet=0;
-    int nsubjets=0;
-    selection.TopTag(topjet,mjet,nsubjets,mmin);
-    Hist( "Mjet_hist" )->Fill( mjet, weight );
-    if(nsubjets>=3) Hist( "Mmin_hist" )->Fill( mmin, weight );
-    Hist( "Nsubjet_hist" )->Fill( nsubjets, weight ); 
-  }
-
-  //at least min_toptag top tags
-  int min_toptag=0;
-  //if(!selection.NTopTagSelection(min_toptag)) throw SError( SError::SkipEvent );
-  
-
-  //analysis code
-
-  Hist( "N_pv_perLumiBin_hist")->Fill( LumiHandler()->GetLumiBin(bcc.run, bcc.luminosityBlock), bcc.pvs->size()*weight);
-  Hist( "N_events_perLumiBin_hist")->Fill( LumiHandler()->GetLumiBin(bcc.run, bcc.luminosityBlock),weight);
- 
-
-  std::vector<Particle> leptons;
-  for(unsigned int i=0; i<bcc.electrons->size(); ++i){
-    leptons.push_back(bcc.electrons->at(i));
-  }
-  for(unsigned int i=0; i<bcc.muons->size(); ++i){
-    leptons.push_back(bcc.muons->at(i));
-  }
-  for(unsigned int i=0; i<bcc.taus->size(); ++i){
-    leptons.push_back(bcc.taus->at(i));
-  }
-  Hist( "N_lep_hist" )->Fill( leptons.size(), weight );
-  for(unsigned int i=0; i<leptons.size(); ++i){
-    Hist( "pt_lep_hist" )->Fill( leptons[i].pt, weight );
-  }
-  if(bcc.topjets->size()>=2){
-    Hist( "DR_jj_hist" )->Fill( bcc.topjets->at(0).deltaR(bcc.topjets->at(1)), weight ); 
-  }
-
+  //if(!selection.TriggerSelection("HLT_PFJet320_v"))  throw SError( SError::SkipEvent );
 
   //write out all objects
-
+  
   o_photons.clear();
   o_jets.clear();
   o_electrons.clear();
@@ -354,7 +244,7 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   o_genparticles.clear();
   o_triggerNames.clear();
   o_triggerResults.clear();
-
+  
   if(PhotonCollection.size()>0) o_photons=*bcc.photons;
   if(JetCollection.size()>0) o_jets=*bcc.jets;
   if(ElectronCollection.size()>0) o_electrons=*bcc.electrons;
@@ -366,7 +256,7 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   if(TopJetCollection.size()>0) o_topjets=*bcc.topjets;
   if(PrunedJetCollection.size()>0) o_prunedjets=*bcc.prunedjets;
   if(GenParticleCollection.size()>0) o_genparticles=*bcc.genparticles;
-
+  
   if(newrun) o_triggerNames = bcc.triggerNames_actualrun;//store trigger names only for new runs
   newrun=false;
   o_triggerResults = *bcc.triggerResults;

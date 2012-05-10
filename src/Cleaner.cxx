@@ -168,7 +168,7 @@ void Cleaner::MuonCleaner(double ptmin, double etamax){
 	  if(mu.globalTrack_chi2/mu.globalTrack_ndof<10){
 	    if(mu.innerTrack_trackerLayersWithMeasurement>8){
 	      if(mu.dB<0.02){
-		if(mu.relIso()<0.0125){
+		if(mu.relIso()<0.125){
 		  if(fabs(mu.vertex_z-bcc->pvs->at(0).z)<1){
 		    if(mu.innerTrack_numberOfValidPixelHits>0){
 		      if(mu.numberOfMatchedStations>1){
@@ -188,6 +188,34 @@ void Cleaner::MuonCleaner(double ptmin, double etamax){
 
   for(unsigned int i=0; i<good_mus.size(); ++i){
     bcc->muons->push_back(good_mus[i]);
+  }
+
+}
+
+void Cleaner::TauCleaner(double ptmin, double etamax){
+
+  std::vector<Tau> good_taus;
+  for(unsigned int i=0; i<bcc->taus->size(); ++i){
+    Tau tau = bcc->taus->at(i);
+    if(tau.pt>ptmin){
+      if(fabs(tau.eta)<etamax){
+	if(bcc->taus->at(i).decayModeFinding){
+	  if(bcc->taus->at(i).byMediumCombinedIsolationDeltaBetaCorr){
+	    if(bcc->taus->at(i).againstElectronTight){
+	      if(bcc->taus->at(i).againstMuonTight){
+		good_taus.push_back(tau);
+	      }
+	    }
+	  }
+	}
+      }
+    }
+  }
+  
+  bcc->taus->clear();
+
+  for(unsigned int i=0; i<good_taus.size(); ++i){
+    bcc->taus->push_back(good_taus[i]);
   }
 
 }

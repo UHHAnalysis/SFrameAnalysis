@@ -19,6 +19,7 @@ class Cleaner{
 
   void ElectronCleaner(double ptmin=0, double etamax=9999);
   void MuonCleaner(double ptmin=0, double etamax=9999); 
+  void TauCleaner(double ptmin=0, double etamax=9999); 
   void JetCleaner(double ptmin=0, double etamax=9999, bool doPFID=true);
   void TopJetCleaner(double ptmin=0, double etamax=9999, bool doPFID=true); 
 

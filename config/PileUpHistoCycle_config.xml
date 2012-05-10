@@ -2,6 +2,7 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd">
 
 <JobConfiguration JobName="PileUpHistoCycleJob" OutputLevel="DEBUG">
+	<Library Name="libfastjet" />
 	<Library Name="libAnalysis" />
 	<Library Name="libSFramePlugIns" />
 
@@ -9,8 +10,9 @@
 	<Package Name="SFramePlugIns.par" />
 	<Package Name="Analysis.par" />
 
-	<Cycle Name="PileUpHistoCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="" OutputDirectory="./" PostFix="" TargetLumi="10" > 
-		<InputData Lumi="50" NEventsMax="-1" Type="MC" Version="TTbar">
+<!--	<Cycle Name="PileUpHistoCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="" OutputDirectory="./" PostFix="" TargetLumi="1" > -->
+	<Cycle Name="PileUpHistoCycle"  OutputDirectory="./" PostFix="" TargetLumi="1" > 
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbar">
 
 		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_0_ntuple.root" Lumi="0.0"/> 
 		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_1_ntuple.root" Lumi="0.0"/> 

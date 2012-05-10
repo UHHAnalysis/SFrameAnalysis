@@ -2,6 +2,7 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd">
 
 <JobConfiguration JobName="TauEffiCycleJob" OutputLevel="DEBUG">
+	<Library Name="libfastjet" />
 	<Library Name="libAnalysis" />
 	<Library Name="libSFramePlugIns" />
 
@@ -9,7 +10,8 @@
 	<Package Name="SFramePlugIns.par" />
 	<Package Name="Analysis.par" />
 
-	<Cycle Name="TauEffiCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/afs/naf.desy.de/group/cms/scratch/peiffer/PROOF/" OutputDirectory="./" PostFix="" TargetLumi="1" > 
+<!--	<Cycle Name="TauEffiCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/afs/naf.desy.de/group/cms/scratch/peiffer/PROOF/" OutputDirectory="./" PostFix="" TargetLumi="1" > -->
+	<Cycle Name="TauEffiCycle"  OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarTest_TauEffi">
 <!--		<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ttbar52.root" Lumi="0.0"/> -->
 

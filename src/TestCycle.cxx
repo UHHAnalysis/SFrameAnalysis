@@ -1,4 +1,4 @@
-// $Id: TestCycle.cxx,v 1.9 2012/05/07 14:25:56 peiffer Exp $
+// $Id: TestCycle.cxx,v 1.1 2012/05/10 15:39:22 peiffer Exp $
 
 // Local include(s):
 #include "../include/TestCycle.h"
@@ -242,7 +242,7 @@ void TestCycle::BeginInputFile( const SInputData& ) throw( SError ) {
   ConnectVariable( "AnalysisTree", "luminosityBlock" , bcc.luminosityBlock);
   ConnectVariable( "AnalysisTree" ,"event" ,bcc.event);
   ConnectVariable( "AnalysisTree" ,"isRealData", bcc.isRealData);
-  ConnectVariable( "AnalysisTree" ,"HBHENoiseFilterResult", bcc.HBHENoiseFilterResult);
+  //ConnectVariable( "AnalysisTree" ,"HBHENoiseFilterResult", bcc.HBHENoiseFilterResult);
   ConnectVariable( "AnalysisTree" ,"beamspot_x0", bcc.beamspot_x0);
   ConnectVariable( "AnalysisTree" ,"beamspot_y0", bcc.beamspot_y0);
   ConnectVariable( "AnalysisTree" ,"beamspot_z0", bcc.beamspot_z0);
@@ -272,9 +272,9 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   if(bcc.genInfo){
     if(puwp){
       weight *= puwp->produceWeight(bcc.genInfo);
-      //std::cout << bcc.genInfo->pileup_TrueNumInteractions << "   " << puwp->produceWeight(bcc.genInfo) <<std::endl;
+      //std::cout << bcc.genInfo->pileup_TrueNumInteractions() << "   " << puwp->produceWeight(bcc.genInfo) <<std::endl;
     }
-    double npu = bcc.genInfo->pileup_TrueNumInteractions;
+    double npu = bcc.genInfo->pileup_TrueNumInteractions();
     if(npu>50) npu=49.9999;
     Hist( "N_pileup_hist" )->Fill( npu, weight );
   }
@@ -314,18 +314,18 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
 
 //   for(unsigned int i=0; i<bcc.genparticles->size(); ++i){
 //     GenParticle genp = bcc.genparticles->at(i);
-//     std::cout << genp.index <<"  pdgId = " << genp.pdgId << "  mo1 = " << genp.mother1 << "  mo2 = " << genp.mother2 <<"  da1 = " << genp.daughter1 << "  da2 = " << genp.daughter2 <<std::endl;
+//     //std::cout << genp.index() <<"  pdgId = " << genp.pdgId() << "  mo1 = " << genp.mother1 << "  mo2 = " << genp.mother2 <<"  da1 = " << genp.daughter1 << "  da2 = " << genp.daughter2 <<std::endl;
 //     if(genp.mother(bcc.genparticles,1)){
-//       std::cout << "  Mother1: " << genp.mother(bcc.genparticles,1)->pdgId << "  " << genp.mother(bcc.genparticles,1)->pt <<std::endl;
+//       std::cout << "  Mother1: " << genp.mother(bcc.genparticles,1)->pdgId() << "  " << genp.mother(bcc.genparticles,1)->pt() <<std::endl;
 //     }
 //     if(genp.mother(bcc.genparticles,2)){
-//       std::cout << "  Mother2: " << genp.mother(bcc.genparticles,2)->pdgId << "  " << genp.mother(bcc.genparticles,2)->pt <<std::endl;
+//       std::cout << "  Mother2: " << genp.mother(bcc.genparticles,2)->pdgId() << "  " << genp.mother(bcc.genparticles,2)->pt() <<std::endl;
 //     }
 //     if(genp.daughter(bcc.genparticles,1)){
-//       std::cout << "  Daughter1: " << genp.daughter(bcc.genparticles,1)->pdgId << "  " << genp.daughter(bcc.genparticles,1)->pt <<std::endl;
+//       std::cout << "  Daughter1: " << genp.daughter(bcc.genparticles,1)->pdgId() << "  " << genp.daughter(bcc.genparticles,1)->pt() <<std::endl;
 //     }
 //     if(genp.daughter(bcc.genparticles,2)){
-//       std::cout << "  Daughter2: " << genp.daughter(bcc.genparticles,2)->pdgId << "  " << genp.daughter(bcc.genparticles,2)->pt <<std::endl;
+//       std::cout << "  Daughter2: " << genp.daughter(bcc.genparticles,2)->pdgId() << "  " << genp.daughter(bcc.genparticles,2)->pt() <<std::endl;
 //     }
 //   }
 
@@ -337,23 +337,23 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   if(bcc.genparticles){
     for(unsigned int i=0; i<bcc.genparticles->size(); ++i){
       GenParticle genp = bcc.genparticles->at(i);
-      if( genp.pdgId==6 && genp.status==3) top=genp;
-      if( genp.pdgId==-6 && genp.status==3) antitop=genp;  
-      if(abs(genp.pdgId)==5 && genp.status==3 ){
+      if( genp.pdgId()==6 && genp.status()==3) top=genp;
+      if( genp.pdgId()==-6 && genp.status()==3) antitop=genp;  
+      if(abs(genp.pdgId())==5 && genp.status()==3 ){
 	Hist ("b_quark_mass")->Fill( sqrt(genp.v4().mass2()));
-	Hist ("eta_bquark_hist") ->Fill(genp.eta);
-	if( genp.pt<=20)
-	  Hist( "eta_bquark_0_20_hist")->Fill( genp.eta);
-	if( genp.pt>20 && genp.pt<=35)
-	  Hist( "eta_bquark_20_35_hist")->Fill( genp.eta);
-	if( genp.pt>35 && genp.pt<=50)
-	  Hist( "eta_bquark_35_50_hist")->Fill( genp.eta);	
-	if( genp.pt>50 && genp.pt<=75)
-	  Hist( "eta_bquark_50_75_hist")->Fill( genp.eta);
-	if( genp.pt>75 && genp.pt<=100)
-	  Hist( "eta_bquark_75_100_hist")->Fill( genp.eta);
-	if( genp.pt>100)
-	  Hist( "eta_bquark_100_inf_hist")->Fill( genp.eta);
+	Hist ("eta_bquark_hist") ->Fill(genp.eta());
+	if( genp.pt()<=20)
+	  Hist( "eta_bquark_0_20_hist")->Fill( genp.eta());
+	if( genp.pt()>20 && genp.pt()<=35)
+	  Hist( "eta_bquark_20_35_hist")->Fill( genp.eta());
+	if( genp.pt()>35 && genp.pt()<=50)
+	  Hist( "eta_bquark_35_50_hist")->Fill( genp.eta());	
+	if( genp.pt()>50 && genp.pt()<=75)
+	  Hist( "eta_bquark_50_75_hist")->Fill( genp.eta());
+	if( genp.pt()>75 && genp.pt()<=100)
+	  Hist( "eta_bquark_75_100_hist")->Fill( genp.eta());
+	if( genp.pt()>100)
+	  Hist( "eta_bquark_100_inf_hist")->Fill( genp.eta());
       }
       //     if(abs(genp.pdgId)==5 && genp.status==3 &&  genp.v4().mass2()<4.78*4.78)
       //       throw SError( SError::SkipEvent );
@@ -410,8 +410,8 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   Hist ("y_ttbar")->Fill( (top.v4()+antitop.v4()).Rapidity(),weight);  
   Hist ("pt_ttbar")->Fill( (top.v4()+antitop.v4()).pt(),weight); 
  
-  Hist ("pt_t")->Fill( top.pt,weight); 
-  Hist ("pt_t")->Fill( antitop.pt,weight); 
+  Hist ("pt_t")->Fill( top.pt(),weight); 
+  Hist ("pt_t")->Fill( antitop.pt(),weight); 
   Hist ("y_t")->Fill( top.v4().Rapidity(),weight); 
   Hist ("y_t")->Fill( antitop.v4().Rapidity(),weight);  
   
@@ -419,52 +419,52 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   int nbjets=0;
   Jet PrimBJet;
   for(unsigned int i=0; i<bcc.jets->size(); ++i){
-    if(bcc.jets->at(i).btag_combinedSecondaryVertex>0.244)
-      Hist ("Eta_B_jet_CSVL")->Fill ( bcc.jets->at(i).eta, weight);
-    if(bcc.jets->at(i).btag_combinedSecondaryVertex>0.679)
-      Hist ("Eta_B_jet_CSVM")->Fill ( bcc.jets->at(i).eta, weight);
-    if(bcc.jets->at(i).btag_combinedSecondaryVertex>0.898)
-      Hist ("Eta_B_jet_CSVT")->Fill ( bcc.jets->at(i).eta, weight);
-    if(bcc.jets->at(i).btag_jetProbability>0.275)
-      Hist ("Eta_B_jet_JPL")->Fill ( bcc.jets->at(i).eta, weight);
-    if(bcc.jets->at(i).btag_jetProbability>0.545)
-      Hist ("Eta_B_jet_JPM")->Fill ( bcc.jets->at(i).eta, weight);
-    if(bcc.jets->at(i).btag_jetProbability>0.790)
-      Hist ("Eta_B_jet_JPT")->Fill ( bcc.jets->at(i).eta, weight);
-    if(bcc.jets->at(i).btag_combinedSecondaryVertex>0.244)
-      Hist ("Pt_B_jet_CSVL")->Fill ( bcc.jets->at(i).pt, weight);
-    if(bcc.jets->at(i).btag_combinedSecondaryVertex>0.679)
-      Hist ("Pt_B_jet_CSVM")->Fill ( bcc.jets->at(i).pt, weight);
-    if(bcc.jets->at(i).btag_combinedSecondaryVertex>0.898)
-      Hist ("Pt_B_jet_CSVT")->Fill ( bcc.jets->at(i).pt, weight);
-    if(bcc.jets->at(i).btag_jetProbability>0.275)
-      Hist ("Pt_B_jet_JPL")->Fill ( bcc.jets->at(i).pt, weight);
-    if(bcc.jets->at(i).btag_jetProbability>0.545)
-      Hist ("Pt_B_jet_JPM")->Fill ( bcc.jets->at(i).pt, weight);
-    if(bcc.jets->at(i).btag_jetProbability>0.790)
-      Hist ("Pt_B_jet_JPT")->Fill ( bcc.jets->at(i).pt, weight);
-    if(bcc.jets->at(i).btag_combinedSecondaryVertex>0.679){
+    if(bcc.jets->at(i).btag_combinedSecondaryVertex()>0.244)
+      Hist ("Eta_B_jet_CSVL")->Fill ( bcc.jets->at(i).eta(), weight);
+    if(bcc.jets->at(i).btag_combinedSecondaryVertex()>0.679)
+      Hist ("Eta_B_jet_CSVM")->Fill ( bcc.jets->at(i).eta(), weight);
+    if(bcc.jets->at(i).btag_combinedSecondaryVertex()>0.898)
+      Hist ("Eta_B_jet_CSVT")->Fill ( bcc.jets->at(i).eta(), weight);
+    if(bcc.jets->at(i).btag_jetProbability()>0.275)
+      Hist ("Eta_B_jet_JPL")->Fill ( bcc.jets->at(i).eta(), weight);
+    if(bcc.jets->at(i).btag_jetProbability()>0.545)
+      Hist ("Eta_B_jet_JPM")->Fill ( bcc.jets->at(i).eta(), weight);
+    if(bcc.jets->at(i).btag_jetProbability()>0.790)
+      Hist ("Eta_B_jet_JPT")->Fill ( bcc.jets->at(i).eta(), weight);
+    if(bcc.jets->at(i).btag_combinedSecondaryVertex()>0.244)
+      Hist ("Pt_B_jet_CSVL")->Fill ( bcc.jets->at(i).pt(), weight);
+    if(bcc.jets->at(i).btag_combinedSecondaryVertex()>0.679)
+      Hist ("Pt_B_jet_CSVM")->Fill ( bcc.jets->at(i).pt(), weight);
+    if(bcc.jets->at(i).btag_combinedSecondaryVertex()>0.898)
+      Hist ("Pt_B_jet_CSVT")->Fill ( bcc.jets->at(i).pt(), weight);
+    if(bcc.jets->at(i).btag_jetProbability()>0.275)
+      Hist ("Pt_B_jet_JPL")->Fill ( bcc.jets->at(i).pt(), weight);
+    if(bcc.jets->at(i).btag_jetProbability()>0.545)
+      Hist ("Pt_B_jet_JPM")->Fill ( bcc.jets->at(i).pt(), weight);
+    if(bcc.jets->at(i).btag_jetProbability()>0.790)
+      Hist ("Pt_B_jet_JPT")->Fill ( bcc.jets->at(i).pt(), weight);
+    if(bcc.jets->at(i).btag_combinedSecondaryVertex()>0.679){
       nbjets++;
-      if(bcc.jets->at(i).pt> PrimBJet.pt)
+      if(bcc.jets->at(i).pt()> PrimBJet.pt())
 	PrimBJet = bcc.jets->at(i);
 
-      if(bcc.jets->at(i).pt>20 && bcc.jets->at(i).pt<=35)
-	Hist("eta_bjet_20_35_hist")->Fill( bcc.jets->at(i).eta,weight);
-      if(bcc.jets->at(i).pt>35 && bcc.jets->at(i).pt<=50)
-	Hist("eta_bjet_35_50_hist")->Fill( bcc.jets->at(i).eta,weight);
-      if(bcc.jets->at(i).pt>50 && bcc.jets->at(i).pt<=75)
-	Hist("eta_bjet_50_75_hist")->Fill( bcc.jets->at(i).eta,weight);
-      if(bcc.jets->at(i).pt>75 && bcc.jets->at(i).pt<=100)
-	Hist("eta_bjet_75_100_hist")->Fill( bcc.jets->at(i).eta,weight);
-      if(bcc.jets->at(i).pt>100)
-	Hist("eta_bjet_100_inf_hist")->Fill( bcc.jets->at(i).eta,weight);
+      if(bcc.jets->at(i).pt()>20 && bcc.jets->at(i).pt()<=35)
+	Hist("eta_bjet_20_35_hist")->Fill( bcc.jets->at(i).eta(),weight);
+      if(bcc.jets->at(i).pt()>35 && bcc.jets->at(i).pt()<=50)
+	Hist("eta_bjet_35_50_hist")->Fill( bcc.jets->at(i).eta(),weight);
+      if(bcc.jets->at(i).pt()>50 && bcc.jets->at(i).pt()<=75)
+	Hist("eta_bjet_50_75_hist")->Fill( bcc.jets->at(i).eta(),weight);
+      if(bcc.jets->at(i).pt()>75 && bcc.jets->at(i).pt()<=100)
+	Hist("eta_bjet_75_100_hist")->Fill( bcc.jets->at(i).eta(),weight);
+      if(bcc.jets->at(i).pt()>100)
+	Hist("eta_bjet_100_inf_hist")->Fill( bcc.jets->at(i).eta(),weight);
     }
   }
-  if(PrimBJet.pt>0){
-    Hist("pt_bjet_hist")->Fill(PrimBJet.pt,weight);
-    Hist("eta_bjet_hist")->Fill(PrimBJet.eta,weight);
+  if(PrimBJet.pt()>0){
+    Hist("pt_bjet_hist")->Fill(PrimBJet.pt(),weight);
+    Hist("eta_bjet_hist")->Fill(PrimBJet.eta(),weight);
     for(unsigned int i=0; i<bcc.jets->size(); ++i){
-      if(bcc.jets->at(i).pt!=PrimBJet.pt){
+      if(bcc.jets->at(i).pt()!=PrimBJet.pt()){
 	Hist("dR_bj1j_hist")->Fill(PrimBJet.deltaR(bcc.jets->at(i)));
 	break;
       }
@@ -498,29 +498,29 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   }
   Hist( "N_lep_hist" )->Fill( leptons.size(), weight );
   for(unsigned int i=0; i<leptons.size(); ++i){
-    Hist( "pt_lep_hist" )->Fill( leptons[i].pt, weight );
-    if(leptons[i].pt>PrimLep.pt)
+    Hist( "pt_lep_hist" )->Fill( leptons[i].pt(), weight );
+    if(leptons[i].pt()>PrimLep.pt())
       PrimLep = leptons[i];
   }
-  if(PrimLep.pt>0){
-    Hist("pt_lep1_hist")->Fill(PrimLep.pt,weight);
-    Hist("eta_lep1_hist")->Fill(PrimLep.eta,weight);
+  if(PrimLep.pt()>0){
+    Hist("pt_lep1_hist")->Fill(PrimLep.pt(),weight);
+    Hist("eta_lep1_hist")->Fill(PrimLep.eta(),weight);
   }
   if(bcc.jets->size()>=1){
-    Hist("pt_jet1_hist")->Fill(bcc.jets->at(0).pt,weight);
-    Hist("eta_jet1_hist")->Fill(bcc.jets->at(0).eta,weight);
+    Hist("pt_jet1_hist")->Fill(bcc.jets->at(0).pt(),weight);
+    Hist("eta_jet1_hist")->Fill(bcc.jets->at(0).eta(),weight);
   }
   if(bcc.jets->size()>=2){
-    Hist("pt_jet2_hist")->Fill(bcc.jets->at(1).pt,weight);
-    Hist("eta_jet2_hist")->Fill(bcc.jets->at(1).eta,weight);
+    Hist("pt_jet2_hist")->Fill(bcc.jets->at(1).pt(),weight);
+    Hist("eta_jet2_hist")->Fill(bcc.jets->at(1).eta(),weight);
   }
   if(bcc.jets->size()>=3){
-    Hist("pt_jet3_hist")->Fill(bcc.jets->at(2).pt,weight);
-    Hist("eta_jet3_hist")->Fill(bcc.jets->at(2).eta,weight);
+    Hist("pt_jet3_hist")->Fill(bcc.jets->at(2).pt(),weight);
+    Hist("eta_jet3_hist")->Fill(bcc.jets->at(2).eta(),weight);
   }
   if(bcc.jets->size()>=4){
-    Hist("pt_jet4_hist")->Fill(bcc.jets->at(3).pt,weight);
-    Hist("eta_jet4_hist")->Fill(bcc.jets->at(3).eta,weight);
+    Hist("pt_jet4_hist")->Fill(bcc.jets->at(3).pt(),weight);
+    Hist("eta_jet4_hist")->Fill(bcc.jets->at(3).eta(),weight);
   }
   if(bcc.topjets->size()>=2){
     Hist( "DR_jj_hist" )->Fill( bcc.topjets->at(0).deltaR(bcc.topjets->at(1)), weight ); 

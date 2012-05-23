@@ -14,7 +14,7 @@ class Selection{
 
   ~Selection(){};
 
-  bool HBHENoiseFilter();
+  //bool HBHENoiseFilter();
 
   bool TriggerSelection(std::string name);
 
@@ -27,7 +27,7 @@ class Selection{
 
   struct HigherPt {
     bool operator() (const Particle& j1, const Particle& j2) const {
-      return j1.pt > j2.pt;
+      return j1.pt() > j2.pt();
     };
   };
 

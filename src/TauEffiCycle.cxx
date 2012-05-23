@@ -1,4 +1,4 @@
-// $Id: TauEffiCycle.cxx,v 1.2 2012/04/10 13:18:29 peiffer Exp $
+// $Id: TauEffiCycle.cxx,v 1.1 2012/04/23 14:53:22 peiffer Exp $
 
 // Local include(s):
 #include "../include/TauEffiCycle.h"
@@ -65,7 +65,7 @@ void TauEffiCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SErr
  
   //produce clean tau collection
   for(unsigned int i=0; i<bcc.taus->size(); ++i){
-    if(!bcc.taus->at(i).decayModeFinding || !bcc.taus->at(i).byLooseCombinedIsolationDeltaBetaCorr /*||  !bcc.taus->at(i).againstElectronTight ||  !bcc.taus->at(i).againstMuonTight*/){
+    if(!bcc.taus->at(i).decayModeFinding() || !bcc.taus->at(i).byLooseCombinedIsolationDeltaBetaCorr() /*||  !bcc.taus->at(i).againstElectronTight() ||  !bcc.taus->at(i).againstMuonTight()*/){
       bcc.taus->erase(bcc.taus->begin()+i);
       i--;
     }
@@ -73,10 +73,10 @@ void TauEffiCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SErr
   
   for(unsigned int i=0; i<bcc.genparticles->size(); ++i){
     GenParticle genp = bcc.genparticles->at(i);
-    if(abs(genp.pdgId)!=15) continue;
-    if(fabs(genp.eta)>2.5) continue;
+    if(abs(genp.pdgId())!=15) continue;
+    if(fabs(genp.eta())>2.5) continue;
 
-    Hist("pt_gentau_hist")->Fill(genp.pt,weight);
+    Hist("pt_gentau_hist")->Fill(genp.pt(),weight);
 
     bool match=false;
     for(unsigned int j=0; j<bcc.taus->size(); ++j){
@@ -86,7 +86,7 @@ void TauEffiCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SErr
 	  std::cout << "double match found" << std::endl;
 	}
 	else{
-	  Hist("pt_rectau_hist")->Fill(genp.pt,weight);
+	  Hist("pt_rectau_hist")->Fill(genp.pt(),weight);
 	  match=true;
 	}
       }

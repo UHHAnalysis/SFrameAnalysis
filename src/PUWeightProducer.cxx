@@ -29,7 +29,7 @@ double PUWeightProducer::produceWeight(GenInfo* genInfo){
 
   double weight =0;
 
-  int binnumber = h_npu_mc->GetXaxis()->FindBin(genInfo->pileup_TrueNumInteractions);
+  int binnumber = h_npu_mc->GetXaxis()->FindBin(genInfo->pileup_TrueNumInteractions());
   
   if(h_npu_data->GetBinContent(binnumber)!=0){
 

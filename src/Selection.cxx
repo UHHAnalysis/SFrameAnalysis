@@ -7,9 +7,9 @@ Selection::Selection( BaseCycleContainer* input_){
 
 }
 
-bool Selection::HBHENoiseFilter(){
-  return bcc->HBHENoiseFilterResult;
-}
+// bool Selection::HBHENoiseFilter(){
+//   return bcc->HBHENoiseFilterResult;
+// }
 
 bool Selection::TriggerSelection(std::string name){
 
@@ -30,7 +30,7 @@ bool Selection::NJetSelection(int min_nparticle, double ptmin, double etamax){
 
   int nparticle=0;
    for(unsigned int i=0;i<bcc->jets->size(); ++i){
-     if(bcc->jets->at(i).pt>ptmin && fabs(bcc->jets->at(i).eta)<etamax) nparticle++;
+     if(bcc->jets->at(i).pt()>ptmin && fabs(bcc->jets->at(i).eta())<etamax) nparticle++;
    }
   return nparticle>=min_nparticle;
 }
@@ -39,7 +39,7 @@ bool Selection::NTopJetSelection(int min_nparticle, double ptmin, double etamax)
 
   int nparticle=0;
    for(unsigned int i=0;i<bcc->topjets->size(); ++i){
-     if(bcc->topjets->at(i).pt>ptmin && fabs(bcc->topjets->at(i).eta)<etamax) nparticle++;
+     if(bcc->topjets->at(i).pt()>ptmin && fabs(bcc->topjets->at(i).eta())<etamax) nparticle++;
    }
   return nparticle>=min_nparticle;
 }
@@ -66,12 +66,12 @@ bool Selection::NTopTagSelection(int min_ntoptag){
 
 bool Selection::TopTag(TopJet topjet,  double &mjet, int &nsubjets, double &mmin){
  
-  nsubjets=topjet.numberOfDaughters;
+  nsubjets=topjet.numberOfDaughters();
 
   LorentzVector allsubjets(0,0,0,0);
   
-  for(int j=0; j<topjet.numberOfDaughters; ++j){
-    allsubjets += topjet.subjets[j].v4();
+  for(int j=0; j<topjet.numberOfDaughters(); ++j){
+    allsubjets += topjet.subjets()[j].v4();
   }
   if(!allsubjets.isTimelike()){
     mjet=0;
@@ -82,17 +82,17 @@ bool Selection::TopTag(TopJet topjet,  double &mjet, int &nsubjets, double &mmin
   mjet = allsubjets.M();
   
   if(nsubjets>=3) {
-    sort(topjet.subjets.begin(), topjet.subjets.end(), HigherPt());
-    
+    sort(topjet.subjets().begin(), topjet.subjets().end(), HigherPt());
+
     double m01 = 0;
-    if( (topjet.subjets[0].v4()+topjet.subjets[1].v4()).isTimelike()) 
-      m01=(topjet.subjets[0].v4()+topjet.subjets[1].v4()).M();
+    if( (topjet.subjets()[0].v4()+topjet.subjets()[1].v4()).isTimelike()) 
+      m01=(topjet.subjets()[0].v4()+topjet.subjets()[1].v4()).M();
     double m02 = 0;
-    if( (topjet.subjets[0].v4()+topjet.subjets[2].v4()).isTimelike() ) 
-      m02=(topjet.subjets[0].v4()+topjet.subjets[2].v4()).M();
+    if( (topjet.subjets()[0].v4()+topjet.subjets()[2].v4()).isTimelike() ) 
+      m02=(topjet.subjets()[0].v4()+topjet.subjets()[2].v4()).M();
     double m12 = 0;
-    if( (topjet.subjets[1].v4()+topjet.subjets[2].v4()).isTimelike()  )
-      m12 = (topjet.subjets[1].v4()+topjet.subjets[2].v4()).M();
+    if( (topjet.subjets()[1].v4()+topjet.subjets()[2].v4()).isTimelike()  )
+      m12 = (topjet.subjets()[1].v4()+topjet.subjets()[2].v4()).M();
     
     //minimum pairwise mass > 50 GeV/c^2
     mmin = std::min(m01,std::min(m02,m12));

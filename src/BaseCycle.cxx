@@ -1,4 +1,4 @@
-// $Id: BaseCycle.cxx,v 1.9 2012/05/07 14:25:56 peiffer Exp $
+// $Id: BaseCycle.cxx,v 1.10 2012/05/10 15:36:56 peiffer Exp $
 
 // Local include(s):
 #include "../include/BaseCycle.h"
@@ -85,7 +85,7 @@ void BaseCycle::BeginInputData( const SInputData& ) throw( SError ) {
   DeclareVariable( bcc.luminosityBlock, "luminosityBlock" );
   DeclareVariable( bcc.event, "event" );
   DeclareVariable( bcc.isRealData, "isRealData" );
-  DeclareVariable( bcc.HBHENoiseFilterResult, "HBHENoiseFilterResult" );
+  //DeclareVariable( bcc.HBHENoiseFilterResult, "HBHENoiseFilterResult" );
   DeclareVariable( bcc.beamspot_x0, "beamspot_x0");
   DeclareVariable( bcc.beamspot_y0, "beamspot_y0");
   DeclareVariable( bcc.beamspot_z0, "beamspot_z0");
@@ -168,7 +168,7 @@ void BaseCycle::BeginInputFile( const SInputData& ) throw( SError ) {
   
   ConnectVariable( "AnalysisTree" ,"event" ,bcc.event);
   ConnectVariable( "AnalysisTree" ,"isRealData", bcc.isRealData);
-  ConnectVariable( "AnalysisTree" ,"HBHENoiseFilterResult", bcc.HBHENoiseFilterResult);
+  //ConnectVariable( "AnalysisTree" ,"HBHENoiseFilterResult", bcc.HBHENoiseFilterResult);
   ConnectVariable( "AnalysisTree" ,"beamspot_x0", bcc.beamspot_x0);
   ConnectVariable( "AnalysisTree" ,"beamspot_y0", bcc.beamspot_y0);
   ConnectVariable( "AnalysisTree" ,"beamspot_z0", bcc.beamspot_z0);
@@ -223,8 +223,8 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   }
 
   //HBHE noise filter only for data
-  if(bcc.isRealData)
-    if(!selection.HBHENoiseFilter()) throw SError( SError::SkipEvent );
+//   if(bcc.isRealData)
+//     if(!selection.HBHENoiseFilter()) throw SError( SError::SkipEvent );
 
   //trigger
 

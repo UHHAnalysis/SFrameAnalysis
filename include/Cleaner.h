@@ -25,7 +25,7 @@ class Cleaner{
 
   struct HigherPt {
     bool operator() (const Particle& j1, const Particle& j2) const {
-      return j1.pt > j2.pt;
+      return j1.pt() > j2.pt();
     };
   };
 

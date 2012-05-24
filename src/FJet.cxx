@@ -128,10 +128,10 @@ void FJet::FindJets(const vector<Particle*> ParticlesIn, vector<Jet*>& JetsOut)
   for (unsigned int ijet = 0; ijet < SortedJets.size(); ijet++) { 
     Jet* jet = new Jet();
     JetsOut.push_back(jet);
-    jet->pt = SortedJets[ijet].pt();
-    jet->eta = SortedJets[ijet].eta();
-    jet->phi = SortedJets[ijet].phi();
-    jet->energy = SortedJets[ijet].E();
+    jet->set_pt ( SortedJets[ijet].pt());
+    jet->set_eta ( SortedJets[ijet].eta());
+    jet->set_phi ( SortedJets[ijet].phi());
+    jet->set_energy ( SortedJets[ijet].E());
   }
 
   // get the association of jetparticles to jets

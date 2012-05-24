@@ -1,4 +1,4 @@
-// $Id: TestCycle.cxx,v 1.2 2012/05/23 13:21:35 peiffer Exp $
+// $Id: TestCycle.cxx,v 1.3 2012/05/24 08:34:13 peiffer Exp $
 
 // Local include(s):
 #include "../include/TestCycle.h"
@@ -55,19 +55,23 @@ void TestCycle::BeginCycle() throw( SError ) {
   AddConfigObject( lumiHandler );
 
   //Set-Up Selection
-  selection = new Selection();
+  preselection= new Selection("pre-selection");
+  selection = new Selection("final selection");
+
   //DO NOT use trigger selection in PROOF mode for the moment
-  selection->addSelectionModule(new TriggerSelection("HLT_PFJet320_v"));
-  selection->addSelectionModule(new NTopJetSelection(2,350,2.5));
-  selection->addSelectionModule(new NTopTagSelection(1));
+  preselection->addSelectionModule(new TriggerSelection("HLT_PFJet320_v"));
+  preselection->addSelectionModule(new NTopJetSelection(2,350,2.5));
+
+  selection->addSelectionModule(new NTopTagSelection(2));
 
   return;
 
 }
 
 void TestCycle::EndCycle() throw( SError ) {
-
-   return;
+  preselection->printCutFlow();
+  selection->printCutFlow();
+  return;
 
 }
 
@@ -376,7 +380,7 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
     if( !LumiHandler()->PassGoodRunsList( bcc.run, bcc.luminosityBlock )) throw SError( SError::SkipEvent );
   }
 
-  if(!selection->passSelection(&bcc))  throw SError( SError::SkipEvent );
+  if(!preselection->passSelection(&bcc))  throw SError( SError::SkipEvent );
 
   //analysis code
 
@@ -390,6 +394,8 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
     if(nsubjets>=3) Hist( "Mmin_hist" )->Fill( mmin, weight );
     Hist( "Nsubjet_hist" )->Fill( nsubjets, weight ); 
   }
+
+  if(!selection->passSelection(&bcc))  throw SError( SError::SkipEvent );
 
   Hist( "N_pv")->Fill(bcc.pvs->size(),weight);
 

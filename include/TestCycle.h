@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: TestCycle.h,v 1.1 2012/05/10 15:39:22 peiffer Exp $
+// $Id: TestCycle.h,v 1.2 2012/05/24 08:34:12 peiffer Exp $
 #ifndef TestCycle_H
 #define TestCycle_H
 
@@ -19,7 +19,7 @@
  *          Put a longer description over here...
  *
  *  @author Put your name here
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 
@@ -76,6 +76,7 @@ private:
   bool newrun;
 
   PUWeightProducer *puwp;
+  Selection* preselection;
   Selection* selection;
 
   // wrapper to LuminosityHandler

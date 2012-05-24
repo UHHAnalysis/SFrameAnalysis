@@ -20,9 +20,55 @@ class TriggerSelection: public SelectionModule{
 
 };
 
+class NMuonSelection: public SelectionModule{
+ public:
+  NMuonSelection(int min_nparticle, int max_nparticle=999999, double ptmin=0., double etamax=9999.);
+  ~NMuonSelection(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  int m_min_nparticle;
+  int m_max_nparticle;
+  double m_ptmin;
+  double m_etamax;
+};
+
+class NElectronSelection: public SelectionModule{
+ public:
+  NElectronSelection(int min_nparticle, int max_nparticle=999999,  double ptmin=0., double etamax=9999.);
+  ~NElectronSelection(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  int m_min_nparticle;
+  int m_max_nparticle;
+  double m_ptmin;
+  double m_etamax;
+};
+
+class NTauSelection: public SelectionModule{
+ public:
+  NTauSelection(int min_nparticle, int max_nparticle=999999,  double ptmin=0., double etamax=9999.);
+  ~NTauSelection(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  int m_min_nparticle;
+  int m_max_nparticle;
+  double m_ptmin;
+  double m_etamax;
+};
+
+
 class NJetSelection: public SelectionModule{
  public:
-  NJetSelection(int min_nparticle,  double ptmin=0., double etamax=9999.);
+  NJetSelection(int min_nparticle, int max_nparticle=999999,  double ptmin=0., double etamax=9999.);
   ~NJetSelection(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -30,13 +76,14 @@ class NJetSelection: public SelectionModule{
 
  private:
   int m_min_nparticle;
+  int m_max_nparticle;
   double m_ptmin;
   double m_etamax;
 };
 
 class NTopJetSelection: public SelectionModule{
  public:
-  NTopJetSelection(int min_nparticle,  double ptmin=0., double etamax=9999.);
+  NTopJetSelection(int min_nparticle, int max_nparticle=999999,  double ptmin=0., double etamax=9999.);
   ~NTopJetSelection(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -44,6 +91,7 @@ class NTopJetSelection: public SelectionModule{
 
  private:
   int m_min_nparticle;
+  int m_max_nparticle;
   double m_ptmin;
   double m_etamax;
 };

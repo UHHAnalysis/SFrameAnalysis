@@ -4,7 +4,7 @@
 #include "Objects.h"
 #include "BaseCycleContainer.h"
 #include <algorithm>
-
+#include "Utils.h"
 
 class Cleaner{
 
@@ -22,12 +22,6 @@ class Cleaner{
   void TauCleaner(double ptmin=0, double etamax=9999); 
   void JetCleaner(double ptmin=0, double etamax=9999, bool doPFID=true);
   void TopJetCleaner(double ptmin=0, double etamax=9999, bool doPFID=true); 
-
-  struct HigherPt {
-    bool operator() (const Particle& j1, const Particle& j2) const {
-      return j1.pt() > j2.pt();
-    };
-  };
 
  private:
 

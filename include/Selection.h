@@ -3,41 +3,38 @@
 
 #include "Objects.h"
 #include "BaseCycleContainer.h"
-#include <algorithm>
+#include "core/include/SLogger.h"
+
+class SelectionModule{
+ public:
+  SelectionModule(){};
+  virtual ~SelectionModule(){};
+   
+  virtual bool pass(BaseCycleContainer*)=0;
+  virtual std::string description()=0;
+};
 
 
 class Selection{
-
  public:
-  Selection(){};
-  Selection(BaseCycleContainer*);
-
+  
+  //Selection(){};
+  Selection(std::string name = "Selection");
   ~Selection(){};
+  
+  void addSelectionModule(SelectionModule*);
+  void clearSelectionModulesList();
+  bool passSelection(BaseCycleContainer *bcc);
+  bool passInvertedSelection(BaseCycleContainer *bcc);
 
-  //bool HBHENoiseFilter();
-
-  bool TriggerSelection(std::string name);
-
-  bool NJetSelection(int min_nparticle,  double ptmin=0., double etamax=9999.);
-  bool NTopJetSelection(int min_nparticle,  double ptmin=0., double etamax=9999.);
-
-  bool NTopTagSelection(int min_ntoptag);
-
-  bool TopTag(TopJet topjet, double& mjet, int& nsubjets, double& mmin);
-
-  struct HigherPt {
-    bool operator() (const Particle& j1, const Particle& j2) const {
-      return j1.pt() > j2.pt();
-    };
-  };
+  void printCutFlow();
 
  private:
-
-  BaseCycleContainer* bcc;
-
-
-
+  mutable SLogger m_logger;
+  std::vector<SelectionModule*> m_cuts;
+  std::vector<int> m_cutflow;
 };
+
 
 
 #endif

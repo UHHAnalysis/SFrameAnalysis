@@ -1,4 +1,4 @@
-// $Id: BaseCycle.cxx,v 1.10 2012/05/10 15:36:56 peiffer Exp $
+// $Id: BaseCycle.cxx,v 1.11 2012/05/23 13:21:35 peiffer Exp $
 
 // Local include(s):
 #include "../include/BaseCycle.h"
@@ -41,7 +41,7 @@ void BaseCycle::BeginCycle() throw( SError ) {
   LuminosityHandler *lumiHandler = new LuminosityHandler();
   // Declared Properties readable not before BeginCycle
   
-  lumiHandler->SetGRLPath( "/afs/naf.desy.de/user/p/peiffer/CMSSW_5_2_3_patch4/src/UHHAnalysis/NtupleWriter/" );
+  lumiHandler->SetGRLPath( "/afs/naf.desy.de/user/p/peiffer/CMSSW_5_2_5/src/UHHAnalysis/NtupleWriter/" );
   lumiHandler->SetLumiFileName( "GoodRun.root" );
   lumiHandler->SetTrigger( "HLT_PFJet320_v" );
   lumiHandler->SetIntLumiPerBin( 25 );
@@ -53,6 +53,14 @@ void BaseCycle::BeginCycle() throw( SError ) {
   
   // adding luminosity handler to gloabl config
   AddConfigObject( lumiHandler );
+
+
+  //Set-Up Selection
+  selection = new Selection();
+  //DO NOT use trigger selection in PROOF mode for the moment
+  selection->addSelectionModule(new TriggerSelection("HLT_PFJet320_v"));
+  selection->addSelectionModule(new NJetSelection(2,50,2.5));
+
   return;
 
 }
@@ -64,7 +72,6 @@ void BaseCycle::EndCycle() throw( SError ) {
 }
 
 void BaseCycle::BeginInputData( const SInputData& ) throw( SError ) {
-
 
    // check if LumiHandler is set up correctly
    if( LumiHandler() == NULL ){
@@ -134,6 +141,9 @@ void BaseCycle::EndInputData( const SInputData& ) throw( SError ) {
 //     // store the luminosity collected in each run
 //     WriteObj( *(LumiHandler()->GetTreeLuminosityPerRun()) ); 
 //   }
+
+  selection->printCutFlow();
+
   return;
   
 }
@@ -154,18 +164,8 @@ void BaseCycle::BeginInputFile( const SInputData& ) throw( SError ) {
   if(GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", GenParticleCollection.c_str() , bcc.genparticles);
   if(addGenInfo) ConnectVariable( "AnalysisTree", "genInfo" , bcc.genInfo);
   
-//     unsigned int myrun=0;
-//     ConnectVariable( "AnalysisTree", "run" , myrun);
-//     bcc.run = (int)myrun;
-//     unsigned int mylb=0;
-//     ConnectVariable( "AnalysisTree", "luminosityBlock" , mylb);
-//     bcc.luminosityBlock = (int) mylb;
-  
-  
-  
   ConnectVariable( "AnalysisTree", "run" , bcc.run);
   ConnectVariable( "AnalysisTree", "luminosityBlock" , bcc.luminosityBlock);
-  
   ConnectVariable( "AnalysisTree" ,"event" ,bcc.event);
   ConnectVariable( "AnalysisTree" ,"isRealData", bcc.isRealData);
   //ConnectVariable( "AnalysisTree" ,"HBHENoiseFilterResult", bcc.HBHENoiseFilterResult);
@@ -198,7 +198,7 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   if(bcc.genInfo){
     if(puwp){
       weight *= puwp->produceWeight(bcc.genInfo);
-      //std::cout << bcc.genInfo->pileup_TrueNumInteractions << "   " << puwp->produceWeight(bcc.genInfo) <<std::endl;
+      //std::cout << bcc.genInfo->pileup_TrueNumInteractions() << "   " << puwp->produceWeight(bcc.genInfo) <<std::endl;
     }
   }
 
@@ -215,21 +215,12 @@ void BaseCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
 
   //selection
 
-  Selection selection(&bcc);
-
   //select only good runs
   if(bcc.isRealData && LumiHandler()->IsLumiCalc() ){
     if( !LumiHandler()->PassGoodRunsList( bcc.run, bcc.luminosityBlock )) throw SError( SError::SkipEvent );
   }
 
-  //HBHE noise filter only for data
-//   if(bcc.isRealData)
-//     if(!selection.HBHENoiseFilter()) throw SError( SError::SkipEvent );
-
-  //trigger
-
-  //DO NOT use trigger selection in PROOF mode for the moment
-  //if(!selection.TriggerSelection("HLT_PFJet320_v"))  throw SError( SError::SkipEvent );
+  if(!selection->passSelection(&bcc))  throw SError( SError::SkipEvent );
 
   //write out all objects
   

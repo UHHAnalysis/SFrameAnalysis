@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: BaseCycle.h,v 1.5 2012/04/23 12:51:31 peiffer Exp $
+// $Id: BaseCycle.h,v 1.6 2012/05/02 07:38:46 peiffer Exp $
 #ifndef BaseCycle_H
 #define BaseCycle_H
 
@@ -7,7 +7,7 @@
 #include "core/include/SCycleBase.h"
 
 #include "Objects.h"
-#include "Selection.h"
+#include "SelectionModules.h"
 #include "BaseCycleContainer.h"
 #include "PUWeightProducer.h"
 #include "Cleaner.h"
@@ -18,7 +18,7 @@
  *          Put a longer description over here...
  *
  *  @author Put your name here
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 
@@ -56,6 +56,7 @@ private:
   std::string pu_filename_mc,  pu_filename_data,  pu_histname_mc, pu_histname_data;
 
   BaseCycleContainer bcc;
+  Selection* selection;
 
   //output variables
   std::vector< Electron > o_electrons;  

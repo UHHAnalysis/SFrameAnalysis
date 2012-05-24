@@ -1,4 +1,4 @@
-// $Id: TestCycle.cxx,v 1.1 2012/05/10 15:39:22 peiffer Exp $
+// $Id: TestCycle.cxx,v 1.2 2012/05/23 13:21:35 peiffer Exp $
 
 // Local include(s):
 #include "../include/TestCycle.h"
@@ -41,7 +41,7 @@ void TestCycle::BeginCycle() throw( SError ) {
   LuminosityHandler *lumiHandler = new LuminosityHandler();
   // Declared Properties readable not before BeginCycle
   
-  lumiHandler->SetGRLPath( "/afs/naf.desy.de/user/p/peiffer/CMSSW_5_2_3_patch4/src/UHHAnalysis/NtupleWriter/" );
+  lumiHandler->SetGRLPath( "/afs/naf.desy.de/user/p/peiffer/CMSSW_5_2_5/src/UHHAnalysis/NtupleWriter/" );
   lumiHandler->SetLumiFileName( "GoodRun.root" );
   lumiHandler->SetTrigger( "HLT_PFJet320_v" );
   lumiHandler->SetIntLumiPerBin( 25 );
@@ -53,6 +53,14 @@ void TestCycle::BeginCycle() throw( SError ) {
   
   // adding luminosity handler to gloabl config
   AddConfigObject( lumiHandler );
+
+  //Set-Up Selection
+  selection = new Selection();
+  //DO NOT use trigger selection in PROOF mode for the moment
+  selection->addSelectionModule(new TriggerSelection("HLT_PFJet320_v"));
+  selection->addSelectionModule(new NTopJetSelection(2,350,2.5));
+  selection->addSelectionModule(new NTopTagSelection(1));
+
   return;
 
 }
@@ -257,16 +265,19 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
     m_logger << WARNING<< "this seems to be real data but addGenInfo=True in config file" << SLogger::endmsg;
   }
 
+
   //fill list of trigger names
   if(bcc.triggerNames->size()!=0){
     bcc.triggerNames_actualrun = *bcc.triggerNames;
     newrun=true;
   }
 
+
   // generate random run Nr for MC samples (consider luminosity of each run)
   // e.g. for proper OTX cut in MC, and needs to be done only once per event
   if( !bcc.isRealData && LumiHandler()->IsLumiCalc() )
     bcc.run = LumiHandler()->GetRandomRunNr() ;
+
 
 
   if(bcc.genInfo){
@@ -280,17 +291,17 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   }
 
 
+
   //clean collections here
 
   Cleaner cleaner(&bcc);
-
-//   if(!bcc.isRealData && bcc.jets) cleaner.JetEnergyResolutionShifter();
-//   if(bcc.electrons) cleaner.ElectronCleaner(20,2.5);
-//   if(bcc.muons) cleaner.MuonCleaner(20,2.1);
+  if(!bcc.isRealData && bcc.jets && bcc.met) cleaner.JetEnergyResolutionShifter();
+  if(bcc.electrons) cleaner.ElectronCleaner(20,2.5);
+  if(bcc.muons) cleaner.MuonCleaner(20,2.1);
   if(bcc.jets) cleaner.JetCleaner(20,2.5,true);
-//   if(bcc.topjets) cleaner.TopJetCleaner(350,2.5,false);
-//   if(bcc.taus) cleaner.TauCleaner(20,2.1);
- 
+  if(bcc.topjets) cleaner.TopJetCleaner(350,2.5,false);
+  if(bcc.taus) cleaner.TauCleaner(20,2.1);
+
   /*
   for(unsigned int i=0;i<bcc.taus->size(); ++i){
     //std::cout << i << ":  " <<  bcc.taus->at(i).pt << "  " << bcc.taus->at(i).eta << "  " << bcc.taus->at(i).phi << std::endl;
@@ -330,8 +341,6 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
 //   }
 
 
-  //selection
- 
   GenParticle top;
   GenParticle antitop;
   if(bcc.genparticles){
@@ -360,43 +369,27 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
     }
   }
 
-  //Selection selection(&bcc);
+  //selection
 
   //select only good runs
-//   if(bcc.isRealData && LumiHandler()->IsLumiCalc() ){
-//     if( !LumiHandler()->PassGoodRunsList( bcc.run, bcc.luminosityBlock )) throw SError( SError::SkipEvent );
-//   }
+  if(bcc.isRealData && LumiHandler()->IsLumiCalc() ){
+    if( !LumiHandler()->PassGoodRunsList( bcc.run, bcc.luminosityBlock )) throw SError( SError::SkipEvent );
+  }
 
-  //HBHE noise filter only for data
-//   if(bcc.isRealData)
-//     if(!selection.HBHENoiseFilter()) throw SError( SError::SkipEvent );
+  if(!selection->passSelection(&bcc))  throw SError( SError::SkipEvent );
 
-  //trigger
+  //analysis code
 
-  //DO NOT use trigger selection in PROOF mode for the moment
-  //if(!selection.TriggerSelection("HLT_PFJet320_v"))  throw SError( SError::SkipEvent );
-
-  //at least two CA 0.8 fat jets
-  //if(!selection.NTopJetSelection(2)) throw SError( SError::SkipEvent );
- 
-  /*
   for(unsigned int i=0; i< bcc.topjets->size(); ++i){
     TopJet topjet =  bcc.topjets->at(i);
     double mmin=0;
     double mjet=0;
     int nsubjets=0;
-    selection.TopTag(topjet,mjet,nsubjets,mmin);
+    TopTag(topjet,mjet,nsubjets,mmin);
     Hist( "Mjet_hist" )->Fill( mjet, weight );
     if(nsubjets>=3) Hist( "Mmin_hist" )->Fill( mmin, weight );
     Hist( "Nsubjet_hist" )->Fill( nsubjets, weight ); 
   }
-
-  //at least min_toptag top tags
-  int min_toptag=0;
-  if(!selection.NTopTagSelection(min_toptag)) throw SError( SError::SkipEvent );
-  */
-
-  //analysis code
 
   Hist( "N_pv")->Fill(bcc.pvs->size(),weight);
 

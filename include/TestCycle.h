@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: TestCycle.h,v 1.6 2012/05/02 07:38:46 peiffer Exp $
+// $Id: TestCycle.h,v 1.1 2012/05/10 15:39:22 peiffer Exp $
 #ifndef TestCycle_H
 #define TestCycle_H
 
@@ -7,10 +7,11 @@
 #include "core/include/SCycleBase.h"
 
 #include "Objects.h"
-#include "Selection.h"
+#include "SelectionModules.h"
 #include "BaseCycleContainer.h"
 #include "PUWeightProducer.h"
 #include "Cleaner.h"
+#include "Utils.h"
 #include "LuminosityHandler.h"
 /**
  *   @short Put short description of class here
@@ -18,7 +19,7 @@
  *          Put a longer description over here...
  *
  *  @author Put your name here
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.1 $
  */
 
 
@@ -75,6 +76,7 @@ private:
   bool newrun;
 
   PUWeightProducer *puwp;
+  Selection* selection;
 
   // wrapper to LuminosityHandler
   LuminosityHandler *LumiHandler() { return (LuminosityHandler*)GetConfigObject("LuminosityHandler"); }

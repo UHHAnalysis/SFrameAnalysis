@@ -1,4 +1,4 @@
-// $Id: TestCycle.cxx,v 1.3 2012/05/24 08:34:13 peiffer Exp $
+// $Id: TestCycle.cxx,v 1.4 2012/05/24 11:45:44 peiffer Exp $
 
 // Local include(s):
 #include "../include/TestCycle.h"
@@ -299,7 +299,7 @@ void TestCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError 
   //clean collections here
 
   Cleaner cleaner(&bcc);
-  if(!bcc.isRealData && bcc.jets && bcc.met) cleaner.JetEnergyResolutionShifter();
+  if(!bcc.isRealData && bcc.jets) cleaner.JetEnergyResolutionShifter();
   if(bcc.electrons) cleaner.ElectronCleaner(20,2.5);
   if(bcc.muons) cleaner.MuonCleaner(20,2.1);
   if(bcc.jets) cleaner.JetCleaner(20,2.5,true);

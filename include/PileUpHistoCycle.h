@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: PileUpHistoCycle.h,v 1.3 2012/04/04 13:08:57 peiffer Exp $
+// $Id: PileUpHistoCycle.h,v 1.1 2012/04/05 09:42:35 peiffer Exp $
 #ifndef PileUpHistoCycle_H
 #define PileUpHistoCycle_H
 
@@ -8,7 +8,6 @@
 
 #include "Objects.h"
 #include "BaseCycleContainer.h"
-#include "Selection.h"
 
 /**
  *   @short Put short description of class here
@@ -16,7 +15,7 @@
  *          Put a longer description over here...
  *
  *  @author Put your name here
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.1 $
  */
 
 

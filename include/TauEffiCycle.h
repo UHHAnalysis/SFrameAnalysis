@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: TauEffiCycle.h,v 1.1 2012/04/05 09:42:35 peiffer Exp $
+// $Id: TauEffiCycle.h,v 1.1 2012/04/23 12:51:30 peiffer Exp $
 #ifndef TauEffiCycle_H
 #define TauEffiCycle_H
 
@@ -8,7 +8,6 @@
 
 #include "Objects.h"
 #include "BaseCycleContainer.h"
-#include "Selection.h"
 #include "TGraphAsymmErrors.h"
 
 /**

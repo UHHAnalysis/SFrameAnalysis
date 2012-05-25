@@ -9,7 +9,8 @@ Cleaner::Cleaner( BaseCycleContainer* input_){
 
 void Cleaner::JetEnergyResolutionShifter(int syst_shift){
 
-  double met = bcc->met->pt();
+  double met = 0;
+  if(bcc->met) met=bcc->met->pt();
 
   for(unsigned int i=0; i<bcc->jets->size(); ++i){
     Jet jet = bcc->jets->at(i);
@@ -71,16 +72,19 @@ void Cleaner::JetEnergyResolutionShifter(int syst_shift){
   }
   
   //store changed MET, flip phi if new MET is negative
-  if(met>=0){
-    bcc->met->set_pt( met);
+  if(bcc->met){
+    if(met>=0){
+      bcc->met->set_pt( met);
+    }
+    else{
+      bcc->met->set_pt( -1*met);
+      if(bcc->met->phi()<=0)
+	bcc->met->set_phi (bcc->met->phi()+PI);
+      else
+	bcc->met->set_phi ( bcc->met->phi()-PI);
+    }
   }
-  else{
-    bcc->met->set_pt( -1*met);
-    if(bcc->met->phi()<=0)
-      bcc->met->set_phi (bcc->met->phi()+PI);
-    else
-      bcc->met->set_phi ( bcc->met->phi()-PI);
-  }
+
   sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
 }
 

@@ -3,16 +3,18 @@
 
 <JobConfiguration JobName="BaseCycleJob" OutputLevel="DEBUG">
 	<Library Name="libfastjet" />
+	<Library Name="libSFrameTools" />
 	<Library Name="libAnalysis" />
 	<Library Name="libSFramePlugIns" />
 
 	<Package Name="SFrameCore.par" />
 	<Package Name="SFramePlugIns.par" />
+	<Package Name="SFrameTools.par" />
 	<Package Name="Analysis.par" />
 
-<!--	<Cycle Name="BaseCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > -->
-	<Cycle Name="BaseCycle"  OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > 
-		<InputData Lumi="920" NEventsMax="10000" Type="MC" Version="LQ1000" Cacheable="True">
+	<Cycle Name="BaseCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > 
+<!--	<Cycle Name="BaseCycle"  OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > -->
+		<InputData Lumi="1600" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="True">
 		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000.root" Lumi="0.0"/> 
 
 

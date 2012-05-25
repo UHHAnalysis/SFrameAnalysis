@@ -1,4 +1,4 @@
-// $Id: SETUP.C,v 1.2 2012/04/04 14:45:09 peiffer Exp $
+// $Id: SETUP.C,v 1.3 2012/05/10 15:36:56 peiffer Exp $
 
 int SETUP() {
 
@@ -8,6 +8,7 @@ int SETUP() {
    if( gSystem->Load( "libTree" ) == -1 ) return -1;
    if( gSystem->Load( "libHist" ) == -1 ) return -1;
    if( gSystem->Load( "libGraf" ) == -1 ) return -1;
+   if( gSystem->Load( "libSFrameTools" ) == -1 ) return -1;
    if( gSystem->Load( "libAnalysis" ) == -1 ) return -1;
    return 0;
 }

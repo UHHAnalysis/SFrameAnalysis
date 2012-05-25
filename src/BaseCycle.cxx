@@ -1,4 +1,4 @@
-// $Id: BaseCycle.cxx,v 1.11 2012/05/23 13:21:35 peiffer Exp $
+// $Id: BaseCycle.cxx,v 1.12 2012/05/24 08:34:13 peiffer Exp $
 
 // Local include(s):
 #include "../include/BaseCycle.h"
@@ -44,7 +44,7 @@ void BaseCycle::BeginCycle() throw( SError ) {
   lumiHandler->SetGRLPath( "/afs/naf.desy.de/user/p/peiffer/CMSSW_5_2_5/src/UHHAnalysis/NtupleWriter/" );
   lumiHandler->SetLumiFileName( "GoodRun.root" );
   lumiHandler->SetTrigger( "HLT_PFJet320_v" );
-  lumiHandler->SetIntLumiPerBin( 25 );
+  lumiHandler->SetIntLumiPerBin( 100 );
   
   // Initialise, checks also if LumiFile is specified and readable
   lumiHandler->Initialise();
@@ -54,12 +54,6 @@ void BaseCycle::BeginCycle() throw( SError ) {
   // adding luminosity handler to gloabl config
   AddConfigObject( lumiHandler );
 
-
-  //Set-Up Selection
-  selection = new Selection();
-  //DO NOT use trigger selection in PROOF mode for the moment
-  selection->addSelectionModule(new TriggerSelection("HLT_PFJet320_v"));
-  selection->addSelectionModule(new NJetSelection(2,50,2.5));
 
   return;
 
@@ -114,6 +108,15 @@ void BaseCycle::BeginInputData( const SInputData& ) throw( SError ) {
   if(pu_filename_mc.size()>0 && pu_filename_data.size()>0 && pu_histname_mc.size()>0 && pu_histname_data.size()>0){
     puwp = new PUWeightProducer(pu_filename_mc, pu_filename_data, pu_histname_mc, pu_histname_data);
   }
+  else{
+    puwp = 0;
+  }
+
+  //Set-Up Selection
+  selection = new Selection();
+  //DO NOT use trigger selection in PROOF mode for the moment
+  //selection->addSelectionModule(new TriggerSelection("HLT_PFJet320_v"));
+  selection->addSelectionModule(new NJetSelection(2,50,2.5));
 
   return;
 

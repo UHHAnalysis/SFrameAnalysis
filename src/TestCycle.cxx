@@ -1,4 +1,4 @@
-// $Id: TestCycle.cxx,v 1.4 2012/05/24 11:45:44 peiffer Exp $
+// $Id: TestCycle.cxx,v 1.5 2012/05/25 09:32:31 peiffer Exp $
 
 // Local include(s):
 #include "../include/TestCycle.h"
@@ -53,16 +53,6 @@ void TestCycle::BeginCycle() throw( SError ) {
   
   // adding luminosity handler to gloabl config
   AddConfigObject( lumiHandler );
-
-  //Set-Up Selection
-  preselection= new Selection("pre-selection");
-  selection = new Selection("final selection");
-
-  //DO NOT use trigger selection in PROOF mode for the moment
-  preselection->addSelectionModule(new TriggerSelection("HLT_PFJet320_v"));
-  preselection->addSelectionModule(new NTopJetSelection(2,350,2.5));
-
-  selection->addSelectionModule(new NTopTagSelection(2));
 
   return;
 
@@ -120,6 +110,19 @@ void TestCycle::BeginInputData( const SInputData& ) throw( SError ) {
   if(pu_filename_mc.size()>0 && pu_filename_data.size()>0 && pu_histname_mc.size()>0 && pu_histname_data.size()>0){
     puwp = new PUWeightProducer(pu_filename_mc, pu_filename_data, pu_histname_mc, pu_histname_data);
   }
+  else{
+    puwp=0;
+  }
+
+  //Set-Up Selection
+  preselection= new Selection("pre-selection");
+  selection = new Selection("final selection");
+
+  //DO NOT use trigger selection in PROOF mode for the moment
+  //preselection->addSelectionModule(new TriggerSelection("HLT_PFJet320_v"));
+  preselection->addSelectionModule(new NTopJetSelection(2,350,2.5));
+
+  selection->addSelectionModule(new NTopTagSelection(2));
 
   //
   // Declare the output histograms:

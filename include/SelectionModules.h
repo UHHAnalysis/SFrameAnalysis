@@ -109,4 +109,16 @@ class NTopTagSelection: public SelectionModule{
   int m_max_ntoptag;
 };
 
+class NPrimaryVertexSelection: public SelectionModule{
+ public:
+  NPrimaryVertexSelection(int min_npv=1, int max_npv=999999999);
+  ~NPrimaryVertexSelection(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  int m_min_npv;
+  int m_max_npv;
+};
 #endif

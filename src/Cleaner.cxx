@@ -1,9 +1,9 @@
 #include "../include/Cleaner.h"
 
 
-Cleaner::Cleaner( BaseCycleContainer* input_){
+Cleaner::Cleaner( BaseCycleContainer* input){
 
-  bcc = input_;
+  bcc = input;
 
 }
 
@@ -81,13 +81,72 @@ void Cleaner::JetEnergyResolutionShifter(int syst_shift){
       if(bcc->met->phi()<=0)
 	bcc->met->set_phi (bcc->met->phi()+PI);
       else
-	bcc->met->set_phi ( bcc->met->phi()-PI);
+	bcc->met->set_phi (bcc->met->phi()-PI);
     }
   }
 
   sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
 }
 
+
+void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
+
+  double met = 0;
+  if(bcc->met) met=bcc->met->pt();
+
+  for(unsigned int i=0; i<bcc->jets->size(); ++i){
+
+    LorentzVector jet_v4_raw = bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw();
+
+    met-=bcc->jets->at(i).pt();
+
+    //subtract lepton momenta from raw jet momentum
+    if(bcc->electrons){
+      for(unsigned int j=0; j<bcc->electrons->size(); ++j){
+	if(bcc->jets->at(i).deltaR(bcc->electrons->at(j))<0.5){
+	  jet_v4_raw -= bcc->electrons->at(j).v4();
+	}
+      }
+    }
+    if(bcc->muons){
+      for(unsigned int j=0; j<bcc->muons->size(); ++j){
+	jet_v4_raw -= bcc->muons->at(j).v4();
+      }
+    }
+
+    //apply jet energy corrections to modified raw momentum
+    
+    corrector->setJetPt(jet_v4_raw.Pt());
+    corrector->setJetEta(jet_v4_raw.Eta());
+    corrector->setJetE(jet_v4_raw.E());  
+    corrector->setJetA(bcc->jets->at(i).jetArea());
+    corrector->setRho(bcc->rho);
+
+    float correctionfactor = corrector->getCorrection();
+    LorentzVector jet_v4_corrected = jet_v4_raw *correctionfactor;
+
+    bcc->jets->at(i).set_v4(jet_v4_corrected);
+    bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);
+
+    met+=bcc->jets->at(i).pt();
+    
+  }
+
+  //store changed MET, flip phi if new MET is negative
+  if(bcc->met){
+    if(met>=0){
+      bcc->met->set_pt( met);
+    }
+    else{
+      bcc->met->set_pt( -1*met);
+      if(bcc->met->phi()<=0)
+	bcc->met->set_phi (bcc->met->phi()+PI);
+      else
+	bcc->met->set_phi (bcc->met->phi()-PI);
+    }
+  }
+
+}
 
 //tight ele ID from https://twiki.cern.ch/twiki/bin/view/CMS/EgammaCutBasedIdentification
 bool Cleaner::eleID(Electron ele){
@@ -126,7 +185,7 @@ bool Cleaner::pfID(Jet jet){
 }
 
 
-void Cleaner::ElectronCleaner(double ptmin, double etamax){
+void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax){
 
   std::vector<Electron> good_eles;
   for(unsigned int i=0; i<bcc->electrons->size(); ++i){
@@ -139,9 +198,7 @@ void Cleaner::ElectronCleaner(double ptmin, double etamax){
 	      if(ele.passconversionveto()){
 		//if(ele.mvaTrigV0>0.0){
 		if(eleID(ele)){
-		  if(ele.relIso()<0.1){
 		    good_eles.push_back(ele);
-		  }
 		}
 		//}
 	      }
@@ -160,8 +217,27 @@ void Cleaner::ElectronCleaner(double ptmin, double etamax){
   sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
 }
 
+void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax){
 
-void Cleaner::MuonCleaner(double ptmin, double etamax){
+  ElectronCleaner_noIso(ptmin, etamax);
+  std::vector<Electron> good_eles;
+  for(unsigned int i=0; i<bcc->electrons->size(); ++i){
+    Electron ele = bcc->electrons->at(i);
+    if(ele.relIso()<relisomax){
+      good_eles.push_back(ele);
+    }
+  }
+  bcc->electrons->clear();
+
+  for(unsigned int i=0; i<good_eles.size(); ++i){
+    bcc->electrons->push_back(good_eles[i]);
+  }
+  sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
+
+}
+
+
+void Cleaner::MuonCleaner_noIso(double ptmin, double etamax){
 
   std::vector<Muon> good_mus;
   for(unsigned int i=0; i<bcc->muons->size(); ++i){
@@ -172,12 +248,10 @@ void Cleaner::MuonCleaner(double ptmin, double etamax){
 	  if(mu.globalTrack_chi2()/mu.globalTrack_ndof()<10){
 	    if(mu.innerTrack_trackerLayersWithMeasurement()>8){
 	      if(mu.dB()<0.02){
-		if(mu.relIso()<0.125){
-		  if(fabs(mu.vertex_z()-bcc->pvs->at(0).z())<1){
-		    if(mu.innerTrack_numberOfValidPixelHits()>0){
-		      if(mu.numberOfMatchedStations()>1){
-			good_mus.push_back(mu);
-		      }
+		if(fabs(mu.vertex_z()-bcc->pvs->at(0).z())<1){
+		  if(mu.innerTrack_numberOfValidPixelHits()>0){
+		    if(mu.numberOfMatchedStations()>1){
+		      good_mus.push_back(mu);
 		    }
 		  }
 		}
@@ -186,6 +260,25 @@ void Cleaner::MuonCleaner(double ptmin, double etamax){
 	  }
 	}
       }
+    }
+  }
+  bcc->muons->clear();
+
+  for(unsigned int i=0; i<good_mus.size(); ++i){
+    bcc->muons->push_back(good_mus[i]);
+  }
+  sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
+}
+
+void Cleaner::MuonCleaner(double ptmin, double etamax, double relisomax){
+
+  MuonCleaner_noIso(ptmin, etamax);
+
+  std::vector<Muon> good_mus;
+  for(unsigned int i=0; i<bcc->muons->size(); ++i){
+    Muon mu = bcc->muons->at(i);
+    if(mu.relIso()<relisomax){
+      good_mus.push_back(mu);
     }
   }
   bcc->muons->clear();
@@ -266,4 +359,22 @@ void Cleaner::TopJetCleaner(double ptmin, double etamax, bool doPFID){
     bcc->topjets->push_back(good_topjets[i]);
   }
   sort(bcc->topjets->begin(), bcc->topjets->end(), HigherPt());
+}
+
+
+void Cleaner::PrimaryVertexCleaner(int ndofmax, double zmax, double rhomax){
+
+  std::vector<PrimaryVertex> good_pvs;
+  for(unsigned int i=0; i<bcc->pvs->size(); ++i){
+    PrimaryVertex pv = bcc->pvs->at(i);
+    if(pv.ndof()>=ndofmax && fabs(pv.z())<zmax && pv.rho()<=rhomax){
+      good_pvs.push_back(pv);
+    } 
+  }
+  bcc->pvs->clear();
+
+  for(unsigned int i=0; i<good_pvs.size(); ++i){
+    bcc->pvs->push_back(good_pvs[i]);
+  }
+
 }

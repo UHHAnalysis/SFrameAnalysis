@@ -5,6 +5,7 @@ DEPDIR  = $(OBJDIR)/dep
 SRCDIR  = src
 INCDIR  = include
 INCLUDES += -I$(SFRAME_DIR)/SFrameTools/include
+INCLUDES += -I$(SFRAME_DIR)/SFrameTools/JetMETObjects/interface
 
 # Include the generic compilation rules
 include $(SFRAME_DIR)/Makefile.common

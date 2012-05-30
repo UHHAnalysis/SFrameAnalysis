@@ -169,25 +169,24 @@ std::string NTopTagSelection::description(){
 
 
 
-/*
+NPrimaryVertexSelection::NPrimaryVertexSelection(int min_npv, int max_npv){
+  m_min_npv=min_npv;
+  m_max_npv=max_npv;
+}
 
+bool NPrimaryVertexSelection::pass(BaseCycleContainer *bcc){
 
-bool Selection::NTopTagSelection(int min_ntoptag){
-
-  int ntoptag=0;
+  int npv=bcc->pvs->size();
   
-  for(unsigned int i=0; i< bcc->topjets->size(); ++i){
-    
-    TopJet topjet =  bcc->topjets->at(i);
-    double mmin=0;
-    double mjet=0;
-    int nsubjets=0;
-    if(TopTag(topjet,mjet,nsubjets,mmin)) ntoptag++;
-  }
-
-  if(ntoptag<min_ntoptag) return false;
+  if(npv<m_min_npv) return false;
+  if(npv>m_max_npv) return false;
   return true;
 
 }
 
-*/
+std::string NPrimaryVertexSelection::description(){
+  char s[100];
+  sprintf(s, "%d <= number of primary vertices <= %d",m_min_npv,m_max_npv);
+  return s;
+}
+

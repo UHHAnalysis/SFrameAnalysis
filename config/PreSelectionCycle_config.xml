@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd">
+
+<JobConfiguration JobName="PreSelectionCycleJob" OutputLevel="INFO">
+	<Library Name="libfastjet" />
+	<Library Name="libJetMETObjects" />
+	<Library Name="libSFrameTools" />
+	<Library Name="libAnalysis" />
+	<Library Name="libSFramePlugIns" />
+
+	<Package Name="SFrameCore.par" />
+	<Package Name="SFramePlugIns.par" />
+	<Package Name="SFrameTools.par" />
+	<Package Name="Analysis.par" />
+
+
+	<Cycle Name="PreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > 
+<!--	<Cycle Name="PreSelectionCycle"  OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > -->
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="True">
+		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" /> 
+		</InputData>
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ600" Cacheable="True">
+		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ600.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" /> 
+		</InputData>
+		<UserConfig>
+		   <Item Name="JetCollection" Value="goodPatJetsPFlow" />  
+		   <Item Name="ElectronCollection" Value="selectedPatElectronsPFlow" />  
+		   <Item Name="MuonCollection" Value="selectedPatMuonsPFlow" /> 
+		   <Item Name="TauCollection" Value="selectedPatTaus" /> 
+<!--		   <Item Name="PhotonCollection" Value="patPhotons" /> -->
+		   <Item Name="PrimaryVertexCollection" Value="goodOfflinePrimaryVertices" /> 
+		   <Item Name="METName" Value="patMETs" />  
+		   <Item Name="TopJetCollection" Value="goodPatJetsCATopTagPF" />
+<!--		   <Item Name="PrunedJetCollection" Value="goodPatJetsCA8PrunedPF" />  -->
+		   <Item Name="GenParticleCollection" Value="GenParticles" />  
+
+
+		</UserConfig>
+	</Cycle>
+</JobConfiguration>

@@ -146,6 +146,7 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
     }
   }
 
+  sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
 }
 
 //tight ele ID from https://twiki.cern.ch/twiki/bin/view/CMS/EgammaCutBasedIdentification

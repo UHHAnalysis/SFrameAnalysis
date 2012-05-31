@@ -1,4 +1,4 @@
-// $Id: TestCycle.cxx,v 1.5 2012/05/25 09:32:31 peiffer Exp $
+// $Id: TestCycle.cxx,v 1.6 2012/05/25 12:47:50 peiffer Exp $
 
 // Local include(s):
 #include "../include/TestCycle.h"
@@ -59,8 +59,7 @@ void TestCycle::BeginCycle() throw( SError ) {
 }
 
 void TestCycle::EndCycle() throw( SError ) {
-  preselection->printCutFlow();
-  selection->printCutFlow();
+
   return;
 
 }
@@ -231,7 +230,8 @@ void TestCycle::EndInputData( const SInputData& ) throw( SError ) {
     // store the luminosity collected in each run
     WriteObj( *(LumiHandler()->GetTreeLuminosityPerRun()) ); 
   }*/
-  
+  preselection->printCutFlow();
+  selection->printCutFlow();
   return;
   
 }

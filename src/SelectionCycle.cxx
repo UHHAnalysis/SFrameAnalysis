@@ -1,12 +1,12 @@
-// $Id: PreSelectionCycle.cxx,v 1.1 2012/05/30 09:27:02 peiffer Exp $
+// $Id: SelectionCycle.cxx,v 1.1 2012/05/30 09:27:02 peiffer Exp $
 
 // Local include(s):
-#include "../include/PreSelectionCycle.h"
+#include "../include/SelectionCycle.h"
 
-ClassImp( PreSelectionCycle );
+ClassImp( SelectionCycle );
 
 
-PreSelectionCycle::PreSelectionCycle()
+SelectionCycle::SelectionCycle()
    : SCycleBase() {
 
   SetLogName( GetName() );
@@ -25,34 +25,46 @@ PreSelectionCycle::PreSelectionCycle()
   
 }
 
-PreSelectionCycle::~PreSelectionCycle() {
+SelectionCycle::~SelectionCycle() {
 
 }
 
-void PreSelectionCycle::BeginCycle() throw( SError ) {
+void SelectionCycle::BeginCycle() throw( SError ) {
   
   return;
 
 }
 
-void PreSelectionCycle::EndCycle() throw( SError ) {
+void SelectionCycle::EndCycle() throw( SError ) {
 
   return;
 
 }
 
-void PreSelectionCycle::BeginInputData( const SInputData& inputData) throw( SError ) {
+void SelectionCycle::BeginInputData( const SInputData& inputData) throw( SError ) {
 
 
   addGenInfo=true;
   if(inputData.GetType()=="DATA" || inputData.GetType()=="Data" || inputData.GetType()=="data") addGenInfo=false;
 
   //Set-Up Selection
-  preselection= new Selection("pre-selection");
+  first_selection= new Selection("first selection");
 
-  preselection->addSelectionModule(new NElectronSelection(1,int_infinity(),30,2.5));//at least one electron
-  preselection->addSelectionModule(new NMuonSelection(0,0));//no muons
-  preselection->addSelectionModule(new NJetSelection(2));//at least two jets
+  first_selection->addSelectionModule(new NPrimaryVertexSelection(1)); //at least one good PV
+  first_selection->addSelectionModule(new NJetSelection(2,int_infinity(),50,2.4));//at least two jets
+  first_selection->addSelectionModule(new NElectronSelection(1,int_infinity(),70,2.5));//at least one electron
+  first_selection->addSelectionModule(new NElectronSelection(1,1,70,2.5));//exactly one electron 
+  first_selection->addSelectionModule(new NMuonSelection(0,0,35,2.1));//no muons
+  first_selection->addSelectionModule(new TwoDCut()); 
+
+  second_selection= new Selection("second selection");
+
+  second_selection->addSelectionModule(new NJetSelection(1,int_infinity(),150,2.4));//leading jet with pt>150 GeV
+  second_selection->addSelectionModule(new NBTagSelection(1)); //at least one b tag
+  //second_selection->addSelectionModule(new NBTagSelection(0,0)); //no b tags
+  second_selection->addSelectionModule(new HTlepCut(150));
+  second_selection->addSelectionModule(new TriangularCut());
+  second_selection->addSelectionModule(new METCut(50));
 
   std::vector<JetCorrectorParameters> pars;
 
@@ -95,14 +107,15 @@ void PreSelectionCycle::BeginInputData( const SInputData& inputData) throw( SErr
 
 }
 
-void PreSelectionCycle::EndInputData( const SInputData& ) throw( SError ) {
+void SelectionCycle::EndInputData( const SInputData& ) throw( SError ) {
 
-  preselection->printCutFlow();
+  first_selection->printCutFlow();
+  second_selection->printCutFlow();
   return;
   
 }
 
-void PreSelectionCycle::BeginInputFile( const SInputData& ) throw( SError ) {
+void SelectionCycle::BeginInputFile( const SInputData& ) throw( SError ) {
 
   ConnectVariable( "AnalysisTree", "triggerResults" , bcc.triggerResults);
   ConnectVariable( "AnalysisTree", "triggerNames" , bcc.triggerNames);
@@ -131,7 +144,7 @@ void PreSelectionCycle::BeginInputFile( const SInputData& ) throw( SError ) {
 
 }
 
-void PreSelectionCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError ) {
+void SelectionCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError ) {
 
   if(bcc.isRealData && addGenInfo){
     m_logger << WARNING<< "this seems to be real data but addGenInfo=True from config file" << SLogger::endmsg;
@@ -143,24 +156,24 @@ void PreSelectionCycle::ExecuteEvent( const SInputData&, Double_t weight) throw(
     newrun=true;
   }
 
-  //save uncleaned jet collection and MET to be stored in output
-  std::vector<Jet> uncleaned_jets;
-  for(unsigned int i=0; i<bcc.jets->size();++i){
-    uncleaned_jets.push_back(bcc.jets->at(i));
-  }
-  MET uncleaned_met = *bcc.met;
-
   //clean collections here
 
   Cleaner cleaner(&bcc);
 
+  if(bcc.pvs)  cleaner.PrimaryVertexCleaner(4, 24., 2.);
+  if(bcc.electrons) cleaner.ElectronCleaner_noIso(70,2.5);
   if(bcc.muons) cleaner.MuonCleaner_noIso(35,2.1);
   if(bcc.jets) cleaner.JetLeptonSubtractor(corrector);
   if(!bcc.isRealData && bcc.jets) cleaner.JetEnergyResolutionShifter();
-  if(bcc.jets) cleaner.JetCleaner(30,2.4,true);
+  //apply loose jet cleaning for 2D cut
+  if(bcc.jets) cleaner.JetCleaner(25,double_infinity(),true);
 
+  if(!first_selection->passSelection(&bcc))  throw SError( SError::SkipEvent );
 
-  if(!preselection->passSelection(&bcc))  throw SError( SError::SkipEvent );
+  //apply tighter jet cleaning for further cuts and analysis steps
+  if(bcc.jets) cleaner.JetCleaner(50,2.4,true);
+  
+  if(!second_selection->passSelection(&bcc))  throw SError( SError::SkipEvent );
 
   //write out all objects
   
@@ -177,12 +190,12 @@ void PreSelectionCycle::ExecuteEvent( const SInputData&, Double_t weight) throw(
   o_triggerResults.clear();
   
   if(PhotonCollection.size()>0) o_photons=*bcc.photons;
-  if(JetCollection.size()>0) o_jets=uncleaned_jets; //store uncorrected jets
+  if(JetCollection.size()>0) o_jets=*bcc.jets; 
   if(ElectronCollection.size()>0) o_electrons=*bcc.electrons;
   if(MuonCollection.size()>0) o_muons=*bcc.muons;
   if(TauCollection.size()>0) o_taus=*bcc.taus;
   if(PrimaryVertexCollection.size()>0) o_pvs=*bcc.pvs;
-  if(METName.size()>0) o_met = uncleaned_met; //store uncorrected MET
+  if(METName.size()>0) o_met = *bcc.met; 
   if(addGenInfo) o_genInfo = *bcc.genInfo;
   if(TopJetCollection.size()>0) o_topjets=*bcc.topjets;
   if(PrunedJetCollection.size()>0) o_prunedjets=*bcc.prunedjets;

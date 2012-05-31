@@ -7,6 +7,7 @@
 #include <algorithm>
 #include "Selection.h"
 
+
 class TriggerSelection: public SelectionModule{
  public:
   TriggerSelection(std::string);
@@ -22,7 +23,7 @@ class TriggerSelection: public SelectionModule{
 
 class NMuonSelection: public SelectionModule{
  public:
-  NMuonSelection(int min_nparticle, int max_nparticle=999999, double ptmin=0., double etamax=9999.);
+  NMuonSelection(int min_nparticle, int max_nparticle=int_infinity(), double ptmin=0., double etamax=double_infinity() );
   ~NMuonSelection(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -37,7 +38,7 @@ class NMuonSelection: public SelectionModule{
 
 class NElectronSelection: public SelectionModule{
  public:
-  NElectronSelection(int min_nparticle, int max_nparticle=999999,  double ptmin=0., double etamax=9999.);
+  NElectronSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());
   ~NElectronSelection(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -52,7 +53,7 @@ class NElectronSelection: public SelectionModule{
 
 class NTauSelection: public SelectionModule{
  public:
-  NTauSelection(int min_nparticle, int max_nparticle=999999,  double ptmin=0., double etamax=9999.);
+  NTauSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());
   ~NTauSelection(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -68,7 +69,7 @@ class NTauSelection: public SelectionModule{
 
 class NJetSelection: public SelectionModule{
  public:
-  NJetSelection(int min_nparticle, int max_nparticle=999999,  double ptmin=0., double etamax=9999.);
+  NJetSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());
   ~NJetSelection(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -83,7 +84,7 @@ class NJetSelection: public SelectionModule{
 
 class NTopJetSelection: public SelectionModule{
  public:
-  NTopJetSelection(int min_nparticle, int max_nparticle=999999,  double ptmin=0., double etamax=9999.);
+  NTopJetSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());
   ~NTopJetSelection(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -98,7 +99,7 @@ class NTopJetSelection: public SelectionModule{
 
 class NTopTagSelection: public SelectionModule{
  public:
-  NTopTagSelection(int min_ntoptag, int max_ntoptag=999999);
+  NTopTagSelection(int min_ntoptag, int max_ntoptag=int_infinity());
   ~NTopTagSelection(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -109,9 +110,28 @@ class NTopTagSelection: public SelectionModule{
   int m_max_ntoptag;
 };
 
+
+
+class NBTagSelection: public SelectionModule{
+ public:
+
+  NBTagSelection(int min_nbtag, int max_nbtag=int_infinity(), E_BtagType type=e_CSVT);
+  ~NBTagSelection(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  int m_min_nbtag;
+  int m_max_nbtag;
+  E_BtagType m_type;
+};
+
+
+
 class NPrimaryVertexSelection: public SelectionModule{
  public:
-  NPrimaryVertexSelection(int min_npv=1, int max_npv=999999999);
+  NPrimaryVertexSelection(int min_npv=1, int max_npv=int_infinity());
   ~NPrimaryVertexSelection(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -121,4 +141,52 @@ class NPrimaryVertexSelection: public SelectionModule{
   int m_min_npv;
   int m_max_npv;
 };
+
+
+class HTlepCut: public SelectionModule{
+ public:
+  HTlepCut(double min_htlep, double max_htlep=double_infinity());
+  ~HTlepCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  double m_min_htlep;
+  double m_max_htlep;
+};
+
+class METCut: public SelectionModule{
+ public:
+  METCut(double min_met, double max_met=double_infinity());
+  ~METCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  double m_min_met;
+  double m_max_met;
+};
+
+class TwoDCut: public SelectionModule{
+ public:
+  TwoDCut(){};
+  ~TwoDCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+};
+
+class TriangularCut: public SelectionModule{
+ public:
+  TriangularCut(){};
+  ~TriangularCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+};
+
 #endif

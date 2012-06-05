@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: Analysis_LinkDef.h,v 1.9 2012/05/30 09:41:12 peiffer Exp $
+// $Id: Analysis_LinkDef.h,v 1.10 2012/05/31 09:01:42 peiffer Exp $
 #ifdef __CINT__
 
 #pragma link off all globals;
@@ -13,6 +13,7 @@
 //
 // #pragma link C++ class MySuperClass+;
 
+#pragma link C++ class AnalysisCycle+;
 #pragma link C++ class BaseCycle+;
 #pragma link C++ class PileUpHistoCycle+;
 #pragma link C++ class LeptoquarkCycle+;
@@ -20,17 +21,7 @@
 #pragma link C++ class TestCycle+;
 #pragma link C++ class PreSelectionCycle+;
 #pragma link C++ class SelectionCycle+;
+#pragma link C++ class ExampleCycle;
 
-//PROOF braucht das (warum auch immer):
-// #pragma link C++ class pair<const string,string*>;
-// #pragma link C++ class pair<const string,int*>;
-// #pragma link C++ class pair<const string,double*>;
-// #pragma link C++ class pair<const string,bool*>;
-// #pragma link C++ class pair<const string,vector<string>*>;
-// #pragma link C++ class pair<const string,vector<int>*> ;
-// #pragma link C++ class pair<const string,vector<double>*>;
-// #pragma link C++ class pair<const string,vector<bool>*>;
-// #pragma link C++ class pair<pair<string,string>,TH1*>;
-// #pragma link C++ class TObjLink;
 
 #endif // __CINT__

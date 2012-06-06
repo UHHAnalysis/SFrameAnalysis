@@ -1,4 +1,4 @@
-// $Id: CycleCreators.py 159 2010-04-13 09:44:22Z krasznaa $
+// $Id: AnalysisCycle.cxx,v 1.1 2012/06/05 14:42:34 rkogler Exp $
 
 #include <iostream>
 
@@ -10,6 +10,7 @@ using namespace std;
 #include "include/ExampleHists.h"
 #include "include/ObjectHandler.h"
 #include "include/EventCalc.h"
+#include "STreeType.h"
 
 ClassImp( AnalysisCycle );
 
@@ -38,8 +39,9 @@ AnalysisCycle::AnalysisCycle()
   DeclareProperty( "PrimaryVertexCollection", m_PrimaryVertexCollection );
   DeclareProperty( "METName", m_METName );
   DeclareProperty( "TopJetCollection", m_TopJetCollection );
+  DeclareProperty( "TopJetCollectionGen", m_TopJetCollectionGen );
   DeclareProperty( "PrunedJetCollection", m_PrunedJetCollection );
-  DeclareProperty( "addGenInfo", m_addGenInfo);
+  //DeclareProperty( "addGenInfo", m_addGenInfo);
   DeclareProperty( "GenParticleCollection", m_GenParticleCollection);
   
   // steerable properties for the Pile-up reweighting
@@ -98,7 +100,7 @@ void AnalysisCycle::EndCycle() throw( SError )
 
 }
 
-void AnalysisCycle::BeginInputData( const SInputData& ) throw( SError ) 
+void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError ) 
 {
   // declaration of variables and histograms
 
@@ -107,6 +109,10 @@ void AnalysisCycle::BeginInputData( const SInputData& ) throw( SError )
     m_logger << FATAL << "Luminosity Handler not properly added to Configuration!" << SLogger::endmsg;
     exit(-1);
   }
+
+  //determine whether running on MC or data
+  m_addGenInfo=true;
+  if(inputData.GetType()=="DATA" || inputData.GetType()=="Data" || inputData.GetType()=="data") m_addGenInfo=false;
 
   // Overwrite target Luminosity
   // has to be done for every input data 
@@ -124,32 +130,34 @@ void AnalysisCycle::BeginInputData( const SInputData& ) throw( SError )
 	     << " Hist(MC) = " << m_PUHistnameMC << SLogger::endmsg;
     m_puwp = new PUWeightProducer(m_PUFilenameMC, m_PUFilenameData, m_PUHistnameMC, m_PUHistnameData);
   }
-
-  // output Ntuple for preselection
-  //  if (OutputTree){ // defined in XML file?
-//   DeclareVariable( m_bcc.run, "run" );
-//   DeclareVariable( m_bcc.luminosityBlock, "luminosityBlock" );
-//   DeclareVariable( m_bcc.event, "event" );
-//   DeclareVariable( m_bcc.isRealData, "isRealData" );
-//   DeclareVariable( m_bcc.HBHENoiseFilterResult, "HBHENoiseFilterResult" );
-//   DeclareVariable( m_bcc.beamspot_x0, "beamspot_x0");
-//   DeclareVariable( m_bcc.beamspot_y0, "beamspot_y0");
-//   DeclareVariable( m_bcc.beamspot_z0, "beamspot_z0");
-//   if(m_ElectronCollection.size()>0) DeclareVariable( o_electrons, ElectronCollection.c_str() );
-//   if(m_MuonCollection.size()>0) DeclareVariable( o_muons, MuonCollection.c_str() ); 
-//   if(m_TauCollection.size()>0) DeclareVariable( o_taus, TauCollection.c_str() );
-//   if(JetCollection.size()>0) DeclareVariable( o_jets, JetCollection.c_str() );
-//   if(PhotonCollection.size()>0) DeclareVariable( o_photons, PhotonCollection.c_str() );
-//   if(METName.size()>0) DeclareVariable( o_met, METName.c_str() );
-//   if(PrimaryVertexCollection.size()>0) DeclareVariable( o_pvs, PrimaryVertexCollection.c_str());
-//   if(TopJetCollection.size()>0) DeclareVariable( o_topjets, TopJetCollection.c_str());
-//   if(PrunedJetCollection.size()>0) DeclareVariable( o_prunedjets, PrunedJetCollection.c_str());
-//   if(GenParticleCollection.size()>0) DeclareVariable( o_genparticles, GenParticleCollection.c_str());
-//   if(addGenInfo) DeclareVariable( o_genInfo, "genInfo" );
-//   DeclareVariable( o_triggerNames, "triggerNames");
-//   DeclareVariable( o_triggerResults, "triggerResults"); 
-//  }
-  
+ 
+  // output Ntuple
+  if (inputData.GetTrees(STreeType::OutputSimpleTree)){ 
+    m_logger << INFO << "adding output tree" << SLogger::endmsg;
+    DeclareVariable( m_bcc.run, "run" );
+    DeclareVariable( m_bcc.rho, "rho" );
+    DeclareVariable( m_bcc.luminosityBlock, "luminosityBlock" );
+    DeclareVariable( m_bcc.event, "event" );
+    DeclareVariable( m_bcc.isRealData, "isRealData" );
+    //DeclareVariable( m_bcc.HBHENoiseFilterResult, "HBHENoiseFilterResult" );
+    DeclareVariable( m_bcc.beamspot_x0, "beamspot_x0");
+    DeclareVariable( m_bcc.beamspot_y0, "beamspot_y0");
+    DeclareVariable( m_bcc.beamspot_z0, "beamspot_z0");
+    if(m_ElectronCollection.size()>0) DeclareVariable(m_output_electrons, m_ElectronCollection.c_str() );
+    if(m_MuonCollection.size()>0) DeclareVariable(m_output_muons, m_MuonCollection.c_str() ); 
+    if(m_TauCollection.size()>0) DeclareVariable(m_output_taus, m_TauCollection.c_str() );
+    if(m_JetCollection.size()>0) DeclareVariable(m_output_jets, m_JetCollection.c_str() );
+    if(m_PhotonCollection.size()>0) DeclareVariable(m_output_photons, m_PhotonCollection.c_str() );
+    if(m_METName.size()>0) DeclareVariable(m_output_met, m_METName.c_str() );
+    if(m_PrimaryVertexCollection.size()>0) DeclareVariable(m_output_pvs, m_PrimaryVertexCollection.c_str());
+    if(m_TopJetCollection.size()>0) DeclareVariable(m_output_topjets, m_TopJetCollection.c_str());
+    if(m_addGenInfo && m_TopJetCollectionGen.size()>0) DeclareVariable(m_output_topjetsgen, m_TopJetCollectionGen.c_str());
+    if(m_PrunedJetCollection.size()>0) DeclareVariable(m_output_prunedjets, m_PrunedJetCollection.c_str());
+    if(m_addGenInfo && m_GenParticleCollection.size()>0) DeclareVariable(m_output_genparticles, m_GenParticleCollection.c_str());
+    if(m_addGenInfo) DeclareVariable(m_output_genInfo, "genInfo" );
+    DeclareVariable(m_output_triggerNames, "triggerNames");
+    DeclareVariable(m_output_triggerResults, "triggerResults"); 
+  }
   return;
 
 }
@@ -267,10 +275,12 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
   if(m_METName.size()>0) ConnectVariable( "AnalysisTree", m_METName.c_str() , m_bcc.met);
   if(m_PrimaryVertexCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrimaryVertexCollection.c_str() , m_bcc.pvs);
   if(m_TopJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollection.c_str() , m_bcc.topjets);
+  if(m_addGenInfo && m_TopJetCollectionGen.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollectionGen.c_str() , m_bcc.topjetsgen);
   if(m_PrunedJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrunedJetCollection.c_str() , m_bcc.prunedjets);
   if(m_GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenParticleCollection.c_str() , m_bcc.genparticles);
   if(m_addGenInfo) ConnectVariable( "AnalysisTree", "genInfo" , m_bcc.genInfo);
   ConnectVariable( "AnalysisTree", "run" , m_bcc.run);
+  ConnectVariable( "AnalysisTree", "rho" , m_bcc.rho);
   ConnectVariable( "AnalysisTree", "luminosityBlock" , m_bcc.luminosityBlock);
   ConnectVariable( "AnalysisTree" ,"event" ,m_bcc.event);
   ConnectVariable( "AnalysisTree" ,"isRealData", m_bcc.isRealData);
@@ -298,7 +308,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
   calc->Reset();
 
   if(m_bcc.isRealData && m_addGenInfo){
-    m_logger << WARNING<< "Running over real data, but addGenInfo=True in config file?!" << SLogger::endmsg;
+    m_logger << WARNING<< "Running over real data, but addGenInfo=True?!" << SLogger::endmsg;
   }
 
   //fill list of trigger names
@@ -331,5 +341,42 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 
   return;
   
+}
+
+void AnalysisCycle::WriteOutputTree() throw( SError)
+{
+  //write out all objects
+
+  m_output_photons.clear();
+  m_output_jets.clear();
+  m_output_electrons.clear();
+  m_output_muons.clear();
+  m_output_taus.clear();
+  m_output_pvs.clear();
+  m_output_topjets.clear();
+  m_output_topjetsgen.clear();
+  m_output_prunedjets.clear();
+  m_output_genparticles.clear();
+  m_output_triggerNames.clear();
+  m_output_triggerResults.clear();
+  
+  if(m_PhotonCollection.size()>0) m_output_photons=*m_bcc.photons;
+  if(m_JetCollection.size()>0) m_output_jets=*m_bcc.jets;
+  if(m_ElectronCollection.size()>0) m_output_electrons=*m_bcc.electrons;
+  if(m_MuonCollection.size()>0) m_output_muons=*m_bcc.muons;
+  if(m_TauCollection.size()>0) m_output_taus=*m_bcc.taus;
+  if(m_PrimaryVertexCollection.size()>0) m_output_pvs=*m_bcc.pvs;
+  if(m_METName.size()>0) m_output_met = *m_bcc.met; 
+  if(m_addGenInfo) m_output_genInfo = *m_bcc.genInfo;
+  if(m_TopJetCollection.size()>0) m_output_topjets=*m_bcc.topjets;
+  if(m_addGenInfo && m_TopJetCollectionGen.size()>0) m_output_topjetsgen=*m_bcc.topjetsgen;
+  if(m_PrunedJetCollection.size()>0) m_output_prunedjets=*m_bcc.prunedjets;
+  if(m_addGenInfo && m_GenParticleCollection.size()>0) m_output_genparticles=*m_bcc.genparticles;
+  
+  if(m_newrun) m_output_triggerNames = m_bcc.triggerNames_actualrun;//store trigger names only for new runs
+  m_newrun=false;
+  
+  m_output_triggerResults = *m_bcc.triggerResults;
+
 }
 

@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: CycleCreators.py 159 2010-04-13 09:44:22Z krasznaa $
+// $Id: AnalysisCycle.h,v 1.1 2012/06/05 14:44:30 rkogler Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -22,7 +22,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 159 $
+ *  @version $Revision: 1.1 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -71,6 +71,11 @@ public:
   /// Function called for every event
   void ExecuteEvent( const SInputData&, Double_t ) throw( SError );
 
+  //Function called at the end of every event to store selected data
+  void WriteOutputTree() throw( SError );
+
+  bool addGenInfo() {return m_addGenInfo;}
+
 private:
 
   // wrapper to LuminosityHandler
@@ -98,10 +103,27 @@ private:
   std::string m_PrimaryVertexCollection;
   std::string m_METName;
   std::string m_TopJetCollection;
+  std::string m_TopJetCollectionGen;
   std::string m_PrunedJetCollection;
   std::string m_GenParticleCollection;
   bool m_addGenInfo;
   bool m_newrun;
+
+  //output variables
+  std::vector< Electron > m_output_electrons;  
+  std::vector< Muon > m_output_muons;
+  std::vector< Tau > m_output_taus;
+  std::vector< Photon > m_output_photons;
+  std::vector< PrimaryVertex > m_output_pvs;
+  std::vector< Jet > m_output_jets;
+  std::vector< TopJet > m_output_topjets;
+  std::vector< TopJet > m_output_topjetsgen;
+  std::vector< TopJet > m_output_prunedjets;
+  MET m_output_met;
+  std::vector<std::string> m_output_triggerNames;
+  std::vector<bool> m_output_triggerResults;
+  std::vector< GenParticle > m_output_genparticles;
+  GenInfo m_output_genInfo;
 
   // list of the event selections 
   std::vector<Selection*> m_selections;
@@ -111,10 +133,7 @@ private:
 
   // important: the container with all variables
   BaseCycleContainer m_bcc;
-
-  // the container for writing pre-selected Ntuples
-  BaseCycleContainer m_out_bcc;
-
+ 
   // Macro adding the functions for dictionary generation
   ClassDef( AnalysisCycle, 0 );
 

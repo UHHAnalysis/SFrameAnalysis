@@ -6,7 +6,7 @@
 #include "BaseCycleContainer.h"
 #include <algorithm>
 #include "Selection.h"
-
+#include "EventCalc.h"
 
 class TriggerSelection: public SelectionModule{
  public:

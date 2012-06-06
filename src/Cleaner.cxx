@@ -7,6 +7,20 @@ Cleaner::Cleaner( BaseCycleContainer* input){
 
 }
 
+Cleaner::Cleaner(){
+
+  ObjectHandler* objs = ObjectHandler::Instance();
+  bcc = objs->GetBaseCycleContainer();
+
+}
+
+void Cleaner::resetEventCalc(){
+
+  EventCalc* evc = EventCalc::Instance();
+  evc->Reset();
+
+}
+
 void Cleaner::JetEnergyResolutionShifter(int syst_shift){
 
   double met = 0;
@@ -86,6 +100,7 @@ void Cleaner::JetEnergyResolutionShifter(int syst_shift){
   }
 
   sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+  resetEventCalc();
 }
 
 
@@ -99,7 +114,7 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
     LorentzVector jet_v4_raw = bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw();
 
     met-=bcc->jets->at(i).pt();
-
+  
     //subtract lepton momenta from raw jet momentum
     if(bcc->electrons){
       for(unsigned int j=0; j<bcc->electrons->size(); ++j){
@@ -115,7 +130,6 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
     }
 
     //apply jet energy corrections to modified raw momentum
-    
     corrector->setJetPt(jet_v4_raw.Pt());
     corrector->setJetEta(jet_v4_raw.Eta());
     corrector->setJetE(jet_v4_raw.E());  
@@ -147,6 +161,7 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
   }
 
   sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+  resetEventCalc();
 }
 
 //tight ele ID from https://twiki.cern.ch/twiki/bin/view/CMS/EgammaCutBasedIdentification
@@ -234,7 +249,7 @@ void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax){
     bcc->electrons->push_back(good_eles[i]);
   }
   sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
-
+  resetEventCalc();
 }
 
 
@@ -269,6 +284,7 @@ void Cleaner::MuonCleaner_noIso(double ptmin, double etamax){
     bcc->muons->push_back(good_mus[i]);
   }
   sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
+  resetEventCalc();
 }
 
 void Cleaner::MuonCleaner(double ptmin, double etamax, double relisomax){
@@ -316,6 +332,7 @@ void Cleaner::TauCleaner(double ptmin, double etamax){
     bcc->taus->push_back(good_taus[i]);
   }
   sort(bcc->taus->begin(), bcc->taus->end(), HigherPt());
+  resetEventCalc();
 }
 
 
@@ -339,6 +356,7 @@ void Cleaner::JetCleaner(double ptmin, double etamax, bool doPFID){
     bcc->jets->push_back(good_jets[i]);
   }
   sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+  resetEventCalc();
 }
 
 void Cleaner::TopJetCleaner(double ptmin, double etamax, bool doPFID){
@@ -360,6 +378,7 @@ void Cleaner::TopJetCleaner(double ptmin, double etamax, bool doPFID){
     bcc->topjets->push_back(good_topjets[i]);
   }
   sort(bcc->topjets->begin(), bcc->topjets->end(), HigherPt());
+  resetEventCalc();
 }
 
 
@@ -377,5 +396,5 @@ void Cleaner::PrimaryVertexCleaner(int ndofmax, double zmax, double rhomax){
   for(unsigned int i=0; i<good_pvs.size(); ++i){
     bcc->pvs->push_back(good_pvs[i]);
   }
-
+  resetEventCalc();
 }

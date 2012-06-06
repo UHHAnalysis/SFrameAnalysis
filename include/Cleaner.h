@@ -6,11 +6,13 @@
 #include <algorithm>
 #include "Utils.h"
 #include "FactorizedJetCorrector.h"
+#include "ObjectHandler.h"
+#include "EventCalc.h"
 
 class Cleaner{
 
  public:
-  Cleaner(){};
+  Cleaner();
   Cleaner(BaseCycleContainer*);
 
   ~Cleaner(){};
@@ -36,7 +38,8 @@ class Cleaner{
   bool eleID(Electron);
   bool pfID(Jet);
 
-
+  //call this routine at the end of each cleaner to force re-calculation of basic variables in EventCalc
+  void resetEventCalc();
 
 };
 

@@ -228,7 +228,9 @@ HTlepCut::HTlepCut(double min_htlep, double max_htlep){
 }
 
 bool HTlepCut::pass(BaseCycleContainer *bcc){
-  double htlep = HTlep(bcc);
+  //double htlep = HTlep(bcc);
+  EventCalc* calc = EventCalc::Instance();
+  double htlep = calc->GetHTlep();
   if( htlep < m_min_htlep) return false;
   if( htlep > m_max_htlep) return false;
   return true;

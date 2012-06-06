@@ -9,7 +9,7 @@
 <!ENTITY QCD_Pt-1400to1800 SYSTEM "QCD_Pt-1000to1400.xml">
 ]>
 
-<JobConfiguration JobName="PileUpHistoCycleJob" OutputLevel="DEBUG">
+<JobConfiguration JobName="PileUpHistoCycleJob" OutputLevel="INFO">
 	<Library Name="libfastjet" />
 	<Library Name="libSFrameTools" />
 	<Library Name="libAnalysis" />

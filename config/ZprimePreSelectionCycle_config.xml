@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd">
+
+
+<JobConfiguration JobName="ZprimePreSelectionCycle" OutputLevel="INFO">
+	<Library Name="libfastjet" />
+	<Library Name="libJetMETObjects" />
+	<Library Name="libSFrameTools" />
+	<Library Name="libAnalysis" />
+	<Library Name="libSFramePlugIns" />
+
+	<Package Name="SFrameCore.par" />
+	<Package Name="SFramePlugIns.par" />
+	<Package Name="SFrameTools.par" />
+	<Package Name="Analysis.par" />
+
+
+<!--	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > -->
+	<Cycle Name="ZprimePreSelectionCycle"  OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > 
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarTest" Cacheable="False">
+		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/TTbarTest.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" /> 
+		</InputData> 
+		<UserConfig>
+		   <Item Name="JetCollection" Value="goodPatJetsPFlow" />  
+		   <Item Name="ElectronCollection" Value="selectedPatElectronsLoosePFlow" />  
+		   <Item Name="MuonCollection" Value="selectedPatMuonsLoosePFlow" /> 
+		   <Item Name="TauCollection" Value="selectedPatTaus" /> 
+<!--		   <Item Name="PhotonCollection" Value="patPhotons" /> -->
+		   <Item Name="PrimaryVertexCollection" Value="goodOfflinePrimaryVertices" /> 
+		   <Item Name="METName" Value="patMETs" />  
+		   <Item Name="TopJetCollection" Value="goodPatJetsCATopTagPF" />
+		   <Item Name="TopJetCollectionGen" Value="caTopTagGen" />
+		   <Item Name="PrunedJetCollection" Value="goodPatJetsCA8PrunedPF" />  
+		   <Item Name="GenParticleCollection" Value="GenParticles" />  
+
+
+		</UserConfig>
+	</Cycle>
+</JobConfiguration>

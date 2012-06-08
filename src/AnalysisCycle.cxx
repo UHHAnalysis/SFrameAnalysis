@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.1 2012/06/05 14:42:34 rkogler Exp $
+// $Id: AnalysisCycle.cxx,v 1.2 2012/06/06 15:49:45 peiffer Exp $
 
 #include <iostream>
 
@@ -90,11 +90,6 @@ void AnalysisCycle::BeginCycle() throw( SError )
 
 void AnalysisCycle::EndCycle() throw( SError ) 
 {
-  // clean-up, info messages and final calculations after the analysis
-
-  PrintSelectionSummary();
-  
-  FinaliseHistos();
 
   return;
 
@@ -253,8 +248,15 @@ void AnalysisCycle::PrintSelectionSummary()
 
 void AnalysisCycle::EndInputData( const SInputData& ) throw( SError ) 
 {
+  // clean-up, info messages and final calculations after the analysis
 
-   return;
+  PrintSelectionSummary();
+
+  FinaliseHistos();
+
+  m_selections.clear();
+
+  return;
 
 }
 

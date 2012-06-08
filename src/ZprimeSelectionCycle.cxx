@@ -7,7 +7,6 @@ using namespace std;
 #include "include/SelectionModules.h"
 #include "include/ExampleHists.h"
 #include "include/ObjectHandler.h"
-#include "include/Cleaner.h"
 #include "JetCorrectorParameters.h"
 
 ClassImp( ZprimeSelectionCycle );
@@ -63,7 +62,7 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   // -------------------- set up the selections ---------------------------
 
   //Set-Up Selection
-  Selection* first_selection= new Selection("first_selection");
+  first_selection= new Selection("first_selection");
 
   first_selection->addSelectionModule(new NPrimaryVertexSelection(1)); //at least one good PV
   first_selection->addSelectionModule(new NJetSelection(2,int_infinity(),50,2.4));//at least two jets
@@ -72,7 +71,7 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   first_selection->addSelectionModule(new NMuonSelection(0,0,35,2.1));//no muons
   first_selection->addSelectionModule(new TwoDCut()); 
 
-  Selection* second_selection= new Selection("second_selection");
+  second_selection= new Selection("second_selection");
 
   second_selection->addSelectionModule(new NJetSelection(1,int_infinity(),150,2.4));//leading jet with pt>150 GeV
   second_selection->addSelectionModule(new NBTagSelection(1)); //at least one b tag
@@ -94,7 +93,7 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
 
   if(!addGenInfo()) pars.push_back(JetCorrectorParameters("/afs/naf.desy.de/user/p/peiffer/SFrame/SFrameAnalysis/config/GR_R_52_V7_L2L3Residual_AK5PF.txt")); 
 
-  corrector = new FactorizedJetCorrector(pars);
+  m_corrector = new FactorizedJetCorrector(pars);
 
   return;
 
@@ -103,7 +102,8 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
 void ZprimeSelectionCycle::EndInputData( const SInputData& id ) throw( SError ) 
 {
 
-   return;
+  AnalysisCycle::EndInputData( id );
+  return;
 
 }
 
@@ -128,29 +128,29 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   // also, the good-run selection is performed there and the calculator is reset
   AnalysisCycle::ExecuteEvent( id, weight);
 
-  static Selection* first_selection = GetSelection("first_selection");
-  static Selection* second_selection = GetSelection("second_selection");
-
-  Cleaner* cleaner = new Cleaner();
+//   Selection* first_selection = GetSelection("first_selection");
+//   Selection* second_selection = GetSelection("second_selection");
+ 
+  m_cleaner = new Cleaner();
 
   ObjectHandler* objs = ObjectHandler::Instance();
   BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
 
-  if(bcc->pvs)  cleaner->PrimaryVertexCleaner(4, 24., 2.);
-  if(bcc->electrons) cleaner->ElectronCleaner_noIso(70,2.5);
-  if(bcc->muons) cleaner->MuonCleaner_noIso(35,2.1);  
-  if(bcc->jets) cleaner->JetLeptonSubtractor(corrector);
-  if(!bcc->isRealData && bcc->jets) cleaner->JetEnergyResolutionShifter();
+  if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
+  if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(70,2.5);
+  if(bcc->muons) m_cleaner->MuonCleaner_noIso(35,2.1);  
+  if(bcc->jets) m_cleaner->JetLeptonSubtractor(m_corrector);
+  if(!bcc->isRealData && bcc->jets) m_cleaner->JetEnergyResolutionShifter();
   //apply loose jet cleaning for 2D cut
-  if(bcc->jets) cleaner->JetCleaner(25,double_infinity(),true);
+  if(bcc->jets) m_cleaner->JetCleaner(25,double_infinity(),true);
 
   if(!first_selection->passSelection())  throw SError( SError::SkipEvent );
 
   //apply tighter jet cleaning for further cuts and analysis steps
-  if(bcc->jets) cleaner->JetCleaner(50,2.4,true);
+  if(bcc->jets) m_cleaner->JetCleaner(50,2.4,true);
 
   //remove all taus from collection for HTlep calculation
-  if(bcc->taus) cleaner->TauCleaner(double_infinity(),0.0);
+  if(bcc->taus) m_cleaner->TauCleaner(double_infinity(),0.0);
 
   if(!second_selection->passSelection())  throw SError( SError::SkipEvent );
 

@@ -7,7 +7,6 @@ using namespace std;
 #include "include/SelectionModules.h"
 #include "include/ExampleHists.h"
 #include "include/ObjectHandler.h"
-#include "include/Cleaner.h"
 #include "JetCorrectorParameters.h"
 
 ClassImp( ZprimePreSelectionCycle );
@@ -62,7 +61,7 @@ void ZprimePreSelectionCycle::BeginInputData( const SInputData& id ) throw( SErr
 
   // -------------------- set up the selections ---------------------------
 
-  Selection* preselection= new Selection("pre-selection");
+  preselection= new Selection("pre-selection");
 
   preselection->addSelectionModule(new NElectronSelection(1,int_infinity(),30,2.5));//at least one electron
   preselection->addSelectionModule(new NMuonSelection(0,0));//no muons
@@ -79,7 +78,7 @@ void ZprimePreSelectionCycle::BeginInputData( const SInputData& id ) throw( SErr
 
   if(!addGenInfo()) pars.push_back(JetCorrectorParameters("/afs/naf.desy.de/user/p/peiffer/SFrame/SFrameAnalysis/config/GR_R_52_V7_L2L3Residual_AK5PF.txt")); 
 
-  corrector = new FactorizedJetCorrector(pars);
+  m_corrector = new FactorizedJetCorrector(pars);
 
   return;
 
@@ -87,8 +86,9 @@ void ZprimePreSelectionCycle::BeginInputData( const SInputData& id ) throw( SErr
 
 void ZprimePreSelectionCycle::EndInputData( const SInputData& id ) throw( SError ) 
 {
+  AnalysisCycle::EndInputData( id );
 
-   return;
+  return;
 
 }
 
@@ -113,6 +113,8 @@ void ZprimePreSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weigh
   // also, the good-run selection is performed there and the calculator is reset
   AnalysisCycle::ExecuteEvent( id, weight);
 
+  m_cleaner = new Cleaner();
+
   ObjectHandler* objs = ObjectHandler::Instance();
   BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
 
@@ -125,15 +127,12 @@ void ZprimePreSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weigh
 
   //clean collections here
 
-  Cleaner* cleaner= new Cleaner();
-
-  if(bcc->muons) cleaner->MuonCleaner_noIso(35,2.1);
-  if(bcc->jets) cleaner->JetLeptonSubtractor(corrector);
-  //if(!bcc->isRealData && bcc->jets) cleaner->JetEnergyResolutionShifter();
-  if(bcc->jets) cleaner->JetCleaner(30,2.4,true);
+  if(bcc->muons) m_cleaner->MuonCleaner_noIso(35,2.1);
+  if(bcc->jets) m_cleaner->JetLeptonSubtractor(m_corrector);
+  if(!bcc->isRealData && bcc->jets) m_cleaner->JetEnergyResolutionShifter();
+  if(bcc->jets) m_cleaner->JetCleaner(30,2.4,true);
 
   // get the selections
-  static Selection* preselection = GetSelection("pre-selection");
   
   if(!preselection->passSelection())  throw SError( SError::SkipEvent );
 
@@ -144,8 +143,6 @@ void ZprimePreSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weigh
   for(unsigned int i=0; i<uncleaned_jets.size();++i){
      bcc->jets->push_back(uncleaned_jets.at(i));
   }
-//   objs->SetBaseCycleContainer(bcc);
-
 
   WriteOutputTree();
 

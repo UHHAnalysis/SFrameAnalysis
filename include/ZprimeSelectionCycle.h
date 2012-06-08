@@ -5,6 +5,7 @@
 // SFrame include(s):
 #include "include/AnalysisCycle.h"
 #include "FactorizedJetCorrector.h"
+#include "Cleaner.h"
 
 class ZprimeSelectionCycle : public AnalysisCycle {
 
@@ -35,7 +36,11 @@ private:
   // Put all your private variables here
   //
   
-  FactorizedJetCorrector* corrector;
+  FactorizedJetCorrector* m_corrector;
+  Cleaner* m_cleaner;
+
+  Selection* first_selection;
+  Selection* second_selection;
 
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimeSelectionCycle, 0 );

@@ -1,4 +1,4 @@
-// $Id: CycleCreators.py 159 2010-04-13 09:44:22Z krasznaa $
+// $Id: ExampleCycle.cxx,v 1.1 2012/06/05 16:02:51 rkogler Exp $
 
 #include <iostream>
 
@@ -46,7 +46,6 @@ void ExampleCycle::EndCycle() throw( SError )
 
   
   // call the base cycle class for all standard methods
-  // and a summary of the made selections
   AnalysisCycle::EndCycle();
 
   return;
@@ -87,8 +86,8 @@ void ExampleCycle::BeginInputData( const SInputData& id ) throw( SError )
 
 void ExampleCycle::EndInputData( const SInputData& id ) throw( SError ) 
 {
-
-   return;
+  AnalysisCycle::EndInputData( id );
+  return;
 
 }
 

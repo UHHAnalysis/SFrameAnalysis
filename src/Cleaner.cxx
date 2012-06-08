@@ -125,7 +125,9 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
     }
     if(bcc->muons){
       for(unsigned int j=0; j<bcc->muons->size(); ++j){
-	jet_v4_raw -= bcc->muons->at(j).v4();
+	if(bcc->jets->at(i).deltaR(bcc->muons->at(j))<0.5){
+	  jet_v4_raw -= bcc->muons->at(j).v4();
+	}
       }
     }
 
@@ -143,7 +145,7 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
     bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);
 
     met+=bcc->jets->at(i).pt();
-    
+
   }
 
   //store changed MET, flip phi if new MET is negative

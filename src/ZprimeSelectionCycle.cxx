@@ -86,13 +86,18 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   std::vector<JetCorrectorParameters> pars;
 
   //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
-
-  pars.push_back(JetCorrectorParameters("/afs/naf.desy.de/user/p/peiffer/SFrame/SFrameAnalysis/config/GR_R_52_V7_L1FastJet_AK5PF.txt"));
-  pars.push_back(JetCorrectorParameters("/afs/naf.desy.de/user/p/peiffer/SFrame/SFrameAnalysis/config/GR_R_52_V7_L2Relative_AK5PF.txt"));  
-  pars.push_back(JetCorrectorParameters("/afs/naf.desy.de/user/p/peiffer/SFrame/SFrameAnalysis/config/GR_R_52_V7_L3Absolute_AK5PF.txt")); 
-
-  if(!addGenInfo()) pars.push_back(JetCorrectorParameters("/afs/naf.desy.de/user/p/peiffer/SFrame/SFrameAnalysis/config/GR_R_52_V7_L2L3Residual_AK5PF.txt")); 
-
+  if(!addGenInfo()){
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L1FastJet_AK5PF.txt"));
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L2Relative_AK5PF.txt"));  
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L3Absolute_AK5PF.txt")); 
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L2L3Residual_AK5PF.txt")); 
+  }
+  else{
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L1FastJet_AK5PF.txt"));
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L2Relative_AK5PF.txt"));  
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L3Absolute_AK5PF.txt")); 
+  } 
+ 
   m_corrector = new FactorizedJetCorrector(pars);
 
   return;

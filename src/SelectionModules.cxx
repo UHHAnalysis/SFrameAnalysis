@@ -132,7 +132,7 @@ bool NTopJetSelection::pass(BaseCycleContainer *bcc){
 
 std::string NTopJetSelection::description(){
   char s[100];
-  sprintf(s, "%d <= number of topjets <= %d, with pt>%.1f GeV, abs(eta)<%.1f",m_min_nparticle,m_max_nparticle,m_ptmin,m_etamax);
+  sprintf(s, "%d <= N(CA-jets) <= %d, with pt>%.1f GeV, |eta|<%.1f",m_min_nparticle,m_max_nparticle,m_ptmin,m_etamax);
 
   return s;
 }
@@ -163,7 +163,7 @@ bool NTopTagSelection::pass(BaseCycleContainer *bcc){
 
 std::string NTopTagSelection::description(){
   char s[100];
-  sprintf(s, "%d <= number of top-tags <= %d",m_min_ntoptag,m_max_ntoptag);
+  sprintf(s, "%d <= N(top-tags) <= %d",m_min_ntoptag,m_max_ntoptag);
   return s;
 }
 

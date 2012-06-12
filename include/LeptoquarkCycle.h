@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: LeptoquarkCycle.h,v 1.2 2012/04/24 14:15:27 peiffer Exp $
+// $Id: LeptoquarkCycle.h,v 1.3 2012/05/25 12:47:49 peiffer Exp $
 #ifndef LeptoquarkCycle_H
 #define LeptoquarkCycle_H
 
@@ -19,7 +19,7 @@
  *          Put a longer description over here...
  *
  *  @author Put your name here
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 
@@ -60,7 +60,7 @@ private:
   // Macro adding the functions for dictionary generation
   ClassDef( LeptoquarkCycle, 0 );
 
-}; // class PileUpHistoCycle
+}; // class LeptoquarkCycle
 
-#endif // PileUpHistoCycle_H
+#endif // LeptoquarkCycle
 

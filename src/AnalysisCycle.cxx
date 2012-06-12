@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.2 2012/06/06 15:49:45 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.3 2012/06/08 14:01:42 peiffer Exp $
 
 #include <iostream>
 
@@ -162,7 +162,24 @@ void AnalysisCycle::RegisterSelection(Selection* sel)
 {
   // register a selection in the list of selections
 
-  m_selections.push_back(sel);
+  if (!sel){
+    m_logger << WARNING << "Got NULL pointer, can not register selection." << SLogger::endmsg;
+    return;
+  }
+  
+  // check if selection already exists, only register it if not
+  TString InName(sel->GetName());
+  bool exists = false;
+  for (unsigned int i=0; i<m_selections.size(); ++i){
+    TString SelName = m_selections[i]->GetName();
+    if (InName == SelName){
+      exists = true;
+    }
+  }
+  if (!exists){
+    m_selections.push_back(sel);
+  }
+
   return;
 }
 
@@ -171,6 +188,10 @@ void AnalysisCycle::RegisterHistCollection(BaseHists* hists)
 {
   // register a collection of histograms in the list
 
+  if (!hists){
+    m_logger << WARNING << "Got NULL pointer, can not register histogram collection." << SLogger::endmsg;
+    return;
+  }
   m_histcollections.push_back(hists);
   return;
 }
@@ -187,7 +208,7 @@ Selection* AnalysisCycle::GetSelection(const std::string name)
       return m_selections[i];
     }
   }
-  m_logger << WARNING << "Could not find selection with name " << InName << "." << SLogger::endmsg;
+  m_logger << DEBUG << "Could not find selection with name " << InName << "." << SLogger::endmsg;
   return NULL;
 }
 
@@ -245,6 +266,16 @@ void AnalysisCycle::PrintSelectionSummary()
 
 }
 
+void AnalysisCycle::ResetSelectionStats()
+{
+  // set all selection statistics to zero
+
+  for (unsigned int i=0; i<m_selections.size(); ++i){
+    m_selections[i]->resetCutFlow();
+  }
+
+}
+
 
 void AnalysisCycle::EndInputData( const SInputData& ) throw( SError ) 
 {
@@ -254,7 +285,7 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
 
   FinaliseHistos();
 
-  m_selections.clear();
+  ResetSelectionStats();
 
   return;
 
@@ -279,7 +310,7 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
   if(m_TopJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollection.c_str() , m_bcc.topjets);
   if(m_addGenInfo && m_TopJetCollectionGen.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollectionGen.c_str() , m_bcc.topjetsgen);
   if(m_PrunedJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrunedJetCollection.c_str() , m_bcc.prunedjets);
-  if(m_GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenParticleCollection.c_str() , m_bcc.genparticles);
+  if(m_addGenInfo && m_GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenParticleCollection.c_str() , m_bcc.genparticles);
   if(m_addGenInfo) ConnectVariable( "AnalysisTree", "genInfo" , m_bcc.genInfo);
   ConnectVariable( "AnalysisTree", "run" , m_bcc.run);
   ConnectVariable( "AnalysisTree", "rho" , m_bcc.rho);

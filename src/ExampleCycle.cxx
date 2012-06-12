@@ -1,4 +1,4 @@
-// $Id: ExampleCycle.cxx,v 1.1 2012/06/05 16:02:51 rkogler Exp $
+// $Id: ExampleCycle.cxx,v 1.2 2012/06/08 14:01:42 peiffer Exp $
 
 #include <iostream>
 
@@ -68,14 +68,12 @@ void ExampleCycle::BeginInputData( const SInputData& id ) throw( SError )
   TopSel->addSelectionModule(new NTopTagSelection(2,999));
   RegisterSelection(TopSel);
 
-
   // ---------------- set up the histogram collections --------------------
 
   // histograms without any cuts
   RegisterHistCollection( new ExampleHists("NoCuts") );
   // histograms after the top selection
   RegisterHistCollection( new ExampleHists("TopSel") );
-
 
   // important: initialise histogram collections after their definition
   InitHistos();
@@ -118,7 +116,6 @@ void ExampleCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( S
   // get the histogram collections
   static BaseHists* HistsNoCuts = GetHistCollection("NoCuts");
   static BaseHists* HistsTopSel = GetHistCollection("TopSel");
-
 
   // start the analysis
   HistsNoCuts->Fill();

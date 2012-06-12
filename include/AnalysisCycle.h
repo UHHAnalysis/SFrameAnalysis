@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.1 2012/06/05 14:44:30 rkogler Exp $
+// $Id: AnalysisCycle.h,v 1.2 2012/06/06 15:49:45 peiffer Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -22,7 +22,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.1 $
+ *  @version $Revision: 1.2 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -45,6 +45,9 @@ public:
 
   // print out information of the selections
   void PrintSelectionSummary();
+
+  // reset the cut-flows of all selections
+  void ResetSelectionStats();
 
   // calls init for each histogram collection
   void InitHistos();

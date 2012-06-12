@@ -263,6 +263,7 @@ void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax){
   sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
 }
 
+
 void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax){
 
   ElectronCleaner_noIso(ptmin, etamax);

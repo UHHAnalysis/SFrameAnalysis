@@ -20,11 +20,14 @@ ZprimePreSelectionCycle::ZprimePreSelectionCycle()
   // set the integrated luminosity per bin for the lumi-yield control plots
   SetIntLumiPerBin(25.);
 
+  m_corrector = NULL;
+
 }
 
 ZprimePreSelectionCycle::~ZprimePreSelectionCycle() 
 {
   // destructor
+  if (m_corrector) delete m_corrector;
 }
 
 void ZprimePreSelectionCycle::BeginCycle() throw( SError ) 
@@ -61,7 +64,8 @@ void ZprimePreSelectionCycle::BeginInputData( const SInputData& id ) throw( SErr
 
   // -------------------- set up the selections ---------------------------
 
-  preselection= new Selection("pre-selection");
+  //Selection* preselection = new Selection("pre-selection");
+  Selection* preselection = new Selection("pre-selection");
 
   preselection->addSelectionModule(new NElectronSelection(1,int_infinity(),30,2.5));//at least one electron
   preselection->addSelectionModule(new NMuonSelection(0,0));//no muons
@@ -120,7 +124,8 @@ void ZprimePreSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weigh
   // also, the good-run selection is performed there and the calculator is reset
   AnalysisCycle::ExecuteEvent( id, weight);
 
-  m_cleaner = new Cleaner();
+  Cleaner cleaner;
+  static Selection* preselection = GetSelection("pre-selection");
 
   ObjectHandler* objs = ObjectHandler::Instance();
   BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
@@ -134,10 +139,10 @@ void ZprimePreSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weigh
 
   //clean collections here
 
-  if(bcc->muons) m_cleaner->MuonCleaner_noIso(35,2.1);
-  if(bcc->jets) m_cleaner->JetLeptonSubtractor(m_corrector);
-  if(!bcc->isRealData && bcc->jets) m_cleaner->JetEnergyResolutionShifter();
-  if(bcc->jets) m_cleaner->JetCleaner(30,2.4,true);
+  if(bcc->muons) cleaner.MuonCleaner_noIso(35,2.1);
+  if(bcc->jets) cleaner.JetLeptonSubtractor(m_corrector);
+  if(!bcc->isRealData && bcc->jets) cleaner.JetEnergyResolutionShifter();
+  if(bcc->jets) cleaner.JetCleaner(30,2.4,true);
 
   // get the selections
   

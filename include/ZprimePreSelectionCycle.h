@@ -37,9 +37,6 @@ private:
   //
   
   FactorizedJetCorrector* m_corrector;
-  Cleaner* m_cleaner;
-
-  Selection* preselection;
 
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimePreSelectionCycle, 0 );

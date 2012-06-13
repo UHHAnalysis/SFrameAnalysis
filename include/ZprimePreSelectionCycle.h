@@ -7,6 +7,13 @@
 #include "FactorizedJetCorrector.h"
 #include "Cleaner.h"
 
+/**
+ *  @short Selection cycle to perform 
+ *         pre-selection for Z'->ttbar analysis
+ *  @author Thomas Peiffer
+ */
+
+
 class ZprimePreSelectionCycle : public AnalysisCycle {
 
 public:

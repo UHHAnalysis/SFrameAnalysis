@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.2 2012/06/06 15:49:45 peiffer Exp $
+// $Id: AnalysisCycle.h,v 1.3 2012/06/12 13:50:24 rkogler Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -22,7 +22,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.2 $
+ *  @version $Revision: 1.3 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -33,29 +33,31 @@ public:
   /// Default destructor
   ~AnalysisCycle();
 
-  // add a new selection to the analysis
+  /// add a new selection to the analysis
   void RegisterSelection(Selection* sel);
 
-  // add a new histogram collection to the analysis
+  /// add a new histogram collection to the analysis
   void RegisterHistCollection(BaseHists* hists);
 
+  /// returns booked selection
   Selection* GetSelection(const std::string name);
 
+  /// returns booked histogram collection
   BaseHists* GetHistCollection(const std::string name);
 
-  // print out information of the selections
+  /// print out information of the selections
   void PrintSelectionSummary();
 
-  // reset the cut-flows of all selections
+  /// reset the cut-flows of all selections
   void ResetSelectionStats();
 
-  // calls init for each histogram collection
+  /// calls init for each histogram collection
   void InitHistos();
   
-  // calls finalise for each histogram collection
+  /// calls finalise for each histogram collection
   void FinaliseHistos();
   
-  // Function to set the integrated luminosity per bin
+  /// Function to set the integrated luminosity per bin
   void SetIntLumiPerBin(double int_lumi){m_int_lumi_per_bin = int_lumi;}
 
   /// Function called at the beginning of the cycle
@@ -74,9 +76,10 @@ public:
   /// Function called for every event
   void ExecuteEvent( const SInputData&, Double_t ) throw( SError );
 
-  //Function called at the end of every event to store selected data
+  /// Function called at the end of every event to store selected data
   void WriteOutputTree() throw( SError );
 
+  /// returns whether generator info is added or not (automatically determined if data type is 'data')
   bool addGenInfo() {return m_addGenInfo;}
 
 private:

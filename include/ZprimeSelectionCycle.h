@@ -7,6 +7,12 @@
 #include "FactorizedJetCorrector.h"
 #include "Cleaner.h"
 
+/**
+ *  @short Selection cycle to perform 
+ *         full selection for Z'->ttbar analysis
+ *  @author Thomas Peiffer
+ */
+
 class ZprimeSelectionCycle : public AnalysisCycle {
 
 public:
@@ -38,9 +44,6 @@ private:
   
   FactorizedJetCorrector* m_corrector;
   Cleaner* m_cleaner;
-
-  Selection* first_selection;
-  Selection* second_selection;
 
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimeSelectionCycle, 0 );

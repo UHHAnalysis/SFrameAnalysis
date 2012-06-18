@@ -1,6 +1,7 @@
 #ifndef Cleaner_H
 #define Cleaner_H
 
+#include "TVector2.h"
 #include "Objects.h"
 #include "BaseCycleContainer.h"
 #include <algorithm>
@@ -18,7 +19,7 @@ class Cleaner{
   ~Cleaner(){};
 
   //use syst_shift<0 or >0 for systematic uncertainties of the JER shifts
-  void JetEnergyResolutionShifter(int syst_shift=0);
+  void JetEnergyResolutionShifter(E_SystShift syst_shift=e_Default);
   void JetLeptonSubtractor(FactorizedJetCorrector *corrector);
 
   void ElectronCleaner(double ptmin=0, double etamax=9999, double relisomax=0.1);

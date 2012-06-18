@@ -21,10 +21,13 @@ void Cleaner::resetEventCalc(){
 
 }
 
-void Cleaner::JetEnergyResolutionShifter(int syst_shift){
+void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift){
 
-  double met = 0;
-  if(bcc->met) met=bcc->met->pt();
+  LorentzVector met(0,0,0,0);
+  if(bcc->met) {
+    met.SetPt(bcc->met->pt());
+    met.SetPhi(bcc->met->phi());
+  }
 
   for(unsigned int i=0; i<bcc->jets->size(); ++i){
     Jet jet = bcc->jets->at(i);
@@ -32,14 +35,14 @@ void Cleaner::JetEnergyResolutionShifter(int syst_shift){
     //ignore unmatched jets (which have zero vector) or jets with very low pt:
     if(gen_pt < 15.0) continue;
 
-    met += jet.pt()*jet.JEC_factor_raw();
+    met += jet.v4()*jet.JEC_factor_raw();
     
     float recopt = jet.pt();
     double factor = -10;
     double abseta = fabs(jet.eta());
 
     //numbers taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
-    if(syst_shift==0){
+    if(syst_shift==e_Default){
       if(abseta < 0.5)
 	factor = 0.052;
       else if(abseta >= 0.5 && abseta <1.1)
@@ -51,7 +54,7 @@ void Cleaner::JetEnergyResolutionShifter(int syst_shift){
       else if(abseta >= 2.3)
 	factor = 0.288;
     }
-    else if(syst_shift>0){
+    else if(syst_shift==e_Up){
       if(abseta < 0.5)
 	factor = 0.11;
       else if(abseta >= 0.5 && abseta <1.1)
@@ -63,7 +66,7 @@ void Cleaner::JetEnergyResolutionShifter(int syst_shift){
       else if(abseta >= 2.3)
 	factor = 0.49;
     }
-    else{
+    else if(syst_shift==e_Down){
       if(abseta < 0.5)
 	factor = -0.01;
       else if(abseta >= 0.5 && abseta <1.1)
@@ -82,21 +85,13 @@ void Cleaner::JetEnergyResolutionShifter(int syst_shift){
     bcc->jets->at(i).set_pt( jet.pt());
 
     //propagate JER shifts to MET
-    met -= jet.pt()*jet.JEC_factor_raw();
+    met -= jet.v4()*jet.JEC_factor_raw();
   }
   
   //store changed MET, flip phi if new MET is negative
   if(bcc->met){
-    if(met>=0){
-      bcc->met->set_pt( met);
-    }
-    else{
-      bcc->met->set_pt( -1*met);
-      if(bcc->met->phi()<=0)
-	bcc->met->set_phi (bcc->met->phi()+PI);
-      else
-	bcc->met->set_phi (bcc->met->phi()-PI);
-    }
+    bcc->met->set_pt(met.Pt());
+    bcc->met->set_phi(met.Phi());
   }
 
   sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
@@ -106,55 +101,57 @@ void Cleaner::JetEnergyResolutionShifter(int syst_shift){
 
 void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
 
-  double met = 0;
-  if(bcc->met) met=bcc->met->pt();
+  LorentzVector met(0,0,0,0);
+  if(bcc->met) {
+    met.SetPt(bcc->met->pt());
+    met.SetPhi(bcc->met->phi());
+  }
 
   for(unsigned int i=0; i<bcc->jets->size(); ++i){
 
     LorentzVector jet_v4_raw = bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw();
 
-    met-=bcc->jets->at(i).pt();
+    met+= bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw() ; 
   
     //subtract lepton momenta from raw jet momentum
-    
+     
     double ele_energy =  bcc->jets->at(i).chargedEmEnergyFraction()*jet_v4_raw.E();
     double mu_energy = bcc->jets->at(i).muonEnergyFraction()*jet_v4_raw.E();
 
     if(bcc->electrons){
       for(unsigned int j=0; j<bcc->electrons->size(); ++j){
 	if(bcc->jets->at(i).deltaR(bcc->electrons->at(j))<0.5){
-	  if(jet_v4_raw.pt() >= bcc->electrons->at(j).pt()){
-	    jet_v4_raw -= bcc->electrons->at(j).v4();
-	    bcc->jets->at(i).set_electronMultiplicity(bcc->jets->at(i).electronMultiplicity()-1);
-	    ele_energy -= bcc->electrons->at(j).energy();
-	  }
-	  else{
-	    //std::cout << "Subtracting electron with pt="<< bcc->electrons->at(j).pt() <<" from jet with pt(corrected)= " << bcc->jets->at(i).pt() << ", pt(raw)=" << jet_v4_raw.pt()  << std::endl;
-	    jet_v4_raw -= jet_v4_raw;
-	  }
+//       if(jet_v4_raw.pt() >= bcc->electrons->at(j).pt()){
+	  jet_v4_raw -= bcc->electrons->at(j).v4();
+//  	  bcc->jets->at(i).set_electronMultiplicity(bcc->jets->at(i).electronMultiplicity()-1);
+//  	  ele_energy -= bcc->electrons->at(j).energy();
+	  //}
+	  //else{
+	  //std::cout << "Subtracting electron with pt="<< bcc->electrons->at(j).pt() <<" from jet with pt(corrected)= " << bcc->jets->at(i).pt() << ", pt(raw)=" << jet_v4_raw.pt()  << std::endl;
+	  //jet_v4_raw -= jet_v4_raw;
+	  //}
 	}
       }
     }
     if(bcc->muons){
       for(unsigned int j=0; j<bcc->muons->size(); ++j){
 	if(bcc->jets->at(i).deltaR(bcc->muons->at(j))<0.5){
+	  //if(jet_v4_raw.pt()>= bcc->muons->at(j).pt()){
 	  jet_v4_raw -= bcc->muons->at(j).v4();
-	  if(jet_v4_raw.pt()>= bcc->muons->at(j).pt()){
-	    jet_v4_raw -= bcc->muons->at(j).v4();
-	    bcc->jets->at(i).set_muonMultiplicity(bcc->jets->at(i).muonMultiplicity()-1);
-	    mu_energy -= bcc->muons->at(j).energy();
-	  }
-	  else{
-	    //std::cout << "Subtracting muon with pt="<< bcc->muons->at(j).pt() <<" from jet with pt(corrected)= " << bcc->jets->at(i).pt() << ", pt(raw)=" << jet_v4_raw.pt()  << std::endl;
-	    jet_v4_raw -= jet_v4_raw;	
-	  }
+//  	  bcc->jets->at(i).set_muonMultiplicity(bcc->jets->at(i).muonMultiplicity()-1);
+//  	  mu_energy -= bcc->muons->at(j).energy();
+	  //}
+	  //else{
+	  //std::cout << "Subtracting muon with pt="<< bcc->muons->at(j).pt() <<" from jet with pt(corrected)= " << bcc->jets->at(i).pt() << ", pt(raw)=" << jet_v4_raw.pt()  << std::endl;
+	  //jet_v4_raw -= jet_v4_raw;	
+	  //}
 	}
       }
     }
     if(ele_energy<=jet_v4_raw.E())
       bcc->jets->at(i).set_chargedEmEnergyFraction(ele_energy/jet_v4_raw.E());
     if(mu_energy<=jet_v4_raw.E())
-      bcc->jets->at(i).set_muonEnergyFraction(mu_energy/jet_v4_raw.E());
+     bcc->jets->at(i).set_muonEnergyFraction(mu_energy/jet_v4_raw.E());
     
 
     //apply jet energy corrections to modified raw momentum
@@ -163,31 +160,22 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
     corrector->setJetE(jet_v4_raw.E());  
     corrector->setJetA(bcc->jets->at(i).jetArea());
     corrector->setRho(bcc->rho);
-    //corrector->setNPV(bcc->pvs->size());	
+    corrector->setNPV(bcc->pvs->size());	
 
     float correctionfactor = corrector->getCorrection();
-    //std::cout << correctionfactor << "   " << 1./bcc->jets->at(i).JEC_factor_raw() << std::endl;
+    
     LorentzVector jet_v4_corrected = jet_v4_raw *correctionfactor;
 
     bcc->jets->at(i).set_v4(jet_v4_corrected);
     bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);
 
-    met+=bcc->jets->at(i).pt();
+    met-= bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw() ; 
 
   }
 
-  //store changed MET, flip phi if new MET is negative
   if(bcc->met){
-    if(met>=0){
-      bcc->met->set_pt( met);
-    }
-    else{
-      bcc->met->set_pt( -1*met);
-      if(bcc->met->phi()<=0)
-	bcc->met->set_phi (bcc->met->phi()+PI);
-      else
-	bcc->met->set_phi (bcc->met->phi()-PI);
-    }
+     bcc->met->set_pt(met.Pt());
+     bcc->met->set_phi(met.Phi());
   }
 
   sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
@@ -226,6 +214,7 @@ bool Cleaner::pfID(Jet jet){
       return true;
 
   }
+  std::cout << "Bloeder Jet, pt,eta= " << jet.pt() << ", " <<jet.eta() << ";  " << jet.numberOfDaughters() << " " << jet.neutralHadronEnergyFraction() << " " <<jet.neutralEmEnergyFraction() << " " << jet.chargedEmEnergyFraction() << " " << jet.chargedHadronEnergyFraction() << " " << jet.chargedMultiplicity() <<std::endl;
   return false;
      
 }
@@ -238,20 +227,20 @@ void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax){
     Electron ele = bcc->electrons->at(i);
     if(ele.pt()>ptmin){
       if(fabs(ele.eta())<etamax){
-  	if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660){
-  	  if(bcc->pvs->size()>0){
-  	    if(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y())<0.02){
- 	      if(ele.passconversionveto()){
-  		if(ele.mvaTrigV0()>0.0){
-  		  if(eleID(ele)){
+//    	if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660){
+//     	  if(bcc->pvs->size()>0){
+//     	    if(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y())<0.02){
+//    	      if(ele.passconversionveto()){
+//     		if(ele.mvaTrigV0()>0.0){
+//     		  if(eleID(ele)){
 		    good_eles.push_back(ele);
-  		  }
-  		}
- 	      }
-  	    }
-  	  }
-  	}
-      }
+    		  }
+//     		}
+//    	      }
+//     	    }
+//     	  }
+//     	}
+//       }
     }
   }
 
@@ -291,21 +280,21 @@ void Cleaner::MuonCleaner_noIso(double ptmin, double etamax){
     Muon mu = bcc->muons->at(i);
     if(mu.pt()>ptmin){
       if(fabs(mu.eta())<etamax){
-	if(mu.isGlobalMuon()){
-	  if(mu.globalTrack_chi2()/mu.globalTrack_ndof()<10){
-	    if(mu.innerTrack_trackerLayersWithMeasurement()>5){
-	      if(mu.dB()<0.02){
-		if(fabs(mu.vertex_z()-bcc->pvs->at(0).z())<1){
-		  if(mu.innerTrack_numberOfValidPixelHits()>0){
-		    if(mu.numberOfMatchedStations()>1){
+//   	if(mu.isGlobalMuon()){
+//   	  if(mu.globalTrack_chi2()/mu.globalTrack_ndof()<10){
+//   	    if(mu.innerTrack_trackerLayersWithMeasurement()>5){
+//   	      if(mu.dB()<0.02){
+//   		if(fabs(mu.vertex_z()-bcc->pvs->at(0).z())<1){
+//   		  if(mu.innerTrack_numberOfValidPixelHits()>0){
+//   		    if(mu.numberOfMatchedStations()>1){
 		      good_mus.push_back(mu);
-		    }
-		  }
-		}
-	      }
-	    }
-	  }
-	}
+ // 		    }
+//   		  }
+//   		}
+//   	      }
+//   	    }
+//   	  }
+//   	}
       }
     }
   }

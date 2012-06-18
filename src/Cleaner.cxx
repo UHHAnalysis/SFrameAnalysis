@@ -101,18 +101,10 @@ void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift){
 
 void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
 
-  LorentzVector met(0,0,0,0);
-  if(bcc->met) {
-    met.SetPt(bcc->met->pt());
-    met.SetPhi(bcc->met->phi());
-  }
-
   for(unsigned int i=0; i<bcc->jets->size(); ++i){
 
     LorentzVector jet_v4_raw = bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw();
 
-    met+= bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw() ; 
-  
     //subtract lepton momenta from raw jet momentum
      
     double ele_energy =  bcc->jets->at(i).chargedEmEnergyFraction()*jet_v4_raw.E();
@@ -169,13 +161,6 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
     bcc->jets->at(i).set_v4(jet_v4_corrected);
     bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);
 
-    met-= bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw() ; 
-
-  }
-
-  if(bcc->met){
-     bcc->met->set_pt(met.Pt());
-     bcc->met->set_phi(met.Phi());
   }
 
   sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());

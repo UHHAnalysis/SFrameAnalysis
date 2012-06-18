@@ -62,20 +62,21 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   // -------------------- set up the selections ---------------------------
 
   //Set-Up Selection
-  first_selection= new Selection("first_selection");
+  Selection* first_selection= new Selection("first_selection");
 
   first_selection->addSelectionModule(new NPrimaryVertexSelection(1)); //at least one good PV
   first_selection->addSelectionModule(new NJetSelection(2,int_infinity(),50,2.4));//at least two jets
   first_selection->addSelectionModule(new NElectronSelection(1,int_infinity(),70,2.5));//at least one electron
   first_selection->addSelectionModule(new NElectronSelection(1,1,70,2.5));//exactly one electron 
   first_selection->addSelectionModule(new NMuonSelection(0,0,35,2.1));//no muons
-  first_selection->addSelectionModule(new TwoDCut()); 
+  first_selection->addSelectionModule(new TwoDCut());
+  
 
-  second_selection= new Selection("second_selection");
+  Selection* second_selection= new Selection("second_selection");
 
   second_selection->addSelectionModule(new NJetSelection(1,int_infinity(),150,2.4));//leading jet with pt>150 GeV
-  second_selection->addSelectionModule(new NBTagSelection(1)); //at least one b tag
-  //second_selection->addSelectionModule(new NBTagSelection(0,0)); //no b tags
+  //second_selection->addSelectionModule(new NBTagSelection(1)); //at least one b tag
+  second_selection->addSelectionModule(new NBTagSelection(0,0)); //no b tags
   second_selection->addSelectionModule(new HTlepCut(150));
   second_selection->addSelectionModule(new TriangularCut());
   second_selection->addSelectionModule(new METCut(50));
@@ -87,15 +88,15 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
 
   //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
   if(!addGenInfo()){
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L1FastJet_AK5PF.txt"));
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L2Relative_AK5PF.txt"));  
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L3Absolute_AK5PF.txt")); 
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L2L3Residual_AK5PF.txt")); 
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L1FastJet_AK5PFchs.txt"));
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L2Relative_AK5PFchs.txt"));  
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L3Absolute_AK5PFchs.txt")); 
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L2L3Residual_AK5PFchs.txt")); 
   }
   else{
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L1FastJet_AK5PF.txt"));
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L2Relative_AK5PF.txt"));  
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L3Absolute_AK5PF.txt")); 
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L1FastJet_AK5PFchs.txt"));
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L2Relative_AK5PFchs.txt"));  
+    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L3Absolute_AK5PFchs.txt")); 
   } 
  
   m_corrector = new FactorizedJetCorrector(pars);
@@ -133,13 +134,14 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   // also, the good-run selection is performed there and the calculator is reset
   AnalysisCycle::ExecuteEvent( id, weight);
 
-//   Selection* first_selection = GetSelection("first_selection");
-//   Selection* second_selection = GetSelection("second_selection");
+  static Selection* first_selection = GetSelection("first_selection");
+  static Selection* second_selection = GetSelection("second_selection");
  
   m_cleaner = new Cleaner();
 
   ObjectHandler* objs = ObjectHandler::Instance();
   BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+  EventCalc* calc = EventCalc::Instance();
 
   if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
   if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(70,2.5);
@@ -151,6 +153,8 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
   if(!first_selection->passSelection())  throw SError( SError::SkipEvent );
 
+  //cout << bcc->event << endl;
+
   //apply tighter jet cleaning for further cuts and analysis steps
   if(bcc->jets) m_cleaner->JetCleaner(50,2.4,true);
 
@@ -159,6 +163,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
   if(!second_selection->passSelection())  throw SError( SError::SkipEvent );
 
+  calc->PrintEventContent();
 
   WriteOutputTree();
 

@@ -75,8 +75,8 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   Selection* second_selection= new Selection("second_selection");
 
   second_selection->addSelectionModule(new NJetSelection(1,int_infinity(),150,2.4));//leading jet with pt>150 GeV
-  //second_selection->addSelectionModule(new NBTagSelection(1)); //at least one b tag
-  second_selection->addSelectionModule(new NBTagSelection(0,0)); //no b tags
+  second_selection->addSelectionModule(new NBTagSelection(1)); //at least one b tag
+  //second_selection->addSelectionModule(new NBTagSelection(0,0)); //no b tags
   second_selection->addSelectionModule(new HTlepCut(150));
   second_selection->addSelectionModule(new TriangularCut());
   second_selection->addSelectionModule(new METCut(50));
@@ -144,16 +144,14 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   EventCalc* calc = EventCalc::Instance();
 
   if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
-  if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(70,2.5);
-  if(bcc->muons) m_cleaner->MuonCleaner_noIso(35,2.1);  
+  if(bcc->electrons) m_cleaner->ElectronCleaner_noID_noIso(70,2.5);
+  if(bcc->muons) m_cleaner->MuonCleaner_noID_noIso(35,2.1);  
   if(bcc->jets) m_cleaner->JetLeptonSubtractor(m_corrector);
   if(!bcc->isRealData && bcc->jets) m_cleaner->JetEnergyResolutionShifter();
   //apply loose jet cleaning for 2D cut
   if(bcc->jets) m_cleaner->JetCleaner(25,double_infinity(),true);
 
   if(!first_selection->passSelection())  throw SError( SError::SkipEvent );
-
-  //cout << bcc->event << endl;
 
   //apply tighter jet cleaning for further cuts and analysis steps
   if(bcc->jets) m_cleaner->JetCleaner(50,2.4,true);

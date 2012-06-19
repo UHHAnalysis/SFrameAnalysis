@@ -27,7 +27,7 @@ class Cleaner{
   ~Cleaner(){};
 
   /**
-   * Function to corrects the jet momentum to account for differences in jet energy resolution between data and MC. 
+   * Function that corrects the jet momentum to account for differences in jet energy resolution between data and MC. 
    * Changes are propagated to missing transverse energy. To be applied on MC only. 
    * Use the options syst_shift=e_Up and syst_shift=e_Down to shift the jet momenta within their systematic uncertainties.
   */

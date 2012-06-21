@@ -87,8 +87,6 @@ void ZprimePreSelectionCycle::BeginInputData( const SInputData& id ) throw( SErr
     pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L3Absolute_AK5PFchs.txt")); 
   } 
 
-  if(!addGenInfo()) pars.push_back(JetCorrectorParameters("/afs/naf.desy.de/user/p/peiffer/SFrame/SFrameAnalysis/config/GR_R_52_V7_L2L3Residual_AK5PF.txt")); 
-
   m_corrector = new FactorizedJetCorrector(pars);
 
   return;

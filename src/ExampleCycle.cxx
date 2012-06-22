@@ -1,4 +1,4 @@
-// $Id: ExampleCycle.cxx,v 1.2 2012/06/08 14:01:42 peiffer Exp $
+// $Id: ExampleCycle.cxx,v 1.3 2012/06/12 13:49:16 rkogler Exp $
 
 #include <iostream>
 
@@ -114,8 +114,8 @@ void ExampleCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( S
   static Selection* TopSel = GetSelection("TopSelection");
 
   // get the histogram collections
-  static BaseHists* HistsNoCuts = GetHistCollection("NoCuts");
-  static BaseHists* HistsTopSel = GetHistCollection("TopSel");
+  BaseHists* HistsNoCuts = GetHistCollection("NoCuts");
+  BaseHists* HistsTopSel = GetHistCollection("TopSel");
 
   // start the analysis
   HistsNoCuts->Fill();

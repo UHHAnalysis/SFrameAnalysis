@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.3 2012/06/08 14:01:42 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.4 2012/06/12 13:48:34 rkogler Exp $
 
 #include <iostream>
 
@@ -7,7 +7,6 @@ using namespace std;
 // Local include(s):
 #include "include/AnalysisCycle.h"
 #include "include/SelectionModules.h"
-#include "include/ExampleHists.h"
 #include "include/ObjectHandler.h"
 #include "include/EventCalc.h"
 #include "STreeType.h"
@@ -192,7 +191,11 @@ void AnalysisCycle::RegisterHistCollection(BaseHists* hists)
     m_logger << WARNING << "Got NULL pointer, can not register histogram collection." << SLogger::endmsg;
     return;
   }
+
+ 
   m_histcollections.push_back(hists);
+ 
+
   return;
 }
 
@@ -251,6 +254,8 @@ void AnalysisCycle::FinaliseHistos()
   for (unsigned int i=0; i<m_histcollections.size(); ++i){
     m_histcollections[i]->Finish();
   }
+
+  m_histcollections.clear();
 
   return;
 

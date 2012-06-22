@@ -20,11 +20,13 @@ ZprimeSelectionCycle::ZprimeSelectionCycle()
   // set the integrated luminosity per bin for the lumi-yield control plots
   SetIntLumiPerBin(25.);
 
+  m_corrector = NULL;
 }
 
 ZprimeSelectionCycle::~ZprimeSelectionCycle() 
 {
   // destructor
+  if (m_corrector) delete m_corrector;
 }
 
 void ZprimeSelectionCycle::BeginCycle() throw( SError ) 
@@ -62,6 +64,7 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   // -------------------- set up the selections ---------------------------
 
   //Set-Up Selection
+
   Selection* first_selection= new Selection("first_selection");
 
   first_selection->addSelectionModule(new NPrimaryVertexSelection(1)); //at least one good PV
@@ -144,9 +147,10 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   EventCalc* calc = EventCalc::Instance();
 
   if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
-  if(bcc->electrons) m_cleaner->ElectronCleaner_noID_noIso(70,2.5);
-  if(bcc->muons) m_cleaner->MuonCleaner_noID_noIso(35,2.1);  
-  if(bcc->jets) m_cleaner->JetLeptonSubtractor(m_corrector);
+  if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(70,2.5);
+  if(bcc->muons) m_cleaner->MuonCleaner_noIso(35,2.1);  
+  if(bcc->jets) m_cleaner->JetLeptonSubtractor(m_corrector,false);
+
   if(!bcc->isRealData && bcc->jets) m_cleaner->JetEnergyResolutionShifter();
   //apply loose jet cleaning for 2D cut
   if(bcc->jets) m_cleaner->JetCleaner(25,double_infinity(),true);
@@ -161,7 +165,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
   if(!second_selection->passSelection())  throw SError( SError::SkipEvent );
 
-  calc->PrintEventContent();
+  //calc->PrintEventContent();
 
   WriteOutputTree();
 

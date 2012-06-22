@@ -30,13 +30,21 @@ class Cleaner{
    * Function that corrects the jet momentum to account for differences in jet energy resolution between data and MC. 
    * Changes are propagated to missing transverse energy. To be applied on MC only. 
    * Use the options syst_shift=e_Up and syst_shift=e_Down to shift the jet momenta within their systematic uncertainties.
+   * Use sort=true if you want to re-order the jets according to corrected pt after the applied shifts.
   */
-  void JetEnergyResolutionShifter(E_SystShift syst_shift=e_Default);
+  void JetEnergyResolutionShifter(E_SystShift syst_shift=e_Default, bool sort=true);
   /**
    * Function to subtract lepton momenta from jets if the distance between jet and lepton axis is less than 0.5 in the eta-phi plane. 
    * All jets and leptons in the actual BaseCycleContainer are considered.
+   * Use sort=false or sort=true if you want to re-order the jets according to corrected pt after the applied shifts.
   */
-  void JetLeptonSubtractor(FactorizedJetCorrector *corrector);
+  void JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort=true);
+
+  /**
+   * Function to apply new jet corrections to all jets of the BaseCycleContainer.
+   * Use sort=false or sort=true if you want to re-order the jets according to corrected pt after the applied shifts.
+  */
+  void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true);
 
   void ElectronCleaner(double ptmin=0, double etamax=9999, double relisomax=0.1);
   void MuonCleaner(double ptmin=0, double etamax=9999, double relisomax=0.125); 

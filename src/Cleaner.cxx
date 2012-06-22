@@ -21,26 +21,29 @@ void Cleaner::resetEventCalc(){
 
 }
 
-void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift){
+void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort){
 
   LorentzVector met(0,0,0,0);
   if(bcc->met) {
-    met.SetPt(bcc->met->pt());
-    met.SetPhi(bcc->met->phi());
+    met = bcc->met->v4();
   }
 
   for(unsigned int i=0; i<bcc->jets->size(); ++i){
 
     float genpt = bcc->jets->at(i).genjet_pt();
     //ignore unmatched jets (which have zero vector) or jets with very low pt:
-    if(genpt < 15.0) continue;
+    if(genpt < 15.0) {
+      //if(bcc->event==95758084) std::cout << "1.0 | " <<  bcc->jets->at(i).pt()  << " | " << bcc->jets->at(i).eta() << " | " << genpt << std::endl; 
+      continue;
+    }
     
     LorentzVector jet_v4 =  bcc->jets->at(i).v4();
-    met += jet_v4*bcc->jets->at(i).JEC_factor_raw();
-    
-    float recopt = bcc->jets->at(i).pt();
-    float factor = -10.0;
-    float abseta = fabs(bcc->jets->at(i).eta());
+
+    LorentzVector jet_v4_raw = jet_v4*bcc->jets->at(i).JEC_factor_raw();
+ 
+    float recopt = jet_v4.pt();
+    float factor = 0.0;
+    float abseta = fabs(jet_v4.eta());
 
     //numbers taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
     if(syst_shift==e_Default){
@@ -53,6 +56,8 @@ void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift){
       else if(abseta >= 1.7 && abseta <2.3)
 	factor = 0.134;
       else if(abseta >= 2.3)
+	factor = 0.288;
+      else
 	factor = 0.288;
     }
     else if(syst_shift==e_Up){
@@ -81,32 +86,48 @@ void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift){
     }
 
     float ptscale = std::max(0.0f, 1 + factor * (recopt - genpt) / recopt);
+
     jet_v4*=ptscale;
+
     bcc->jets->at(i).set_v4(jet_v4);
 
     //propagate JER shifts to MET
-    met -= jet_v4* bcc->jets->at(i).JEC_factor_raw();
+    //if(jet_v4.Pt()>25) {
+    met += jet_v4_raw;
+    jet_v4_raw*=ptscale;
+    met -= jet_v4_raw;
+    //}
+
+//      if(bcc->event==95758084){
+//        std::cout << ptscale << " | " << jet_v4.Pt()  << " | "<<  jet_v4.eta() << " | " << genpt << std::endl;
+//      }
   }
-  
+
   //store changed MET
   if(bcc->met){
     bcc->met->set_pt(met.Pt());
     bcc->met->set_phi(met.Phi());
   }
 
-  sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+  if(sort) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
   resetEventCalc();
 }
 
 
-void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
+void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort){
 
+//   if(bcc->event==95758084){
+//     std::cout<< "event: " <<bcc->event <<std::endl;
+//     std::cout<< "ID| pt raw  | PAT pt | area     | rho     | corr    | old cor| JER ptscale | pt new | eta new | ptgen " <<std::endl;
+//   }
+    
   for(unsigned int i=0; i<bcc->jets->size(); ++i){
 
     LorentzVector jet_v4_raw = bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw();
 
     //subtract lepton momenta from raw jet momentum
-     
+    
+    //if(bcc->event==95758084)std::cout << i+1 << " | " << jet_v4_raw.Pt() << std::endl;
     double ele_energy =  bcc->jets->at(i).chargedEmEnergyFraction()*jet_v4_raw.E();
     double mu_energy = bcc->jets->at(i).muonEnergyFraction()*jet_v4_raw.E();
 
@@ -119,7 +140,7 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
 //  	  ele_energy -= bcc->electrons->at(j).energy();
 	  //}
 	  //else{
-	  //std::cout << "Subtracting electron with pt="<< bcc->electrons->at(j).pt() <<" from jet with pt(corrected)= " << bcc->jets->at(i).pt() << ", pt(raw)=" << jet_v4_raw.pt()  << std::endl;
+	  //std::cout  << bcc->jets->at(i).pt()<< " -ele pt:"<< bcc->electrons->at(j).pt() << std::endl;
 	  //jet_v4_raw -= jet_v4_raw;
 	  //}
 	}
@@ -134,7 +155,7 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
 //  	  mu_energy -= bcc->muons->at(j).energy();
 	  //}
 	  //else{
-	  //std::cout << "Subtracting muon with pt="<< bcc->muons->at(j).pt() <<" from jet with pt(corrected)= " << bcc->jets->at(i).pt() << ", pt(raw)=" << jet_v4_raw.pt()  << std::endl;
+	  //std::cout << bcc->jets->at(i).pt() << " -mu pt:"<< bcc->muons->at(j).pt()  << std::endl;
 	  //jet_v4_raw -= jet_v4_raw;	
 	  //}
 	}
@@ -143,8 +164,7 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
     if(ele_energy<=jet_v4_raw.E())
       bcc->jets->at(i).set_chargedEmEnergyFraction(ele_energy/jet_v4_raw.E());
     if(mu_energy<=jet_v4_raw.E())
-     bcc->jets->at(i).set_muonEnergyFraction(mu_energy/jet_v4_raw.E());
-    
+      bcc->jets->at(i).set_muonEnergyFraction(mu_energy/jet_v4_raw.E());
 
     //apply jet energy corrections to modified raw momentum
     corrector->setJetPt(jet_v4_raw.Pt());
@@ -158,12 +178,38 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector){
     
     LorentzVector jet_v4_corrected = jet_v4_raw *correctionfactor;
 
+    //if(bcc->event==95758084)std::cout << i+1 << " | " << jet_v4_raw.Pt() << " | " <<  bcc->jets->at(i).pt() << " | " << bcc->jets->at(i).jetArea()<< " | " << bcc->rho << " | " << correctionfactor  << " | " << 1./bcc->jets->at(i).JEC_factor_raw() << " | " << std::endl;
+
     bcc->jets->at(i).set_v4(jet_v4_corrected);
     bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);
 
   }
 
-  sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+  if(sort) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+  resetEventCalc();
+}
+
+void Cleaner::JetRecorrector(FactorizedJetCorrector *corrector, bool sort){
+
+  for(unsigned int i=0; i<bcc->jets->size(); ++i){
+
+    LorentzVector jet_v4_raw = bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw();
+    corrector->setJetPt(jet_v4_raw.Pt());
+    corrector->setJetEta(jet_v4_raw.Eta());
+    corrector->setJetE(jet_v4_raw.E());  
+    corrector->setJetA(bcc->jets->at(i).jetArea());
+    corrector->setRho(bcc->rho);
+    corrector->setNPV(bcc->pvs->size());	
+
+    float correctionfactor = corrector->getCorrection();
+    
+    LorentzVector jet_v4_corrected = jet_v4_raw *correctionfactor;
+
+    bcc->jets->at(i).set_v4(jet_v4_corrected);
+    bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);
+  }
+
+  if(sort) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
   resetEventCalc();
 }
 
@@ -199,7 +245,7 @@ bool Cleaner::pfID(Jet jet){
       return true;
 
   }
-  std::cout << "Bloeder Jet, pt,eta= " << jet.pt() << ", " <<jet.eta() << ";  " << jet.numberOfDaughters() << " " << jet.neutralHadronEnergyFraction() << " " <<jet.neutralEmEnergyFraction() << " " << jet.chargedEmEnergyFraction() << " " << jet.chargedHadronEnergyFraction() << " " << jet.chargedMultiplicity() <<std::endl;
+  //std::cout << "Bloeder Jet, pt,eta= " << jet.pt() << ", " <<jet.eta() << ";  " << jet.numberOfDaughters() << " " << jet.neutralHadronEnergyFraction() << " " <<jet.neutralEmEnergyFraction() << " " << jet.chargedEmEnergyFraction() << " " << jet.chargedHadronEnergyFraction() << " " << jet.chargedMultiplicity() <<std::endl;
   return false;
      
 }
@@ -222,6 +268,7 @@ void Cleaner::ElectronCleaner_noID_noIso(double ptmin, double etamax){
     bcc->electrons->push_back(good_eles[i]);
   }
   sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
+  resetEventCalc();
 }
 
 void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax){
@@ -251,6 +298,7 @@ void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax){
     bcc->electrons->push_back(good_eles[i]);
   }
   sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
+  resetEventCalc();
 }
 
 void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax){
@@ -339,6 +387,7 @@ void Cleaner::MuonCleaner(double ptmin, double etamax, double relisomax){
     bcc->muons->push_back(good_mus[i]);
   }
   sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
+  resetEventCalc();
 }
 
 void Cleaner::TauCleaner(double ptmin, double etamax){

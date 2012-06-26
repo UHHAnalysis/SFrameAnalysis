@@ -66,6 +66,12 @@ void JetLeptonCleanerCycle::BeginInputData( const SInputData& id ) throw( SError
   // important: initialise histogram collections after their definition
   InitHistos();
 
+  Selection* selection= new Selection("selection");
+
+  selection->addSelectionModule(new NElectronSelection(1,int_infinity()));//at least one electron
+  selection->addSelectionModule(new NMuonSelection(0,0));//no muons
+  RegisterSelection(selection);
+
   return;
 
 }
@@ -125,10 +131,12 @@ void JetLeptonCleanerCycle::ExecuteEvent( const SInputData& id, Double_t weight)
      bcc->jets->push_back(uncleaned_jets.at(i));
   }
 
-
   Cleaner cleaner;
-  if(bcc->muons) cleaner.MuonCleaner_noID_noIso(35,2.1);
-  if(bcc->electrons) cleaner.ElectronCleaner_noID_noIso(70,2.5);
+  if(bcc->muons) cleaner.MuonCleaner_noIso(35,2.1);
+  if(bcc->electrons) cleaner.ElectronCleaner_noIso(35,2.5);
+
+  //static Selection* selection = GetSelection("selection");
+  //if(!selection->passSelection())  throw SError( SError::SkipEvent );
 
   HistsLeptonCleaning->Fill();
 

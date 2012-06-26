@@ -41,6 +41,15 @@ void JetLeptonCleanerHists::Init()
   Book( TH2F( "ptrec_ptgen_noJLS", "p_{T} vs p_{T}^{gen}", 100,0,500,100,0,500));
   Book( TH2F( "ptrec_ptgen_withJLS", "p_{T} vs p_{T}^{gen}", 100,0,500,100,0,500));
   
+  Book( TH2F( "ptresolution_ptgenlep_noJLS", "p_{T} vs p_{T}^{gen}", 100,-15,5,100,0,200));
+  Book( TH2F( "ptresolution_ptgenlep_withJLS", "p_{T} vs p_{T}^{gen}", 100,-15,5,100,0,200));
+
+  Book( TH1F( "pt_resolution_genJLS_noJLS", "(p_{T}^{gen} - p_{T})/p_{T}^{gen}", 200,-15,5));
+  Book( TH1F( "pt_resolution_genJLS_withJLS", "(p_{T}^{gen} - p_{T})/p_{T}^{gen}", 200,-15,5));
+
+  Book( TH2F( "ptrec_ptgen_genJLS_noJLS", "p_{T} vs p_{T}^{gen}", 100,0,500,100,0,500));
+  Book( TH2F( "ptrec_ptgen_genJLS_withJLS", "p_{T} vs p_{T}^{gen}", 100,0,500,100,0,500));
+
   std::vector<JetCorrectorParameters> pars;
 
   pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L1FastJet_AK5PFchs.txt"));
@@ -95,7 +104,7 @@ void JetLeptonCleanerHists::Fill()
   //search for changed jets by comparing uncleaned and new jet collection
   bool changed=false;
   for(unsigned int i=0; i< bcc->jets->size();++i){
-    if(fabs(uncleaned_jets.at(i).pt()-bcc->jets->at(i).pt())>0.01){
+    if(fabs(uncleaned_jets.at(i).pt()-bcc->jets->at(i).pt())>0.0001){
       //std::cout << "vorher: " << uncleaned_jets.at(i).pt() << "   nachher: " << bcc->jets->at(i).pt() <<std::endl;
       changed=true;
       Hist( "delta_pt")->Fill( uncleaned_jets.at(i).pt()-bcc->jets->at(i).pt());
@@ -108,6 +117,29 @@ void JetLeptonCleanerHists::Fill()
 	Hist("pt_resolution_withJLS")->Fill( (bcc->jets->at(i).genjet_pt() -  bcc->jets->at(i).pt() )/ bcc->jets->at(i).genjet_pt() );
 	Hist("ptrec_ptgen_noJLS")->Fill( uncleaned_jets.at(i).pt(), bcc->jets->at(i).genjet_pt());
 	Hist("ptrec_ptgen_withJLS")->Fill( bcc->jets->at(i).pt(), bcc->jets->at(i).genjet_pt());
+
+	//lepton removal from jets on generator level
+	LorentzVector genlep_v4(0,0,0,0);
+	for(unsigned int j=0; j<bcc->jets->at(i).genparticles_indices().size(); ++j){
+	  unsigned int index = bcc->jets->at(i).genparticles_indices().at(j);
+	  int pdgId = abs(bcc->genparticles->at(index).pdgId());
+	  int status = abs(bcc->genparticles->at(index).status());
+	  if(status==1 &&(  pdgId==11 || pdgId==13)){
+	    genlep_v4+= bcc->genparticles->at(index).v4();
+	  }
+	}
+
+
+	Hist("ptresolution_ptgenlep_noJLS") -> Fill( (bcc->jets->at(i).genjet_pt() -  uncleaned_jets.at(i).pt() )/ bcc->jets->at(i).genjet_pt() , genlep_v4.pt());
+	Hist("ptresolution_ptgenlep_withJLS") -> Fill ( (bcc->jets->at(i).genjet_pt() -  bcc->jets->at(i).pt() )/ bcc->jets->at(i).genjet_pt() , genlep_v4.pt());
+
+	LorentzVector genjet_v4 =  bcc->jets->at(i).genjet_v4();
+	genjet_v4 -= genlep_v4;
+	Hist("pt_resolution_genJLS_noJLS")->Fill( (genjet_v4.pt() -  uncleaned_jets.at(i).pt() )/ genjet_v4.pt() );	
+	Hist("pt_resolution_genJLS_withJLS")->Fill( (genjet_v4.pt() -  bcc->jets->at(i).pt() )/ genjet_v4.pt() );
+	Hist("ptrec_ptgen_genJLS_noJLS")->Fill( uncleaned_jets.at(i).pt(), genjet_v4.pt());
+	Hist("ptrec_ptgen_genJLS_withJLS")->Fill( bcc->jets->at(i).pt(), genjet_v4.pt());
+
       }
     }
   }

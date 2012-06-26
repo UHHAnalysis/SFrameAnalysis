@@ -218,11 +218,13 @@ bool Cleaner::eleID(Electron ele){
 
   bool pass=false;
   
+  float trackMomentumAtVtx = ele.EcalEnergy()/ele.EoverPIn();
+
   if(fabs(ele.supercluster_eta())<1.4442){
-    if(ele.dEtaIn()<0.004 && ele.dPhiIn()<0.03 && ele.sigmaIEtaIEta()<0.01 && ele.HoverE()<0.12 && fabs(1./ele.EcalEnergy()-1./ele.v4().P())<0.05) pass=true; 
+    if(ele.dEtaIn()<0.004 && ele.dPhiIn()<0.03 && ele.sigmaIEtaIEta()<0.01 && ele.HoverE()<0.12 && fabs(1./ele.EcalEnergy()-1./trackMomentumAtVtx)<0.05) pass=true; 
   }
   else if( fabs(ele.supercluster_eta())>1.5660){
-    if(ele.dEtaIn()<0.005 && ele.dPhiIn()<0.02 && ele.sigmaIEtaIEta()<0.03 && ele.HoverE()<0.10 && fabs(1./ele.EcalEnergy()-1./ele.v4().P())<0.05) pass=true; 
+    if(ele.dEtaIn()<0.005 && ele.dPhiIn()<0.02 && ele.sigmaIEtaIEta()<0.03 && ele.HoverE()<0.10 && fabs(1./ele.EcalEnergy()-1./trackMomentumAtVtx)<0.05) pass=true; 
   }
 
   return pass;
@@ -347,13 +349,17 @@ void Cleaner::MuonCleaner_noIso(double ptmin, double etamax){
   for(unsigned int i=0; i<bcc->muons->size(); ++i){
     Muon mu = bcc->muons->at(i);
     if(mu.isGlobalMuon()){
-      if(mu.globalTrack_chi2()/mu.globalTrack_ndof()<10){
-	if(mu.innerTrack_trackerLayersWithMeasurement()>5){
-	  if(mu.dB()<0.02){
-	    if(fabs(mu.vertex_z()-bcc->pvs->at(0).z())<1){
-	      if(mu.innerTrack_numberOfValidPixelHits()>0){
-		if(mu.numberOfMatchedStations()>1){
-		  good_mus.push_back(mu);
+      if(mu.isPFMuon()){
+	if(mu.globalTrack_chi2()/mu.globalTrack_ndof()<10){
+	  if(mu.globalTrack_numberOfValidMuonHits()>0){
+	    if(mu.innerTrack_trackerLayersWithMeasurement()>5){
+	      if(mu.dB()<0.02){
+		if(fabs(mu.vertex_z()-bcc->pvs->at(0).z())<0.5){
+		  if(mu.innerTrack_numberOfValidPixelHits()>0){
+		    if(mu.numberOfMatchedStations()>1){
+		      good_mus.push_back(mu);
+		    }
+		  }
 		}
 	      }
 	    }

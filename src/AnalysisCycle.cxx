@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.4 2012/06/12 13:48:34 rkogler Exp $
+// $Id: AnalysisCycle.cxx,v 1.5 2012/06/22 07:46:17 peiffer Exp $
 
 #include <iostream>
 
@@ -42,6 +42,8 @@ AnalysisCycle::AnalysisCycle()
   DeclareProperty( "PrunedJetCollection", m_PrunedJetCollection );
   //DeclareProperty( "addGenInfo", m_addGenInfo);
   DeclareProperty( "GenParticleCollection", m_GenParticleCollection);
+  DeclareProperty( "readTTbarReco", m_readTTbarReco);
+  DeclareProperty( "writeTTbarReco", m_writeTTbarReco);
   
   // steerable properties for the Pile-up reweighting
   DeclareProperty( "PU_Filename_MC" , m_PUFilenameMC);
@@ -149,6 +151,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     if(m_PrunedJetCollection.size()>0) DeclareVariable(m_output_prunedjets, m_PrunedJetCollection.c_str());
     if(m_addGenInfo && m_GenParticleCollection.size()>0) DeclareVariable(m_output_genparticles, m_GenParticleCollection.c_str());
     if(m_addGenInfo) DeclareVariable(m_output_genInfo, "genInfo" );
+    if(m_writeTTbarReco) DeclareVariable(m_output_recoHyps, "recoHyps");
     DeclareVariable(m_output_triggerNames, "triggerNames");
     DeclareVariable(m_output_triggerResults, "triggerResults"); 
   }
@@ -317,6 +320,7 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
   if(m_PrunedJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrunedJetCollection.c_str() , m_bcc.prunedjets);
   if(m_addGenInfo && m_GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenParticleCollection.c_str() , m_bcc.genparticles);
   if(m_addGenInfo) ConnectVariable( "AnalysisTree", "genInfo" , m_bcc.genInfo);
+  if(m_readTTbarReco) ConnectVariable( "AnalysisTree", "recoHyps", m_bcc.recoHyps);
   ConnectVariable( "AnalysisTree", "run" , m_bcc.run);
   ConnectVariable( "AnalysisTree", "rho" , m_bcc.rho);
   ConnectVariable( "AnalysisTree", "luminosityBlock" , m_bcc.luminosityBlock);
@@ -376,6 +380,9 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     if( !LumiHandler()->PassGoodRunsList( m_bcc.run, m_bcc.luminosityBlock )) throw SError( SError::SkipEvent );
   }
 
+  //create new pointer to recoHyps if recoHyps are going to be stored but no recoHyps were read in
+  //note: list of recoHyps is still empty, has to be filled in the user cycle
+  if(m_writeTTbarReco && !m_readTTbarReco)  m_bcc.recoHyps = new std::vector<ReconstructionHypothesis>;
 
   return;
   
@@ -397,6 +404,7 @@ void AnalysisCycle::WriteOutputTree() throw( SError)
   m_output_genparticles.clear();
   m_output_triggerNames.clear();
   m_output_triggerResults.clear();
+  m_output_recoHyps.clear();
   
   if(m_PhotonCollection.size()>0) m_output_photons=*m_bcc.photons;
   if(m_JetCollection.size()>0) m_output_jets=*m_bcc.jets;
@@ -410,7 +418,8 @@ void AnalysisCycle::WriteOutputTree() throw( SError)
   if(m_addGenInfo && m_TopJetCollectionGen.size()>0) m_output_topjetsgen=*m_bcc.topjetsgen;
   if(m_PrunedJetCollection.size()>0) m_output_prunedjets=*m_bcc.prunedjets;
   if(m_addGenInfo && m_GenParticleCollection.size()>0) m_output_genparticles=*m_bcc.genparticles;
-  
+  if(m_writeTTbarReco) m_output_recoHyps=*m_bcc.recoHyps;
+
   if(m_newrun) m_output_triggerNames = m_bcc.triggerNames_actualrun;//store trigger names only for new runs
   m_newrun=false;
   

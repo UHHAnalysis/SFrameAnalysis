@@ -321,3 +321,31 @@ std::string TriangularCut::description(){
   return s;
 }
 
+HypothesisDiscriminatorCut::HypothesisDiscriminatorCut(HypothesisDiscriminator* discr, double min_discr, double max_discr){
+  m_discr=discr;
+  m_min_discr = min_discr;
+  m_max_discr = max_discr;
+}
+
+bool HypothesisDiscriminatorCut::pass(BaseCycleContainer *bcc){
+
+  ReconstructionHypothesis *hyp = m_discr->GetBestHypothesis();
+
+  if(!hyp){
+    std::cout << "WARNING: no hypothesis " << m_discr->GetLabel() << " found, event is rejected." <<std::endl;
+    return false;
+  }
+
+  double discr_value = hyp->discriminator(m_discr->GetLabel());
+
+  if(discr_value<m_min_discr || discr_value>m_max_discr) return false;
+
+  return true;
+
+}
+
+std::string HypothesisDiscriminatorCut::description(){
+  char s[100];
+  sprintf(s, "%.1f < %s discriminator < %.1f",m_min_discr,m_discr->GetLabel().c_str(),m_max_discr);
+  return s;
+}

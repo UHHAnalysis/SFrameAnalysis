@@ -83,9 +83,14 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   second_selection->addSelectionModule(new HTlepCut(150));
   second_selection->addSelectionModule(new TriangularCut());
   second_selection->addSelectionModule(new METCut(50));
- 
+
+  Selection* chi2_selection= new Selection("chi2_selection");
+  m_chi2discr = new Chi2Discriminator();
+  chi2_selection->addSelectionModule(new HypothesisDiscriminatorCut( m_chi2discr, -1*double_infinity(), 100));
+
   RegisterSelection(first_selection);
   RegisterSelection(second_selection);
+  RegisterSelection(chi2_selection); 
 
   std::vector<JetCorrectorParameters> pars;
 
@@ -103,6 +108,8 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   } 
  
   m_corrector = new FactorizedJetCorrector(pars);
+
+
 
   return;
 
@@ -139,6 +146,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
   static Selection* first_selection = GetSelection("first_selection");
   static Selection* second_selection = GetSelection("second_selection");
+  static Selection* chi2_selection = GetSelection("chi2_selection");
  
   m_cleaner = new Cleaner();
 
@@ -155,6 +163,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   //apply loose jet cleaning for 2D cut
   if(bcc->jets) m_cleaner->JetCleaner(25,double_infinity(),true);
 
+
   if(!first_selection->passSelection())  throw SError( SError::SkipEvent );
 
   //apply tighter jet cleaning for further cuts and analysis steps
@@ -164,6 +173,19 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   if(bcc->taus) m_cleaner->TauCleaner(double_infinity(),0.0);
 
   if(!second_selection->passSelection())  throw SError( SError::SkipEvent );
+
+
+  //do reconstruction here
+
+  calc->FillHighMassTTbarHypotheses();
+  m_chi2discr->FillDiscriminatorValues();
+
+  ReconstructionHypothesis *hyp = m_chi2discr->GetBestHypothesis();
+  double mttbar= (hyp->toplep_v4()+hyp->tophad_v4()).M();
+  std::cout << "event: " << bcc->event << "   mttbar : " << mttbar << "   chi2 : " << hyp->discriminator("Chi2") << std::endl;
+
+
+  if(!chi2_selection->passSelection())  throw SError( SError::SkipEvent );
 
   //calc->PrintEventContent();
 

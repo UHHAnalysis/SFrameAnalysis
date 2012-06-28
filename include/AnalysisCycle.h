@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.3 2012/06/12 13:50:24 rkogler Exp $
+// $Id: AnalysisCycle.h,v 1.4 2012/06/13 09:49:56 peiffer Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -22,7 +22,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.3 $
+ *  @version $Revision: 1.4 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -114,6 +114,8 @@ private:
   std::string m_GenParticleCollection;
   bool m_addGenInfo;
   bool m_newrun;
+  bool m_writeTTbarReco;
+  bool m_readTTbarReco;
 
   //output variables
   std::vector< Electron > m_output_electrons;  
@@ -130,6 +132,7 @@ private:
   std::vector<bool> m_output_triggerResults;
   std::vector< GenParticle > m_output_genparticles;
   GenInfo m_output_genInfo;
+  std::vector< ReconstructionHypothesis > m_output_recoHyps;
 
   // list of the event selections 
   std::vector<Selection*> m_selections;

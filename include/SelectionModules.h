@@ -7,6 +7,7 @@
 #include <algorithm>
 #include "Selection.h"
 #include "EventCalc.h"
+#include "HypothesisDiscriminator.h"
 
 class TriggerSelection: public SelectionModule{
  public:
@@ -186,6 +187,21 @@ class TriangularCut: public SelectionModule{
 
   virtual bool pass(BaseCycleContainer*);
   virtual std::string description();
+
+};
+
+class HypothesisDiscriminatorCut: public SelectionModule{
+ public:
+  HypothesisDiscriminatorCut(HypothesisDiscriminator* discr, double min_discr, double max_discr);
+  ~HypothesisDiscriminatorCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  double m_max_discr;
+  double m_min_discr;
+  HypothesisDiscriminator* m_discr;
 
 };
 

@@ -62,9 +62,6 @@ class Cleaner{
 
   BaseCycleContainer* bcc;
 
-  bool eleID(Electron);
-  bool pfID(Jet);
-
   /// call this routine at the end of each cleaner to force re-calculation of basic variables in EventCalc
   void resetEventCalc();
 

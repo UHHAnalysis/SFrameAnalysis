@@ -213,44 +213,6 @@ void Cleaner::JetRecorrector(FactorizedJetCorrector *corrector, bool sort){
   resetEventCalc();
 }
 
-//tight ele ID from https://twiki.cern.ch/twiki/bin/view/CMS/EgammaCutBasedIdentification
-bool Cleaner::eleID(Electron ele){
-
-  bool pass=false;
-  
-  float trackMomentumAtVtx = ele.EcalEnergy()/ele.EoverPIn();
-
-  if(fabs(ele.supercluster_eta())<1.4442){
-    if(ele.dEtaIn()<0.004 && ele.dPhiIn()<0.03 && ele.sigmaIEtaIEta()<0.01 && ele.HoverE()<0.12 && fabs(1./ele.EcalEnergy()-1./trackMomentumAtVtx)<0.05) pass=true; 
-  }
-  else if( fabs(ele.supercluster_eta())>1.5660){
-    if(ele.dEtaIn()<0.005 && ele.dPhiIn()<0.02 && ele.sigmaIEtaIEta()<0.03 && ele.HoverE()<0.10 && fabs(1./ele.EcalEnergy()-1./trackMomentumAtVtx)<0.05) pass=true; 
-  }
-
-  return pass;
-
-}
-
-//pf ID has already been applied when using goodPatJets
-bool Cleaner::pfID(Jet jet){
-
-  if(jet.numberOfDaughters()>1 
-     && jet.neutralHadronEnergyFraction()<0.99
-     && jet.neutralEmEnergyFraction()<0.99){
-    
-    if(fabs(jet.eta())>=2.4)
-      return true;
-    
-    if(jet.chargedEmEnergyFraction()<0.99
-       && jet.chargedHadronEnergyFraction()>0
-       && jet.chargedMultiplicity()>0)
-      return true;
-
-  }
-  //std::cout << "Bloeder Jet, pt,eta= " << jet.pt() << ", " <<jet.eta() << ";  " << jet.numberOfDaughters() << " " << jet.neutralHadronEnergyFraction() << " " <<jet.neutralEmEnergyFraction() << " " << jet.chargedEmEnergyFraction() << " " << jet.chargedHadronEnergyFraction() << " " << jet.chargedMultiplicity() <<std::endl;
-  return false;
-     
-}
 
 void Cleaner::ElectronCleaner_noID_noIso(double ptmin, double etamax){
 
@@ -281,11 +243,13 @@ void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax){
     Electron ele = bcc->electrons->at(i);
     if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660){
       if(bcc->pvs->size()>0){
-	if(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y())<0.02){
-	  if(ele.passconversionveto()){
-	    if(ele.mvaTrigV0()>0.0){
-	      if(eleID(ele)){
-		good_eles.push_back(ele);
+	if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02){
+	  if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1){	  
+	    if(ele.passconversionveto()){
+	      if(ele.mvaTrigV0()>0.0){
+		if(ele.eleID(Electron::e_Tight)){
+		  good_eles.push_back(ele);
+		}
 	      }
 	    }
 	  }
@@ -433,7 +397,7 @@ void Cleaner::JetCleaner(double ptmin, double etamax, bool doPFID){
     Jet jet = bcc->jets->at(i);
     if(jet.pt()>ptmin){
       if(fabs(jet.eta())<etamax){
-	if(!doPFID || pfID(jet)){
+	if(!doPFID || jet.pfID()){
 	  good_jets.push_back(jet);
 	}
       }
@@ -456,7 +420,7 @@ void Cleaner::TopJetCleaner(double ptmin, double etamax, bool doPFID){
     TopJet topjet = bcc->topjets->at(i);
     if(topjet.pt()>ptmin){
       if(fabs(topjet.eta())<etamax){
-	if(!doPFID || pfID(topjet)){
+	if(!doPFID || topjet.pfID()){
 	  good_topjets.push_back(topjet);
 	}
       }

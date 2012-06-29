@@ -7,6 +7,10 @@
 #include "FactorizedJetCorrector.h"
 #include "Cleaner.h"
 #include "HypothesisDiscriminator.h"
+#include "HypothesisHists.h"
+#include "include/SelectionModules.h"
+#include "include/ObjectHandler.h"
+#include "JetCorrectorParameters.h"
 
 /**
  *  @short Selection cycle to perform 
@@ -46,6 +50,7 @@ private:
   FactorizedJetCorrector* m_corrector;
   Cleaner* m_cleaner;
   Chi2Discriminator* m_chi2discr;
+  BestPossibleDiscriminator* m_bpdiscr;
 
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimeSelectionCycle, 0 );

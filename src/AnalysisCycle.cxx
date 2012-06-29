@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.5 2012/06/22 07:46:17 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.6 2012/06/28 16:01:42 peiffer Exp $
 
 #include <iostream>
 
@@ -380,9 +380,9 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     if( !LumiHandler()->PassGoodRunsList( m_bcc.run, m_bcc.luminosityBlock )) throw SError( SError::SkipEvent );
   }
 
-  //create new pointer to recoHyps if recoHyps are going to be stored but no recoHyps were read in
+  //create new pointer to recoHyps if no recoHyps were read in
   //note: list of recoHyps is still empty, has to be filled in the user cycle
-  if(m_writeTTbarReco && !m_readTTbarReco)  m_bcc.recoHyps = new std::vector<ReconstructionHypothesis>;
+  if(!m_readTTbarReco)  m_bcc.recoHyps = new std::vector<ReconstructionHypothesis>;
 
   return;
   

@@ -4,10 +4,6 @@ using namespace std;
 
 // Local include(s):
 #include "include/ZprimeSelectionCycle.h"
-#include "include/SelectionModules.h"
-#include "include/ExampleHists.h"
-#include "include/ObjectHandler.h"
-#include "JetCorrectorParameters.h"
 
 ClassImp( ZprimeSelectionCycle );
 
@@ -86,7 +82,9 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
 
   Selection* chi2_selection= new Selection("chi2_selection");
   m_chi2discr = new Chi2Discriminator();
-  chi2_selection->addSelectionModule(new HypothesisDiscriminatorCut( m_chi2discr, -1*double_infinity(), 100));
+  chi2_selection->addSelectionModule(new HypothesisDiscriminatorCut( m_chi2discr, -1*double_infinity(), 10));
+
+  m_bpdiscr = new BestPossibleDiscriminator();
 
   RegisterSelection(first_selection);
   RegisterSelection(second_selection);
@@ -109,7 +107,15 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
  
   m_corrector = new FactorizedJetCorrector(pars);
 
+  // ---------------- set up the histogram collections --------------------
 
+  // histograms without any cuts
+  RegisterHistCollection( new HypothesisHists("Chi2", m_chi2discr) );
+  RegisterHistCollection( new HypothesisHists("BestPossible", m_bpdiscr) );
+
+
+  // important: initialise histogram collections after their definition
+  InitHistos();
 
   return;
 
@@ -179,13 +185,25 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
   calc->FillHighMassTTbarHypotheses();
   m_chi2discr->FillDiscriminatorValues();
+  m_bpdiscr->FillDiscriminatorValues();
 
   ReconstructionHypothesis *hyp = m_chi2discr->GetBestHypothesis();
   double mttbar= (hyp->toplep_v4()+hyp->tophad_v4()).M();
-  std::cout << "event: " << bcc->event << "   mttbar : " << mttbar << "   chi2 : " << hyp->discriminator("Chi2") << std::endl;
+  double nu_pz = hyp->neutrino_v4().pz();
+  //std::cout << "event: " << bcc->event << "   mttbar : " << mttbar << "   nu pz : "<< nu_pz << "   chi2 : " << hyp->discriminator("Chi2") << "   chi2 tlep: " << hyp->discriminator("Chi2_tlep") <<"   chi2 thad: " << hyp->discriminator("Chi2_thad") <<std::endl;
 
+  ReconstructionHypothesis *bp_hyp = m_bpdiscr->GetBestHypothesis();
+  double bp_mttbar =  (bp_hyp->toplep_v4()+bp_hyp->tophad_v4()).M();
+  //std::cout << "               bp mttbar : " << bp_mttbar << "   bp deltaR : " << bp_hyp->discriminator("BestPossible") << std::endl;
+
+  // get the histogram collections
+  BaseHists* Chi2Hists = GetHistCollection("Chi2");
+  BaseHists* BPHists = GetHistCollection("BestPossible");
 
   if(!chi2_selection->passSelection())  throw SError( SError::SkipEvent );
+
+  Chi2Hists->Fill();
+  BPHists->Fill();
 
   //calc->PrintEventContent();
 

@@ -14,7 +14,7 @@
 #include "TH2.h"
 
 /**
- * histogram class to draw histograms for the ttbar reconstruction
+ * @short histogram class to draw histograms for the ttbar reconstruction
  *
  * histograms are plotted for the best hypothesis determined by the HypothesisDiscriminator given to the constructor
  */

@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.6 2012/06/28 16:01:42 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.7 2012/06/29 13:05:18 peiffer Exp $
 
 #include <iostream>
 
@@ -287,6 +287,7 @@ void AnalysisCycle::ResetSelectionStats()
 
 void AnalysisCycle::EndInputData( const SInputData& ) throw( SError ) 
 {
+
   // clean-up, info messages and final calculations after the analysis
 
   PrintSelectionSummary();
@@ -296,6 +297,7 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
   ResetSelectionStats();
 
   return;
+
 
 }
 
@@ -330,6 +332,9 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
   ConnectVariable( "AnalysisTree" ,"beamspot_x0", m_bcc.beamspot_x0);
   ConnectVariable( "AnalysisTree" ,"beamspot_y0", m_bcc.beamspot_y0);
   ConnectVariable( "AnalysisTree" ,"beamspot_z0", m_bcc.beamspot_z0);
+
+  //if(m_caTopTagGen.size()>0) ConnectVariable("AnalysisTree", m_caTopTagGen.c_str(), m_bcc.topjets);
+
 
   ObjectHandler* objs = ObjectHandler::Instance();
   objs->SetBaseCycleContainer(&m_bcc);
@@ -367,14 +372,23 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 
 
   // store the weight (lumiweight) in the eventcalc class and use it 
+  calc -> ProduceWeight(weight);
+
 
   if(m_bcc.genInfo){
+
+    std::vector<float> genweights =  m_bcc.genInfo->weights();
+    for(unsigned int i=0; i< genweights.size(); ++i){
+      calc -> ProduceWeight(genweights[i]);
+    }
+
     if(m_puwp){
-      double pu_weight = m_puwp->produceWeight(m_bcc.genInfo);
+     double pu_weight = m_puwp->produceWeight(m_bcc.genInfo);
       // set the weight in the eventcalc
+      calc -> ProduceWeight(pu_weight);
     }
   }
-
+  
   //select only good runs
   if(m_bcc.isRealData && LumiHandler()->IsLumiCalc() ){
     if( !LumiHandler()->PassGoodRunsList( m_bcc.run, m_bcc.luminosityBlock )) throw SError( SError::SkipEvent );

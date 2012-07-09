@@ -137,6 +137,28 @@ std::string NTopJetSelection::description(){
   return s;
 }
 
+NPrunedJetSelection::NPrunedJetSelection(int min_nparticle, int max_nparticle, double ptmin, double etamax){
+  m_min_nparticle=min_nparticle;
+  m_max_nparticle=max_nparticle;
+  m_ptmin=ptmin;
+  m_etamax=etamax;
+}
+
+bool NPrunedJetSelection::pass(BaseCycleContainer *bcc){
+  int nparticle=0;
+  for(unsigned int i=0;i<bcc->prunedjets->size(); ++i){
+    if(bcc->prunedjets->at(i).pt()>m_ptmin && fabs(bcc->prunedjets->at(i).eta())<m_etamax) nparticle++;
+  }
+  return nparticle>=m_min_nparticle && nparticle<=m_max_nparticle;
+}
+
+std::string NPrunedJetSelection::description(){
+  char s[100];
+  sprintf(s, "%d <= N(pruned jets) <= %d, with pt>%.1f GeV, |eta|<%.1f",m_min_nparticle,m_max_nparticle,m_ptmin,m_etamax);
+
+  return s;
+}
+
 
 
 NTopTagSelection::NTopTagSelection(int min_ntoptag, int max_ntoptag){
@@ -164,6 +186,34 @@ bool NTopTagSelection::pass(BaseCycleContainer *bcc){
 std::string NTopTagSelection::description(){
   char s[100];
   sprintf(s, "%d <= N(top-tags) <= %d",m_min_ntoptag,m_max_ntoptag);
+  return s;
+}
+
+NWTagSelection::NWTagSelection(int min_nwtag, int max_nwtag){
+  m_min_nwtag=min_nwtag;
+  m_max_nwtag=max_nwtag;
+}
+
+bool NWTagSelection::pass(BaseCycleContainer *bcc){
+
+  int nwtag=0;
+  
+  for(unsigned int i=0; i< bcc->prunedjets->size(); ++i){
+    TopJet prunedjet =  bcc->prunedjets->at(i);
+    double mmin=0;
+    double mjet=0;
+    int nsubjets=0;
+    if(WTag(prunedjet,mjet,nsubjets,mmin)) nwtag++;
+  }
+  if(nwtag<m_min_nwtag) return false;
+  if(nwtag>m_max_nwtag) return false;
+  return true;
+
+}
+
+std::string NWTagSelection::description(){
+  char s[100];
+  sprintf(s, "%d <= N(W-tags) <= %d",m_min_nwtag,m_max_nwtag);
   return s;
 }
 

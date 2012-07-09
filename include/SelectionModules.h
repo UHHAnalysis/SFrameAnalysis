@@ -98,6 +98,23 @@ class NTopJetSelection: public SelectionModule{
   double m_etamax;
 };
 
+
+class NPrunedJetSelection: public SelectionModule{
+ public:
+  NPrunedJetSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());
+  ~NPrunedJetSelection(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  int m_min_nparticle;
+  int m_max_nparticle;
+  double m_ptmin;
+  double m_etamax;
+};
+
+
 class NTopTagSelection: public SelectionModule{
  public:
   NTopTagSelection(int min_ntoptag, int max_ntoptag=int_infinity());
@@ -111,6 +128,19 @@ class NTopTagSelection: public SelectionModule{
   int m_max_ntoptag;
 };
 
+
+class NWTagSelection: public SelectionModule{
+ public:
+  NWTagSelection(int min_nwtag, int max_nwtag=int_infinity());
+  ~NWTagSelection(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  int m_min_nwtag;
+  int m_max_nwtag;
+};
 
 
 class NBTagSelection: public SelectionModule{

@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.7 2012/06/29 13:05:18 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.8 2012/07/02 15:06:24 mmeyer Exp $
 
 #include <iostream>
 
@@ -23,6 +23,10 @@ AnalysisCycle::AnalysisCycle()
 
   m_puwp = NULL;
   m_newrun = false;
+
+  // set some default values
+  m_readTTbarReco = false;
+  m_writeTTbarReco = false;
   
   // declare variables for lumi file 
   DeclareProperty( "LumiFilePath" , m_lumifile_path);
@@ -44,7 +48,7 @@ AnalysisCycle::AnalysisCycle()
   DeclareProperty( "GenParticleCollection", m_GenParticleCollection);
   DeclareProperty( "readTTbarReco", m_readTTbarReco);
   DeclareProperty( "writeTTbarReco", m_writeTTbarReco);
-  
+
   // steerable properties for the Pile-up reweighting
   DeclareProperty( "PU_Filename_MC" , m_PUFilenameMC);
   DeclareProperty( "PU_Filename_Data" , m_PUFilenameData);

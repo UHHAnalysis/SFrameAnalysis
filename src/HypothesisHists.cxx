@@ -16,8 +16,8 @@ HypothesisHists::~HypothesisHists()
 void HypothesisHists::Init()
 {
 
-  Book( TH1F( "M_ttbar_rec", "rec. M_{t#bar{t}} [GeV/c^{2}]", 1000, 0, 3000 ) );
-
+  Book( TH1F( "M_ttbar_rec", "M_{t#bar{t}}^{rec} [GeV/c^{2}]", 1000, 0, 3000 ) );
+  Book( TH1F("M_ttbar_resolution", "(M_{t#bar{t}}^{gen} - M_{t#bar{t}}^{rec})/M_{t#bar{t}}^{rec}", 1000, -5,5) );
 
   TString name = m_discr->GetLabel();
   name += " discriminator";
@@ -29,7 +29,7 @@ void HypothesisHists::Init()
   }
   Book( TH1F("Discriminator", name , 100, min,max) );
 
-  Book( TH2F("M_ttbar_rec_vs_M_ttbar_gen","rec. M_{t#bar{t}} [GeV/c^{2}] vs gen. M_{t#bar{t}} [GeV/c^{2}]",100,0,3000,100,0,3000));
+  Book( TH2F("M_ttbar_rec_vs_M_ttbar_gen","M_{t#bar{t}}^{rec} [GeV/c^{2}] vs M_{t#bar{t}}^{gen} [GeV/c^{2}]",100,0,3000,100,0,3000));
   
 }
 
@@ -37,10 +37,10 @@ void HypothesisHists::Fill()
 {
   // fill the histograms
 
-  // important: get the event weight
-  double weight = 1.;
-
   EventCalc* calc = EventCalc::Instance();
+
+  // important: get the event weight
+  double weight = calc->GetWeight();
 
   ReconstructionHypothesis* hyp = m_discr->GetBestHypothesis();
   
@@ -49,6 +49,7 @@ void HypothesisHists::Fill()
 
   Hist("M_ttbar_rec")->Fill(mttbar_rec, weight);
   Hist("M_ttbar_rec_vs_M_ttbar_gen")->Fill(mttbar_rec, mttbar_gen);
+  Hist("M_ttbar_resolution")->Fill( (mttbar_gen-mttbar_rec)/mttbar_gen, weight);
   Hist("Discriminator")->Fill(hyp->discriminator(m_discr->GetLabel()), weight);
 }
 

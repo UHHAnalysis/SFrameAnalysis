@@ -67,7 +67,7 @@ void ZprimePreSelectionCycle::BeginInputData( const SInputData& id ) throw( SErr
   //Selection* preselection = new Selection("pre-selection");
   Selection* preselection = new Selection("pre-selection");
 
-  preselection->addSelectionModule(new NElectronSelection(1,int_infinity(),30,2.5));//at least one electron
+  preselection->addSelectionModule(new NElectronSelection(1,int_infinity(),35,2.5));//at least one electron
   preselection->addSelectionModule(new NMuonSelection(0,0));//no muons
   preselection->addSelectionModule(new NJetSelection(2));//at least two jets
   RegisterSelection(preselection);
@@ -138,6 +138,8 @@ void ZprimePreSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weigh
   //clean collections here
 
   if(bcc->muons) cleaner.MuonCleaner_noIso(35,2.1);
+  if(bcc->electrons) cleaner.ElectronCleaner_noIso(35,2.5);
+
   if(bcc->jets) cleaner.JetLeptonSubtractor(m_corrector,false);
   if(!bcc->isRealData && bcc->jets) cleaner.JetEnergyResolutionShifter();
   if(bcc->jets) cleaner.JetCleaner(30,2.4,true);

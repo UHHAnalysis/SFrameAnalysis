@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd">
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd" [
+<!ENTITY TTbar SYSTEM "TTbar.xml">]
+>
 
 <JobConfiguration JobName="ZprimeSelectionCycle" OutputLevel="INFO">
 	<Library Name="libfastjet" />
@@ -21,17 +23,17 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" /> 
 		</InputData> -->
-		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarTestFromALL" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/TTbarTest2.root" Lumi="0.0"/> 
+<!--		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="FromAll" Cacheable="True">
+                        &TTbar;
 			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" /> 
-		</InputData> 
-<!--		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarTestWithHyp" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ZprimeSelectionCycle.MC.TTbarTestFromALL.root" Lumi="0.0"/> 
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> -->
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="FromPresel" Cacheable="False">
+		<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ZprimePreSelectionCycle.MC.TTbarTest.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" /> 
 		</InputData>
-	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000FromPreSel" Cacheable="False">
+<!--	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000FromPreSel" Cacheable="False">
 		<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ZprimePreSelectionCycle.MC.LQ1000.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" />
 			<OutputTree Name="AnalysisTree" /> 
@@ -53,8 +55,8 @@
 		</InputData> --> 
 		<UserConfig>
 		   <Item Name="JetCollection" Value="goodPatJetsPFlow" />  
-		   <Item Name="ElectronCollection" Value="selectedPatElectronsLoosePFlow" />  
-		   <Item Name="MuonCollection" Value="selectedPatMuonsLoosePFlow" /> 
+		   <Item Name="ElectronCollection" Value="selectedPatElectronsPFlowLoose" />  
+		   <Item Name="MuonCollection" Value="selectedPatMuonsPFlowLoose" /> 
 		   <Item Name="TauCollection" Value="selectedPatTaus" /> 
 <!--		   <Item Name="PhotonCollection" Value="patPhotons" /> -->
 		   <Item Name="PrimaryVertexCollection" Value="goodOfflinePrimaryVertices" /> 
@@ -64,7 +66,7 @@
 		   <Item Name="PrunedJetCollection" Value="goodPatJetsCA8PrunedPF" />  
 		   <Item Name="GenParticleCollection" Value="GenParticles" />  
 		   <Item Name="writeTTbarReco" Value="True" />  
-   		   <Item Name="readTTbarReco" Value="False" />
+   		   <Item Name="readTTbarReco" Value="False" /> 
 
 		</UserConfig>
 	</Cycle>

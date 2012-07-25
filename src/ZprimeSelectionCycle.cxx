@@ -65,8 +65,8 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
 
   first_selection->addSelectionModule(new NPrimaryVertexSelection(1)); //at least one good PV
   first_selection->addSelectionModule(new NJetSelection(2,int_infinity(),50,2.4));//at least two jets
-  first_selection->addSelectionModule(new NElectronSelection(1,int_infinity(),70,2.5));//at least one electron
-  first_selection->addSelectionModule(new NElectronSelection(1,1,70,2.5));//exactly one electron 
+  first_selection->addSelectionModule(new NElectronSelection(1,int_infinity(),35,2.5));//at least one electron
+  first_selection->addSelectionModule(new NElectronSelection(1,1,35,2.5));//exactly one electron 
   first_selection->addSelectionModule(new NMuonSelection(0,0,35,2.1));//no muons
   first_selection->addSelectionModule(new TwoDCut());
   
@@ -112,7 +112,7 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   // histograms without any cuts
   RegisterHistCollection( new HypothesisHists("Chi2", m_chi2discr) );
   RegisterHistCollection( new HypothesisHists("BestPossible", m_bpdiscr) );
-
+  
 
   // important: initialise histogram collections after their definition
   InitHistos();
@@ -161,7 +161,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   EventCalc* calc = EventCalc::Instance();
 
   if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
-  if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(70,2.5);
+  if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(35,2.5);
   if(bcc->muons) m_cleaner->MuonCleaner_noIso(35,2.1);  
   if(bcc->jets) m_cleaner->JetLeptonSubtractor(m_corrector,false);
 
@@ -190,7 +190,14 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   ReconstructionHypothesis *hyp = m_chi2discr->GetBestHypothesis();
   double mttbar= (hyp->toplep_v4()+hyp->tophad_v4()).M();
   double nu_pz = hyp->neutrino_v4().pz();
-  //std::cout << "event: " << bcc->event << "   mttbar : " << mttbar << "   nu pz : "<< nu_pz << "   chi2 : " << hyp->discriminator("Chi2") << "   chi2 tlep: " << hyp->discriminator("Chi2_tlep") <<"   chi2 thad: " << hyp->discriminator("Chi2_thad") <<std::endl;
+  //std::cout << "event: " << bcc->event << "   mttbar : " << mttbar << "   chi2 : " << hyp->discriminator("Chi2") << "   chi2 tlep: " << hyp->discriminator("Chi2_tlep") <<"   chi2 thad: " << hyp->discriminator("Chi2_thad") <<std::endl;
+
+  //std::cout << "  leptonic side:  top pt : " << hyp->toplep_v4().Pt() << "   top m : " << hyp->toplep_v4().mass() << "   lepton pt : " << hyp->lepton().pt()  << "   nu pz : " << nu_pz << "   jet pt : " << bcc->jets->at( hyp->blep_index() ).pt() <<"   njets : " << hyp->toplep_jets_indices().size() << std::endl;
+  //std::cout << "  hadronic side:  top pt : " << hyp->tophad_v4().Pt() << "   top m : " << hyp->tophad_v4().mass() << "   njets : " << hyp->tophad_jets_indices().size();
+//   for(unsigned int i=0; i< hyp->tophad_jets_indices().size(); ++i){
+//     std::cout << "   jet " << i<< " pt : " << bcc->jets->at( hyp->tophad_jets_indices().at(i) ).pt() ;
+//   }
+//   std::cout << std::endl;
 
   ReconstructionHypothesis *bp_hyp = m_bpdiscr->GetBestHypothesis();
   double bp_mttbar =  (bp_hyp->toplep_v4()+bp_hyp->tophad_v4()).M();
@@ -200,7 +207,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   BaseHists* Chi2Hists = GetHistCollection("Chi2");
   BaseHists* BPHists = GetHistCollection("BestPossible");
 
-  if(!chi2_selection->passSelection())  throw SError( SError::SkipEvent );
+  //if(!chi2_selection->passSelection())  throw SError( SError::SkipEvent );
 
   Chi2Hists->Fill();
   BPHists->Fill();

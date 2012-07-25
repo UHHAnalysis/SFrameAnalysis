@@ -273,7 +273,7 @@ void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax){
   std::vector<Electron> good_eles;
   for(unsigned int i=0; i<bcc->electrons->size(); ++i){
     Electron ele = bcc->electrons->at(i);
-    if(ele.relIso()<relisomax){
+    if(ele.relIsorho(bcc->rho)<relisomax){
       good_eles.push_back(ele);
     }
   }
@@ -317,7 +317,7 @@ void Cleaner::MuonCleaner_noIso(double ptmin, double etamax){
 	if(mu.globalTrack_chi2()/mu.globalTrack_ndof()<10){
 	  if(mu.globalTrack_numberOfValidMuonHits()>0){
 	    if(mu.innerTrack_trackerLayersWithMeasurement()>5){
-	      if(mu.dB()<0.02){
+	      if(mu.dB()<0.02){ //0.2 ?
 		if(fabs(mu.vertex_z()-bcc->pvs->at(0).z())<0.5){
 		  if(mu.innerTrack_numberOfValidPixelHits()>0){
 		    if(mu.numberOfMatchedStations()>1){

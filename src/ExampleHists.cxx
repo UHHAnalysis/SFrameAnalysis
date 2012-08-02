@@ -48,12 +48,13 @@ void ExampleHists::Fill()
 {
   // fill the histograms
 
-  // important: get the event weight
-  double weight = 1.;
 
   EventCalc* calc = EventCalc::Instance();
   bool IsRealData = calc->IsRealData();
   LuminosityHandler* lumih = calc->GetLumiHandler();
+
+  // important: get the event weight
+  double weight = calc->GetWeight();
 
   int run = calc->GetRunNum();
   int lumiblock = calc->GetLumiBlock();

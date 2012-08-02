@@ -17,9 +17,6 @@ TriggerEffiCycle::TriggerEffiCycle()
   // constructor, declare additional variables that should be 
   // obtained from the steering-xml file
   
-  // set the integrated luminosity per bin for the lumi-yield control plots
-  SetIntLumiPerBin(25.);
-
 }
 
 TriggerEffiCycle::~TriggerEffiCycle() 

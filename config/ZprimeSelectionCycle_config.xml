@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd" [
-<!ENTITY TTbar SYSTEM "TTbar.xml">]
->
+<!ENTITY TTbar SYSTEM "TTbar.xml">
+<!ENTITY Data SYSTEM "MuData.xml">
+]>
 
 <JobConfiguration JobName="ZprimeSelectionCycle" OutputLevel="INFO">
 	<Library Name="libfastjet" />
@@ -17,54 +18,37 @@
 
 
 <!--	<Cycle Name="ZprimeSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > -->
-	<Cycle Name="ZprimeSelectionCycle"  OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > 
-<!--		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarTest" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ZprimePreSelectionCycle.MC.TTbar.root" Lumi="0.0"/> 
-			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" /> 
-		</InputData> -->
-<!--		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="FromAll" Cacheable="True">
-                        &TTbar;
+	<Cycle Name="ZprimeSelectionCycle"  OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="Btag" TargetLumi="1" > 
+
+<!--		<InputData Lumi="1" NEventsMax="-1" Type="Data" Version="MuData" Cacheable="True">
+                        &Data;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> -->
-		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="FromPresel" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ZprimePreSelectionCycle.MC.TTbarTest.root" Lumi="0.0"/> 
-			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" /> 
-		</InputData>
-<!--	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000FromPreSel" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ZprimePreSelectionCycle.MC.LQ1000.root" Lumi="0.0"/> 
+
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ600_ELE" Cacheable="False">
+		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ600_v3.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" />
 			<OutputTree Name="AnalysisTree" /> 
 		</InputData>
-		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ600FromPreSel" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/Ntuples/ZprimePreSelectionCycle.MC.LQ600.root" Lumi="0.0"/> 
-			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" /> 
-		</InputData> 
-	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000.root" Lumi="0.0"/> 
-			<InputTree Name="AnalysisTree" />
-			<OutputTree Name="AnalysisTree" /> 
-		</InputData>
-		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ600" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ600.root" Lumi="0.0"/> 
-			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" /> 
-		</InputData> --> 
+
+
 		<UserConfig>
+
+		   <Item Name="Electron_Or_Muon_Selection" Value="ELE" />
+  		   <Item Name="Nbtags_min" Value="1" />
+
 		   <Item Name="JetCollection" Value="goodPatJetsPFlow" />  
-		   <Item Name="ElectronCollection" Value="selectedPatElectronsPFlowLoose" />  
+		   <Item Name="ElectronCollection" Value="selectedPatElectronsPFlow" />  
 		   <Item Name="MuonCollection" Value="selectedPatMuonsPFlowLoose" /> 
-		   <Item Name="TauCollection" Value="selectedPatTaus" /> 
+<!--		   <Item Name="TauCollection" Value="selectedPatTausPFlow" /> -->
 <!--		   <Item Name="PhotonCollection" Value="patPhotons" /> -->
 		   <Item Name="PrimaryVertexCollection" Value="goodOfflinePrimaryVertices" /> 
 		   <Item Name="METName" Value="patMETsPFlow" />  
 		   <Item Name="TopJetCollection" Value="goodPatJetsCATopTagPF" />
-		   <Item Name="TopJetCollectionGen" Value="caTopTagGen" />
-		   <Item Name="PrunedJetCollection" Value="goodPatJetsCA8PrunedPF" />  
-		   <Item Name="GenParticleCollection" Value="GenParticles" />  
+<!--		   <Item Name="TopJetCollectionGen" Value="caTopTagGen" /> -->
+<!--		   <Item Name="PrunedJetCollection" Value="goodPatJetsCA8PrunedPF" />  -->
+<!--		   <Item Name="GenParticleCollection" Value="GenParticles" />  -->
 		   <Item Name="writeTTbarReco" Value="True" />  
    		   <Item Name="readTTbarReco" Value="False" /> 
 

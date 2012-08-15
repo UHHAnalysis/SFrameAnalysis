@@ -43,6 +43,8 @@ private:
   // Put all your private variables here
   //
   
+  std::string m_Electron_Or_Muon_Selection;
+
   FactorizedJetCorrector* m_corrector;
 
   // Macro adding the functions for dictionary generation

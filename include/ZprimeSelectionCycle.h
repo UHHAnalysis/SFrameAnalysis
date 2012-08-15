@@ -47,6 +47,10 @@ private:
   // Put all your private variables here
   //
   
+  std::string m_Electron_Or_Muon_Selection;
+  int m_Nbtags_max;
+  int m_Nbtags_min;  
+
   FactorizedJetCorrector* m_corrector;
   Cleaner* m_cleaner;
   Chi2Discriminator* m_chi2discr;

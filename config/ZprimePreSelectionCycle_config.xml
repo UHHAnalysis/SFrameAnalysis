@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd" [
-<!ENTITY TTbar SYSTEM "TTbar.xml">]
+<!ENTITY TauData SYSTEM "TauData.xml">]
 >
 
 
@@ -17,33 +17,45 @@
 	<Package Name="Analysis.par" />
 
 
-	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > 
-<!--	<Cycle Name="ZprimePreSelectionCycle"  OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > -->
-		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarTest" Cacheable="True">
+<!--	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > -->
+	<Cycle Name="ZprimePreSelectionCycle"  OutputDirectory="/scratch/hh/lustre/cms/user/peiffer/Ntuples/" PostFix="" TargetLumi="1" > 
+
+
+<!--	        <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="TauData" Cacheable="True">
+                        &TauData;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> -->
+
+<!--		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarTest" Cacheable="True">
                         &TTbar;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
-<!--		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarTest" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/TTbarTest.root" Lumi="0.0"/> 
-			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" /> 
-		</InputData>
-	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000.root" Lumi="0.0"/> 
-			<InputTree Name="AnalysisTree" />
-			<OutputTree Name="AnalysisTree" /> 
-		</InputData>
-		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ600" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ600.root" Lumi="0.0"/> 
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarTest" Cacheable="False">
+		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/TTbarTest_v5.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" /> 
 		</InputData> -->
+
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000_MU" Cacheable="False">
+		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000_v3.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" /> 
+		</InputData>
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ600_MU" Cacheable="False">
+		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ600_v3.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" /> 
+		</InputData>  
 		<UserConfig>
+
+		   <Item Name="Electron_Or_Muon_Selection" Value="MU" />
+
 		   <Item Name="JetCollection" Value="goodPatJetsPFlow" />  
-		   <Item Name="ElectronCollection" Value="selectedPatElectronsPFlowLoose" />  
-		   <Item Name="MuonCollection" Value="selectedPatMuonsPFlowLoose" /> 
-		   <Item Name="TauCollection" Value="selectedPatTaus" /> 
+		   <Item Name="ElectronCollection" Value="selectedPatElectronsPFlow" /> 
+		   <Item Name="MuonCollection" Value="selectedPatMuonsPFlow" /> 
+		   <Item Name="TauCollection" Value="selectedPatTausPFlow" /> 
 <!--		   <Item Name="PhotonCollection" Value="patPhotons" /> -->
 		   <Item Name="PrimaryVertexCollection" Value="goodOfflinePrimaryVertices" /> 
 		   <Item Name="METName" Value="patMETsPFlow" />  

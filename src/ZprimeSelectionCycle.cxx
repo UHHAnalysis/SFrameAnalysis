@@ -17,6 +17,15 @@ ZprimeSelectionCycle::ZprimeSelectionCycle()
   SetIntLumiPerBin(25.);
 
   m_corrector = NULL;
+
+  DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
+
+  //default: no btagging cuts applied, other cuts can be defined in config file
+  m_Nbtags_min=0;
+  m_Nbtags_max=int_infinity();
+  DeclareProperty( "Nbtags_min", m_Nbtags_min);
+  DeclareProperty( "Nbtags_max", m_Nbtags_max);  
+
 }
 
 ZprimeSelectionCycle::~ZprimeSelectionCycle() 
@@ -63,21 +72,49 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
 
   Selection* first_selection= new Selection("first_selection");
 
+  bool doEle=false;
+  bool doMu=false;
+
+  if(m_Electron_Or_Muon_Selection=="Electrons" || m_Electron_Or_Muon_Selection=="Electron" || m_Electron_Or_Muon_Selection=="Ele" || m_Electron_Or_Muon_Selection=="ELE"){
+    doEle=true;
+  }
+  else if(m_Electron_Or_Muon_Selection=="Muon" || m_Electron_Or_Muon_Selection=="Muons" || m_Electron_Or_Muon_Selection=="Mu" || m_Electron_Or_Muon_Selection=="MU"){
+    doMu=true;
+  }
+  else{
+    m_logger << ERROR << "Electron_Or_Muon_Selection is not defined in your xml config file --- should be either `ELE` or `MU`" << SLogger::endmsg;
+  }
+  
+  if(doEle)
+    first_selection->addSelectionModule(new TriggerSelection("HLT_Ele30_CaloIdVT_TrkIdT_PFJet100_PFJet25_"));
+  if(doMu)
+    first_selection->addSelectionModule(new TriggerSelection("HLT_Mu40_eta2p1_v"));
+
   first_selection->addSelectionModule(new NPrimaryVertexSelection(1)); //at least one good PV
   first_selection->addSelectionModule(new NJetSelection(2,int_infinity(),50,2.4));//at least two jets
-  first_selection->addSelectionModule(new NElectronSelection(1,int_infinity(),35,2.5));//at least one electron
-  first_selection->addSelectionModule(new NElectronSelection(1,1,35,2.5));//exactly one electron 
-  first_selection->addSelectionModule(new NMuonSelection(0,0,35,2.1));//no muons
+
+
+  if(doEle){
+    first_selection->addSelectionModule(new NElectronSelection(1,int_infinity()));//at least one electron
+    first_selection->addSelectionModule(new NElectronSelection(1,1));//exactly one electron
+    first_selection->addSelectionModule(new NMuonSelection(0,0));//no muons
+  }
+  if(doMu){
+    first_selection->addSelectionModule(new NMuonSelection(1,int_infinity()));//at least one muon
+    first_selection->addSelectionModule(new NMuonSelection(1,1));//exactly one muon
+    first_selection->addSelectionModule(new NElectronSelection(0,0));//no electrons
+  }
+
   first_selection->addSelectionModule(new TwoDCut());
   
 
   Selection* second_selection= new Selection("second_selection");
 
-  second_selection->addSelectionModule(new NJetSelection(1,int_infinity(),150,2.4));//leading jet with pt>150 GeV
-  second_selection->addSelectionModule(new NBTagSelection(1)); //at least one b tag
-  //second_selection->addSelectionModule(new NBTagSelection(0,0)); //no b tags
+  second_selection->addSelectionModule(new NJetSelection(1,int_infinity(),150,2.5));//leading jet with pt>150 GeV
+  second_selection->addSelectionModule(new NBTagSelection(m_Nbtags_min,m_Nbtags_max)); //b tags from config file
   second_selection->addSelectionModule(new HTlepCut(150));
-  second_selection->addSelectionModule(new TriangularCut());
+  if(doEle)
+    second_selection->addSelectionModule(new TriangularCut());
   second_selection->addSelectionModule(new METCut(50));
 
   Selection* chi2_selection= new Selection("chi2_selection");
@@ -162,7 +199,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
   if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
   if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(35,2.5);
-  if(bcc->muons) m_cleaner->MuonCleaner_noIso(35,2.1);  
+  if(bcc->muons) m_cleaner->MuonCleaner_noIso(45,2.1);  
   if(bcc->jets) m_cleaner->JetLeptonSubtractor(m_corrector,false);
 
   if(!bcc->isRealData && bcc->jets) m_cleaner->JetEnergyResolutionShifter();
@@ -173,7 +210,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   if(!first_selection->passSelection())  throw SError( SError::SkipEvent );
 
   //apply tighter jet cleaning for further cuts and analysis steps
-  if(bcc->jets) m_cleaner->JetCleaner(50,2.4,true);
+  if(bcc->jets) m_cleaner->JetCleaner(50,2.5,true);
 
   //remove all taus from collection for HTlep calculation
   if(bcc->taus) m_cleaner->TauCleaner(double_infinity(),0.0);
@@ -185,11 +222,12 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
   calc->FillHighMassTTbarHypotheses();
   m_chi2discr->FillDiscriminatorValues();
-  m_bpdiscr->FillDiscriminatorValues();
+  //m_bpdiscr->FillDiscriminatorValues();
 
   ReconstructionHypothesis *hyp = m_chi2discr->GetBestHypothesis();
-  double mttbar= (hyp->toplep_v4()+hyp->tophad_v4()).M();
-  double nu_pz = hyp->neutrino_v4().pz();
+
+  //double mttbar= (hyp->toplep_v4()+hyp->tophad_v4()).M();
+  //double nu_pz = hyp->neutrino_v4().pz();
   //std::cout << "event: " << bcc->event << "   mttbar : " << mttbar << "   chi2 : " << hyp->discriminator("Chi2") << "   chi2 tlep: " << hyp->discriminator("Chi2_tlep") <<"   chi2 thad: " << hyp->discriminator("Chi2_thad") <<std::endl;
 
   //std::cout << "  leptonic side:  top pt : " << hyp->toplep_v4().Pt() << "   top m : " << hyp->toplep_v4().mass() << "   lepton pt : " << hyp->lepton().pt()  << "   nu pz : " << nu_pz << "   jet pt : " << bcc->jets->at( hyp->blep_index() ).pt() <<"   njets : " << hyp->toplep_jets_indices().size() << std::endl;
@@ -199,18 +237,18 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 //   }
 //   std::cout << std::endl;
 
-  ReconstructionHypothesis *bp_hyp = m_bpdiscr->GetBestHypothesis();
-  double bp_mttbar =  (bp_hyp->toplep_v4()+bp_hyp->tophad_v4()).M();
+  //ReconstructionHypothesis *bp_hyp = m_bpdiscr->GetBestHypothesis();
+  //double bp_mttbar =  (bp_hyp->toplep_v4()+bp_hyp->tophad_v4()).M();
   //std::cout << "               bp mttbar : " << bp_mttbar << "   bp deltaR : " << bp_hyp->discriminator("BestPossible") << std::endl;
 
   // get the histogram collections
   BaseHists* Chi2Hists = GetHistCollection("Chi2");
-  BaseHists* BPHists = GetHistCollection("BestPossible");
+  //BaseHists* BPHists = GetHistCollection("BestPossible");
 
   //if(!chi2_selection->passSelection())  throw SError( SError::SkipEvent );
 
   Chi2Hists->Fill();
-  BPHists->Fill();
+  //BPHists->Fill();
 
   //calc->PrintEventContent();
 

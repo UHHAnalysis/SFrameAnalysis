@@ -148,7 +148,7 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
 
   // histograms without any cuts
   RegisterHistCollection( new HypothesisHists("Chi2", m_chi2discr) );
-  RegisterHistCollection( new HypothesisHists("BestPossible", m_bpdiscr) );
+  //RegisterHistCollection( new HypothesisHists("BestPossible", m_bpdiscr) );
   
 
   // important: initialise histogram collections after their definition
@@ -220,8 +220,12 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
   //do reconstruction here
 
+
+
   calc->FillHighMassTTbarHypotheses();
+
   m_chi2discr->FillDiscriminatorValues();
+
   //m_bpdiscr->FillDiscriminatorValues();
 
   ReconstructionHypothesis *hyp = m_chi2discr->GetBestHypothesis();

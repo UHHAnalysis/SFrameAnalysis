@@ -1,4 +1,4 @@
-// $Id: ExampleCycle.cxx,v 1.3 2012/06/12 13:49:16 rkogler Exp $
+// $Id: ExampleCycle.cxx,v 1.4 2012/06/22 07:46:17 peiffer Exp $
 
 #include <iostream>
 
@@ -61,17 +61,31 @@ void ExampleCycle::BeginInputData( const SInputData& id ) throw( SError )
 
   // -------------------- set up the selections ---------------------------
 
+  Selection* BSel = new Selection( "BSelection");
+  BSel->addSelectionModule(new NBTagSelection(1)); //at least one b tag
+
+  Selection* NoBSel = new Selection( "NoBSelection");
+  NoBSel->addSelectionModule(new NBTagSelection(0,0)); //no b tags
+
   Selection* TopSel = new Selection("TopSelection");
   //DO NOT use trigger selection in PROOF mode at the moment
   //TopSel->addSelectionModule(new TriggerSelection("HLT_PFJet320_v"));
-  TopSel->addSelectionModule(new NTopJetSelection(2,999,350,2.5));
-  TopSel->addSelectionModule(new NTopTagSelection(2,999));
+  TopSel->addSelectionModule(new NTopJetSelection(1,int_infinity(),350,2.5));
+  TopSel->addSelectionModule(new NTopTagSelection(1,int_infinity()));
+
+  RegisterSelection(BSel);
+  RegisterSelection(NoBSel);
   RegisterSelection(TopSel);
 
   // ---------------- set up the histogram collections --------------------
 
   // histograms without any cuts
   RegisterHistCollection( new ExampleHists("NoCuts") );
+
+  //histograms with and without b tagging
+  RegisterHistCollection( new ExampleHists("BTag") );
+  RegisterHistCollection( new ExampleHists("NoBTag") );
+
   // histograms after the top selection
   RegisterHistCollection( new ExampleHists("TopSel") );
 
@@ -111,19 +125,29 @@ void ExampleCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( S
   AnalysisCycle::ExecuteEvent( id, weight);
 
   // get the selections
+  static Selection* BSel = GetSelection("BSelection");
+  static Selection* NoBSel = GetSelection("NoBSelection");
   static Selection* TopSel = GetSelection("TopSelection");
 
   // get the histogram collections
   BaseHists* HistsNoCuts = GetHistCollection("NoCuts");
+  BaseHists* HistsBTag = GetHistCollection("BTag");
+  BaseHists* HistsNoBTag = GetHistCollection("NoBTag");
   BaseHists* HistsTopSel = GetHistCollection("TopSel");
 
   // start the analysis
   HistsNoCuts->Fill();
-  
+  EventCalc* calc = EventCalc::Instance();
+  if(BSel->passSelection()){
+    HistsBTag->Fill();
+  }
+  if(NoBSel->passSelection()){
+    HistsNoBTag->Fill();  
+  }
+
   ObjectHandler* objs = ObjectHandler::Instance();
-  BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
   
-  if(!TopSel->passSelection(bcc))  throw SError( SError::SkipEvent );
+  if(!TopSel->passSelection())  throw SError( SError::SkipEvent );
 
   HistsTopSel->Fill();
   

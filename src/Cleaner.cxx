@@ -16,8 +16,11 @@ Cleaner::Cleaner(){
 
 void Cleaner::resetEventCalc(){
 
+  //reset everything in EventCalc except the event weight
   EventCalc* evc = EventCalc::Instance();
+  double weight = evc->GetWeight();
   evc->Reset();
+  evc->ProduceWeight(weight);
 
 }
 
@@ -33,7 +36,7 @@ void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort){
     float genpt = bcc->jets->at(i).genjet_pt();
     //ignore unmatched jets (which have zero vector) or jets with very low pt:
     if(genpt < 15.0) {
-      //if(bcc->event==95758084) std::cout << "1.0 | " <<  bcc->jets->at(i).pt()  << " | " << bcc->jets->at(i).eta() << " | " << genpt << std::endl; 
+      // std::cout << "1.0 | " <<  bcc->jets->at(i).pt()  << " | " << bcc->jets->at(i).eta() << " | " << genpt << std::endl; 
       continue;
     }
     
@@ -98,9 +101,8 @@ void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort){
     met -= jet_v4_raw;
     //}
 
-//      if(bcc->event==95758084){
-//        std::cout << ptscale << " | " << jet_v4.Pt()  << " | "<<  jet_v4.eta() << " | " << genpt << std::endl;
-//      }
+    //std::cout << ptscale << " | " << jet_v4.Pt()  << " | "<<  jet_v4.eta() << " | " << genpt << std::endl;
+    
   }
 
   //store changed MET
@@ -116,10 +118,9 @@ void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort){
 
 void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort){
 
-//   if(bcc->event==95758084){
-//     std::cout<< "event: " <<bcc->event <<std::endl;
-//     std::cout<< "ID| pt raw  | PAT pt | area     | rho     | corr    | old cor| JER ptscale | pt new | eta new | ptgen " <<std::endl;
-//   }
+  //std::cout<< "event: " <<bcc->event <<std::endl;
+  //std::cout<< "ID| pt raw  | PAT pt | area     | rho     | corr    | old cor| JER ptscale | pt new | eta new | ptgen " <<std::endl;
+
     
   for(unsigned int i=0; i<bcc->jets->size(); ++i){
 
@@ -127,7 +128,7 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort){
 
     //subtract lepton momenta from raw jet momentum
     
-    //if(bcc->event==95758084)std::cout << i+1 << " | " << jet_v4_raw.Pt() << std::endl;
+    //std::cout << i+1 << " | " << jet_v4_raw.Pt() << std::endl;
     double ele_energy =  bcc->jets->at(i).chargedEmEnergyFraction()*jet_v4_raw.E();
     double mu_energy = bcc->jets->at(i).muonEnergyFraction()*jet_v4_raw.E();
 
@@ -178,7 +179,7 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort){
     
     LorentzVector jet_v4_corrected = jet_v4_raw *correctionfactor;
 
-    //if(bcc->event==95758084)std::cout << i+1 << " | " << jet_v4_raw.Pt() << " | " <<  bcc->jets->at(i).pt() << " | " << bcc->jets->at(i).jetArea()<< " | " << bcc->rho << " | " << correctionfactor  << " | " << 1./bcc->jets->at(i).JEC_factor_raw() << " | " << std::endl;
+    //std::cout << i+1 << " | " << jet_v4_raw.Pt() << " | " <<  bcc->jets->at(i).pt() << " | " << bcc->jets->at(i).jetArea()<< " | " << bcc->rho << " | " << correctionfactor  << " | " << 1./bcc->jets->at(i).JEC_factor_raw() << " | " << std::endl;
 
     bcc->jets->at(i).set_v4(jet_v4_corrected);
     bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);

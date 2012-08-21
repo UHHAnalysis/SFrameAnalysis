@@ -1,4 +1,12 @@
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_0.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_1.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_2.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_3.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_4.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_5.root" Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_6.root" Lumi="0.0"/>
 
+<!-- Old files:
 <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_44_2_pon.root" Lumi="0.0"/>
 <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_9_2_PU1.root" Lumi="0.0"/>
 <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_1_1_0MF.root" Lumi="0.0"/>
@@ -43,3 +51,4 @@
 <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_42_1_Lwu.root" Lumi="0.0"/>
 <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_19_1_LIx.root" Lumi="0.0"/>
 <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v2/TTbar/Ntuple_10_1_ZKm.root" Lumi="0.0"/>
+-->

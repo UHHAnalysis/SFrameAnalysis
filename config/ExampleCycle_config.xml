@@ -2,7 +2,7 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd">
 
 <!-- <JobConfiguration JobName="ExampleCycleJob" OutputLevel="VERBOSE"> -->
-<JobConfiguration JobName="ExampleCycleJob" OutputLevel="DEBUG">
+<JobConfiguration JobName="ExampleCycleJob" OutputLevel="INFO">
 
 	<Library Name="libfastjet"/>
 	<Library Name="libSFramePlugIns"/>
@@ -14,103 +14,59 @@
 	<Package Name="Analysis.par" />
 
 <!--	<Cycle Name="ExampleCycle" RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="" OutputDirectory="./" PostFix="" TargetLumi="1.0"> -->
-	<Cycle Name="ExampleCycle" OutputDirectory="Output/" PostFix="" TargetLumi="1.0">
+<!--	<Cycle Name="ExampleCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="Output/" PostFix="" TargetLumi="1" > -->
+	<Cycle Name="ExampleCycle" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/ExampleHistsMuon/" PostFix="" TargetLumi="1.0"> 
 
-                <InputData Lumi="1" NEventsMax="-1" Type="Data" Version="2012" Cacheable="False">
-                        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Data/Data_353_Ntuple.root" Lumi="0.0"/> 
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Data/Data_25_Ntuple.root" Lumi="0.0"/> 
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Data/Data_248_Ntuple.root" Lumi="0.0"/> 
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Data/Data_393_Ntuple.root" Lumi="0.0"/> 
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Data/Data_108_Ntuple.root" Lumi="0.0"/> 
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Data/Data_333_Ntuple.root" Lumi="0.0"/> 
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Data/Data_368_Ntuple.root" Lumi="0.0"/> 
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Data/Data_288_Ntuple.root" Lumi="0.0"/> 
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Data/Data_423_Ntuple.root" Lumi="0.0"/> 
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Data/Data_408_Ntuple.root" Lumi="0.0"/> 
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Data/Data_240_Ntuple.root" Lumi="0.0"/> 
-                        <InputTree Name="AnalysisTree" />
-                </InputData>
+		<InputData Lumi="5211.28" NEventsMax="-1" Type="DATA" Version="DATA" Cacheable="True">
+		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.DATA.DATA.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
 
-                <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="False">
-		        <In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000.root" Lumi="0.0"/> 
-                        <InputTree Name="AnalysisTree" />
-                </InputData>
+		<InputData Lumi="27250.9" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
+		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.TTbar.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+		<InputData Lumi="507.3" NEventsMax="-1" Type="MC" Version="Wjets" Cacheable="True">
+		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.Wjets.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
 
-                <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ600" Cacheable="False">
-                        <In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ600.root" Lumi="0.0"/> 
-                        <InputTree Name="AnalysisTree" /> 
-                </InputData>
-
-                <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
-                        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_20_Ntuple.root" Lumi="0.0"/> 
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_39_Ntuple.root" Lumi="0.0"/> 
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_45_Ntuple.root" Lumi="0.0"/> 
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/TTbar/MC_TTbar_23_Ntuple.root" Lumi="0.0"/> 
-                        <InputTree Name="AnalysisTree" />
-                </InputData>
-
-                <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="Wjets" Cacheable="True">
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Wjets/MC_Wjets_85_Ntuple.root" Lumi="0.0"/> 
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Wjets/MC_Wjets_698_Ntuple.root" Lumi="0.0"/> 
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Wjets/MC_Wjets_386_Ntuple.root" Lumi="0.0"/> 
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Wjets/MC_Wjets_640_Ntuple.root" Lumi="0.0"/> 
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Wjets/MC_Wjets_427_Ntuple.root" Lumi="0.0"/> 
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Wjets/MC_Wjets_531_Ntuple.root" Lumi="0.0"/> 
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/Wjets/MC_Wjets_578_Ntuple.root" Lumi="0.0"/> 
-                        <InputTree Name="AnalysisTree" />
-                </InputData> 
-                <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-470to600" Cacheable="True">
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-470to600_0_Ntuple.root"  Lumi="0.0"/>
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-470to600_1_Ntuple.root"  Lumi="0.0"/>
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-470to600_2_Ntuple.root"  Lumi="0.0"/>
-                        <InputTree Name="AnalysisTree" />
-                </InputData>
-                <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-600to800" Cacheable="True">
-                        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-600to800_161_Ntuple.root"  Lumi="0.0"/>
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-600to800_162_Ntuple.root"  Lumi="0.0"/>
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-600to800_163_Ntuple.root"  Lumi="0.0"/>
-                        <InputTree Name="AnalysisTree" />
-                </InputData>
-                <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-800to1000" Cacheable="True">
-                        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-800to1000_323_Ntuple.root"  Lumi="0.0"/>
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-800to1000_324_Ntuple.root"  Lumi="0.0"/>
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-800to1000_325_Ntuple.root"  Lumi="0.0"/>
-                        <InputTree Name="AnalysisTree" />
-                </InputData>
-                <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-1000to1400" Cacheable="True">
-                        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-1000to1400_484_Ntuple.root"  Lumi="0.0"/>
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-1000to1400_485_Ntuple.root"  Lumi="0.0"/>
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-1000to1400_486_Ntuple.root"  Lumi="0.0"/>
-                        <InputTree Name="AnalysisTree" />
-                </InputData>
-                <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-1400to1800" Cacheable="True">
-		        <In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-1400to1800_563_Ntuple.root"  Lumi="0.0"/>
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-1400to1800_564_Ntuple.root"  Lumi="0.0"/>
-			<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/Ntuples/QCD/MC_QCD_Pt-1400to1800_565_Ntuple.root"  Lumi="0.0"/>
-                        <InputTree Name="AnalysisTree" />
-                </InputData>
+		<InputData Lumi="8390.9" NEventsMax="-1" Type="MC" Version="DY_10to50" Cacheable="True">
+		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.DY_10to50.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+		<InputData Lumi="8693.9" NEventsMax="-1" Type="MC" Version="DY_50toInf" Cacheable="True">
+		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.DY_50toInf.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
 
 		<UserConfig>
-		      <Item Name="JetCollection" Value="goodPatJetsPFlow" /> 
-		      <Item Name="ElectronCollection" Value="selectedPatElectronsPFlow" /> 
-		      <Item Name="MuonCollection" Value="selectedPatMuonsPFlow" />
-		      <Item Name="TauCollection" Value="selectedPatTaus" />
-		      <Item Name="PrimaryVertexCollection" Value="goodOfflinePrimaryVertices" /> 
-		      <Item Name="METName" Value="patMETs" /> 
-		      <Item Name="TopJetCollection" Value="goodPatJetsCATopTagPF" />
-		      <Item Name="PrunedJetCollection" Value="goodPatJetsCA8PrunedPF" /> 
-		      <!-- <Item Name="TopJetCollectionGen" Value="caTopTagGen" /> -->
-		      <!--<Item Name="GenParticleCollection" Value="GenParticles" />-->
-		      <!--<Item Name="PhotonCollection" Value="patPhotons" />-->
+
+		   <Item Name="JetCollection" Value="goodPatJetsPFlow" />  
+		   <Item Name="ElectronCollection" Value="selectedPatElectronsPFlow" /> 
+		   <Item Name="MuonCollection" Value="selectedPatMuonsPFlow" /> 
+		   <Item Name="TauCollection" Value="selectedPatTausPFlow" /> 
+<!--		   <Item Name="PhotonCollection" Value="patPhotons" /> -->
+		   <Item Name="PrimaryVertexCollection" Value="goodOfflinePrimaryVertices" /> 
+		   <Item Name="METName" Value="patMETsPFlow" />  
+		   <Item Name="TopJetCollection" Value="goodPatJetsCATopTagPF" />
+		   <Item Name="TopJetCollectionGen" Value="caTopTagGen" />
+		   <Item Name="PrunedJetCollection" Value="goodPatJetsCA8PrunedPF" />  
+		   <Item Name="GenParticleCollection" Value="GenParticles" /> 
 		      
 		      <!--<Item Name="pu_filename_mc" Value="/afs/naf.desy.de/user/p/peiffer/SFrame/SFrameAnalysis/config/pileup_histo.root" />-->
 		      <!--<Item Name="pu_filename_data" Value="/afs/naf.desy.de/user/p/peiffer/SFrame/SFrameAnalysis/config/PileUpHistoCycle.MC.TTbar.root" />-->
 		      <!--<Item Name="pu_histname_mc" Value="pileup" />-->
 		      <!--<Item Name="pu_histname_data" Value="N_pileup_hist" />-->
 
-		      <Item Name="LumiFilePath" Value="/afs/naf.desy.de/user/k/kogler/w0/SFrame/SFrameAnalysis/config/lumifiles" />
-		      <Item Name="LumiFileName" Value="GoodRun_May12.root" />
-		      <Item Name="LumiTrigger" Value="HLT_PFJet320_v" />
+		      <Item Name="writeTTbarReco" Value="True" />  
+		      <Item Name="readTTbarReco" Value="True" /> 
+
+		   <Item Name="LumiFilePath" Value="/scratch/hh/dust/naf/cms/user/peiffer/LumiFiles/" /> 
+		   <Item Name="LumiFileName" Value="MuonAll.root" /> 
+		   <Item Name="LumiTrigger" Value="HLT_Mu40_eta2p1_v" /> 
+		      
+		      
                 </UserConfig>
 	</Cycle>
 </JobConfiguration>

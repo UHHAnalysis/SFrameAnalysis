@@ -1,4 +1,4 @@
-// $Id: ExampleCycle.cxx,v 1.4 2012/06/22 07:46:17 peiffer Exp $
+// $Id: ExampleCycle.cxx,v 1.5 2012/08/21 15:56:32 peiffer Exp $
 
 #include <iostream>
 
@@ -9,6 +9,7 @@ using namespace std;
 #include "include/SelectionModules.h"
 #include "include/ExampleHists.h"
 #include "include/ObjectHandler.h"
+#include "include/HypothesisHists.h"
 
 ClassImp( ExampleCycle );
 
@@ -19,7 +20,7 @@ ExampleCycle::ExampleCycle()
   // obtained from the steering-xml file
   
   // set the integrated luminosity per bin for the lumi-yield control plots
-  SetIntLumiPerBin(25.);
+  SetIntLumiPerBin(250.);
 
 }
 
@@ -82,12 +83,18 @@ void ExampleCycle::BeginInputData( const SInputData& id ) throw( SError )
   // histograms without any cuts
   RegisterHistCollection( new ExampleHists("NoCuts") );
 
+  static Chi2Discriminator* m_chi2discr = new Chi2Discriminator();
+  RegisterHistCollection( new HypothesisHists("Chi2_NoCuts", m_chi2discr ) );
+
   //histograms with and without b tagging
   RegisterHistCollection( new ExampleHists("BTag") );
   RegisterHistCollection( new ExampleHists("NoBTag") );
+  RegisterHistCollection( new HypothesisHists("Chi2_BTag", m_chi2discr ) );
+  RegisterHistCollection( new HypothesisHists("Chi2_NoBTag", m_chi2discr ) );
 
   // histograms after the top selection
   RegisterHistCollection( new ExampleHists("TopSel") );
+  RegisterHistCollection( new HypothesisHists("Chi2_TopSel", m_chi2discr ) );
 
   // important: initialise histogram collections after their definition
   InitHistos();
@@ -134,15 +141,25 @@ void ExampleCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( S
   BaseHists* HistsBTag = GetHistCollection("BTag");
   BaseHists* HistsNoBTag = GetHistCollection("NoBTag");
   BaseHists* HistsTopSel = GetHistCollection("TopSel");
+  
+  BaseHists* Chi2_HistsNoCuts = GetHistCollection("Chi2_NoCuts");
+  BaseHists* Chi2_HistsBTag = GetHistCollection("Chi2_BTag");
+  BaseHists* Chi2_HistsNoBTag = GetHistCollection("Chi2_NoBTag");
+  BaseHists* Chi2_HistsTopSel = GetHistCollection("Chi2_TopSel");
+
+
 
   // start the analysis
   HistsNoCuts->Fill();
+  Chi2_HistsNoCuts->Fill();
   EventCalc* calc = EventCalc::Instance();
   if(BSel->passSelection()){
     HistsBTag->Fill();
+    Chi2_HistsBTag->Fill();
   }
   if(NoBSel->passSelection()){
     HistsNoBTag->Fill();  
+    Chi2_HistsNoBTag->Fill();
   }
 
   ObjectHandler* objs = ObjectHandler::Instance();
@@ -150,6 +167,7 @@ void ExampleCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( S
   if(!TopSel->passSelection())  throw SError( SError::SkipEvent );
 
   HistsTopSel->Fill();
+  Chi2_HistsTopSel->Fill();
   
   return;
   

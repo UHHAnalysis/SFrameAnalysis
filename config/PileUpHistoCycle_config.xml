@@ -2,6 +2,16 @@
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd" [
 <!ENTITY TTbar SYSTEM "TTbar.xml">
 <!ENTITY Wjets SYSTEM "Wjets.xml">
+<!ENTITY DY_10to50 SYSTEM "DY_10to50.xml">
+<!ENTITY DY_50toInf SYSTEM "DY_50toInf.xml">
+<!ENTITY SingleTop_T_tch SYSTEM "SingleTop_T_tch.xml">
+<!ENTITY SingleTop_T_tWch SYSTEM "SingleTop_T_tWch.xml">
+<!ENTITY SingleTop_T_sch SYSTEM "SingleTop_T_sch.xml">
+<!ENTITY SingleTop_Tbar_tch SYSTEM "SingleTop_Tbar_tch.xml">
+<!ENTITY SingleTop_Tbar_tWch SYSTEM "SingleTop_Tbar_tWch.xml">
+<!ENTITY SingleTop_Tbar_sch SYSTEM "SingleTop_Tbar_sch.xml">
+<!ENTITY QCD_Pt-170to300 SYSTEM "QCD_Pt-170to300.xml">
+<!ENTITY QCD_Pt-300to470 SYSTEM "QCD_Pt-300to470.xml">
 <!ENTITY QCD_Pt-470to600 SYSTEM "QCD_Pt-470to600.xml">
 <!ENTITY QCD_Pt-600to800 SYSTEM "QCD_Pt-600to800.xml">
 <!ENTITY QCD_Pt-800to1000 SYSTEM "QCD_Pt-800to1000.xml">
@@ -9,7 +19,7 @@
 <!ENTITY QCD_Pt-1400to1800 SYSTEM "QCD_Pt-1000to1400.xml">
 ]>
 
-<JobConfiguration JobName="PileUpHistoCycleJob" OutputLevel="INFO">
+<JobConfiguration JobName="PileUpHistoCycleJob" OutputLevel="DEBUG">
 	<Library Name="libfastjet" />
 	<Library Name="libSFrameTools" />
 	<Library Name="libAnalysis" />
@@ -20,16 +30,17 @@
 	<Package Name="SFrameTools.par" />
 	<Package Name="Analysis.par" />
 
-	<Cycle Name="PileUpHistoCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="" OutputDirectory="./" PostFix="" TargetLumi="1" > 
+	<Cycle Name="PileUpHistoCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/PileUpHistos/" PostFix="" TargetLumi="1" > 
 <!--	<Cycle Name="PileUpHistoCycle"  OutputDirectory="./" PostFix="" TargetLumi="1" > -->
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000.root" Lumi="0.0"/> 
+		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000_v3.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" />
 		</InputData>
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ600" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ600.root" Lumi="0.0"/> 
+		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ600_v3.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
-		</InputData>
+		</InputData> 
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
 		        &TTbar;
 			<InputTree Name="AnalysisTree" />
@@ -38,6 +49,47 @@
 		        &Wjets;
 			<InputTree Name="AnalysisTree" />
 		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DY_10to50" Cacheable="True">
+		        &DY_10to50;
+			<InputTree Name="AnalysisTree" />
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DY_50toInf" Cacheable="True">
+		        &DY_50toInf;
+			<InputTree Name="AnalysisTree" />
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_T_tch" Cacheable="True">
+                        &SingleTop_T_tch;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_T_tWch" Cacheable="True">
+                        &SingleTop_T_tWch;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_T_sch" Cacheable="True">
+                        &SingleTop_T_sch;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_Tbar_tch" Cacheable="True">
+                        &SingleTop_Tbar_tch;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_Tbar_tWch" Cacheable="True">
+                        &SingleTop_Tbar_tWch;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_Tbar_sch" Cacheable="True">
+                        &SingleTop_Tbar_sch;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+
+<!--	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-170to300" Cacheable="True">
+		        &QCD_Pt-170to300;
+			<InputTree Name="AnalysisTree" />
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-300to470" Cacheable="True">
+		        &QCD_Pt-300to470;
+			<InputTree Name="AnalysisTree" />
+		</InputData>
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-470to600" Cacheable="True">
 		        &QCD_Pt-470to600;
 			<InputTree Name="AnalysisTree" />
@@ -57,7 +109,7 @@
  	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-1400to1800" Cacheable="True">
 		        &QCD_Pt-1400to1800;
 			<InputTree Name="AnalysisTree" />
-		</InputData>
+		</InputData> -->
 		<UserConfig>
 
 		</UserConfig>

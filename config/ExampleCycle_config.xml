@@ -26,6 +26,7 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.TTbar.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
+
 		<InputData Lumi="507.3" NEventsMax="-1" Type="MC" Version="Wjets" Cacheable="True">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.Wjets.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -37,6 +38,31 @@
 		</InputData> 
 		<InputData Lumi="8693.9" NEventsMax="-1" Type="MC" Version="DY_50toInf" Cacheable="True">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.DY_50toInf.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+
+	        <InputData Lumi="421.6" NEventsMax="-1" Type="MC" Version="SingleTop_T_tch" Cacheable="True">
+		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.SingleTop_T_tch.root" Lumi="0.0"/> 
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+	        <InputData Lumi="44834" NEventsMax="-1" Type="MC" Version="SingleTop_T_tWch" Cacheable="True">
+ 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.SingleTop_T_tWch.root" Lumi="0.0"/>       
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+	        <InputData Lumi="68591" NEventsMax="-1" Type="MC" Version="SingleTop_T_sch" Cacheable="True">
+   		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.SingleTop_T_sch.root" Lumi="0.0"/>     
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+	        <InputData Lumi="63032" NEventsMax="-1" Type="MC" Version="SingleTop_Tbar_tch" Cacheable="True">
+   		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.SingleTop_Tbar_tch.root" Lumi="0.0"/>     
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+	        <InputData Lumi="44456" NEventsMax="-1" Type="MC" Version="SingleTop_Tbar_tWch" Cacheable="True">
+  		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.SingleTop_Tbar_tWch.root" Lumi="0.0"/>      
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+	        <InputData Lumi="79531" NEventsMax="-1" Type="MC" Version="SingleTop_Tbar_sch" Cacheable="True">
+ 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.SingleTop_Tbar_sch.root" Lumi="0.0"/>       
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 
@@ -54,10 +80,10 @@
 		   <Item Name="PrunedJetCollection" Value="goodPatJetsCA8PrunedPF" />  
 		   <Item Name="GenParticleCollection" Value="GenParticles" /> 
 		      
-		      <!--<Item Name="pu_filename_mc" Value="/afs/naf.desy.de/user/p/peiffer/SFrame/SFrameAnalysis/config/pileup_histo.root" />-->
-		      <!--<Item Name="pu_filename_data" Value="/afs/naf.desy.de/user/p/peiffer/SFrame/SFrameAnalysis/config/PileUpHistoCycle.MC.TTbar.root" />-->
-		      <!--<Item Name="pu_histname_mc" Value="pileup" />-->
-		      <!--<Item Name="pu_histname_data" Value="N_pileup_hist" />-->
+		      <Item Name="PU_Filename_MC" Value="/scratch/hh/dust/naf/cms/user/peiffer/PileUpHistos/PileUpHistoCycle" />
+		      <Item Name="PU_Filename_Data" Value="/scratch/hh/dust/naf/cms/user/peiffer/PileUpHistos/MyDataPileupHistogram.root" />
+		      <Item Name="PU_Histname_Data" Value="pileup" />
+		      <Item Name="PU_Histname_MC" Value="N_pileup_hist" />
 
 		      <Item Name="writeTTbarReco" Value="True" />  
 		      <Item Name="readTTbarReco" Value="True" /> 

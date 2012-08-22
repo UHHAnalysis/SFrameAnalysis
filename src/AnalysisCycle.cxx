@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.8 2012/07/02 15:06:24 mmeyer Exp $
+// $Id: AnalysisCycle.cxx,v 1.9 2012/07/09 08:35:12 peiffer Exp $
 
 #include <iostream>
 
@@ -123,12 +123,21 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
   } 
 
   // pile-up reweighting
-  if(m_PUFilenameMC.size()>0 && m_PUFilenameData.size()>0 && m_PUHistnameMC.size()>0 && m_PUHistnameData.size()>0){
+  if(m_PUFilenameMC.size()>0 && m_PUFilenameData.size()>0 && m_PUHistnameMC.size()>0 && m_PUHistnameData.size()>0 && m_addGenInfo){
+    std::cout << inputData.GetName() <<std::endl;
+    m_PUFilenameMC += ".";
+    m_PUFilenameMC += inputData.GetType();
+    m_PUFilenameMC += ".";
+    m_PUFilenameMC += inputData.GetVersion();
+    m_PUFilenameMC += ".root";   
     m_logger << INFO << "PU Reweighting will be performed. File(data) = " << m_PUFilenameData
 	     << " File(MC) = " << m_PUFilenameMC << SLogger::endmsg;
     m_logger << INFO << "PU, histograms: Hist(data) = " << m_PUHistnameData
 	     << " Hist(MC) = " << m_PUHistnameMC << SLogger::endmsg;
     m_puwp = new PUWeightProducer(m_PUFilenameMC, m_PUFilenameData, m_PUHistnameMC, m_PUHistnameData);
+  }
+  else{
+    m_puwp = NULL;
   }
  
   // output Ntuple
@@ -377,7 +386,6 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 
   // store the weight (lumiweight) in the eventcalc class and use it 
   calc -> ProduceWeight(weight);
-
 
   if(m_bcc.genInfo){
 

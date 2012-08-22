@@ -5,6 +5,12 @@
 <!ENTITY DY_10to50 SYSTEM "DY_10to50.xml">
 <!ENTITY DY_50toInf SYSTEM "DY_50toInf.xml">
 <!ENTITY TTbar SYSTEM "TTbar.xml">
+<!ENTITY SingleTop_T_tch SYSTEM "SingleTop_T_tch.xml">
+<!ENTITY SingleTop_T_tWch SYSTEM "SingleTop_T_tWch.xml">
+<!ENTITY SingleTop_T_sch SYSTEM "SingleTop_T_sch.xml">
+<!ENTITY SingleTop_Tbar_tch SYSTEM "SingleTop_Tbar_tch.xml">
+<!ENTITY SingleTop_Tbar_tWch SYSTEM "SingleTop_Tbar_tWch.xml">
+<!ENTITY SingleTop_Tbar_sch SYSTEM "SingleTop_Tbar_sch.xml">
 ]>
 
 
@@ -21,23 +27,20 @@
 	<Package Name="Analysis.par" />
 
 
-	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/PreSelectionElectron/" PostFix="" TargetLumi="1" > 
+	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/PreSelectionMuon/" PostFix="" TargetLumi="1" > 
 <!--	<Cycle Name="ZprimePreSelectionCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/PreSelectionMuon/" PostFix="" TargetLumi="1" > -->
 
-<!--
 	        <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="DATA" Cacheable="True">
                         &MuData;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
--->
 
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
                         &TTbar;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData>
-<!--	
                <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DY_10to50" Cacheable="True">
                         &DY_10to50;
 			<InputTree Name="AnalysisTree" /> 
@@ -48,7 +51,7 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData>
-
+<!--
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="False">
 		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000_v3.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" />
@@ -59,17 +62,47 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" /> 
 		</InputData>  
-
+-->
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="Wjets" Cacheable="True">
                         &Wjets;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
--->
+
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_T_tch" Cacheable="True">
+                        &SingleTop_T_tch;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_T_tWch" Cacheable="True">
+                        &SingleTop_T_tWch;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_T_sch" Cacheable="True">
+                        &SingleTop_T_sch;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_Tbar_tch" Cacheable="True">
+                        &SingleTop_Tbar_tch;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_Tbar_tWch" Cacheable="True">
+                        &SingleTop_Tbar_tWch;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_Tbar_sch" Cacheable="True">
+                        &SingleTop_Tbar_sch;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> 
 
 		<UserConfig>
 
-		   <Item Name="Electron_Or_Muon_Selection" Value="ELE" />
+		   <Item Name="Electron_Or_Muon_Selection" Value="MU" />
 
 		   <Item Name="JetCollection" Value="goodPatJetsPFlow" />  
 		   <Item Name="ElectronCollection" Value="selectedPatElectronsPFlow" /> 

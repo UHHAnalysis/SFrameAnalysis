@@ -91,15 +91,15 @@ void ZprimePreSelectionCycle::BeginInputData( const SInputData& id ) throw( SErr
 
   //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
   if(!addGenInfo()){
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L1FastJet_AK5PFchs.txt"));
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L2Relative_AK5PFchs.txt"));  
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L3Absolute_AK5PFchs.txt")); 
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/GR_R_52_V9_L2L3Residual_AK5PFchs.txt")); 
+    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/GR_R_52_V9_L1FastJet_AK5PFchs.txt"));
+    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/GR_R_52_V9_L2Relative_AK5PFchs.txt"));  
+    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/GR_R_52_V9_L3Absolute_AK5PFchs.txt")); 
+    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/GR_R_52_V9_L2L3Residual_AK5PFchs.txt")); 
   }
   else{
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L1FastJet_AK5PFchs.txt"));
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L2Relative_AK5PFchs.txt"));  
-    pars.push_back(JetCorrectorParameters("/scratch/hh/lustre/cms/user/peiffer/JECFiles/START52_V11_L3Absolute_AK5PFchs.txt")); 
+    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/START52_V11_L1FastJet_AK5PFchs.txt"));
+    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/START52_V11_L2Relative_AK5PFchs.txt"));  
+    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/START52_V11_L3Absolute_AK5PFchs.txt")); 
   } 
 
   m_corrector = new FactorizedJetCorrector(pars);

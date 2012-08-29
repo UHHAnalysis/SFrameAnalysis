@@ -40,7 +40,6 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.DY_50toInf.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
-
 	        <InputData Lumi="70277" NEventsMax="-1" Type="MC" Version="SingleTop_T_tch" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.SingleTop_T_tch.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -63,6 +62,10 @@
 		</InputData> 
 	        <InputData Lumi="79531" NEventsMax="-1" Type="MC" Version="SingleTop_Tbar_sch" Cacheable="False">
  		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.SingleTop_Tbar_sch.root" Lumi="0.0"/>       
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+	        <InputData Lumi="182490" NEventsMax="-1" Type="MC" Version="WW" Cacheable="False">
+ 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/SelectionMuon/ZprimeSelectionCycle.MC.WW.root" Lumi="0.0"/>       
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 

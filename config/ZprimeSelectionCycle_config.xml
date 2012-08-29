@@ -76,6 +76,11 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
+	        <InputData Lumi="182490" NEventsMax="-1" Type="MC" Version="WW" Cacheable="False">
+ 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/PreSelectionMuon/ZprimePreSelectionCycle.MC.WW.root" Lumi="0.0"/>       
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> 
 
 		<UserConfig>
 

@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.9 2012/07/09 08:35:12 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.10 2012/08/22 15:31:45 peiffer Exp $
 
 #include <iostream>
 
@@ -124,7 +124,6 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 
   // pile-up reweighting
   if(m_PUFilenameMC.size()>0 && m_PUFilenameData.size()>0 && m_PUHistnameMC.size()>0 && m_PUHistnameData.size()>0 && m_addGenInfo){
-    std::cout << inputData.GetName() <<std::endl;
     m_PUFilenameMC += ".";
     m_PUFilenameMC += inputData.GetType();
     m_PUFilenameMC += ".";

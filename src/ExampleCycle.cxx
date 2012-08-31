@@ -1,4 +1,4 @@
-// $Id: ExampleCycle.cxx,v 1.5 2012/08/21 15:56:32 peiffer Exp $
+// $Id: ExampleCycle.cxx,v 1.6 2012/08/22 15:31:45 peiffer Exp $
 
 #include <iostream>
 
@@ -74,6 +74,7 @@ void ExampleCycle::BeginInputData( const SInputData& id ) throw( SError )
   TopSel->addSelectionModule(new NTopJetSelection(1,int_infinity(),350,2.5));
   TopSel->addSelectionModule(new NTopTagSelection(1,int_infinity()));
 
+
   RegisterSelection(BSel);
   RegisterSelection(NoBSel);
   RegisterSelection(TopSel);
@@ -148,11 +149,10 @@ void ExampleCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( S
   BaseHists* Chi2_HistsTopSel = GetHistCollection("Chi2_TopSel");
 
 
-
   // start the analysis
   HistsNoCuts->Fill();
   Chi2_HistsNoCuts->Fill();
-  EventCalc* calc = EventCalc::Instance();
+
   if(BSel->passSelection()){
     HistsBTag->Fill();
     Chi2_HistsBTag->Fill();

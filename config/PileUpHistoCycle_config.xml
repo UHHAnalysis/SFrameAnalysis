@@ -10,6 +10,7 @@
 <!ENTITY SingleTop_Tbar_tch SYSTEM "SingleTop_Tbar_tch.xml">
 <!ENTITY SingleTop_Tbar_tWch SYSTEM "SingleTop_Tbar_tWch.xml">
 <!ENTITY SingleTop_Tbar_sch SYSTEM "SingleTop_Tbar_sch.xml">
+<!ENTITY WW SYSTEM "WW.xml">
 <!ENTITY QCD_Pt-170to300 SYSTEM "QCD_Pt-170to300.xml">
 <!ENTITY QCD_Pt-300to470 SYSTEM "QCD_Pt-300to470.xml">
 <!ENTITY QCD_Pt-470to600 SYSTEM "QCD_Pt-470to600.xml">
@@ -31,8 +32,9 @@
 	<Package Name="Analysis.par" />
 
 	<Cycle Name="PileUpHistoCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/PileUpHistos/" PostFix="" TargetLumi="1" > 
-<!--	<Cycle Name="PileUpHistoCycle"  OutputDirectory="./" PostFix="" TargetLumi="1" > -->
+<!--	<Cycle Name="PileUpHistoCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/PileUpHistos/" PostFix="" TargetLumi="1" > -->
 
+<!--
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="False">
 		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000_v3.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" />
@@ -41,6 +43,7 @@
 		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ600_v3.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
+-->
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
 		        &TTbar;
 			<InputTree Name="AnalysisTree" />
@@ -79,6 +82,10 @@
 		</InputData> 
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="SingleTop_Tbar_sch" Cacheable="True">
                         &SingleTop_Tbar_sch;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WW" Cacheable="True">
+                        &WW;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 

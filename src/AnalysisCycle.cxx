@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.10 2012/08/22 15:31:45 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.11 2012/08/31 09:30:13 peiffer Exp $
 
 #include <iostream>
 
@@ -382,6 +382,9 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     m_bcc.run = LumiHandler()->GetRandomRunNr();
   }
 
+
+  //set the lumiweight to 1 for data
+  if(m_bcc.isRealData) weight = 1;
 
   // store the weight (lumiweight) in the eventcalc class and use it 
   calc -> ProduceWeight(weight);

@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.12 2012/10/26 08:35:11 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.13 2012/11/01 08:25:17 peiffer Exp $
 
 #include <iostream>
 
@@ -55,6 +55,7 @@ AnalysisCycle::AnalysisCycle()
   DeclareProperty( "PU_Histname_MC" , m_PUHistnameMC);
   DeclareProperty( "PU_Histname_Data" , m_PUHistnameData);
 
+  DeclareProperty( "LeptonScaleFactors", m_leptonweights);
 }
 
 AnalysisCycle::~AnalysisCycle() 
@@ -400,6 +401,13 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
      double pu_weight = m_puwp->produceWeight(m_bcc.genInfo);
       // set the weight in the eventcalc
       calc -> ProduceWeight(pu_weight);
+    }
+
+    if(m_leptonweights.size()>0){
+
+      LeptonScaleFactors lsf(m_leptonweights);
+      calc->ProduceWeight(lsf.GetWeight());
+
     }
   }
   

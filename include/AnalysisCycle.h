@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.4 2012/06/13 09:49:56 peiffer Exp $
+// $Id: AnalysisCycle.h,v 1.5 2012/06/28 16:01:52 peiffer Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -9,6 +9,7 @@
 #include "PUWeightProducer.h"
 #include "LuminosityHandler.h"
 #include "BaseHists.h"
+#include "MCDataScaleFactors.h"
 
 /**
  *   @short Base of every analysis cycle 
@@ -22,7 +23,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.4 $
+ *  @version $Revision: 1.5 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -116,6 +117,9 @@ private:
   bool m_newrun;
   bool m_writeTTbarReco;
   bool m_readTTbarReco;
+
+  //MC-data correction weights
+  std::vector<std::string> m_leptonweights;
 
   //output variables
   std::vector< Electron > m_output_electrons;  

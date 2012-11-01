@@ -16,8 +16,11 @@ HypothesisHists::~HypothesisHists()
 void HypothesisHists::Init()
 {
 
-  Book( TH1F( "M_ttbar_rec", "M_{t#bar{t}}^{rec} [GeV/c^{2}]", 150, 0, 3000 ) );
-  Book( TH1F( "M_ttbar_rec_ly", "M_{t#bar{t}}^{rec} [GeV/c^{2}]", 150, 0, 3000 ) );
+  Book( TH1F( "M_ttbar_rec", "M_{t#bar{t}}^{rec} [GeV/c^{2}]", 100, 0, 5000 ) );
+  Book( TH1F( "M_ttbar_rec_ly", "M_{t#bar{t}}^{rec} [GeV/c^{2}]", 100, 0, 5000 ) );
+
+  Book( TH1F( "M_ttbar_gen", "M_{t#bar{t}}^{gen} [GeV/c^{2}]", 100, 0, 5000 ) );
+  Book( TH1F( "M_ttbar_gen_ly", "M_{t#bar{t}}^{gen} [GeV/c^{2}]", 100, 0, 5000 ) );
 
 
   Book( TH1F( "M_toplep_rec", "M^{top,lep} [GeV/c^{2}]", 70, 0, 700 ) );
@@ -34,10 +37,14 @@ void HypothesisHists::Init()
     min=0;
     max=6;
   }
-  Book( TH1F("Discriminator", name , 100, min,max) );
+  if( m_discr->GetLabel()=="CorrectMatch"){
+    min=0;
+    max=2;
+  }
+  Book( TH1F("Discriminator", name , 50, min,max) );
 
-//   Book( TH2F("M_ttbar_rec_vs_M_ttbar_gen","M_{t#bar{t}}^{rec} [GeV/c^{2}] vs M_{t#bar{t}}^{gen} [GeV/c^{2}]",100,0,3000,100,0,3000));
-//   Book( TH1F("M_ttbar_resolution", "(M_{t#bar{t}}^{gen} - M_{t#bar{t}}^{rec})/M_{t#bar{t}}^{rec}", 100, -5,5) );
+  Book( TH2F("M_ttbar_rec_vs_M_ttbar_gen","M_{t#bar{t}}^{rec} [GeV/c^{2}] vs M_{t#bar{t}}^{gen} [GeV/c^{2}]",100,0,3000,100,0,3000));
+  Book( TH1F("M_ttbar_resolution", "(M_{t#bar{t}}^{gen} - M_{t#bar{t}}^{rec})/M_{t#bar{t}}^{rec}", 100, -5,5) );
 }
 
 void HypothesisHists::Fill()
@@ -60,10 +67,13 @@ void HypothesisHists::Fill()
   if(calc->GetGenParticles() )
     mttbar_gen = ( calc->GetTTbarGen()->Top().v4() + calc->GetTTbarGen()->Antitop().v4()).M();
   
+  
   Hist("M_ttbar_rec")->Fill(mttbar_rec, weight);
   Hist("M_ttbar_rec_ly")->Fill(mttbar_rec, weight);
-//   Hist("M_ttbar_rec_vs_M_ttbar_gen")->Fill(mttbar_rec, mttbar_gen);
-//   Hist("M_ttbar_resolution")->Fill( (mttbar_gen-mttbar_rec)/mttbar_gen, weight);
+  Hist("M_ttbar_gen")->Fill(mttbar_gen, weight);
+  Hist("M_ttbar_gen_ly")->Fill(mttbar_gen, weight);
+  Hist("M_ttbar_rec_vs_M_ttbar_gen")->Fill(mttbar_rec, mttbar_gen);
+  Hist("M_ttbar_resolution")->Fill( (mttbar_gen-mttbar_rec)/mttbar_gen, weight);
   Hist("Discriminator")->Fill(hyp->discriminator(m_discr->GetLabel()), weight);
 
   double mtoplep=0;
@@ -74,7 +84,7 @@ void HypothesisHists::Fill()
   Hist("M_tophad_rec")->Fill(mtophad,weight); 
 
   Hist("Pt_toplep_rec")->Fill( hyp->toplep_v4().Pt(),weight );
-  Hist("Pt_tophad_rec")->Fill( hyp->toplep_v4().Pt(),weight ); 
+  Hist("Pt_tophad_rec")->Fill( hyp->tophad_v4().Pt(),weight ); 
 
 }
 

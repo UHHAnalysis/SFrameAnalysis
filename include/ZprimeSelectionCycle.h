@@ -10,6 +10,7 @@
 #include "HypothesisHists.h"
 #include "include/SelectionModules.h"
 #include "include/ObjectHandler.h"
+#include "HypothesisStatistics.h"
 #include "JetCorrectorParameters.h"
 
 /**
@@ -55,6 +56,14 @@ private:
   Cleaner* m_cleaner;
   Chi2Discriminator* m_chi2discr;
   BestPossibleDiscriminator* m_bpdiscr;
+  SumDeltaRDiscriminator* m_sumdrdiscr;
+  CorrectMatchDiscriminator* m_cmdiscr;
+
+  HypothesisStatistics* m_bp_chi2;
+  HypothesisStatistics* m_bp_sumdr;
+  HypothesisStatistics* m_cm_chi2;
+  HypothesisStatistics* m_cm_sumdr; 
+
 
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimeSelectionCycle, 0 );

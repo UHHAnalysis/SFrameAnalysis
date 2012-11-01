@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.11 2012/08/31 09:30:13 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.12 2012/10/26 08:35:11 peiffer Exp $
 
 #include <iostream>
 
@@ -364,7 +364,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 
   // first thing to do: call reset of event calc
   EventCalc* calc = EventCalc::Instance();
-  calc->Reset();
+  calc->Reset(); 
 
   if(m_bcc.isRealData && m_addGenInfo){
     m_logger << WARNING<< "Running over real data, but addGenInfo=True?!" << SLogger::endmsg;
@@ -408,8 +408,12 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     if( !LumiHandler()->PassGoodRunsList( m_bcc.run, m_bcc.luminosityBlock )) throw SError( SError::SkipEvent );
   }
 
+  //clear reco hyp pointers from previous events
+  if( m_bcc.recoHyps && !m_readTTbarReco) delete m_bcc.recoHyps ;
+
   //create new pointer to recoHyps if no recoHyps were read in
   //note: list of recoHyps is still empty, has to be filled in the user cycle
+
   if(!m_readTTbarReco)  m_bcc.recoHyps = new std::vector<ReconstructionHypothesis>;
 
   return;

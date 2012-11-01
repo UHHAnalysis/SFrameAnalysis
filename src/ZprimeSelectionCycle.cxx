@@ -122,6 +122,8 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   chi2_selection->addSelectionModule(new HypothesisDiscriminatorCut( m_chi2discr, -1*double_infinity(), 10));
 
   m_bpdiscr = new BestPossibleDiscriminator();
+  m_sumdrdiscr = new SumDeltaRDiscriminator();
+  m_cmdiscr = new CorrectMatchDiscriminator();
 
   RegisterSelection(first_selection);
   RegisterSelection(second_selection);
@@ -148,12 +150,18 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
 
   // histograms without any cuts
   RegisterHistCollection( new HypothesisHists("Chi2", m_chi2discr) );
-  //RegisterHistCollection( new HypothesisHists("BestPossible", m_bpdiscr) );
-  
+  RegisterHistCollection( new HypothesisHists("BestPossible", m_bpdiscr) );
+  RegisterHistCollection( new HypothesisHists("SumDeltaR", m_sumdrdiscr) );
+  RegisterHistCollection( new HypothesisHists("CorrectMatch", m_cmdiscr) );
 
   // important: initialise histogram collections after their definition
   InitHistos();
 
+  m_bp_chi2 = new HypothesisStatistics("b.p. vs. Chi2");
+  m_bp_sumdr = new HypothesisStatistics("b.p. vs. SumDR");
+  m_cm_chi2 = new HypothesisStatistics("matched vs. Chi2");
+  m_cm_sumdr = new HypothesisStatistics("matched vs. SumDR");
+  
   return;
 
 }
@@ -162,6 +170,12 @@ void ZprimeSelectionCycle::EndInputData( const SInputData& id ) throw( SError )
 {
 
   AnalysisCycle::EndInputData( id );
+
+  m_bp_chi2->PrintStatistics();
+  m_bp_sumdr->PrintStatistics();
+  m_cm_chi2->PrintStatistics();
+  m_cm_sumdr->PrintStatistics();
+
   return;
 
 }
@@ -220,13 +234,14 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
   //do reconstruction here
 
-
-
   calc->FillHighMassTTbarHypotheses();
 
   m_chi2discr->FillDiscriminatorValues();
+  m_bpdiscr->FillDiscriminatorValues();
+  m_sumdrdiscr->FillDiscriminatorValues();
+  m_cmdiscr->FillDiscriminatorValues();
 
-  //m_bpdiscr->FillDiscriminatorValues();
+  //if(!chi2_selection->passSelection())  throw SError( SError::SkipEvent );
 
   ReconstructionHypothesis *hyp = m_chi2discr->GetBestHypothesis();
 
@@ -241,18 +256,34 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 //   }
 //   std::cout << std::endl;
 
-  //ReconstructionHypothesis *bp_hyp = m_bpdiscr->GetBestHypothesis();
+  ReconstructionHypothesis *bp_hyp = m_bpdiscr->GetBestHypothesis();
   //double bp_mttbar =  (bp_hyp->toplep_v4()+bp_hyp->tophad_v4()).M();
   //std::cout << "               bp mttbar : " << bp_mttbar << "   bp deltaR : " << bp_hyp->discriminator("BestPossible") << std::endl;
 
+  ReconstructionHypothesis *sdr_hyp = m_sumdrdiscr->GetBestHypothesis();
+  ReconstructionHypothesis *cm_hyp = m_cmdiscr->GetBestHypothesis();
+  
+
   // get the histogram collections
   BaseHists* Chi2Hists = GetHistCollection("Chi2");
-  //BaseHists* BPHists = GetHistCollection("BestPossible");
-
-  //if(!chi2_selection->passSelection())  throw SError( SError::SkipEvent );
-
+  BaseHists* BPHists = GetHistCollection("BestPossible");
+  BaseHists* SumDRHists = GetHistCollection("SumDeltaR");
+  BaseHists* CorrectMatchHists = GetHistCollection("CorrectMatch");
+  
+  
   Chi2Hists->Fill();
-  //BPHists->Fill();
+  BPHists->Fill();
+  SumDRHists->Fill();
+  if(cm_hyp) CorrectMatchHists->Fill();
+  
+  m_bp_chi2->FillHyps(bp_hyp,hyp);
+  m_bp_sumdr->FillHyps(bp_hyp,sdr_hyp);
+
+
+  if(cm_hyp){
+    m_cm_chi2->FillHyps(cm_hyp,hyp);
+    m_cm_sumdr->FillHyps(cm_hyp,sdr_hyp);
+  }
 
   //calc->PrintEventContent();
 

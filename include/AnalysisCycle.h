@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.5 2012/06/28 16:01:52 peiffer Exp $
+// $Id: AnalysisCycle.h,v 1.6 2012/11/01 17:33:00 peiffer Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -23,7 +23,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.5 $
+ *  @version $Revision: 1.6 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -120,6 +120,7 @@ private:
 
   //MC-data correction weights
   std::vector<std::string> m_leptonweights;
+  LeptonScaleFactors* m_lsf;
 
   //output variables
   std::vector< Electron > m_output_electrons;  

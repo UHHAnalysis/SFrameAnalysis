@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.13 2012/11/01 08:25:17 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.14 2012/11/01 17:33:00 peiffer Exp $
 
 #include <iostream>
 
@@ -168,6 +168,10 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     DeclareVariable(m_output_triggerNames, "triggerNames");
     DeclareVariable(m_output_triggerResults, "triggerResults"); 
   }
+
+  if(m_leptonweights.size()>0)
+    m_lsf = new LeptonScaleFactors(m_leptonweights);
+
   return;
 
 }
@@ -403,11 +407,9 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
       calc -> ProduceWeight(pu_weight);
     }
 
-    if(m_leptonweights.size()>0){
-
-      LeptonScaleFactors lsf(m_leptonweights);
-      calc->ProduceWeight(lsf.GetWeight());
-
+    //lepton scale factor
+    if(m_lsf){
+      calc->ProduceWeight(m_lsf->GetWeight());
     }
   }
   

@@ -21,33 +21,36 @@ void ExampleHists::Init()
   // book all histograms here
 
   // missing ET and HT
-  double* logMET_bins = MakeLogBinning(100, 50, 1200);
-  Book( TH1F( "MET_lx", "missing E_{T} [GeV]", 100, logMET_bins ) );
-  double* logHT_bins = MakeLogBinning(100, 150, 3000);
-  Book( TH1F( "HT_lx", "H_{T} [GeV]", 100, logHT_bins ) );
-  double* logHTlep_bins = MakeLogBinning(100, 150, 1200);
-  Book( TH1F( "HTlep_lx", "H_{T}^{lep} [GeV]", 100, logHTlep_bins ) );
+  double* logMET_bins = MakeLogBinning(40, 50, 1200);
+  Book( TH1F( "MET_lx", "missing E_{T} [GeV]", 40, logMET_bins ) );
+  double* logHT_bins = MakeLogBinning(40, 150, 3000);
+  Book( TH1F( "HT_lx", "H_{T} [GeV]", 40, logHT_bins ) );
+  double* logHTlep_bins = MakeLogBinning(40, 150, 1200);
+  Book( TH1F( "HTlep_lx", "H_{T}^{lep} [GeV]", 40, logHTlep_bins ) );
 
   // jets
-  Book( TH1F( "N_jets", "N^{jets}", 20, 0, 20 ) );
-  double* logPtjet1_bins = MakeLogBinning(50, 150, 1500);
-  double* logPtjet2_bins = MakeLogBinning(50, 50, 1000);
-  double* logPtjet3_bins = MakeLogBinning(50, 50, 500);
-  double* logPtjet4_bins = MakeLogBinning(50, 50, 250);
-  Book( TH1F( "pt_jet1_lx", "p_{T}^{jet 1} [GeV/c]", 50, logPtjet1_bins ) );
-  Book( TH1F( "pt_jet2_lx", "p_{T}^{jet 2} [GeV/c]", 50, logPtjet2_bins ) ); 
-  Book( TH1F( "pt_jet3_lx", "p_{T}^{jet 3} [GeV/c]", 50, logPtjet3_bins ) );
-  Book( TH1F( "pt_jet4_lx", "p_{T}^{jet 4} [GeV/c]", 50, logPtjet4_bins ) );
-  Book( TH1F( "eta_jet1", "#eta^{jet 1}", 50, -2.5, 2.5) );
-  Book( TH1F( "eta_jet2", "#eta^{jet 2}", 50, -2.5, 2.5) );
-  Book( TH1F( "eta_jet3", "#eta^{jet 3}", 50, -2.5, 2.5) );
-  Book( TH1F( "eta_jet4", "#eta^{jet 4}", 50, -2.5, 2.5) );
+  Book( TH1F( "N_jets_ly", "N^{jets}", 20, 0, 20 ) );
+  double* logPtjet1_bins = MakeLogBinning(40, 150, 1500);
+  double* logPtjet2_bins = MakeLogBinning(40, 50, 1000);
+  double* logPtjet3_bins = MakeLogBinning(40, 50, 500);
+  double* logPtjet4_bins = MakeLogBinning(40, 50, 250);
+  Book( TH1F( "pt_jet1_lx", "p_{T}^{jet 1} [GeV/c]", 40, logPtjet1_bins ) );
+  Book( TH1F( "pt_jet2_lx", "p_{T}^{jet 2} [GeV/c]", 40, logPtjet2_bins ) ); 
+  Book( TH1F( "pt_jet3_lx", "p_{T}^{jet 3} [GeV/c]", 40, logPtjet3_bins ) );
+  Book( TH1F( "pt_jet4_lx", "p_{T}^{jet 4} [GeV/c]", 40, logPtjet4_bins ) );
+  Book( TH1F( "eta_jet1", "#eta^{jet 1}", 40, -2.5, 2.5) );
+  Book( TH1F( "eta_jet2", "#eta^{jet 2}", 40, -2.5, 2.5) );
+  Book( TH1F( "eta_jet3", "#eta^{jet 3}", 40, -2.5, 2.5) );
+  Book( TH1F( "eta_jet4", "#eta^{jet 4}", 40, -2.5, 2.5) );
 
   // leptons
   Book( TH1F( "N_mu", "N^{#mu}", 10, 0, 10 ) );
-  double* logPtlep_bins = MakeLogBinning(50, 45, 500);
-  Book( TH1F( "pt_mu_lx", "p_{T}^{#mu} [GeV/c]", 50, logPtlep_bins ) );
-  Book( TH1F( "eta_mu", "#eta^{#mu}", 50, -2.1, 2.1) );
+  double* logPtlep_bins = MakeLogBinning(40, 45, 500);
+  Book( TH1F( "pt_mu_lx", "p_{T}^{#mu} [GeV/c]", 40, logPtlep_bins ) );
+  Book( TH1F( "eta_mu", "#eta^{#mu}", 40, -2.1, 2.1) );
+  Book( TH1F( "reliso_mu", "#mu rel. Iso", 40, 0, 0.5) );
+  Book( TH1F( "ptrel_mu", "p_{T}^{rel}(#mu,jet)", 40, 0, 200.) );
+  Book( TH1F( "deltaRmin_mu", "#Delta R_{min}(#mu,jet)", 40, 0, 2.0) );
 
   // primary vertices
   Book( TH1F( "N_pv", "N^{PV}", 50, 0, 50 ) );
@@ -93,7 +96,7 @@ void ExampleHists::Fill()
 
   std::vector<Jet>* jets = calc->GetJets();
   int Njets = jets->size();
-  Hist("N_jets")->Fill(Njets, weight);
+  Hist("N_jets_ly")->Fill(Njets, weight);
 
   if(Njets>=1){
     Hist("pt_jet1_lx")->Fill(jets->at(0).pt(), weight);
@@ -119,6 +122,11 @@ void ExampleHists::Fill()
     Muon thismu = muons->at(i);
     Hist("pt_mu_lx")->Fill(thismu.pt(), weight);
     Hist("eta_mu")->Fill(thismu.eta(), weight);
+
+    Hist("reliso_mu")->Fill(thismu.relIso(), weight);
+    Hist("ptrel_mu")->Fill( pTrel(&thismu, jets), weight);
+    Hist("deltaRmin_mu")->Fill( deltaRmin(&thismu, jets), weight);
+
   }
 
 

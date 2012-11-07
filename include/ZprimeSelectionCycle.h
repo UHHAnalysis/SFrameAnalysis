@@ -73,7 +73,12 @@ private:
   HypothesisStatistics* m_bp_sumdr;
   HypothesisStatistics* m_cm_chi2;
   HypothesisStatistics* m_cm_sumdr; 
+<<<<<<< ZprimeSelectionCycle.h
+  HypothesisStatistics* m_cm_bp; 
 
+=======
+
+>>>>>>> 1.8
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimeSelectionCycle, 0 );
 

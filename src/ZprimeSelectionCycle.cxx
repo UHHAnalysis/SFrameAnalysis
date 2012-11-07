@@ -125,9 +125,13 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   m_sumdrdiscr = new SumDeltaRDiscriminator();
   m_cmdiscr = new CorrectMatchDiscriminator();
 
+  Selection* matchable_selection = new Selection("matchable_selection");
+  matchable_selection->addSelectionModule(new HypothesisDiscriminatorCut( m_cmdiscr, -1*double_infinity(), 999));
+
   RegisterSelection(first_selection);
   RegisterSelection(second_selection);
   RegisterSelection(chi2_selection); 
+  RegisterSelection(matchable_selection);
 
   std::vector<JetCorrectorParameters> pars;
 
@@ -169,7 +173,8 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   m_bp_sumdr = new HypothesisStatistics("b.p. vs. SumDR");
   m_cm_chi2 = new HypothesisStatistics("matched vs. Chi2");
   m_cm_sumdr = new HypothesisStatistics("matched vs. SumDR");
-  
+  m_cm_bp = new HypothesisStatistics("matched vs. b.p.");
+
   return;
 
 }
@@ -183,6 +188,7 @@ void ZprimeSelectionCycle::EndInputData( const SInputData& id ) throw( SError )
   m_bp_sumdr->PrintStatistics();
   m_cm_chi2->PrintStatistics();
   m_cm_sumdr->PrintStatistics();
+  m_cm_bp->PrintStatistics();
 
   return;
 
@@ -212,7 +218,8 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   static Selection* first_selection = GetSelection("first_selection");
   static Selection* second_selection = GetSelection("second_selection");
   static Selection* chi2_selection = GetSelection("chi2_selection");
- 
+  static Selection* matchable_selection = GetSelection("matchable_selection");
+
   m_cleaner = new Cleaner();
 
   ObjectHandler* objs = ObjectHandler::Instance();
@@ -258,6 +265,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   m_cmdiscr->FillDiscriminatorValues();
 
   //if(!chi2_selection->passSelection())  throw SError( SError::SkipEvent );
+  //if(!matchable_selection->passSelection())  throw SError( SError::SkipEvent );
 
   ReconstructionHypothesis *hyp = m_chi2discr->GetBestHypothesis();
 
@@ -300,6 +308,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   if(cm_hyp){
     m_cm_chi2->FillHyps(cm_hyp,hyp);
     m_cm_sumdr->FillHyps(cm_hyp,sdr_hyp);
+    m_cm_bp->FillHyps(cm_hyp, bp_hyp);
   }
 
   //calc->PrintEventContent();

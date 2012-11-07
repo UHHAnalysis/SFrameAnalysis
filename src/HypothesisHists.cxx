@@ -29,6 +29,11 @@ void HypothesisHists::Init()
   Book( TH1F( "Pt_toplep_rec", "P_{T}^{top,lep} [GeV/c]", 60, 0, 1200 ) );
   Book( TH1F( "Pt_tophad_rec", "P_{T}^{top,had} [GeV/c]", 60, 0, 1200 ) );
 
+  Book( TH1F( "Pt_ttbar_rec", "P_{T,t#bar{t}}^{rec} [GeV/c]", 60, 0, 600 ) );
+  Book( TH1F( "Pt_ttbar_gen", "P_{T,t#bar{t}}^{gen} [GeV/c]", 60, 0, 600 ) );
+
+  Book( TH2F( "Pt_ttbar_rec_vs_Pt_ttbar_gen", "P_{T,t#bar{t}}^{rec} [GeV/c] vs P_{T,t#bar{t}}^{gen} [GeV/c]", 60, 0, 600 ,60, 0, 600));
+
   TString name = m_discr->GetLabel();
   name += " discriminator";
   double min=0;
@@ -63,10 +68,13 @@ void HypothesisHists::Fill()
     mttbar_rec = (hyp->top_v4()+hyp->antitop_v4()).M();
   else
     mttbar_rec = -sqrt( (hyp->top_v4()+hyp->antitop_v4()).mass2());
+  double ptttbar_rec = (hyp->top_v4()+hyp->antitop_v4()).Pt();
   double mttbar_gen = 0;
-  if(calc->GetGenParticles() )
+  double ptttbar_gen = 0;
+  if(calc->GetGenParticles() ){
     mttbar_gen = ( calc->GetTTbarGen()->Top().v4() + calc->GetTTbarGen()->Antitop().v4()).M();
-  
+    ptttbar_gen = ( calc->GetTTbarGen()->Top().v4() + calc->GetTTbarGen()->Antitop().v4()).Pt();
+  }
   
   Hist("M_ttbar_rec")->Fill(mttbar_rec, weight);
   Hist("M_ttbar_rec_ly")->Fill(mttbar_rec, weight);
@@ -84,7 +92,11 @@ void HypothesisHists::Fill()
   Hist("M_tophad_rec")->Fill(mtophad,weight); 
 
   Hist("Pt_toplep_rec")->Fill( hyp->toplep_v4().Pt(),weight );
-  Hist("Pt_tophad_rec")->Fill( hyp->tophad_v4().Pt(),weight ); 
+  Hist("Pt_tophad_rec")->Fill( hyp->tophad_v4().Pt(),weight );
+
+  Hist("Pt_ttbar_rec")->Fill ( ptttbar_rec, weight);
+  Hist("Pt_ttbar_gen")->Fill ( ptttbar_gen, weight); 
+  Hist("Pt_ttbar_rec_vs_Pt_ttbar_gen")->Fill(ptttbar_rec, ptttbar_gen);
 
 }
 

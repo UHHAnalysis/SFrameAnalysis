@@ -154,6 +154,14 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   RegisterHistCollection( new HypothesisHists("SumDeltaR", m_sumdrdiscr) );
   RegisterHistCollection( new HypothesisHists("CorrectMatch", m_cmdiscr) );
 
+  // control histograms
+  RegisterHistCollection( new EventHists("Event") );
+  RegisterHistCollection( new JetHists("Jets") );
+  RegisterHistCollection( new ElectronHists("Electron") );
+  RegisterHistCollection( new MuonHists("Muon") );
+  RegisterHistCollection( new TauHists("Tau") );
+  RegisterHistCollection( new TopJetHists("TopJets") );
+
   // important: initialise histogram collections after their definition
   InitHistos();
 
@@ -211,6 +219,14 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
   EventCalc* calc = EventCalc::Instance();
 
+  // control histograms
+  static BaseHists* eventhists = GetHistCollection("Event");
+  static BaseHists* jethists = GetHistCollection("Jets");
+  static BaseHists* elehists = GetHistCollection("Electron");
+  static BaseHists* muonhists = GetHistCollection("Muon");
+  static BaseHists* tauhists = GetHistCollection("Tau");
+  static BaseHists* topjethists = GetHistCollection("TopJets");
+
   if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
   if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(35,2.5);
   if(bcc->muons) m_cleaner->MuonCleaner_noIso(45,2.1);  
@@ -263,13 +279,14 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   ReconstructionHypothesis *sdr_hyp = m_sumdrdiscr->GetBestHypothesis();
   ReconstructionHypothesis *cm_hyp = m_cmdiscr->GetBestHypothesis();
   
+  // control histograms
+  FillControlHists();
 
   // get the histogram collections
   BaseHists* Chi2Hists = GetHistCollection("Chi2");
   BaseHists* BPHists = GetHistCollection("BestPossible");
   BaseHists* SumDRHists = GetHistCollection("SumDeltaR");
   BaseHists* CorrectMatchHists = GetHistCollection("CorrectMatch");
-  
   
   Chi2Hists->Fill();
   BPHists->Fill();
@@ -294,3 +311,22 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   
 }
 
+void ZprimeSelectionCycle::FillControlHists()
+{
+  // fill some control histograms, need to be defined in BeginInputData
+
+  BaseHists* eventhists = GetHistCollection("Event");
+  BaseHists* jethists = GetHistCollection("Jets");
+  BaseHists* elehists = GetHistCollection("Electron");
+  BaseHists* muonhists = GetHistCollection("Muon");
+  BaseHists* tauhists = GetHistCollection("Tau");
+  BaseHists* topjethists = GetHistCollection("TopJets");    
+
+  eventhists->Fill();
+  jethists->Fill();
+  elehists->Fill();
+  muonhists->Fill();  
+  tauhists->Fill();
+  topjethists->Fill();
+
+}

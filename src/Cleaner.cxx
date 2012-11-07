@@ -1,6 +1,5 @@
 #include "../include/Cleaner.h"
 
-
 Cleaner::Cleaner( BaseCycleContainer* input){
 
   bcc = input;

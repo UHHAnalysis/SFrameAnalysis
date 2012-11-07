@@ -1,4 +1,4 @@
-// $Id: ExampleCycle.cxx,v 1.6 2012/08/22 15:31:45 peiffer Exp $
+// $Id: ExampleCycle.cxx,v 1.7 2012/08/31 09:30:13 peiffer Exp $
 
 #include <iostream>
 
@@ -130,7 +130,7 @@ void ExampleCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( S
 
   // first step: call Execute event of base class to perform basic consistency checks
   // also, the good-run selection is performed there and the calculator is reset
-  AnalysisCycle::ExecuteEvent( id, weight);
+  AnalysisCycle::ExecuteEvent( id, weight );
 
   // get the selections
   static Selection* BSel = GetSelection("BSelection");

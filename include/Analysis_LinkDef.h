@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: Analysis_LinkDef.h,v 1.16 2012/09/27 15:59:24 mmeyer Exp $
+// $Id: Analysis_LinkDef.h,v 1.17 2012/09/28 09:45:53 peiffer Exp $
 #ifdef __CINT__
 
 #pragma link off all globals;
@@ -19,6 +19,13 @@
 //#pragma link C++ class LeptoquarkPreSelectionCycle+;
 #pragma link C++ class TauEffiCycle+;
 #pragma link C++ class ExampleCycle+;
+
+#pragma link C++ class TopJetHists;
+#pragma link C++ class JetHists;
+#pragma link C++ class EventHists;
+#pragma link C++ class ElectronHists;
+#pragma link C++ class MuonHists;
+
 #pragma link C++ class JetLeptonCleanerCycle+;
 #pragma link C++ class ZprimePreSelectionCycle+;
 #pragma link C++ class ZprimeSelectionCycle+;

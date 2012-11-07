@@ -13,6 +13,13 @@
 #include "HypothesisStatistics.h"
 #include "JetCorrectorParameters.h"
 
+#include "EventHists.h"
+#include "JetHists.h"
+#include "ElectronHists.h"
+#include "MuonHists.h"
+#include "TauHists.h"
+#include "TopJetHists.h"
+
 /**
  *  @short Selection cycle to perform 
  *         full selection for Z'->ttbar analysis
@@ -43,6 +50,9 @@ public:
   /// Function called for every event
   void ExecuteEvent( const SInputData&, Double_t ) throw( SError );
 
+  // Fill control histograms
+  void FillControlHists();
+
 private:
   //
   // Put all your private variables here
@@ -63,7 +73,6 @@ private:
   HypothesisStatistics* m_bp_sumdr;
   HypothesisStatistics* m_cm_chi2;
   HypothesisStatistics* m_cm_sumdr; 
-
 
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimeSelectionCycle, 0 );

@@ -4,6 +4,7 @@
 // ROOT include(s):
 #include <TObject.h>
 #include <TString.h>
+#include "TH2.h"
 
 // Local include(s):
 #include "include/BaseHists.h"

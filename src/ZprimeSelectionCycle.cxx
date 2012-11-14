@@ -166,6 +166,21 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
   RegisterHistCollection( new TauHists("Tau") );
   RegisterHistCollection( new TopJetHists("TopJets") );
 
+  RegisterHistCollection( new EventHists("Event_cleaned") );
+  RegisterHistCollection( new JetHists("Jets_cleaned") );
+  RegisterHistCollection( new ElectronHists("Electron_cleaned") );
+  RegisterHistCollection( new MuonHists("Muon_cleaned") );
+  RegisterHistCollection( new TauHists("Tau_cleaned") );
+  RegisterHistCollection( new TopJetHists("TopJets_cleaned") );
+
+
+  RegisterHistCollection( new EventHists("Event_presel") );
+  RegisterHistCollection( new JetHists("Jets_presel") );
+  RegisterHistCollection( new ElectronHists("Electron_presel") );
+  RegisterHistCollection( new MuonHists("Muon_presel") );
+  RegisterHistCollection( new TauHists("Tau_presel") );
+  RegisterHistCollection( new TopJetHists("TopJets_presel") );
+
   // important: initialise histogram collections after their definition
   InitHistos();
 
@@ -215,6 +230,9 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   // also, the good-run selection is performed there and the calculator is reset
   AnalysisCycle::ExecuteEvent( id, weight);
 
+  // control histograms
+  FillControlHists("_presel");
+
   static Selection* first_selection = GetSelection("first_selection");
   static Selection* second_selection = GetSelection("second_selection");
   static Selection* chi2_selection = GetSelection("chi2_selection");
@@ -226,13 +244,6 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
   EventCalc* calc = EventCalc::Instance();
 
-  // control histograms
-  static BaseHists* eventhists = GetHistCollection("Event");
-  static BaseHists* jethists = GetHistCollection("Jets");
-  static BaseHists* elehists = GetHistCollection("Electron");
-  static BaseHists* muonhists = GetHistCollection("Muon");
-  static BaseHists* tauhists = GetHistCollection("Tau");
-  static BaseHists* topjethists = GetHistCollection("TopJets");
 
   if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
   if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(35,2.5);
@@ -243,6 +254,8 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   //apply loose jet cleaning for 2D cut
   if(bcc->jets) m_cleaner->JetCleaner(25,double_infinity(),true);
 
+  // control histograms
+  FillControlHists("_cleaned");
 
   if(!first_selection->passSelection())  throw SError( SError::SkipEvent );
 
@@ -288,7 +301,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   ReconstructionHypothesis *cm_hyp = m_cmdiscr->GetBestHypothesis();
   
   // control histograms
-  FillControlHists();
+  FillControlHists("");
 
   // get the histogram collections
   BaseHists* Chi2Hists = GetHistCollection("Chi2");
@@ -320,16 +333,16 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
   
 }
 
-void ZprimeSelectionCycle::FillControlHists()
+void ZprimeSelectionCycle::FillControlHists(TString postfix)
 {
   // fill some control histograms, need to be defined in BeginInputData
 
-  BaseHists* eventhists = GetHistCollection("Event");
-  BaseHists* jethists = GetHistCollection("Jets");
-  BaseHists* elehists = GetHistCollection("Electron");
-  BaseHists* muonhists = GetHistCollection("Muon");
-  BaseHists* tauhists = GetHistCollection("Tau");
-  BaseHists* topjethists = GetHistCollection("TopJets");    
+  BaseHists* eventhists = GetHistCollection((std::string)("Event"+postfix));
+  BaseHists* jethists = GetHistCollection((std::string)("Jets"+postfix));
+  BaseHists* elehists = GetHistCollection((std::string)("Electron"+postfix));
+  BaseHists* muonhists = GetHistCollection((std::string)("Muon"+postfix));
+  BaseHists* tauhists = GetHistCollection((std::string)("Tau"+postfix));
+  BaseHists* topjethists = GetHistCollection((std::string)("TopJets"+postfix));    
 
   eventhists->Fill();
   jethists->Fill();

@@ -47,6 +47,7 @@ void HypothesisHists::Init()
     max=2;
   }
   Book( TH1F("Discriminator", name , 50, min,max) );
+  Book( TH1F("Discriminator_2", name , 50, 0,10) );
 
   Book( TH2F("M_ttbar_rec_vs_M_ttbar_gen","M_{t#bar{t}}^{rec} [GeV/c^{2}] vs M_{t#bar{t}}^{gen} [GeV/c^{2}]",100,0,3000,100,0,3000));
   Book( TH1F("M_ttbar_resolution", "(M_{t#bar{t}}^{gen} - M_{t#bar{t}}^{rec})/M_{t#bar{t}}^{rec}", 100, -5,5) );
@@ -83,6 +84,7 @@ void HypothesisHists::Fill()
   Hist("M_ttbar_rec_vs_M_ttbar_gen")->Fill(mttbar_rec, mttbar_gen);
   Hist("M_ttbar_resolution")->Fill( (mttbar_gen-mttbar_rec)/mttbar_gen, weight);
   Hist("Discriminator")->Fill(hyp->discriminator(m_discr->GetLabel()), weight);
+  Hist("Discriminator_2")->Fill(hyp->discriminator(m_discr->GetLabel()), weight);
 
   double mtoplep=0;
   double mtophad=0;

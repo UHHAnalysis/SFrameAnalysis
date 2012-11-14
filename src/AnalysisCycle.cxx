@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.14 2012/11/01 17:33:00 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.15 2012/11/02 10:02:14 peiffer Exp $
 
 #include <iostream>
 
@@ -23,6 +23,7 @@ AnalysisCycle::AnalysisCycle()
 
   m_puwp = NULL;
   m_newrun = false;
+  m_lsf = NULL;
 
   // set some default values
   m_readTTbarReco = false;
@@ -419,12 +420,16 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
   }
 
   //clear reco hyp pointers from previous events
-  if( m_bcc.recoHyps && !m_readTTbarReco) delete m_bcc.recoHyps ;
+  if( m_bcc.recoHyps && !m_readTTbarReco && m_writeTTbarReco) {
+    delete m_bcc.recoHyps ;
+    //m_bcc.recoHyps->clear();
+    //m_bcc.recoHyps = NULL;
+  }
 
   //create new pointer to recoHyps if no recoHyps were read in
   //note: list of recoHyps is still empty, has to be filled in the user cycle
 
-  if(!m_readTTbarReco)  m_bcc.recoHyps = new std::vector<ReconstructionHypothesis>;
+  if(!m_readTTbarReco && m_writeTTbarReco)  m_bcc.recoHyps = new std::vector<ReconstructionHypothesis>;
 
   return;
   

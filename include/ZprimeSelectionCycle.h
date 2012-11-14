@@ -51,7 +51,7 @@ public:
   void ExecuteEvent( const SInputData&, Double_t ) throw( SError );
 
   // Fill control histograms
-  void FillControlHists();
+  void FillControlHists(TString postfix="");
 
 private:
   //

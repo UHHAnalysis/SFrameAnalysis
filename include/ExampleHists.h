@@ -4,6 +4,7 @@
 // ROOT include(s):
 #include <TObject.h>
 #include <TString.h>
+#include "TH2.h"
 
 // Local include(s):
 #include "include/BaseHists.h"
@@ -20,7 +21,7 @@
  *   This example collection can be used for data and reconstructed
  *   MC events.
  *   
- *   @version $Revision: 0 $
+ *   @version $Revision: 1.1 $
  */
 
 class ExampleHists : public BaseHists {

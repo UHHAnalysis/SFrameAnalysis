@@ -49,13 +49,12 @@ void ExampleHists::Init()
   Book( TH1F( "pt_mu_lx", "p_{T}^{#mu} [GeV/c]", 40, logPtlep_bins ) );
   Book( TH1F( "eta_mu", "#eta^{#mu}", 40, -2.1, 2.1) );
   Book( TH1F( "reliso_mu", "#mu rel. Iso", 40, 0, 0.5) );
-  Book( TH1F( "ptrel_mu", "p_{T}^{rel}(#mu,jet)", 40, 0, 200.) );
-  Book( TH1F( "deltaRmin_mu", "#Delta R_{min}(#mu,jet)", 40, 0, 2.0) );
+
 
   // primary vertices
   Book( TH1F( "N_pv", "N^{PV}", 50, 0, 50 ) );
-//   Book( TH1F( "N_events_perLumiBin", "N^{evt}", 20, 1, 21 ) );
-//   Book( TH1F( "N_pv_perLumiBin", "N^{PV}", 20, 1, 21 ) );
+  Book( TH1F( "N_events_perLumiBin", "N^{evt}", 24, 0, 24 ) );
+  Book( TH1F( "N_pv_perLumiBin", "N^{PV}", 24, 0, 24 ) );
 
 }
 
@@ -76,10 +75,10 @@ void ExampleHists::Fill()
   int Npvs = calc->GetPrimaryVertices()->size();
 
   Hist("N_pv")->Fill(Npvs, weight);
-//   if(IsRealData){  
-//     Hist( "N_pv_perLumiBin")->Fill( lumih->GetLumiBin(run, lumiblock), Npvs*weight);
-//     Hist( "N_events_perLumiBin")->Fill( lumih->GetLumiBin(run, lumiblock), weight);
-//   }
+  if(calc->IsRealData()){  
+    Hist( "N_pv_perLumiBin")->Fill( lumih->GetLumiBin(run, lumiblock), Npvs*weight);
+    Hist( "N_events_perLumiBin")->Fill( lumih->GetLumiBin(run, lumiblock), weight);
+  }
 
   //double npu = bcc.genInfo->pileup_TrueNumInteractions();
   //if(npu>50) npu=49.9999;
@@ -124,9 +123,6 @@ void ExampleHists::Fill()
     Hist("eta_mu")->Fill(thismu.eta(), weight);
 
     Hist("reliso_mu")->Fill(thismu.relIso(), weight);
-    Hist("ptrel_mu")->Fill( pTrel(&thismu, jets), weight);
-    Hist("deltaRmin_mu")->Fill( deltaRmin(&thismu, jets), weight);
-
   }
 
 
@@ -138,8 +134,8 @@ void ExampleHists::Finish()
   EventCalc* calc = EventCalc::Instance();
   bool IsRealData = calc->IsRealData();
   if (IsRealData){
-//     Hist("N_pv_perLumiBin")->Divide( Hist("N_pv_perLumiBin"), Hist("N_events_perLumiBin"));
-//     Hist( "N_pv_perLumiBin")->GetYaxis()->SetTitle("Events/Lumi");
+    Hist("N_pv_perLumiBin")->Divide( Hist("N_pv_perLumiBin"), Hist("N_events_perLumiBin"));
+    Hist( "N_pv_perLumiBin")->GetYaxis()->SetTitle("Events/Lumi");
   }
 
 }

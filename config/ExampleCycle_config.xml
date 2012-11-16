@@ -21,12 +21,10 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.DATA.DATA.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
-
 		<InputData Lumi="92270" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.TTbar.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
-
 		<InputData Lumi="2097.3" NEventsMax="-1" Type="MC" Version="Wjets" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.Wjets.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -56,8 +54,6 @@
  		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.SingleTop_Tbar_sch.root" Lumi="0.0"/>       
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
-
-
 		<InputData Lumi="118975" NEventsMax="-1" Type="MC" Version="ZP500w5" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.ZP500w5.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -122,15 +118,13 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.ZP4000w400.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-
-
 <!--
-
 		<InputData Lumi="8390.9" NEventsMax="-1" Type="MC" Version="DY_10to50" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.DY_10to50.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
-		<InputData Lumi="8693.9" NEventsMax="-1" Type="MC" Version="DY_50toInf" Cacheable="False">
+-->
+		<InputData Lumi="8693.5" NEventsMax="-1" Type="MC" Version="DY_50toInf" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.DY_50toInf.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
@@ -138,12 +132,12 @@
  		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.WW.root" Lumi="0.0"/>       
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
--->
+
 		<UserConfig>
 
 		   <Item Name="JetCollection" Value="goodPatJetsPFlow" />  
 		   <Item Name="ElectronCollection" Value="selectedPatElectronsPFlow" /> 
-		   <Item Name="MuonCollection" Value="selectedPatMuonsPFlow" /> 
+		   <Item Name="MuonCollection" Value="selectedPatMuonsPFlowLoose" /> 
 		   <Item Name="TauCollection" Value="selectedPatTausPFlow" /> 
 <!--		   <Item Name="PhotonCollection" Value="patPhotons" /> -->
 		   <Item Name="PrimaryVertexCollection" Value="goodOfflinePrimaryVertices" /> 
@@ -154,7 +148,7 @@
 		   <Item Name="GenParticleCollection" Value="GenParticles" /> 
 		      
 		      <Item Name="PU_Filename_MC" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/PileUpHistoCycle" />
-		      <Item Name="PU_Filename_Data" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/MyDataPileupHistogram.root" />
+		      <Item Name="PU_Filename_Data" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/MyDataPileupHistogram_202237.root" />
 		      <Item Name="PU_Histname_Data" Value="pileup" />
 		      <Item Name="PU_Histname_MC" Value="N_pileup_hist" />
 
@@ -162,11 +156,10 @@
 		      <Item Name="readTTbarReco" Value="True" /> 
 
 		   <Item Name="LumiFilePath" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/LumiFiles/" /> 
-		   <Item Name="LumiFileName" Value="Mu40.root" /> 
+		   <Item Name="LumiFileName" Value="Mu40_202237.root" /> 
 		   <Item Name="LumiTrigger" Value="HLT_Mu40_eta2p1_v" /> 
 
-		   <Item Name="LeptonScaleFactors" Value="MuonRunA 956 MuonRunB 4778 MuonRunC 6425" />
-		      
+		    <Item Name="LeptonScaleFactors" Value="MuonRunA 956 MuonRunB 4778 MuonRunC 6425" /> 
 		      
                 </UserConfig>
 	</Cycle>

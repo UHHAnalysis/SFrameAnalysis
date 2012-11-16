@@ -4,6 +4,7 @@
 <!ENTITY DY_10to50 SYSTEM "DY_10to50.xml">
 <!ENTITY DY_50toInf SYSTEM "DY_50toInf.xml">
 <!ENTITY TTbar SYSTEM "TTbar_Powheg.xml">
+<!ENTITY TTbar_MadGraph SYSTEM "TTbar_MadGraph.xml">
 <!ENTITY TTbar_700to1000 SYSTEM "TTbar_Powheg_700to1000.xml">
 <!ENTITY TTbar_1000toInf SYSTEM "TTbar_Powheg_1000toInf.xml">
 <!ENTITY SingleTop_T_tch SYSTEM "ST_t_t.xml">
@@ -156,7 +157,16 @@
                         &ttZ;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-<!--
+
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbar_MadGraph" Cacheable="True">
+                        &TTbar_MadGraph;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WW" Cacheable="True">
+                        &WW;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ150" Cacheable="False">
 		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ150/Ntuple_1_1_HSR.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -229,8 +239,12 @@
 		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ1000/Ntuple_1_1_ceB.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DY_50toInf" Cacheable="True">
+                        &DY_50toInf;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
 
--->
+
 		<UserConfig>
 
 		</UserConfig>

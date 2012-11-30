@@ -245,10 +245,17 @@
 		   <Item Name="PrunedJetCollection" Value="goodPatJetsCA8PrunedPF" />  
 		   <Item Name="GenParticleCollection" Value="GenParticles" /> 
 
+<<<<<<< ZprimeSelectionCycle_config.xml
+           <Item Name="JECFileLocation" Value="/afs/desy.de/user/p/peiffer/JECFiles" />
+           <Item Name="JECDataGlobalTag" Value="GR_R_52_V9" />           
+           <Item Name="JECMCGlobalTag" Value="START52_V11" />
+           <Item Name="JECJetCollection" Value="AK5PFchs" />
+=======
 		      <Item Name="PU_Filename_MC" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/PileUpHistoCycle" />
 		      <Item Name="PU_Filename_Data" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/MyDataPileupHistogram_206745.root" />
 		      <Item Name="PU_Histname_Data" Value="pileup" />
 		      <Item Name="PU_Histname_MC" Value="N_pileup_hist" />
+>>>>>>> 1.12
 
 		   <Item Name="LumiFilePath" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/LumiFiles/" /> 
 		   <Item Name="LumiFileName" Value="Mu40_206745.root" /> 

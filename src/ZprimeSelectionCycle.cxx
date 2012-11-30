@@ -137,17 +137,17 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
 
   //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
   if(!addGenInfo()){
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/GR_R_52_V9_L1FastJet_AK5PFchs.txt"));
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/GR_R_52_V9_L2Relative_AK5PFchs.txt"));  
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/GR_R_52_V9_L3Absolute_AK5PFchs.txt")); 
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/GR_R_52_V9_L2L3Residual_AK5PFchs.txt")); 
+    pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECJetCollection + ".txt"));
+    pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECJetCollection + ".txt"));
+    pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECJetCollection + ".txt"));
+    pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECJetCollection + ".txt"));
   }
   else{
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/START52_V11_L1FastJet_AK5PFchs.txt"));
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/START52_V11_L2Relative_AK5PFchs.txt"));  
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/START52_V11_L3Absolute_AK5PFchs.txt")); 
-  } 
- 
+    pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECJetCollection + ".txt"));
+    pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECJetCollection + ".txt"));
+    pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECJetCollection + ".txt"));
+  }
+
   m_corrector = new FactorizedJetCorrector(pars);
 
   // ---------------- set up the histogram collections --------------------

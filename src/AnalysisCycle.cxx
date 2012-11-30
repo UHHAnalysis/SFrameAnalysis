@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.15 2012/11/02 10:02:14 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.16 2012/11/14 08:35:45 peiffer Exp $
 
 #include <iostream>
 
@@ -49,6 +49,12 @@ AnalysisCycle::AnalysisCycle()
   DeclareProperty( "GenParticleCollection", m_GenParticleCollection);
   DeclareProperty( "readTTbarReco", m_readTTbarReco);
   DeclareProperty( "writeTTbarReco", m_writeTTbarReco);
+
+  // steerable properties for the jec
+  DeclareProperty( "JECFileLocation" , m_JECFileLocation);
+  DeclareProperty( "JECDataGlobalTag" , m_JECDataGlobalTag);
+  DeclareProperty( "JECMCGlobalTag" , m_JECMCGlobalTag);
+  DeclareProperty( "JECJetCollection" , m_JECJetCollection);
 
   // steerable properties for the Pile-up reweighting
   DeclareProperty( "PU_Filename_MC" , m_PUFilenameMC);
@@ -123,6 +129,14 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	     << LumiHandler()->GetTargetLumi() << " (pb^-1)!" << SLogger::endmsg;
     GetConfig().SetTargetLumi( LumiHandler()->GetTargetLumi() );
   } 
+
+  if(m_JECFileLocation.size()>0) { 
+    m_logger << INFO << "Using JEC files from " << m_JECFileLocation << SLogger::endmsg;
+    m_logger << INFO << "Using JEC global tags for data " << m_JECDataGlobalTag << " and for MC " << m_JECMCGlobalTag << SLogger::endmsg;
+    m_logger << INFO << "Using JEC for jet collection " << m_JECJetCollection << SLogger::endmsg;
+  }  
+  else
+    m_logger << WARNING << "No location for JEC files is provided" << SLogger::endmsg;
 
   // pile-up reweighting
   if(m_PUFilenameMC.size()>0 && m_PUFilenameData.size()>0 && m_PUHistnameMC.size()>0 && m_PUHistnameData.size()>0 && m_addGenInfo){

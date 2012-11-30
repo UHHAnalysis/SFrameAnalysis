@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.6 2012/11/01 17:33:00 peiffer Exp $
+// $Id: AnalysisCycle.h,v 1.7 2012/11/02 10:02:15 peiffer Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -23,7 +23,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.6 $
+ *  @version $Revision: 1.7 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -82,6 +82,14 @@ public:
 
   /// returns whether generator info is added or not (automatically determined if data type is 'data')
   bool addGenInfo() {return m_addGenInfo;}
+
+protected:
+
+  // JEC information
+  std::string m_JECFileLocation;
+  std::string m_JECDataGlobalTag;
+  std::string m_JECMCGlobalTag;
+  std::string m_JECJetCollection;
 
 private:
 

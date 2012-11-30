@@ -290,7 +290,10 @@
 		   <Item Name="PrunedJetCollection" Value="goodPatJetsCA8PrunedPF" />  
 		   <Item Name="GenParticleCollection" Value="GenParticles" />  
 
-
+           <Item Name="JECFileLocation" Value="/afs/desy.de/user/p/peiffer/JECFiles" />
+           <Item Name="JECDataGlobalTag" Value="GR_R_52_V9" />
+           <Item Name="JECMCGlobalTag" Value="START52_V11" />
+           <Item Name="JECJetCollection" Value="AK5PFchs" />
 		</UserConfig>
 	</Cycle>
 </JobConfiguration>

@@ -220,6 +220,16 @@ class TriangularCut: public SelectionModule{
 
 };
 
+class TriangularCut_reverse: public SelectionModule{
+ public:
+  TriangularCut_reverse(){};
+  ~TriangularCut_reverse(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+};
+
 class HypothesisDiscriminatorCut: public SelectionModule{
  public:
   HypothesisDiscriminatorCut(HypothesisDiscriminator* discr, double min_discr, double max_discr);

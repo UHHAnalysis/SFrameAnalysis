@@ -371,6 +371,47 @@ std::string TriangularCut::description(){
   return s;
 }
 
+bool TriangularCut_reverse::pass(BaseCycleContainer *bcc){
+
+  int pass = 1;
+
+  if(bcc->electrons->size()!=1){
+    std::cout << "WARNING: called triangular cut but electron collection contains " << bcc->electrons->size()<< " !=1 entries. Cut is not applied" <<std::endl;
+    return true;
+  }
+  if(bcc->jets->size()<1){
+    std::cout << "WARNING: called triangular cut but jet collection is empty. Cut is not applied" <<std::endl;
+    return true;
+  }
+
+  double k=1.5/75.;
+
+  Particle METp;
+  METp.set_pt(bcc->met->pt());
+  METp.set_phi(bcc->met->phi());
+  METp.set_eta(0);
+  METp.set_energy(0);
+
+  if(METp.deltaPhi(bcc->electrons->at(0)) > k* METp.pt()+1.5) pass = 0;
+  if(METp.deltaPhi(bcc->electrons->at(0)) < -1*k* METp.pt()+1.5) pass = 0;
+  if(METp.deltaPhi(bcc->jets->at(0)) > k* METp.pt()+1.5) pass = 0;
+  if(METp.deltaPhi(bcc->jets->at(0)) < -1*k* METp.pt()+1.5) pass = 0;
+
+  if (pass == 0){
+  return true;
+  }
+  else return false;
+
+}
+
+std::string TriangularCut_reverse::description(){
+  char s[100];
+  sprintf(s, "triangular cut");
+  return s;
+}
+
+
+
 HypothesisDiscriminatorCut::HypothesisDiscriminatorCut(HypothesisDiscriminator* discr, double min_discr, double max_discr){
   m_discr=discr;
   m_min_discr = min_discr;

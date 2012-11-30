@@ -267,6 +267,47 @@ void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax){
   resetEventCalc();
 }
 
+
+void Cleaner::ElectronCleaner_noIso_reverse(double ptmin, double etamax){
+
+  ElectronCleaner_noID_noIso(ptmin, etamax);
+  std::vector<Electron> good_eles;
+  for(unsigned int i=0; i<bcc->electrons->size(); ++i){
+    int pass = 0;
+    Electron ele = bcc->electrons->at(i);
+    if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660){
+      if(bcc->pvs->size()>0){
+        if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02){
+          if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1){
+            if(ele.passconversionveto()){
+              if(ele.mvaTrigV0()>0.0){
+                if(ele.eleID(Electron::e_Tight)){
+                  //                  good_eles.push_back(ele);                                                                                                                                                  
+                  pass = 1;
+                  //              cout << "Failed EleID req." << endl;                                                                                                                                           
+                }
+              }
+            }
+          }
+	}
+      }
+    }
+
+    if(pass == 0){
+      good_eles.push_back(ele);
+    }
+
+  }
+
+  bcc->electrons->clear();
+
+  for(unsigned int i=0; i<good_eles.size(); ++i){
+    bcc->electrons->push_back(good_eles[i]);
+  }
+  sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
+  resetEventCalc();
+}
+
 void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax){
 
   ElectronCleaner_noIso(ptmin, etamax);

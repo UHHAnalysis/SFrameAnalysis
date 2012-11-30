@@ -8,7 +8,6 @@ INCLUDES += -I$(SFRAME_DIR)/SFrameTools/include
 INCLUDES += -I$(SFRAME_DIR)/SFrameTools/JetMETObjects/interface
 
 # configure FastJet
-FASTJETDIR = /uscms/home/baites/nobackup/Utils/fastjet/3.0.2-install
 INCLUDES += -I$(FASTJETDIR)/include
 
 INCLUDES += -I$(SFRAME_DIR)/SFrameTools

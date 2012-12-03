@@ -261,6 +261,8 @@
 
 		   <Item Name="LeptonScaleFactors" Value="MuonRunA 1051.4 MuonRunB 4778 MuonRunC 11946" />
 
+           <Item Name="QCDSelection" Value="false" />
+
 		</UserConfig>
 	</Cycle>
 </JobConfiguration>

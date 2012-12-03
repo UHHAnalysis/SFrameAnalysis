@@ -1,495 +1,509 @@
 #include "../include/Cleaner.h"
 
-Cleaner::Cleaner( BaseCycleContainer* input){
+Cleaner::Cleaner( BaseCycleContainer* input)
+{
 
-  bcc = input;
-
-}
-
-Cleaner::Cleaner(){
-
-  ObjectHandler* objs = ObjectHandler::Instance();
-  bcc = objs->GetBaseCycleContainer();
+    bcc = input;
 
 }
 
-void Cleaner::resetEventCalc(){
+Cleaner::Cleaner()
+{
 
-  //reset everything in EventCalc except the event weight
-  EventCalc* evc = EventCalc::Instance();
-  double weight = evc->GetWeight();
-  evc->Reset();
-  evc->ProduceWeight(weight);
+    ObjectHandler* objs = ObjectHandler::Instance();
+    bcc = objs->GetBaseCycleContainer();
 
 }
 
-void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort){
+void Cleaner::resetEventCalc()
+{
 
-  LorentzVector met(0,0,0,0);
-  if(bcc->met) {
-    met = bcc->met->v4();
-  }
+    //reset everything in EventCalc except the event weight
+    EventCalc* evc = EventCalc::Instance();
+    double weight = evc->GetWeight();
+    evc->Reset();
+    evc->ProduceWeight(weight);
 
-  for(unsigned int i=0; i<bcc->jets->size(); ++i){
+}
 
-    float genpt = bcc->jets->at(i).genjet_pt();
-    //ignore unmatched jets (which have zero vector) or jets with very low pt:
-    if(genpt < 15.0) {
-      // std::cout << "1.0 | " <<  bcc->jets->at(i).pt()  << " | " << bcc->jets->at(i).eta() << " | " << genpt << std::endl; 
-      continue;
-    }
-    
-    LorentzVector jet_v4 =  bcc->jets->at(i).v4();
+void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort)
+{
 
-    LorentzVector jet_v4_raw = jet_v4*bcc->jets->at(i).JEC_factor_raw();
- 
-    float recopt = jet_v4.pt();
-    float factor = 0.0;
-    float abseta = fabs(jet_v4.eta());
-
-    //numbers taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
-    if(syst_shift==e_Default){
-      if(abseta < 0.5)
-	factor = 0.052;
-      else if(abseta >= 0.5 && abseta <1.1)
-	factor = 0.057;
-      else if(abseta >= 1.1 && abseta <1.7)
-	factor = 0.096;
-      else if(abseta >= 1.7 && abseta <2.3)
-	factor = 0.134;
-      else if(abseta >= 2.3)
-	factor = 0.288;
-      else
-	factor = 0.288;
-    }
-    else if(syst_shift==e_Up){
-      if(abseta < 0.5)
-	factor = 0.115;
-      else if(abseta >= 0.5 && abseta <1.1)
-	factor = 0.114;
-      else if(abseta >= 1.1 && abseta <1.7)
-	factor = 0.161;
-      else if(abseta >= 1.7 && abseta <2.3)
-	factor = 0.228;
-      else if(abseta >= 2.3)
-	factor = 0.488;
-    }
-    else if(syst_shift==e_Down){
-      if(abseta < 0.5)
-	factor = -0.01;
-      else if(abseta >= 0.5 && abseta <1.1)
-	factor = 0.00;
-      else if(abseta >= 1.1 && abseta <1.7)
-	factor = 0.032;
-      else if(abseta >= 1.7 && abseta <2.3)
-	factor = 0.042;
-      else if(abseta >= 2.3)
-	factor = 0.089;
+    LorentzVector met(0,0,0,0);
+    if(bcc->met) {
+        met = bcc->met->v4();
     }
 
-    float ptscale = std::max(0.0f, 1 + factor * (recopt - genpt) / recopt);
+    for(unsigned int i=0; i<bcc->jets->size(); ++i) {
 
-    jet_v4*=ptscale;
+        float genpt = bcc->jets->at(i).genjet_pt();
+        //ignore unmatched jets (which have zero vector) or jets with very low pt:
+        if(genpt < 15.0) {
+            // std::cout << "1.0 | " <<  bcc->jets->at(i).pt()  << " | " << bcc->jets->at(i).eta() << " | " << genpt << std::endl;
+            continue;
+        }
 
-    bcc->jets->at(i).set_v4(jet_v4);
+        LorentzVector jet_v4 =  bcc->jets->at(i).v4();
 
-    //propagate JER shifts to MET
-    //if(jet_v4.Pt()>25) {
-    met += jet_v4_raw;
-    jet_v4_raw*=ptscale;
-    met -= jet_v4_raw;
-    //}
+        LorentzVector jet_v4_raw = jet_v4*bcc->jets->at(i).JEC_factor_raw();
 
-    //std::cout << ptscale << " | " << jet_v4.Pt()  << " | "<<  jet_v4.eta() << " | " << genpt << std::endl;
-    
-  }
+        float recopt = jet_v4.pt();
+        float factor = 0.0;
+        float abseta = fabs(jet_v4.eta());
 
-  //store changed MET
-  if(bcc->met){
-    bcc->met->set_pt(met.Pt());
-    bcc->met->set_phi(met.Phi());
-  }
+        //numbers taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
+        if(syst_shift==e_Default) {
+            if(abseta < 0.5)
+                factor = 0.052;
+            else if(abseta >= 0.5 && abseta <1.1)
+                factor = 0.057;
+            else if(abseta >= 1.1 && abseta <1.7)
+                factor = 0.096;
+            else if(abseta >= 1.7 && abseta <2.3)
+                factor = 0.134;
+            else if(abseta >= 2.3)
+                factor = 0.288;
+            else
+                factor = 0.288;
+        } else if(syst_shift==e_Up) {
+            if(abseta < 0.5)
+                factor = 0.115;
+            else if(abseta >= 0.5 && abseta <1.1)
+                factor = 0.114;
+            else if(abseta >= 1.1 && abseta <1.7)
+                factor = 0.161;
+            else if(abseta >= 1.7 && abseta <2.3)
+                factor = 0.228;
+            else if(abseta >= 2.3)
+                factor = 0.488;
+        } else if(syst_shift==e_Down) {
+            if(abseta < 0.5)
+                factor = -0.01;
+            else if(abseta >= 0.5 && abseta <1.1)
+                factor = 0.00;
+            else if(abseta >= 1.1 && abseta <1.7)
+                factor = 0.032;
+            else if(abseta >= 1.7 && abseta <2.3)
+                factor = 0.042;
+            else if(abseta >= 2.3)
+                factor = 0.089;
+        }
 
-  if(sort) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
-  resetEventCalc();
+        float ptscale = std::max(0.0f, 1 + factor * (recopt - genpt) / recopt);
+
+        jet_v4*=ptscale;
+
+        bcc->jets->at(i).set_v4(jet_v4);
+
+        //propagate JER shifts to MET
+        //if(jet_v4.Pt()>25) {
+        met += jet_v4_raw;
+        jet_v4_raw*=ptscale;
+        met -= jet_v4_raw;
+        //}
+
+        //std::cout << ptscale << " | " << jet_v4.Pt()  << " | "<<  jet_v4.eta() << " | " << genpt << std::endl;
+
+    }
+
+    //store changed MET
+    if(bcc->met) {
+        bcc->met->set_pt(met.Pt());
+        bcc->met->set_phi(met.Phi());
+    }
+
+    if(sort) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+    resetEventCalc();
 }
 
 
-void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort){
+void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
+{
 
-  //std::cout<< "event: " <<bcc->event <<std::endl;
-  //std::cout<< "ID| pt raw  | PAT pt | area     | rho     | corr    | old cor| JER ptscale | pt new | eta new | ptgen " <<std::endl;
+    //std::cout<< "event: " <<bcc->event <<std::endl;
+    //std::cout<< "ID| pt raw  | PAT pt | area     | rho     | corr    | old cor| JER ptscale | pt new | eta new | ptgen " <<std::endl;
 
-    
-  for(unsigned int i=0; i<bcc->jets->size(); ++i){
 
-    LorentzVector jet_v4_raw = bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw();
+    for(unsigned int i=0; i<bcc->jets->size(); ++i) {
 
-    //subtract lepton momenta from raw jet momentum
-    
-    //std::cout << i+1 << " | " << jet_v4_raw.Pt() << std::endl;
-    double ele_energy =  bcc->jets->at(i).chargedEmEnergyFraction()*jet_v4_raw.E();
-    double mu_energy = bcc->jets->at(i).muonEnergyFraction()*jet_v4_raw.E();
+        LorentzVector jet_v4_raw = bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw();
 
-    if(bcc->electrons){
-      for(unsigned int j=0; j<bcc->electrons->size(); ++j){
-	if(bcc->jets->at(i).deltaR(bcc->electrons->at(j))<0.5){
+        //subtract lepton momenta from raw jet momentum
+
+        //std::cout << i+1 << " | " << jet_v4_raw.Pt() << std::endl;
+        double ele_energy =  bcc->jets->at(i).chargedEmEnergyFraction()*jet_v4_raw.E();
+        double mu_energy = bcc->jets->at(i).muonEnergyFraction()*jet_v4_raw.E();
+
+        if(bcc->electrons) {
+            for(unsigned int j=0; j<bcc->electrons->size(); ++j) {
+                if(bcc->jets->at(i).deltaR(bcc->electrons->at(j))<0.5) {
 //       if(jet_v4_raw.pt() >= bcc->electrons->at(j).pt()){
-	  jet_v4_raw -= bcc->electrons->at(j).v4();
+                    jet_v4_raw -= bcc->electrons->at(j).v4();
 //  	  bcc->jets->at(i).set_electronMultiplicity(bcc->jets->at(i).electronMultiplicity()-1);
 //  	  ele_energy -= bcc->electrons->at(j).energy();
-	  //}
-	  //else{
-	  //std::cout  << bcc->jets->at(i).pt()<< " -ele pt:"<< bcc->electrons->at(j).pt() << std::endl;
-	  //jet_v4_raw -= jet_v4_raw;
-	  //}
-	}
-      }
-    }
-    if(bcc->muons){
-      for(unsigned int j=0; j<bcc->muons->size(); ++j){
-	if(bcc->jets->at(i).deltaR(bcc->muons->at(j))<0.5){
-	  //if(jet_v4_raw.pt()>= bcc->muons->at(j).pt()){
-	  jet_v4_raw -= bcc->muons->at(j).v4();
+                    //}
+                    //else{
+                    //std::cout  << bcc->jets->at(i).pt()<< " -ele pt:"<< bcc->electrons->at(j).pt() << std::endl;
+                    //jet_v4_raw -= jet_v4_raw;
+                    //}
+                }
+            }
+        }
+        if(bcc->muons) {
+            for(unsigned int j=0; j<bcc->muons->size(); ++j) {
+                if(bcc->jets->at(i).deltaR(bcc->muons->at(j))<0.5) {
+                    //if(jet_v4_raw.pt()>= bcc->muons->at(j).pt()){
+                    jet_v4_raw -= bcc->muons->at(j).v4();
 //  	  bcc->jets->at(i).set_muonMultiplicity(bcc->jets->at(i).muonMultiplicity()-1);
 //  	  mu_energy -= bcc->muons->at(j).energy();
-	  //}
-	  //else{
-	  //std::cout << bcc->jets->at(i).pt() << " -mu pt:"<< bcc->muons->at(j).pt()  << std::endl;
-	  //jet_v4_raw -= jet_v4_raw;	
-	  //}
-	}
-      }
-    }
-    if(ele_energy<=jet_v4_raw.E())
-      bcc->jets->at(i).set_chargedEmEnergyFraction(ele_energy/jet_v4_raw.E());
-    if(mu_energy<=jet_v4_raw.E())
-      bcc->jets->at(i).set_muonEnergyFraction(mu_energy/jet_v4_raw.E());
-
-    //apply jet energy corrections to modified raw momentum
-    corrector->setJetPt(jet_v4_raw.Pt());
-    corrector->setJetEta(jet_v4_raw.Eta());
-    corrector->setJetE(jet_v4_raw.E());  
-    corrector->setJetA(bcc->jets->at(i).jetArea());
-    corrector->setRho(bcc->rho);
-    corrector->setNPV(bcc->pvs->size());	
-
-    float correctionfactor = corrector->getCorrection();
-    
-    LorentzVector jet_v4_corrected = jet_v4_raw *correctionfactor;
-
-    //std::cout << i+1 << " | " << jet_v4_raw.Pt() << " | " <<  bcc->jets->at(i).pt() << " | " << bcc->jets->at(i).jetArea()<< " | " << bcc->rho << " | " << correctionfactor  << " | " << 1./bcc->jets->at(i).JEC_factor_raw() << " | " << std::endl;
-
-    bcc->jets->at(i).set_v4(jet_v4_corrected);
-    bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);
-
-  }
-
-  if(sort) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
-  resetEventCalc();
-}
-
-void Cleaner::JetRecorrector(FactorizedJetCorrector *corrector, bool sort){
-
-  for(unsigned int i=0; i<bcc->jets->size(); ++i){
-
-    LorentzVector jet_v4_raw = bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw();
-    corrector->setJetPt(jet_v4_raw.Pt());
-    corrector->setJetEta(jet_v4_raw.Eta());
-    corrector->setJetE(jet_v4_raw.E());  
-    corrector->setJetA(bcc->jets->at(i).jetArea());
-    corrector->setRho(bcc->rho);
-    corrector->setNPV(bcc->pvs->size());	
-
-    float correctionfactor = corrector->getCorrection();
-    
-    LorentzVector jet_v4_corrected = jet_v4_raw *correctionfactor;
-
-    bcc->jets->at(i).set_v4(jet_v4_corrected);
-    bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);
-  }
-
-  if(sort) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
-  resetEventCalc();
-}
-
-
-void Cleaner::ElectronCleaner_noID_noIso(double ptmin, double etamax){
-
-  std::vector<Electron> good_eles;
-  for(unsigned int i=0; i<bcc->electrons->size(); ++i){
-    Electron ele = bcc->electrons->at(i);
-    if(ele.pt()>ptmin){
-      if(fabs(ele.eta())<etamax){
-	good_eles.push_back(ele);
-      }
-    }
-  }
-
-  bcc->electrons->clear();
-
-  for(unsigned int i=0; i<good_eles.size(); ++i){
-    bcc->electrons->push_back(good_eles[i]);
-  }
-  sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
-  resetEventCalc();
-}
-
-void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax){
-
-  ElectronCleaner_noID_noIso(ptmin, etamax);
-  std::vector<Electron> good_eles;
-  for(unsigned int i=0; i<bcc->electrons->size(); ++i){
-    Electron ele = bcc->electrons->at(i);
-    if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660){
-      if(bcc->pvs->size()>0){
-	if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02){
-	  if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1){	  
-	    if(ele.passconversionveto()){
-	      if(ele.mvaTrigV0()>0.0){
-		if(ele.eleID(Electron::e_Tight)){
-		  good_eles.push_back(ele);
-		}
-	      }
-	    }
-	  }
-	}
-      }
-    }
-  }
-  
-  bcc->electrons->clear();
-
-  for(unsigned int i=0; i<good_eles.size(); ++i){
-    bcc->electrons->push_back(good_eles[i]);
-  }
-  sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
-  resetEventCalc();
-}
-
-
-void Cleaner::ElectronCleaner_noIso_reverse(double ptmin, double etamax){
-
-  ElectronCleaner_noID_noIso(ptmin, etamax);
-  std::vector<Electron> good_eles;
-  for(unsigned int i=0; i<bcc->electrons->size(); ++i){
-    int pass = 0;
-    Electron ele = bcc->electrons->at(i);
-    if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660){
-      if(bcc->pvs->size()>0){
-        if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02){
-          if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1){
-            if(ele.passconversionveto()){
-              if(ele.mvaTrigV0()>0.0){
-                if(ele.eleID(Electron::e_Tight)){
-                  //                  good_eles.push_back(ele);                                                                                                                                                  
-                  pass = 1;
-                  //              cout << "Failed EleID req." << endl;                                                                                                                                           
+                    //}
+                    //else{
+                    //std::cout << bcc->jets->at(i).pt() << " -mu pt:"<< bcc->muons->at(j).pt()  << std::endl;
+                    //jet_v4_raw -= jet_v4_raw;
+                    //}
                 }
-              }
             }
-          }
-	}
-      }
+        }
+        if(ele_energy<=jet_v4_raw.E())
+            bcc->jets->at(i).set_chargedEmEnergyFraction(ele_energy/jet_v4_raw.E());
+        if(mu_energy<=jet_v4_raw.E())
+            bcc->jets->at(i).set_muonEnergyFraction(mu_energy/jet_v4_raw.E());
+
+        //apply jet energy corrections to modified raw momentum
+        corrector->setJetPt(jet_v4_raw.Pt());
+        corrector->setJetEta(jet_v4_raw.Eta());
+        corrector->setJetE(jet_v4_raw.E());
+        corrector->setJetA(bcc->jets->at(i).jetArea());
+        corrector->setRho(bcc->rho);
+        corrector->setNPV(bcc->pvs->size());
+
+        float correctionfactor = corrector->getCorrection();
+
+        LorentzVector jet_v4_corrected = jet_v4_raw *correctionfactor;
+
+        //std::cout << i+1 << " | " << jet_v4_raw.Pt() << " | " <<  bcc->jets->at(i).pt() << " | " << bcc->jets->at(i).jetArea()<< " | " << bcc->rho << " | " << correctionfactor  << " | " << 1./bcc->jets->at(i).JEC_factor_raw() << " | " << std::endl;
+
+        bcc->jets->at(i).set_v4(jet_v4_corrected);
+        bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);
+
     }
 
-    if(pass == 0){
-      good_eles.push_back(ele);
-    }
-
-  }
-
-  bcc->electrons->clear();
-
-  for(unsigned int i=0; i<good_eles.size(); ++i){
-    bcc->electrons->push_back(good_eles[i]);
-  }
-  sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
-  resetEventCalc();
+    if(sort) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+    resetEventCalc();
 }
 
-void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax){
+void Cleaner::JetRecorrector(FactorizedJetCorrector *corrector, bool sort)
+{
 
-  ElectronCleaner_noIso(ptmin, etamax);
-  std::vector<Electron> good_eles;
-  for(unsigned int i=0; i<bcc->electrons->size(); ++i){
-    Electron ele = bcc->electrons->at(i);
-    if(ele.relIsorho(bcc->rho)<relisomax){
-      good_eles.push_back(ele);
+    for(unsigned int i=0; i<bcc->jets->size(); ++i) {
+
+        LorentzVector jet_v4_raw = bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw();
+        corrector->setJetPt(jet_v4_raw.Pt());
+        corrector->setJetEta(jet_v4_raw.Eta());
+        corrector->setJetE(jet_v4_raw.E());
+        corrector->setJetA(bcc->jets->at(i).jetArea());
+        corrector->setRho(bcc->rho);
+        corrector->setNPV(bcc->pvs->size());
+
+        float correctionfactor = corrector->getCorrection();
+
+        LorentzVector jet_v4_corrected = jet_v4_raw *correctionfactor;
+
+        bcc->jets->at(i).set_v4(jet_v4_corrected);
+        bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);
     }
-  }
-  bcc->electrons->clear();
 
-  for(unsigned int i=0; i<good_eles.size(); ++i){
-    bcc->electrons->push_back(good_eles[i]);
-  }
-  sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
-  resetEventCalc();
-}
-
-void Cleaner::MuonCleaner_noID_noIso(double ptmin, double etamax){
-
-  std::vector<Muon> good_mus;
-  for(unsigned int i=0; i<bcc->muons->size(); ++i){
-    Muon mu = bcc->muons->at(i);
-    if(mu.pt()>ptmin){
-      if(fabs(mu.eta())<etamax){
-	good_mus.push_back(mu);
-      }
-    }
-  }
-  bcc->muons->clear();
-
-  for(unsigned int i=0; i<good_mus.size(); ++i){
-    bcc->muons->push_back(good_mus[i]);
-  }
-  sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
-  resetEventCalc();
-}
-
-void Cleaner::MuonCleaner_noIso(double ptmin, double etamax){
-
-  MuonCleaner_noID_noIso(ptmin, etamax);
-  std::vector<Muon> good_mus;
-  for(unsigned int i=0; i<bcc->muons->size(); ++i){
-    Muon mu = bcc->muons->at(i);
-    if(mu.isGlobalMuon()){
-      if(mu.isPFMuon()){
-	if(mu.globalTrack_chi2()/mu.globalTrack_ndof()<10){
-	  if(mu.globalTrack_numberOfValidMuonHits()>0){
-	    if(mu.innerTrack_trackerLayersWithMeasurement()>5){
-	      if(mu.dB()<0.02){ //0.2 ?
-		if(fabs(mu.vertex_z()-bcc->pvs->at(0).z())<0.5){
-		  if(mu.innerTrack_numberOfValidPixelHits()>0){
-		    if(mu.numberOfMatchedStations()>1){
-		      good_mus.push_back(mu);
-		    }
-		  }
-		}
-	      }
-	    }
-	  }
-	}
-      }
-    }
-  }
-  bcc->muons->clear();
-
-  for(unsigned int i=0; i<good_mus.size(); ++i){
-    bcc->muons->push_back(good_mus[i]);
-  }
-  sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
-  resetEventCalc();
-}
-
-void Cleaner::MuonCleaner(double ptmin, double etamax, double relisomax){
-
-  MuonCleaner_noIso(ptmin, etamax);
-  std::vector<Muon> good_mus;
-  for(unsigned int i=0; i<bcc->muons->size(); ++i){
-    Muon mu = bcc->muons->at(i);
-    if(mu.relIso()<relisomax){
-      good_mus.push_back(mu);
-    }
-  }
-  bcc->muons->clear();
-
-  for(unsigned int i=0; i<good_mus.size(); ++i){
-    bcc->muons->push_back(good_mus[i]);
-  }
-  sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
-  resetEventCalc();
-}
-
-void Cleaner::TauCleaner(double ptmin, double etamax){
-
-  std::vector<Tau> good_taus;
-  for(unsigned int i=0; i<bcc->taus->size(); ++i){
-    Tau tau = bcc->taus->at(i);
-    if(tau.pt()>ptmin){
-      if(fabs(tau.eta())<etamax){
-	if(bcc->taus->at(i).decayModeFinding()){
-	  if(bcc->taus->at(i).byMediumCombinedIsolationDeltaBetaCorr()){
-	    if(bcc->taus->at(i).againstElectronTight()){
-	      if(bcc->taus->at(i).againstMuonTight()){
-		good_taus.push_back(tau);
-	      }
-	    }
-	  }
-	}
-      }
-    }
-  }
-  
-  bcc->taus->clear();
-
-  for(unsigned int i=0; i<good_taus.size(); ++i){
-    bcc->taus->push_back(good_taus[i]);
-  }
-  sort(bcc->taus->begin(), bcc->taus->end(), HigherPt());
-  resetEventCalc();
+    if(sort) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+    resetEventCalc();
 }
 
 
-void Cleaner::JetCleaner(double ptmin, double etamax, bool doPFID){
+void Cleaner::ElectronCleaner_noID_noIso(double ptmin, double etamax)
+{
 
-  std::vector<Jet> good_jets;
-  for(unsigned int i=0; i<bcc->jets->size(); ++i){
-    Jet jet = bcc->jets->at(i);
-    if(jet.pt()>ptmin){
-      if(fabs(jet.eta())<etamax){
-	if(!doPFID || jet.pfID()){
-	  good_jets.push_back(jet);
-	}
-      }
+    std::vector<Electron> good_eles;
+    for(unsigned int i=0; i<bcc->electrons->size(); ++i) {
+        Electron ele = bcc->electrons->at(i);
+        if(ele.pt()>ptmin) {
+            if(fabs(ele.eta())<etamax) {
+                good_eles.push_back(ele);
+            }
+        }
     }
-  }
 
-  bcc->jets->clear();
+    bcc->electrons->clear();
 
-  for(unsigned int i=0; i<good_jets.size(); ++i){
-    bcc->jets->push_back(good_jets[i]);
-  }
-  sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
-  resetEventCalc();
+    for(unsigned int i=0; i<good_eles.size(); ++i) {
+        bcc->electrons->push_back(good_eles[i]);
+    }
+    sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
+    resetEventCalc();
 }
 
-void Cleaner::TopJetCleaner(double ptmin, double etamax, bool doPFID){
-
-  std::vector<TopJet> good_topjets;
-  for(unsigned int i=0; i<bcc->topjets->size(); ++i){
-    TopJet topjet = bcc->topjets->at(i);
-    if(topjet.pt()>ptmin){
-      if(fabs(topjet.eta())<etamax){
-	if(!doPFID || topjet.pfID()){
-	  good_topjets.push_back(topjet);
-	}
-      }
+void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax)
+{
+    ElectronCleaner_noID_noIso(ptmin, etamax);
+    std::vector<Electron> good_eles;
+    for(unsigned int i=0; i<bcc->electrons->size(); ++i) {
+        Electron ele = bcc->electrons->at(i);
+        if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
+            if(bcc->pvs->size()>0) {
+                if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02) {
+                    if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1) {
+                        if(ele.passconversionveto()) {
+                            if(ele.mvaTrigV0()>0.0) {
+                                if(ele.eleID(Electron::e_Tight)) {
+                                    good_eles.push_back(ele);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
-  }
-  bcc->topjets->clear();
 
-  for(unsigned int i=0; i<good_topjets.size(); ++i){
-    bcc->topjets->push_back(good_topjets[i]);
-  }
-  sort(bcc->topjets->begin(), bcc->topjets->end(), HigherPt());
-  resetEventCalc();
+    bcc->electrons->clear();
+
+    for(unsigned int i=0; i<good_eles.size(); ++i) {
+        bcc->electrons->push_back(good_eles[i]);
+    }
+    sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
+    resetEventCalc();
 }
 
 
-void Cleaner::PrimaryVertexCleaner(int ndofmax, double zmax, double rhomax){
+void Cleaner::ElectronCleaner_noIso_reverse(double ptmin, double etamax)
+{
 
-  std::vector<PrimaryVertex> good_pvs;
-  for(unsigned int i=0; i<bcc->pvs->size(); ++i){
-    PrimaryVertex pv = bcc->pvs->at(i);
-    if(pv.ndof()>=ndofmax && fabs(pv.z())<zmax && pv.rho()<=rhomax){
-      good_pvs.push_back(pv);
-    } 
-  }
-  bcc->pvs->clear();
+    ElectronCleaner_noID_noIso(ptmin, etamax);
+    std::vector<Electron> good_eles;
+    for(unsigned int i=0; i<bcc->electrons->size(); ++i) {
+        int pass = 0;
+        Electron ele = bcc->electrons->at(i);
+        if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
+            if(bcc->pvs->size()>0) {
+                if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02) {
+                    if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1) {
+                        if(ele.passconversionveto()) {
+                            if(ele.mvaTrigV0()>0.0) {
+                                if(ele.eleID(Electron::e_Tight)) {
+                                    //                  good_eles.push_back(ele);
+                                    pass = 1;
+                                    //              cout << "Failed EleID req." << endl;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-  for(unsigned int i=0; i<good_pvs.size(); ++i){
-    bcc->pvs->push_back(good_pvs[i]);
-  }
-  resetEventCalc();
+        if(pass == 0) {
+            good_eles.push_back(ele);
+        }
+
+    }
+
+    bcc->electrons->clear();
+
+    for(unsigned int i=0; i<good_eles.size(); ++i) {
+        bcc->electrons->push_back(good_eles[i]);
+    }
+    sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
+    resetEventCalc();
+}
+
+void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax)
+{
+
+    ElectronCleaner_noIso(ptmin, etamax);
+    std::vector<Electron> good_eles;
+    for(unsigned int i=0; i<bcc->electrons->size(); ++i) {
+        Electron ele = bcc->electrons->at(i);
+        if(ele.relIsorho(bcc->rho)<relisomax) {
+            good_eles.push_back(ele);
+        }
+    }
+    bcc->electrons->clear();
+
+    for(unsigned int i=0; i<good_eles.size(); ++i) {
+        bcc->electrons->push_back(good_eles[i]);
+    }
+    sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
+    resetEventCalc();
+}
+
+void Cleaner::MuonCleaner_noID_noIso(double ptmin, double etamax)
+{
+
+    std::vector<Muon> good_mus;
+    for(unsigned int i=0; i<bcc->muons->size(); ++i) {
+        Muon mu = bcc->muons->at(i);
+        if(mu.pt()>ptmin) {
+            if(fabs(mu.eta())<etamax) {
+                good_mus.push_back(mu);
+            }
+        }
+    }
+    bcc->muons->clear();
+
+    for(unsigned int i=0; i<good_mus.size(); ++i) {
+        bcc->muons->push_back(good_mus[i]);
+    }
+    sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
+    resetEventCalc();
+}
+
+void Cleaner::MuonCleaner_noIso(double ptmin, double etamax)
+{
+
+    MuonCleaner_noID_noIso(ptmin, etamax);
+    std::vector<Muon> good_mus;
+    for(unsigned int i=0; i<bcc->muons->size(); ++i) {
+        Muon mu = bcc->muons->at(i);
+        if(mu.isGlobalMuon()) {
+            if(mu.isPFMuon()) {
+                if(mu.globalTrack_chi2()/mu.globalTrack_ndof()<10) {
+                    if(mu.globalTrack_numberOfValidMuonHits()>0) {
+                        if(mu.innerTrack_trackerLayersWithMeasurement()>5) {
+                            if(mu.dB()<0.02) { //0.2 ?
+                                if(fabs(mu.vertex_z()-bcc->pvs->at(0).z())<0.5) {
+                                    if(mu.innerTrack_numberOfValidPixelHits()>0) {
+                                        if(mu.numberOfMatchedStations()>1) {
+                                            good_mus.push_back(mu);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    bcc->muons->clear();
+
+    for(unsigned int i=0; i<good_mus.size(); ++i) {
+        bcc->muons->push_back(good_mus[i]);
+    }
+    sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
+    resetEventCalc();
+}
+
+void Cleaner::MuonCleaner(double ptmin, double etamax, double relisomax)
+{
+
+    MuonCleaner_noIso(ptmin, etamax);
+    std::vector<Muon> good_mus;
+    for(unsigned int i=0; i<bcc->muons->size(); ++i) {
+        Muon mu = bcc->muons->at(i);
+        if(mu.relIso()<relisomax) {
+            good_mus.push_back(mu);
+        }
+    }
+    bcc->muons->clear();
+
+    for(unsigned int i=0; i<good_mus.size(); ++i) {
+        bcc->muons->push_back(good_mus[i]);
+    }
+    sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
+    resetEventCalc();
+}
+
+void Cleaner::TauCleaner(double ptmin, double etamax)
+{
+
+    std::vector<Tau> good_taus;
+    for(unsigned int i=0; i<bcc->taus->size(); ++i) {
+        Tau tau = bcc->taus->at(i);
+        if(tau.pt()>ptmin) {
+            if(fabs(tau.eta())<etamax) {
+                if(bcc->taus->at(i).decayModeFinding()) {
+                    if(bcc->taus->at(i).byMediumCombinedIsolationDeltaBetaCorr()) {
+                        if(bcc->taus->at(i).againstElectronTight()) {
+                            if(bcc->taus->at(i).againstMuonTight()) {
+                                good_taus.push_back(tau);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    bcc->taus->clear();
+
+    for(unsigned int i=0; i<good_taus.size(); ++i) {
+        bcc->taus->push_back(good_taus[i]);
+    }
+    sort(bcc->taus->begin(), bcc->taus->end(), HigherPt());
+    resetEventCalc();
+}
+
+
+void Cleaner::JetCleaner(double ptmin, double etamax, bool doPFID)
+{
+
+    std::vector<Jet> good_jets;
+    for(unsigned int i=0; i<bcc->jets->size(); ++i) {
+        Jet jet = bcc->jets->at(i);
+        if(jet.pt()>ptmin) {
+            if(fabs(jet.eta())<etamax) {
+                if(!doPFID || jet.pfID()) {
+                    good_jets.push_back(jet);
+                }
+            }
+        }
+    }
+
+    bcc->jets->clear();
+
+    for(unsigned int i=0; i<good_jets.size(); ++i) {
+        bcc->jets->push_back(good_jets[i]);
+    }
+    sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+    resetEventCalc();
+}
+
+void Cleaner::TopJetCleaner(double ptmin, double etamax, bool doPFID)
+{
+
+    std::vector<TopJet> good_topjets;
+    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
+        TopJet topjet = bcc->topjets->at(i);
+        if(topjet.pt()>ptmin) {
+            if(fabs(topjet.eta())<etamax) {
+                if(!doPFID || topjet.pfID()) {
+                    good_topjets.push_back(topjet);
+                }
+            }
+        }
+    }
+    bcc->topjets->clear();
+
+    for(unsigned int i=0; i<good_topjets.size(); ++i) {
+        bcc->topjets->push_back(good_topjets[i]);
+    }
+    sort(bcc->topjets->begin(), bcc->topjets->end(), HigherPt());
+    resetEventCalc();
+}
+
+
+void Cleaner::PrimaryVertexCleaner(int ndofmax, double zmax, double rhomax)
+{
+
+    std::vector<PrimaryVertex> good_pvs;
+    for(unsigned int i=0; i<bcc->pvs->size(); ++i) {
+        PrimaryVertex pv = bcc->pvs->at(i);
+        if(pv.ndof()>=ndofmax && fabs(pv.z())<zmax && pv.rho()<=rhomax) {
+            good_pvs.push_back(pv);
+        }
+    }
+    bcc->pvs->clear();
+
+    for(unsigned int i=0; i<good_pvs.size(); ++i) {
+        bcc->pvs->push_back(good_pvs[i]);
+    }
+    resetEventCalc();
 }

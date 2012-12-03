@@ -279,7 +279,7 @@
 		   <Item Name="Electron_Or_Muon_Selection" Value="Muon" />
 
 		   <Item Name="JetCollection" Value="goodPatJetsPFlow" />  
-		   <Item Name="ElectronCollection" Value="selectedPatElectronsPFlow" /> 
+		   <Item Name="ElectronCollection" Value="selectedPatElectronsPFlowLoose" /> 
 		   <Item Name="MuonCollection" Value="selectedPatMuonsPFlowLoose" /> 
 		   <Item Name="TauCollection" Value="selectedPatTausPFlow" /> 
 <!--		   <Item Name="PhotonCollection" Value="patPhotons" /> -->

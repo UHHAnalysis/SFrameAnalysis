@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.8 2012/11/30 19:51:41 bazterra Exp $
+// $Id: AnalysisCycle.h,v 1.9 2012/12/03 20:08:29 bazterra Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -23,7 +23,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.8 $
+ *  @version $Revision: 1.9 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -94,6 +94,10 @@ protected:
   // Inversion of the electron selection
   bool m_QCDSelection;
 
+  // Luminosity property used to define the trigger
+  // use in the analysis
+  std::string m_lumi_trigger;
+
 private:
 
   // wrapper to LuminosityHandler
@@ -103,7 +107,6 @@ private:
   // lumi file properties
   std::string m_lumifile_path;
   std::string m_lumifile_name;
-  std::string m_lumi_trigger;
 
   // PU-reweighting properties
   std::string m_PUFilenameMC;

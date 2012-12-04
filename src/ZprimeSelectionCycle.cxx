@@ -85,9 +85,9 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
     }
 
     if(doEle)
-        first_selection->addSelectionModule(new TriggerSelection("HLT_Ele30_CaloIdVT_TrkIdT_PFJet100_PFJet25_"));
+        first_selection->addSelectionModule(new TriggerSelection(m_lumi_trigger));
     if(doMu)
-        first_selection->addSelectionModule(new TriggerSelection("HLT_Mu40_eta2p1_v"));
+        first_selection->addSelectionModule(new TriggerSelection(m_lumi_trigger));
 
     first_selection->addSelectionModule(new NPrimaryVertexSelection(1)); //at least one good PV
     first_selection->addSelectionModule(new NJetSelection(2,int_infinity(),50,2.4));//at least two jets

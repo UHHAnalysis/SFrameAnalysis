@@ -113,7 +113,7 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
     second_selection->addSelectionModule(new NBTagSelection(m_Nbtags_min,m_Nbtags_max)); //b tags from config file
     second_selection->addSelectionModule(new HTlepCut(150));
     if(doEle) {
-        if(!m_QCDSelection)
+        if(!m_reversed_electron_selection)
             second_selection->addSelectionModule(new TriangularCut());
         else
             second_selection->addSelectionModule(new TriangularCut_reverse());
@@ -249,7 +249,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
     if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
     if(bcc->electrons) {
-        if(!m_QCDSelection) m_cleaner->ElectronCleaner_noIso(35,2.5);
+        if(!m_reversed_electron_selection) m_cleaner->ElectronCleaner_noIso(35,2.5);
         else m_cleaner->ElectronCleaner_noIso_reverse(35,2.5);
     }
     if(bcc->muons) m_cleaner->MuonCleaner_noIso(45,2.1);

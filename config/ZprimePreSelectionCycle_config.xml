@@ -295,7 +295,7 @@
            <Item Name="JECMCGlobalTag" Value="START52_V11" />
            <Item Name="JECJetCollection" Value="AK5PFchs" />
 
-           <Item Name="QCDSelection" Value="false" />
+           <Item Name="ReversedElectronSelection" Value="false" />
 		</UserConfig>
 	</Cycle>
 </JobConfiguration>

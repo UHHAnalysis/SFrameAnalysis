@@ -61,7 +61,10 @@ void MuonHists::Init()
   Book( TH1F( "ptrel_2_ly", "p_{T}^{rel}(2nd #mu,jet)", 40, 0, 200.) );
   Book( TH1F( "deltaRmin_2_ly", "#Delta R_{min}(2nd #mu,jet)", 40, 0, 2.0) );
   Book( TH2F( "deltaRmin_vs_ptrel_2", "#Delta R_{min}(2nd #mu,jet) vs p_{T}^{rel}(2nd #mu,jet)", 40, 0, 2.0, 40, 0, 200.) );
-  
+
+  Book( TH1F( "charge","charge muon",3,-1.5,1.5));
+  Book( TH1F( "charge_1","charge leading muon",3,-1.5,1.5));
+  Book( TH1F( "charge_2","charge 2nd muon",3,-1.5,1.5));
 }
 
 
@@ -89,6 +92,7 @@ void MuonHists::Fill()
       Hist("phi_ly") -> Fill(muon.phi(),weight);
       Hist("isolation")->Fill(muon.relIso(),weight);
       Hist("isolation_ly")->Fill(muon.relIso(),weight);
+      Hist("charge")->Fill(muon.charge(),weight);
 
       std::vector<Jet>* jets = calc->GetJets();
       if(jets){
@@ -124,6 +128,8 @@ void MuonHists::Fill()
 	  Hist(hname_iso)->Fill(muon.relIso(),weight);
 	  TString hname_iso_ly = TString::Format("isolation_%d_ly", i+1);
 	  Hist(hname_iso_ly)->Fill(muon.relIso(),weight);
+	  TString hname_charge = TString::Format("charge_%d", i+1);
+	  Hist(hname_charge)->Fill(muon.charge(),weight);
 
 	  std::vector<Jet>* jets = calc->GetJets();
 	  if(jets){

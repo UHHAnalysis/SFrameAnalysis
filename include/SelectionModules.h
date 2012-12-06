@@ -245,4 +245,18 @@ class HypothesisDiscriminatorCut: public SelectionModule{
 
 };
 
+class MttbarGenCut: public SelectionModule{
+ public:
+  MttbarGenCut(double mttbar_min=0, double mttbar_max=double_infinity());
+  ~MttbarGenCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  double m_mttbar_min;
+  double m_mttbar_max;
+
+};
+
 #endif

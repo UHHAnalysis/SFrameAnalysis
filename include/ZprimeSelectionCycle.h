@@ -50,7 +50,7 @@ public:
   /// Function called for every event
   void ExecuteEvent( const SInputData&, Double_t ) throw( SError );
 
-  // Fill control histograms
+  /// Fill control histograms
   void FillControlHists(TString postfix="");
 
 private:

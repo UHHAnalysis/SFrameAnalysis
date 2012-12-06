@@ -1,10 +1,21 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: CycleCreators.py 159 2010-04-13 09:44:22Z krasznaa $
+// $Id: ExampleCycle.h,v 1.1 2012/06/05 14:45:24 rkogler Exp $
 #ifndef ExampleCycle_H
 #define ExampleCycle_H
 
 // SFrame include(s):
 #include "include/AnalysisCycle.h"
+#include "include/SelectionModules.h"
+#include "include/ExampleHists.h"
+#include "include/ObjectHandler.h"
+#include "include/HypothesisHists.h"
+
+#include "EventHists.h"
+#include "JetHists.h"
+#include "ElectronHists.h"
+#include "MuonHists.h"
+#include "TauHists.h"
+#include "TopJetHists.h"
 
 /**
  *   @short Example of an analysis cycle
@@ -14,7 +25,7 @@
  *          be used for quick cross checks of the system setup.
  *
  *  @author Roman Kogler
- *  @version $Revision: 159 $
+ *  @version $Revision: 1.1 $
  */
 
 class ExampleCycle : public AnalysisCycle {
@@ -40,6 +51,9 @@ public:
 
   /// Function called for every event
   void ExecuteEvent( const SInputData&, Double_t ) throw( SError );
+
+  /// Fill control histograms
+  void FillControlHistos(TString postfix="");
 
 private:
   //

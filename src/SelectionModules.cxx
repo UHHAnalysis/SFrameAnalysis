@@ -423,7 +423,7 @@ bool HypothesisDiscriminatorCut::pass(BaseCycleContainer *bcc){
   ReconstructionHypothesis *hyp = m_discr->GetBestHypothesis();
 
   if(!hyp){
-    std::cout << "WARNING: no hypothesis " << m_discr->GetLabel() << " found, event is rejected." <<std::endl;
+    //std::cout << "WARNING: no hypothesis " << m_discr->GetLabel() << " found, event is rejected." <<std::endl;
     return false;
   }
 
@@ -438,5 +438,31 @@ bool HypothesisDiscriminatorCut::pass(BaseCycleContainer *bcc){
 std::string HypothesisDiscriminatorCut::description(){
   char s[100];
   sprintf(s, "%.1f < %s discriminator < %.1f",m_min_discr,m_discr->GetLabel().c_str(),m_max_discr);
+  return s;
+}
+
+
+MttbarGenCut::MttbarGenCut(double mttbar_min, double mttbar_max){
+  m_mttbar_min = mttbar_min;
+  m_mttbar_max = mttbar_max;
+}
+
+bool MttbarGenCut::pass(BaseCycleContainer *bcc){
+  EventCalc* calc = EventCalc::Instance();
+  if(!calc->GetGenParticles() ){
+    if (!calc->GetTTbarGen()){      
+      return true;
+    }
+  }
+
+  double mttbar_gen = ( calc->GetTTbarGen()->Top().v4() + calc->GetTTbarGen()->Antitop().v4()).M();
+  if( mttbar_gen < m_mttbar_min) return false;
+  if( mttbar_gen > m_mttbar_max) return false;  
+  return true;
+}
+
+std::string MttbarGenCut::description(){
+  char s[100];
+  sprintf(s, "%.1f < MttbarGen < %.1f",m_mttbar_min, m_mttbar_max);
   return s;
 }

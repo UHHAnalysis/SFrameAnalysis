@@ -1,4 +1,4 @@
-// $Id: ExampleCycle.cxx,v 1.7 2012/08/31 09:30:13 peiffer Exp $
+// $Id: ExampleCycle.cxx,v 1.8 2012/11/07 10:06:24 rkogler Exp $
 
 #include <iostream>
 
@@ -6,10 +6,6 @@ using namespace std;
 
 // Local include(s):
 #include "include/ExampleCycle.h"
-#include "include/SelectionModules.h"
-#include "include/ExampleHists.h"
-#include "include/ObjectHandler.h"
-#include "include/HypothesisHists.h"
 
 ClassImp( ExampleCycle );
 
@@ -20,7 +16,7 @@ ExampleCycle::ExampleCycle()
   // obtained from the steering-xml file
   
   // set the integrated luminosity per bin for the lumi-yield control plots
-  SetIntLumiPerBin(250.);
+  SetIntLumiPerBin(500.);
 
 }
 
@@ -68,6 +64,11 @@ void ExampleCycle::BeginInputData( const SInputData& id ) throw( SError )
   Selection* NoBSel = new Selection( "NoBSelection");
   NoBSel->addSelectionModule(new NBTagSelection(0,0)); //no b tags
 
+  Selection* chi2_selection= new Selection("chi2_selection");
+  static Chi2Discriminator* m_chi2discr = new Chi2Discriminator();
+  chi2_selection->addSelectionModule(new HypothesisDiscriminatorCut( m_chi2discr, -1*double_infinity(), 10));
+  //chi2_selection->addSelectionModule(new MttbarGenCut(0,700));
+
   Selection* TopSel = new Selection("TopSelection");
   //DO NOT use trigger selection in PROOF mode at the moment
   //TopSel->addSelectionModule(new TriggerSelection("HLT_PFJet320_v"));
@@ -78,13 +79,20 @@ void ExampleCycle::BeginInputData( const SInputData& id ) throw( SError )
   RegisterSelection(BSel);
   RegisterSelection(NoBSel);
   RegisterSelection(TopSel);
+  RegisterSelection(chi2_selection);
 
   // ---------------- set up the histogram collections --------------------
 
   // histograms without any cuts
   RegisterHistCollection( new ExampleHists("NoCuts") );
+  
+  RegisterHistCollection( new EventHists("Event") );
+  RegisterHistCollection( new JetHists("Jets") );
+  RegisterHistCollection( new ElectronHists("Electron") );
+  RegisterHistCollection( new MuonHists("Muon") );
+  RegisterHistCollection( new TauHists("Tau") );
+  RegisterHistCollection( new TopJetHists("TopJets") );
 
-  static Chi2Discriminator* m_chi2discr = new Chi2Discriminator();
   RegisterHistCollection( new HypothesisHists("Chi2_NoCuts", m_chi2discr ) );
 
   //histograms with and without b tagging
@@ -93,10 +101,31 @@ void ExampleCycle::BeginInputData( const SInputData& id ) throw( SError )
   RegisterHistCollection( new HypothesisHists("Chi2_BTag", m_chi2discr ) );
   RegisterHistCollection( new HypothesisHists("Chi2_NoBTag", m_chi2discr ) );
 
+  RegisterHistCollection( new EventHists("Event_BTag") );
+  RegisterHistCollection( new JetHists("Jets_BTag") );
+  RegisterHistCollection( new ElectronHists("Electron_BTag") );
+  RegisterHistCollection( new MuonHists("Muon_BTag") );
+  RegisterHistCollection( new TauHists("Tau_BTag") );
+  RegisterHistCollection( new TopJetHists("TopJets_BTag") );
+
+  RegisterHistCollection( new EventHists("Event_NoBTag") );
+  RegisterHistCollection( new JetHists("Jets_NoBTag") );
+  RegisterHistCollection( new ElectronHists("Electron_NoBTag") );
+  RegisterHistCollection( new MuonHists("Muon_NoBTag") );
+  RegisterHistCollection( new TauHists("Tau_NoBTag") );
+  RegisterHistCollection( new TopJetHists("TopJets_NoBTag") );
+
   // histograms after the top selection
   RegisterHistCollection( new ExampleHists("TopSel") );
   RegisterHistCollection( new HypothesisHists("Chi2_TopSel", m_chi2discr ) );
 
+  RegisterHistCollection( new EventHists("Event_TopSel") );
+  RegisterHistCollection( new JetHists("Jets_TopSel") );
+  RegisterHistCollection( new ElectronHists("Electron_TopSel") );
+  RegisterHistCollection( new MuonHists("Muon_TopSel") );
+  RegisterHistCollection( new TauHists("Tau_TopSel") );
+  RegisterHistCollection( new TopJetHists("TopJets_TopSel") );
+  
   // important: initialise histogram collections after their definition
   InitHistos();
 
@@ -136,6 +165,7 @@ void ExampleCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( S
   static Selection* BSel = GetSelection("BSelection");
   static Selection* NoBSel = GetSelection("NoBSelection");
   static Selection* TopSel = GetSelection("TopSelection");
+  static Selection* chi2_selection = GetSelection("chi2_selection");
 
   // get the histogram collections
   BaseHists* HistsNoCuts = GetHistCollection("NoCuts");
@@ -148,28 +178,58 @@ void ExampleCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( S
   BaseHists* Chi2_HistsNoBTag = GetHistCollection("Chi2_NoBTag");
   BaseHists* Chi2_HistsTopSel = GetHistCollection("Chi2_TopSel");
 
+  //if(!chi2_selection->passSelection())  throw SError( SError::SkipEvent );
+
+  EventCalc* calc = EventCalc::Instance();
+  if(calc->GetJets()->size()>=12){
+    std::cout << "run: " << calc->GetRunNum() << "   lb: " << calc->GetLumiBlock() << "  event: " << calc->GetEventNum() << "   N(jets): " << calc->GetJets()->size() << std::endl;
+  }
 
   // start the analysis
   HistsNoCuts->Fill();
   Chi2_HistsNoCuts->Fill();
 
+  FillControlHistos("");
+
+
   if(BSel->passSelection()){
     HistsBTag->Fill();
     Chi2_HistsBTag->Fill();
+    FillControlHistos("_BTag");
   }
   if(NoBSel->passSelection()){
     HistsNoBTag->Fill();  
     Chi2_HistsNoBTag->Fill();
+    FillControlHistos("_NoBTag");
   }
-
-  ObjectHandler* objs = ObjectHandler::Instance();
   
   if(!TopSel->passSelection())  throw SError( SError::SkipEvent );
 
   HistsTopSel->Fill();
   Chi2_HistsTopSel->Fill();
+  FillControlHistos("_TopSel");
   
   return;
   
 }
 
+
+void ExampleCycle::FillControlHistos(TString postfix)
+{
+  // fill some control histograms, need to be defined in BeginInputData
+
+  BaseHists* eventhists = GetHistCollection((std::string)("Event"+postfix));
+  BaseHists* jethists = GetHistCollection((std::string)("Jets"+postfix));
+  BaseHists* elehists = GetHistCollection((std::string)("Electron"+postfix));
+  BaseHists* muonhists = GetHistCollection((std::string)("Muon"+postfix));
+  BaseHists* tauhists = GetHistCollection((std::string)("Tau"+postfix));
+  BaseHists* topjethists = GetHistCollection((std::string)("TopJets"+postfix));    
+
+  eventhists->Fill();
+  jethists->Fill();
+  elehists->Fill();
+  muonhists->Fill();  
+  tauhists->Fill();
+  topjethists->Fill();
+
+}

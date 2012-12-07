@@ -55,21 +55,16 @@
 	<Package Name="Analysis.par" />
 
 
-	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/" PostFix="" TargetLumi="1" > 
+	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/dust/naf/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/" PostFix="" TargetLumi="1" > 
 <!--	<Cycle Name="ZprimePreSelectionCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/" PostFix="" TargetLumi="1" >  -->
 
-
+<!--
                 <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="DATA" Cacheable="True">
                         &MuData;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
-<!--
-                <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DY_10to50" Cacheable="True">
-                        &DY_10to50;
-			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" />  
-		</InputData>
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="False">
 		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000_v3.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" />
@@ -80,7 +75,8 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" /> 
 		</InputData>  
-
+-->
+<!--
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZP500w5" Cacheable="True">
                         &ZP500w5;
 			<InputTree Name="AnalysisTree" /> 
@@ -113,11 +109,13 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData>  
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZP1250w12p5" Cacheable="True">
                         &ZP1250w12p5;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZP1250w125" Cacheable="True">
                         &ZP1250w125;
 			<InputTree Name="AnalysisTree" /> 
@@ -143,11 +141,13 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData>  
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZP3000w30" Cacheable="True">
                         &ZP3000w30;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZP3000w300" Cacheable="True">
                         &ZP3000w300;
 			<InputTree Name="AnalysisTree" /> 
@@ -163,6 +163,7 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
+-->
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
                         &TTbar;
 			<InputTree Name="AnalysisTree" /> 
@@ -210,6 +211,7 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
+<!--
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="Wjets" Cacheable="True">
                         &Wjets;
 			<InputTree Name="AnalysisTree" /> 
@@ -220,12 +222,13 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData>
-
+-->
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WW" Cacheable="True">
                         &WW;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
+<!--
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbar_MadGraph" Cacheable="True">
                         &TTbar_MadGraph;
 			<InputTree Name="AnalysisTree" /> 

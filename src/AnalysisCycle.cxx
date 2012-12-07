@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.18 2012/12/03 20:08:29 bazterra Exp $
+// $Id: AnalysisCycle.cxx,v 1.19 2012/12/05 13:06:05 bazterra Exp $
 
 #include <iostream>
 
@@ -25,10 +25,12 @@ AnalysisCycle::AnalysisCycle()
     m_puwp = NULL;
     m_newrun = false;
     m_lsf = NULL;
+    m_bsf = NULL;
 
     // set some default values
     m_readTTbarReco = false;
     m_writeTTbarReco = false;
+    m_dobsf=false;
 
     // declare variables for lumi file
     DeclareProperty( "LumiFilePath" , m_lumifile_path);
@@ -64,6 +66,7 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "PU_Histname_Data" , m_PUHistnameData);
 
     DeclareProperty( "LeptonScaleFactors", m_leptonweights);
+    DeclareProperty( "BTaggingScaleFactors", m_dobsf);
 
     // steerable properties for making qcd (pre) selection
     DeclareProperty( "ReversedElectronSelection", m_reversed_electron_selection);
@@ -191,6 +194,9 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 
     if(m_leptonweights.size()>0)
         m_lsf = new LeptonScaleFactors(m_leptonweights);
+
+    if(m_dobsf)
+      m_bsf = new BTaggingScaleFactors();
 
     return;
 
@@ -431,6 +437,11 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
         if(m_lsf) {
             calc->ProduceWeight(m_lsf->GetWeight());
         }
+        //b tagging scale factor
+        if(m_bsf) {
+            calc->ProduceWeight(m_bsf->GetWeight());
+        }
+
     }
 
     //select only good runs

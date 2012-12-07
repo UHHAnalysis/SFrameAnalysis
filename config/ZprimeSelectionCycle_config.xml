@@ -20,7 +20,7 @@
 
 	<Cycle Name="ZprimeSelectionCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/" PostFix="" TargetLumi="1.0" > 
 
-<!--
+
 		<InputData Lumi="118975" NEventsMax="-1" Type="MC" Version="ZP500w5" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/ZprimePreSelectionCycle.MC.ZP500w5.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -117,18 +117,18 @@
 		</InputData> 
 
 
-		<InputData Lumi="1.0" NEventsMax="-1" Type="MC" Version="TTbar_700to1000" Cacheable="False">
+		<InputData Lumi="178197" NEventsMax="-1" Type="MC" Version="TTbar_700to1000" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/ZprimePreSelectionCycle.MC.TTbar_700to1000.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
 
-		<InputData Lumi="1.0" NEventsMax="-1" Type="MC" Version="TTbar_1000toInf" Cacheable="False">
+		<InputData Lumi="378518" NEventsMax="-1" Type="MC" Version="TTbar_1000toInf" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/ZprimePreSelectionCycle.MC.TTbar_1000toInf.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
--->
+<!--
 		<InputData Lumi="2097.3" NEventsMax="-1" Type="MC" Version="Wjets" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/ZprimePreSelectionCycle.MC.Wjets.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -140,7 +140,7 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
-<!--
+-->
 	        <InputData Lumi="66635" NEventsMax="-1" Type="MC" Version="SingleTop_T_tch" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/ZprimePreSelectionCycle.MC.SingleTop_T_tch.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -177,11 +177,13 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
+<!--
 	        <InputData Lumi="29589" NEventsMax="-1" Type="MC" Version="TTbar_MadGraph" Cacheable="False">
  		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/ZprimePreSelectionCycle.MC.TTbar_MadGraph.root" Lumi="0.0"/>       
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
+-->
 		<InputData Lumi="36088" NEventsMax="-1" Type="MC" Version="DY1Jets_50toInf" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/ZprimePreSelectionCycle.MC.DY1Jets_50toInf.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -207,7 +209,6 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
--->
 		<InputData Lumi="16311" NEventsMax="-1" Type="MC" Version="W2Jets" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/ZprimePreSelectionCycle.MC.W2Jets.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 

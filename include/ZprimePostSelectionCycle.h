@@ -1,14 +1,20 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: ExampleCycle.h,v 1.2 2012/12/06 08:24:48 peiffer Exp $
-#ifndef ExampleCycle_H
-#define ExampleCycle_H
+// $Id: ZprimePostSelectionCycle.h,v 1.2 2012/12/06 08:24:48 peiffer Exp $
+#ifndef ZprimePostSelectionCycle_H
+#define ZprimePostSelectionCycle_H
 
 // SFrame include(s):
 #include "include/AnalysisCycle.h"
 #include "include/SelectionModules.h"
-#include "include/ExampleHists.h"
 #include "include/ObjectHandler.h"
 #include "include/HypothesisHists.h"
+
+#include "EventHists.h"
+#include "JetHists.h"
+#include "ElectronHists.h"
+#include "MuonHists.h"
+#include "TauHists.h"
+#include "TopJetHists.h"
 
 /**
  *   @short Example of an analysis cycle
@@ -21,13 +27,13 @@
  *  @version $Revision: 1.2 $
  */
 
-class ExampleCycle : public AnalysisCycle {
+class ZprimePostSelectionCycle : public AnalysisCycle {
 
 public:
   /// Default constructor
-  ExampleCycle();
+  ZprimePostSelectionCycle();
   /// Default destructor
-  ~ExampleCycle();
+  ~ZprimePostSelectionCycle();
 
   /// Function called at the beginning of the cycle
   void BeginCycle() throw( SError );
@@ -45,15 +51,18 @@ public:
   /// Function called for every event
   void ExecuteEvent( const SInputData&, Double_t ) throw( SError );
 
+  /// Fill control histograms
+  void FillControlHistos(TString postfix="");
+
 private:
   //
   // Put all your private variables here
   //
 
   // Macro adding the functions for dictionary generation
-  ClassDef( ExampleCycle, 0 );
+  ClassDef( ZprimePostSelectionCycle, 0 );
 
-}; // class ExampleCycle
+}; // class ZprimePostSelectionCycle
 
-#endif // ExampleCycle_H
+#endif // ZprimePostSelectionCycle_H
 

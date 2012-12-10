@@ -367,7 +367,7 @@ void Cleaner::MuonCleaner_noIso(double ptmin, double etamax)
                 if(mu.globalTrack_chi2()/mu.globalTrack_ndof()<10) {
                     if(mu.globalTrack_numberOfValidMuonHits()>0) {
                         if(mu.innerTrack_trackerLayersWithMeasurement()>5) {
-                            if(mu.dB()<0.02) { //0.2 ?
+                            if(mu.dB()<0.2) { 
                                 if(fabs(mu.vertex_z()-bcc->pvs->at(0).z())<0.5) {
                                     if(mu.innerTrack_numberOfValidPixelHits()>0) {
                                         if(mu.numberOfMatchedStations()>1) {

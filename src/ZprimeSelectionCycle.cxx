@@ -109,13 +109,8 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
     second_selection->addSelectionModule(new NJetSelection(1,int_infinity(),150,2.5));//leading jet with pt>150 GeV
     second_selection->addSelectionModule(new NBTagSelection(m_Nbtags_min,m_Nbtags_max)); //b tags from config file
     second_selection->addSelectionModule(new HTlepCut(150));
-    if(doEle) {
-        //if(!m_reversed_electron_selection)
-            second_selection->addSelectionModule(new TriangularCut());
-        //else
-            // second_selection->addSelectionModule(new TriangularCut_reverse());
-    }
     second_selection->addSelectionModule(new METCut(20));
+    if(doEle) second_selection->addSelectionModule(new TriangularCut());
 
     Selection* chi2_selection= new Selection("chi2_selection");
     m_chi2discr = new Chi2Discriminator();

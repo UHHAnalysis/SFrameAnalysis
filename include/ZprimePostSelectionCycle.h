@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: ZprimePostSelectionCycle.h,v 1.2 2012/12/06 08:24:48 peiffer Exp $
+// $Id: ZprimePostSelectionCycle.h,v 1.1 2012/12/07 14:21:52 peiffer Exp $
 #ifndef ZprimePostSelectionCycle_H
 #define ZprimePostSelectionCycle_H
 
@@ -24,7 +24,7 @@
  *          be used for quick cross checks of the system setup.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.2 $
+ *  @version $Revision: 1.1 $
  */
 
 class ZprimePostSelectionCycle : public AnalysisCycle {
@@ -59,9 +59,10 @@ private:
   // Put all your private variables here
   //
 
+  std::string m_Electron_Or_Muon_Selection;
+
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimePostSelectionCycle, 0 );
-
 }; // class ZprimePostSelectionCycle
 
 #endif // ZprimePostSelectionCycle_H

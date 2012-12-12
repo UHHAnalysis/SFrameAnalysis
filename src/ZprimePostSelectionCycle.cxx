@@ -1,4 +1,4 @@
-// $Id: ZprimePostSelectionCycle.cxx,v 1.1 2012/12/07 14:21:51 peiffer Exp $
+// $Id: ZprimePostSelectionCycle.cxx,v 1.2 2012/12/12 14:33:04 bazterra Exp $
 
 #include <iostream>
 
@@ -16,9 +16,11 @@ ZprimePostSelectionCycle::ZprimePostSelectionCycle()
     // constructor, declare additional variables that should be
     // obtained from the steering-xml file
 
+    // steerable properties for making qcd (pre) selection
+    DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
+
     // set the integrated luminosity per bin for the lumi-yield control plots
     SetIntLumiPerBin(500.);
-
 }
 
 ZprimePostSelectionCycle::~ZprimePostSelectionCycle()
@@ -59,6 +61,17 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
 
     // -------------------- set up the selections ---------------------------
 
+    bool doEle=false;
+    bool doMu=false;
+
+    if(m_Electron_Or_Muon_Selection=="Electrons" || m_Electron_Or_Muon_Selection=="Electron" || m_Electron_Or_Muon_Selection=="Ele" || m_Electron_Or_Muon_Selection=="ELE") {
+        doEle=true;
+    } else if(m_Electron_Or_Muon_Selection=="Muon" || m_Electron_Or_Muon_Selection=="Muons" || m_Electron_Or_Muon_Selection=="Mu" || m_Electron_Or_Muon_Selection=="MU") {
+        doMu=true;
+    } else {
+        m_logger << ERROR << "Electron_Or_Muon_Selection is not defined in your xml config file --- should be either `ELE` or `MU`" << SLogger::endmsg;
+    }
+
     // Chi2 reconstruction and discriminant 
     static Chi2Discriminator* m_chi2discr = new Chi2Discriminator();
 
@@ -69,7 +82,8 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
     // Kinematic selection
     Selection* KinematicSelection = new Selection("KinematicSelection");
     KinematicSelection->addSelectionModule(new METCut(50));
-    KinematicSelection->addSelectionModule(new HypothesisLeptopPtCut( m_chi2discr, 140.0, double_infinity()));
+    if (doEle)
+        KinematicSelection->addSelectionModule(new HypothesisLeptopPtCut( m_chi2discr, 140.0, double_infinity()));
 
     Selection* Chi2Seletion = new Selection("Chi2Selection");
     Chi2Seletion->addSelectionModule(new HypothesisDiscriminatorCut( m_chi2discr, -1*double_infinity(), 10));

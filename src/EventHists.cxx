@@ -29,8 +29,8 @@ void EventHists::Init()
   Book( TH1F( "HT_TopJets_ly", "H_{T} TopJets", 100,0,3500 ) );
   Book( TH1F( "HT_Jets", "H_{T} Jets", 100,0,3500 ) );
   Book( TH1F( "HT_Jets_ly", "H_{T} Jets", 100,0,3500 ) );
-  Book( TH1F( "MET", "missing E_{T}", 100,0,700 ) );
-  Book( TH1F( "MET_ly", "missing E_{T}", 100,0,700 ) );
+  Book( TH1F( "MET", "missing E_{T}", 700,0,700 ) );
+  Book( TH1F( "MET_ly", "missing E_{T}", 700,0,700 ) );
   Book( TH1F( "HT_MET_TopJets", "H_{T} + missing E_{T} TopJets", 100,0,3500 ) );
   Book( TH1F( "HT_MET_TopJets_ly", "H_{T} + missing E_{T} TopJets", 100,0,3500 ) );
   Book( TH1F( "HT_MET_Jets", "H_{T} + missing E_{T} Jets", 100,0,3500 ) );

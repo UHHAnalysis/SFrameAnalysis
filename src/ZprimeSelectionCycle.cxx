@@ -26,7 +26,6 @@ ZprimeSelectionCycle::ZprimeSelectionCycle()
     m_Nbtags_max=int_infinity();
     DeclareProperty( "Nbtags_min", m_Nbtags_min);
     DeclareProperty( "Nbtags_max", m_Nbtags_max);
-
 }
 
 ZprimeSelectionCycle::~ZprimeSelectionCycle()
@@ -44,7 +43,6 @@ void ZprimeSelectionCycle::BeginCycle() throw( SError )
     AnalysisCycle::BeginCycle();
 
     return;
-
 }
 
 void ZprimeSelectionCycle::EndCycle() throw( SError )
@@ -57,7 +55,6 @@ void ZprimeSelectionCycle::EndCycle() throw( SError )
     AnalysisCycle::EndCycle();
 
     return;
-
 }
 
 void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError )
@@ -113,12 +110,12 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
     second_selection->addSelectionModule(new NBTagSelection(m_Nbtags_min,m_Nbtags_max)); //b tags from config file
     second_selection->addSelectionModule(new HTlepCut(150));
     if(doEle) {
-        if(!m_reversed_electron_selection)
+        //if(!m_reversed_electron_selection)
             second_selection->addSelectionModule(new TriangularCut());
-        else
-            second_selection->addSelectionModule(new TriangularCut_reverse());
+        //else
+            // second_selection->addSelectionModule(new TriangularCut_reverse());
     }
-    second_selection->addSelectionModule(new METCut(50));
+    second_selection->addSelectionModule(new METCut(20));
 
     Selection* chi2_selection= new Selection("chi2_selection");
     m_chi2discr = new Chi2Discriminator();
@@ -160,28 +157,27 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
     RegisterHistCollection( new HypothesisHists("SumDeltaR", m_sumdrdiscr) );
     RegisterHistCollection( new HypothesisHists("CorrectMatch", m_cmdiscr) );
 
-    // control histograms
-    RegisterHistCollection( new EventHists("Event") );
-    RegisterHistCollection( new JetHists("Jets") );
-    RegisterHistCollection( new ElectronHists("Electron") );
-    RegisterHistCollection( new MuonHists("Muon") );
-    RegisterHistCollection( new TauHists("Tau") );
-    RegisterHistCollection( new TopJetHists("TopJets") );
+    // control histogras
+    RegisterHistCollection( new EventHists("Event_Presel") );
+    RegisterHistCollection( new JetHists("Jets_Presel") );
+    RegisterHistCollection( new ElectronHists("Electron_Presel") );
+    RegisterHistCollection( new MuonHists("Muon_Presel") );
+    RegisterHistCollection( new TauHists("Tau_Presel") );
+    RegisterHistCollection( new TopJetHists("TopJets_Presel") );
+    
+    RegisterHistCollection( new EventHists("Event_Cleaned") );
+    RegisterHistCollection( new JetHists("Jets_Cleaned") );
+    RegisterHistCollection( new ElectronHists("Electron_Cleaned") );
+    RegisterHistCollection( new MuonHists("Muon_Cleaned") );
+    RegisterHistCollection( new TauHists("Tau_Cleaned") );
+    RegisterHistCollection( new TopJetHists("TopJets_Cleaned") );
 
-    RegisterHistCollection( new EventHists("Event_cleaned") );
-    RegisterHistCollection( new JetHists("Jets_cleaned") );
-    RegisterHistCollection( new ElectronHists("Electron_cleaned") );
-    RegisterHistCollection( new MuonHists("Muon_cleaned") );
-    RegisterHistCollection( new TauHists("Tau_cleaned") );
-    RegisterHistCollection( new TopJetHists("TopJets_cleaned") );
-
-
-    RegisterHistCollection( new EventHists("Event_presel") );
-    RegisterHistCollection( new JetHists("Jets_presel") );
-    RegisterHistCollection( new ElectronHists("Electron_presel") );
-    RegisterHistCollection( new MuonHists("Muon_presel") );
-    RegisterHistCollection( new TauHists("Tau_presel") );
-    RegisterHistCollection( new TopJetHists("TopJets_presel") );
+    RegisterHistCollection( new EventHists("Event_Postsel") );
+    RegisterHistCollection( new JetHists("Jets_Postsel") );
+    RegisterHistCollection( new ElectronHists("Electron_Postsel") );
+    RegisterHistCollection( new MuonHists("Muon_Postsel") );
+    RegisterHistCollection( new TauHists("Tau_Postsel") );
+    RegisterHistCollection( new TopJetHists("TopJets_Postsel") );
 
     // important: initialise histogram collections after their definition
     InitHistos();
@@ -208,7 +204,6 @@ void ZprimeSelectionCycle::EndInputData( const SInputData& id ) throw( SError )
     m_cm_bp->PrintStatistics();
 
     return;
-
 }
 
 void ZprimeSelectionCycle::BeginInputFile( const SInputData& id ) throw( SError )
@@ -220,7 +215,6 @@ void ZprimeSelectionCycle::BeginInputFile( const SInputData& id ) throw( SError 
     AnalysisCycle::BeginInputFile( id );
 
     return;
-
 }
 
 void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( SError )
@@ -233,7 +227,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
     AnalysisCycle::ExecuteEvent( id, weight);
 
     // control histograms
-    FillControlHists("_presel");
+    FillControlHists("_Presel");
 
     static Selection* first_selection = GetSelection("first_selection");
     static Selection* second_selection = GetSelection("second_selection");
@@ -260,7 +254,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
     if(bcc->jets) m_cleaner->JetCleaner(25,double_infinity(),true);
 
     // control histograms
-    FillControlHists("_cleaned");
+    FillControlHists("_Cleaned");
 
     if(!first_selection->passSelection())  throw SError( SError::SkipEvent );
 
@@ -271,7 +265,6 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
     if(bcc->taus) m_cleaner->TauCleaner(double_infinity(),0.0);
 
     if(!second_selection->passSelection())  throw SError( SError::SkipEvent );
-
 
     //do reconstruction here
 
@@ -306,7 +299,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
     ReconstructionHypothesis *cm_hyp = m_cmdiscr->GetBestHypothesis();
 
     // control histograms
-    FillControlHists("");
+    FillControlHists("_Postsel");
 
     // get the histogram collections
     BaseHists* Chi2Hists = GetHistCollection("Chi2");

@@ -1,4 +1,4 @@
-// $Id: ZprimePostSelectionCycle.cxx,v 1.2 2012/12/12 14:33:04 bazterra Exp $
+// $Id: ZprimePostSelectionCycle.cxx,v 1.3 2012/12/12 15:14:28 bazterra Exp $
 
 #include <iostream>
 
@@ -12,7 +12,6 @@ ClassImp( ZprimePostSelectionCycle );
 ZprimePostSelectionCycle::ZprimePostSelectionCycle()
     : AnalysisCycle()
 {
-
     // constructor, declare additional variables that should be
     // obtained from the steering-xml file
 
@@ -77,7 +76,7 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
 
     // Leading jet selection
     Selection* LeadingJetSelection = new Selection("LeadingJetSelection");
-    LeadingJetSelection->addSelectionModule(new NJetSelection(1,int_infinity(),250,2.5));
+    LeadingJetSelection->addSelectionModule(new NJetSelection(1,int_infinity(),150,2.5));
 
     // Kinematic selection
     Selection* KinematicSelection = new Selection("KinematicSelection");

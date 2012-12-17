@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.11 2012/12/05 13:06:05 bazterra Exp $
+// $Id: AnalysisCycle.h,v 1.12 2012/12/07 11:05:39 peiffer Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -23,7 +23,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.11 $
+ *  @version $Revision: 1.12 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -90,9 +90,6 @@ protected:
   std::string m_JECDataGlobalTag;
   std::string m_JECMCGlobalTag;
   std::string m_JECJetCollection;
-
-  // Inversion of the electron selection
-  bool m_reversed_electron_selection;
 
   // Luminosity property used to define the trigger
   // use in the analysis

@@ -49,7 +49,6 @@ class Cleaner{
   void ElectronCleaner(double ptmin=0, double etamax=9999, double relisomax=0.1);
   void MuonCleaner(double ptmin=0, double etamax=9999, double relisomax=0.125);
   void ElectronCleaner_noIso(double ptmin=0, double etamax=9999);
-  void ElectronCleaner_noIso_reverse(double ptmin=0, double etamax=9999);
   void MuonCleaner_noIso(double ptmin=0, double etamax=9999);
   void ElectronCleaner_noID_noIso(double ptmin=0, double etamax=9999);
   void MuonCleaner_noID_noIso(double ptmin=0, double etamax=9999);

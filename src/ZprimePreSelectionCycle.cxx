@@ -23,9 +23,7 @@ ZprimePreSelectionCycle::ZprimePreSelectionCycle()
 
     m_corrector = NULL;
 
-
     DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
-
 }
 
 ZprimePreSelectionCycle::~ZprimePreSelectionCycle()
@@ -72,7 +70,7 @@ void ZprimePreSelectionCycle::BeginInputData( const SInputData& id ) throw( SErr
     Selection* preselection = new Selection("pre-selection");
 
     if(m_Electron_Or_Muon_Selection=="Electrons" || m_Electron_Or_Muon_Selection=="Electron" || m_Electron_Or_Muon_Selection=="Ele" || m_Electron_Or_Muon_Selection=="ELE") {
-        preselection->addSelectionModule(new NElectronSelection(1,int_infinity()));//at least one electron
+        preselection->addSelectionModule(new NElectronSelection(1,int_infinity(),0.,double_infinity(),false));//at least one electron
         preselection->addSelectionModule(new NMuonSelection(0,0));//no muons
     } else if(m_Electron_Or_Muon_Selection=="Muon" || m_Electron_Or_Muon_Selection=="Muons" || m_Electron_Or_Muon_Selection=="Mu" || m_Electron_Or_Muon_Selection=="MU") {
         preselection->addSelectionModule(new NElectronSelection(0,0));//no electron
@@ -80,7 +78,6 @@ void ZprimePreSelectionCycle::BeginInputData( const SInputData& id ) throw( SErr
     } else {
         m_logger << ERROR << "Electron_Or_Muon_Selection is not defined in your xml config file --- should be either `ELE` or `MU`" << SLogger::endmsg;
     }
-
 
     preselection->addSelectionModule(new NJetSelection(2));//at least two jets
 
@@ -151,10 +148,7 @@ void ZprimePreSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weigh
     //clean collections here
 
     if(bcc->muons) cleaner.MuonCleaner_noIso(45,2.1);
-    if(bcc->electrons) {
-        if(!m_reversed_electron_selection) cleaner.ElectronCleaner_noIso(35,2.5);
-        else cleaner.ElectronCleaner_noIso_reverse(35,2.5);
-    }
+    if(bcc->electrons) cleaner.ElectronCleaner_noIso(35,2.5);
     if(bcc->jets) cleaner.JetLeptonSubtractor(m_corrector,false);
     if(!bcc->isRealData && bcc->jets) cleaner.JetEnergyResolutionShifter();
     if(bcc->jets) cleaner.JetCleaner(30,2.5,true);

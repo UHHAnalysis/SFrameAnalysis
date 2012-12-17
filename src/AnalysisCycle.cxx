@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.19 2012/12/05 13:06:05 bazterra Exp $
+// $Id: AnalysisCycle.cxx,v 1.20 2012/12/07 11:05:39 peiffer Exp $
 
 #include <iostream>
 
@@ -67,9 +67,6 @@ AnalysisCycle::AnalysisCycle()
 
     DeclareProperty( "LeptonScaleFactors", m_leptonweights);
     DeclareProperty( "BTaggingScaleFactors", m_dobsf);
-
-    // steerable properties for making qcd (pre) selection
-    DeclareProperty( "ReversedElectronSelection", m_reversed_electron_selection);
 }
 
 AnalysisCycle::~AnalysisCycle()
@@ -159,9 +156,6 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     } else {
         m_puwp = NULL;
     }
-
-    if(m_reversed_electron_selection)
-        m_logger << INFO << "Applying reversed electron selection (data-driven qcd) !!!!" << SLogger::endmsg;
 
     // output Ntuple
     if (inputData.GetTrees(STreeType::OutputSimpleTree)) {

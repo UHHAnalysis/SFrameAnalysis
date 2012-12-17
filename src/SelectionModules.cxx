@@ -52,19 +52,43 @@ std::string NMuonSelection::description()
 }
 
 
-NElectronSelection::NElectronSelection(int min_nparticle, int max_nparticle, double ptmin, double etamax)
+NElectronSelection::NElectronSelection(int min_nparticle, int max_nparticle, double ptmin, double etamax, bool id)
 {
     m_min_nparticle=min_nparticle;
     m_max_nparticle=max_nparticle;
     m_ptmin=ptmin;
     m_etamax=etamax;
+    m_id=id;
+}
+
+bool NElectronSelection::passId(BaseCycleContainer * bcc, unsigned int index)
+{
+    Electron ele = bcc->electrons->at(index);
+    if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
+        if(bcc->pvs->size()>0) {
+            if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02) {
+                if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1) {
+                    if(ele.passconversionveto()) {
+                        if(ele.mvaTrigV0()>0.0) {
+                            if(ele.eleID(Electron::e_Tight)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return false;
 }
 
 bool NElectronSelection::pass(BaseCycleContainer *bcc)
 {
     int nparticle=0;
     for(unsigned int i=0; i<bcc->electrons->size(); ++i) {
-        if(bcc->electrons->at(i).pt()>m_ptmin && fabs(bcc->electrons->at(i).eta())<m_etamax) nparticle++;
+        if(bcc->electrons->at(i).pt()>m_ptmin && fabs(bcc->electrons->at(i).eta())<m_etamax) { 
+            if((m_id && passId(bcc,i)) || !m_id) nparticle++;
+        }
     }
     return nparticle>=m_min_nparticle && nparticle<=m_max_nparticle;
 }
@@ -378,10 +402,8 @@ std::string TwoDCut::description()
     return s;
 }
 
-
 bool TriangularCut::pass(BaseCycleContainer *bcc)
 {
-
     if(bcc->electrons->size()!=1) {
         std::cout << "WARNING: called triangular cut but electron collection contains " << bcc->electrons->size()<< " !=1 entries. Cut is not applied" <<std::endl;
         return true;
@@ -408,46 +430,6 @@ bool TriangularCut::pass(BaseCycleContainer *bcc)
 }
 
 std::string TriangularCut::description()
-{
-    char s[100];
-    sprintf(s, "triangular cut");
-    return s;
-}
-
-bool TriangularCut_reverse::pass(BaseCycleContainer *bcc)
-{
-
-    int pass = 1;
-
-    if(bcc->electrons->size()!=1) {
-        std::cout << "WARNING: called triangular cut but electron collection contains " << bcc->electrons->size()<< " !=1 entries. Cut is not applied" <<std::endl;
-        return true;
-    }
-    if(bcc->jets->size()<1) {
-        std::cout << "WARNING: called triangular cut but jet collection is empty. Cut is not applied" <<std::endl;
-        return true;
-    }
-
-    double k=1.5/75.;
-
-    Particle METp;
-    METp.set_pt(bcc->met->pt());
-    METp.set_phi(bcc->met->phi());
-    METp.set_eta(0);
-    METp.set_energy(0);
-
-    if(METp.deltaPhi(bcc->electrons->at(0)) > k* METp.pt()+1.5) pass = 0;
-    if(METp.deltaPhi(bcc->electrons->at(0)) < -1*k* METp.pt()+1.5) pass = 0;
-    if(METp.deltaPhi(bcc->jets->at(0)) > k* METp.pt()+1.5) pass = 0;
-    if(METp.deltaPhi(bcc->jets->at(0)) < -1*k* METp.pt()+1.5) pass = 0;
-
-    if (pass == 0) {
-        return true;
-    } else return false;
-
-}
-
-std::string TriangularCut_reverse::description()
 {
     char s[100];
     sprintf(s, "triangular cut");

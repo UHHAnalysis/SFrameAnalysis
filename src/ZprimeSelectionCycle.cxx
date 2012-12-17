@@ -20,6 +20,7 @@ ZprimeSelectionCycle::ZprimeSelectionCycle()
     m_corrector = NULL;
 
     DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
+    DeclareProperty( "ReversedElectronSelection", m_reversed_electron_selection);
 
     //default: no btagging cuts applied, other cuts can be defined in config file
     m_Nbtags_min=0;
@@ -68,8 +69,6 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
 
     //Set-Up Selection
 
-    Selection* first_selection= new Selection("first_selection");
-
     bool doEle=false;
     bool doMu=false;
 
@@ -81,6 +80,11 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
         m_logger << ERROR << "Electron_Or_Muon_Selection is not defined in your xml config file --- should be either `ELE` or `MU`" << SLogger::endmsg;
     }
 
+    if(m_reversed_electron_selection)
+        m_logger << INFO << "Applying reversed electron selection (data-driven qcd) !!!!" << SLogger::endmsg;
+
+    Selection* first_selection= new Selection("first_selection");
+
     if(doEle)
         first_selection->addSelectionModule(new TriggerSelection(m_lumi_trigger));
     if(doMu)
@@ -89,20 +93,18 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
     first_selection->addSelectionModule(new NPrimaryVertexSelection(1)); //at least one good PV
     first_selection->addSelectionModule(new NJetSelection(2,int_infinity(),50,2.4));//at least two jets
 
-
     if(doEle) {
-        first_selection->addSelectionModule(new NElectronSelection(1,int_infinity()));//at least one electron
-        first_selection->addSelectionModule(new NElectronSelection(1,1));//exactly one electron
+        first_selection->addSelectionModule(new NElectronSelection(1,int_infinity(),0.,double_infinity(),false));//at least one electron
+        first_selection->addSelectionModule(new NElectronSelection(1,1,0.,double_infinity(),false));//exactly one electron
         first_selection->addSelectionModule(new NMuonSelection(0,0));//no muons
     }
     if(doMu) {
         first_selection->addSelectionModule(new NMuonSelection(1,int_infinity()));//at least one muon
         first_selection->addSelectionModule(new NMuonSelection(1,1));//exactly one muon
-        first_selection->addSelectionModule(new NElectronSelection(0,0));//no electrons
+        first_selection->addSelectionModule(new NElectronSelection(0,0));//no ided electrons
     }
 
     first_selection->addSelectionModule(new TwoDCut());
-
 
     Selection* second_selection= new Selection("second_selection");
 
@@ -110,7 +112,16 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
     second_selection->addSelectionModule(new NBTagSelection(m_Nbtags_min,m_Nbtags_max)); //b tags from config file
     second_selection->addSelectionModule(new HTlepCut(150));
     second_selection->addSelectionModule(new METCut(20));
-    if(doEle) second_selection->addSelectionModule(new TriangularCut());
+    // second_selection->addSelectionModule(new TriangularCut());
+
+    Selection* eid_selection= new Selection("eid_selection");
+    Selection* trangularcut_selection= new Selection("trangularcut_selection");
+
+    if(doEle) {
+        //eid_trangularcut_selection->addSelectionModule(new NElectronSelection(1,1));//exactly one ided electron
+        eid_selection->addSelectionModule(new NElectronSelection(1,1));
+        trangularcut_selection->addSelectionModule(new TriangularCut());//triangular cuts
+    }
 
     Selection* chi2_selection= new Selection("chi2_selection");
     m_chi2discr = new Chi2Discriminator();
@@ -125,6 +136,8 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
 
     RegisterSelection(first_selection);
     RegisterSelection(second_selection);
+    RegisterSelection(eid_selection);
+    RegisterSelection(trangularcut_selection);
     RegisterSelection(chi2_selection);
     RegisterSelection(matchable_selection);
 
@@ -226,6 +239,8 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
     static Selection* first_selection = GetSelection("first_selection");
     static Selection* second_selection = GetSelection("second_selection");
+    static Selection* eid_selection = GetSelection("eid_selection");
+    static Selection* trangularcut_selection = GetSelection("trangularcut_selection");
     static Selection* chi2_selection = GetSelection("chi2_selection");
     static Selection* matchable_selection = GetSelection("matchable_selection");
 
@@ -235,16 +250,13 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
     BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
     EventCalc* calc = EventCalc::Instance();
 
-
     if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
-    if(bcc->electrons) {
-        if(!m_reversed_electron_selection) m_cleaner->ElectronCleaner_noIso(35,2.5);
-        else m_cleaner->ElectronCleaner_noIso_reverse(35,2.5);
-    }
+    if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(35,2.5);
     if(bcc->muons) m_cleaner->MuonCleaner_noIso(45,2.1);
     if(bcc->jets) m_cleaner->JetLeptonSubtractor(m_corrector,false);
 
     if(!bcc->isRealData && bcc->jets) m_cleaner->JetEnergyResolutionShifter();
+
     //apply loose jet cleaning for 2D cut
     if(bcc->jets) m_cleaner->JetCleaner(25,double_infinity(),true);
 
@@ -260,6 +272,12 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
     if(bcc->taus) m_cleaner->TauCleaner(double_infinity(),0.0);
 
     if(!second_selection->passSelection())  throw SError( SError::SkipEvent );
+
+    if(!m_reversed_electron_selection) {
+        if(!trangularcut_selection->passSelection() || !eid_selection->passSelection())  throw SError( SError::SkipEvent );
+    } else {
+        if(!trangularcut_selection->passInvertedSelection() || !eid_selection->passInvertedSelection())  throw SError( SError::SkipEvent );
+    }
 
     //do reconstruction here
 
@@ -322,8 +340,6 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
     WriteOutputTree();
 
     return;
-
-
 }
 
 void ZprimeSelectionCycle::FillControlHists(TString postfix)

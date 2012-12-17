@@ -39,17 +39,23 @@ private:
 
 class NElectronSelection: public SelectionModule {
 public:
-    NElectronSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());
+    NElectronSelection(
+        int min_nparticle, int max_nparticle=int_infinity(),
+        double ptmin=0., double etamax=double_infinity(), bool id = true 
+    );
     ~NElectronSelection() {};
 
     virtual bool pass(BaseCycleContainer*);
     virtual std::string description();
+
+    bool passId(BaseCycleContainer*, unsigned int);
 
 private:
     int m_min_nparticle;
     int m_max_nparticle;
     double m_ptmin;
     double m_etamax;
+    bool m_id;
 };
 
 class NTauSelection: public SelectionModule {
@@ -214,16 +220,6 @@ class TriangularCut: public SelectionModule {
 public:
     TriangularCut() {};
     ~TriangularCut() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-};
-
-class TriangularCut_reverse: public SelectionModule {
-public:
-    TriangularCut_reverse() {};
-    ~TriangularCut_reverse() {};
 
     virtual bool pass(BaseCycleContainer*);
     virtual std::string description();

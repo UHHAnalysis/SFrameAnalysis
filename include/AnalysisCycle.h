@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.12 2012/12/07 11:05:39 peiffer Exp $
+// $Id: AnalysisCycle.h,v 1.13 2012/12/17 17:58:22 bazterra Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -23,7 +23,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.12 $
+ *  @version $Revision: 1.13 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -95,6 +95,9 @@ protected:
   // use in the analysis
   std::string m_lumi_trigger;
 
+  // Gen info is present in MC sample
+  bool m_addGenInfo;
+
 private:
 
   // wrapper to LuminosityHandler
@@ -124,7 +127,6 @@ private:
   std::string m_TopJetCollectionGen;
   std::string m_PrunedJetCollection;
   std::string m_GenParticleCollection;
-  bool m_addGenInfo;
   bool m_newrun;
   bool m_writeTTbarReco;
   bool m_readTTbarReco;

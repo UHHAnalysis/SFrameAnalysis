@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: ZprimePostSelectionCycle.h,v 1.1 2012/12/07 14:21:52 peiffer Exp $
+// $Id: ZprimePostSelectionCycle.h,v 1.2 2012/12/12 15:14:28 bazterra Exp $
 #ifndef ZprimePostSelectionCycle_H
 #define ZprimePostSelectionCycle_H
 
@@ -15,6 +15,7 @@
 #include "MuonHists.h"
 #include "TauHists.h"
 #include "TopJetHists.h"
+#include "BTagEffHists.h"
 
 /**
  *   @short Example of an analysis cycle
@@ -24,7 +25,7 @@
  *          be used for quick cross checks of the system setup.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.1 $
+ *  @version $Revision: 1.2 $
  */
 
 class ZprimePostSelectionCycle : public AnalysisCycle {
@@ -60,6 +61,7 @@ private:
   //
 
   std::string m_Electron_Or_Muon_Selection;
+  E_BtagType m_btagtype;
 
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimePostSelectionCycle, 0 );

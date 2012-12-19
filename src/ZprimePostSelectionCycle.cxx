@@ -1,4 +1,4 @@
-// $Id: ZprimePostSelectionCycle.cxx,v 1.3 2012/12/12 15:14:28 bazterra Exp $
+// $Id: ZprimePostSelectionCycle.cxx,v 1.4 2012/12/17 17:58:22 bazterra Exp $
 
 #include <iostream>
 
@@ -20,6 +20,9 @@ ZprimePostSelectionCycle::ZprimePostSelectionCycle()
 
     // set the integrated luminosity per bin for the lumi-yield control plots
     SetIntLumiPerBin(500.);
+
+    // set the btagging operating point
+    m_btagtype = e_CSVT; 
 }
 
 ZprimePostSelectionCycle::~ZprimePostSelectionCycle()
@@ -88,10 +91,10 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
     Chi2Seletion->addSelectionModule(new HypothesisDiscriminatorCut( m_chi2discr, -1*double_infinity(), 10));
 
     Selection* BTagSelection = new Selection("BTagSelection");
-    BTagSelection->addSelectionModule(new NBTagSelection(1)); //at least one b tag
+    BTagSelection->addSelectionModule(new NBTagSelection(1,int_infinity(),m_btagtype)); //at least one b tag
 
     Selection* NoBTagSelection = new Selection("NoBTagSelection");
-    NoBTagSelection->addSelectionModule(new NBTagSelection(0,0)); //no b tags
+    NoBTagSelection->addSelectionModule(new NBTagSelection(0,0,m_btagtype)); //no b tags
 
     //chi2_selection->addSelectionModule(new MttbarGenCut(0,700));
 
@@ -148,7 +151,8 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
     RegisterHistCollection( new ElectronHists("Electron_Chi2sel") );
     RegisterHistCollection( new MuonHists("Muon_Chi2sel") );
     RegisterHistCollection( new TauHists("Tau_Chi2sel") );
-    RegisterHistCollection( new TopJetHists("TopJets_Chi2sel") );
+    RegisterHistCollection( new TopJetHists("TopJets_Chi2sel") ); 
+    RegisterHistCollection( new BTagEffHists("BTagEff_Chi2sel", m_btagtype) );
 
     // histograms with Btag and NoBtag and Chi2
     RegisterHistCollection( new HypothesisHists("Chi2_BTag", m_chi2discr ) );
@@ -227,6 +231,7 @@ void ZprimePostSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weig
     BaseHists* Chi2_HistsBTag = GetHistCollection("Chi2_BTag");
     BaseHists* Chi2_HistsNoBTag = GetHistCollection("Chi2_NoBTag");
     BaseHists* Chi2_HistsTopTag = GetHistCollection("Chi2_TopTag");
+    BaseHists* BTagEff_HistsChi2sel = GetHistCollection("BTagEff_Chi2sel");
 
     EventCalc* calc = EventCalc::Instance();
     if(calc->GetJets()->size()>=12) {
@@ -254,6 +259,7 @@ void ZprimePostSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weig
     if(!Chi2Selection->passSelection()) throw SError( SError::SkipEvent ); 
 
     Chi2_HistsChi2sel->Fill();
+    if(m_addGenInfo) BTagEff_HistsChi2sel->Fill();
     FillControlHistos("_Chi2sel");
 
     if(BTagSelection->passSelection()) {
@@ -286,5 +292,4 @@ void ZprimePostSelectionCycle::FillControlHistos(TString postfix)
     muonhists->Fill();
     tauhists->Fill();
     topjethists->Fill();
-
 }

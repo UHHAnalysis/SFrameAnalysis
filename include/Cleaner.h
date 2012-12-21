@@ -46,9 +46,9 @@ class Cleaner{
   */
   void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true);
 
-  void ElectronCleaner(double ptmin=0, double etamax=9999, double relisomax=0.1);
+  void ElectronCleaner(double ptmin=0, double etamax=9999, double relisomax=0.1, bool reverseID = false, bool reverseIso = false);
   void MuonCleaner(double ptmin=0, double etamax=9999, double relisomax=0.125);
-  void ElectronCleaner_noIso(double ptmin=0, double etamax=9999);
+  void ElectronCleaner_noIso(double ptmin=0, double etamax=9999, bool reverseID = false);
   void MuonCleaner_noIso(double ptmin=0, double etamax=9999);
   void ElectronCleaner_noID_noIso(double ptmin=0, double etamax=9999);
   void MuonCleaner_noID_noIso(double ptmin=0, double etamax=9999);
@@ -61,6 +61,9 @@ class Cleaner{
  private:
 
   BaseCycleContainer* bcc;
+
+  // helper function to define electron id criteria.
+  bool passElectronId(BaseCycleContainer*, unsigned int);
 
   /// call this routine at the end of each cleaner to force re-calculation of basic variables in EventCalc
   void resetEventCalc();

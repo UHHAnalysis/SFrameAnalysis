@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: ZprimePostSelectionCycle.h,v 1.2 2012/12/12 15:14:28 bazterra Exp $
+// $Id: ZprimePostSelectionCycle.h,v 1.3 2012/12/19 00:02:01 bazterra Exp $
 #ifndef ZprimePostSelectionCycle_H
 #define ZprimePostSelectionCycle_H
 
@@ -25,7 +25,7 @@
  *          be used for quick cross checks of the system setup.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.2 $
+ *  @version $Revision: 1.3 $
  */
 
 class ZprimePostSelectionCycle : public AnalysisCycle {
@@ -61,7 +61,10 @@ private:
   //
 
   std::string m_Electron_Or_Muon_Selection;
+
+  bool m_dobsf;
   E_BtagType m_btagtype;
+  BTaggingScaleFactors* m_bsf;
 
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimePostSelectionCycle, 0 );

@@ -51,47 +51,24 @@ std::string NMuonSelection::description()
     return s;
 }
 
-
-NElectronSelection::NElectronSelection(int min_nparticle, int max_nparticle, double ptmin, double etamax, bool id)
+NElectronSelection::NElectronSelection(int min_nparticle, int max_nparticle, double ptmin, double etamax)
 {
     m_min_nparticle=min_nparticle;
     m_max_nparticle=max_nparticle;
     m_ptmin=ptmin;
     m_etamax=etamax;
-    m_id=id;
 }
 
-bool NElectronSelection::passId(BaseCycleContainer * bcc, unsigned int index)
-{
-    Electron ele = bcc->electrons->at(index);
-    if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
-        if(bcc->pvs->size()>0) {
-            if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02) {
-                if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1) {
-                    if(ele.passconversionveto()) {
-                        if(ele.mvaTrigV0()>0.0) {
-                            if(ele.eleID(Electron::e_Tight)) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return false;
-}
 
 bool NElectronSelection::pass(BaseCycleContainer *bcc)
 {
     int nparticle=0;
     for(unsigned int i=0; i<bcc->electrons->size(); ++i) {
-        if(bcc->electrons->at(i).pt()>m_ptmin && fabs(bcc->electrons->at(i).eta())<m_etamax) { 
-            if((m_id && passId(bcc,i)) || !m_id) nparticle++;
-        }
+        if(bcc->electrons->at(i).pt()>m_ptmin && fabs(bcc->electrons->at(i).eta())<m_etamax) nparticle++; 
     }
     return nparticle>=m_min_nparticle && nparticle<=m_max_nparticle;
 }
+
 
 std::string NElectronSelection::description()
 {

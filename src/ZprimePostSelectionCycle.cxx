@@ -1,4 +1,4 @@
-// $Id: ZprimePostSelectionCycle.cxx,v 1.4 2012/12/17 17:58:22 bazterra Exp $
+// $Id: ZprimePostSelectionCycle.cxx,v 1.5 2012/12/19 00:02:01 bazterra Exp $
 
 #include <iostream>
 
@@ -15,8 +15,11 @@ ZprimePostSelectionCycle::ZprimePostSelectionCycle()
     // constructor, declare additional variables that should be
     // obtained from the steering-xml file
 
+    m_dobsf = false;
+
     // steerable properties for making qcd (pre) selection
     DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
+    DeclareProperty( "BTaggingScaleFactors", m_dobsf );
 
     // set the integrated luminosity per bin for the lumi-yield control plots
     SetIntLumiPerBin(500.);
@@ -185,8 +188,16 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
     // important: initialise histogram collections after their definition
     InitHistos();
 
+    // Data-MC b-tagging reweighting 
+    m_bsf = NULL;
+    if(m_dobsf) {
+        m_logger << INFO << "Applying btagging scale factor" << SLogger::endmsg;
+        if(doEle)  
+            m_bsf = new BTaggingScaleFactors(m_btagtype, e_Electron);
+        else if(doMu)
+            m_bsf = new BTaggingScaleFactors(m_btagtype, e_Muon);
+    }
     return;
-
 }
 
 void ZprimePostSelectionCycle::EndInputData( const SInputData& id ) throw( SError )
@@ -234,6 +245,12 @@ void ZprimePostSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weig
     BaseHists* BTagEff_HistsChi2sel = GetHistCollection("BTagEff_Chi2sel");
 
     EventCalc* calc = EventCalc::Instance();
+
+    // b tagging scale factor
+    if(m_bsf && m_addGenInfo) {
+        calc->ProduceWeight(m_bsf->GetWeight());
+    }
+
     if(calc->GetJets()->size()>=12) {
         std::cout << "run: " << calc->GetRunNum() << "   lb: " << calc->GetLumiBlock() << "  event: " << calc->GetEventNum() << "   N(jets): " << calc->GetJets()->size() << std::endl;
     }

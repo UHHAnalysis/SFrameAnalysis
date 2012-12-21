@@ -66,11 +66,10 @@ void ZprimePreSelectionCycle::BeginInputData( const SInputData& id ) throw( SErr
 
     // -------------------- set up the selections ---------------------------
 
-    //Selection* preselection = new Selection("pre-selection");
-    Selection* preselection = new Selection("pre-selection");
+    Selection* preselection = new Selection("preselection");
 
     if(m_Electron_Or_Muon_Selection=="Electrons" || m_Electron_Or_Muon_Selection=="Electron" || m_Electron_Or_Muon_Selection=="Ele" || m_Electron_Or_Muon_Selection=="ELE") {
-        preselection->addSelectionModule(new NElectronSelection(1,int_infinity(),0.,double_infinity(),false));//at least one electron
+        preselection->addSelectionModule(new NElectronSelection(1,int_infinity()));//at least one electron
         preselection->addSelectionModule(new NMuonSelection(0,0));//no muons
     } else if(m_Electron_Or_Muon_Selection=="Muon" || m_Electron_Or_Muon_Selection=="Muons" || m_Electron_Or_Muon_Selection=="Mu" || m_Electron_Or_Muon_Selection=="MU") {
         preselection->addSelectionModule(new NElectronSelection(0,0));//no electron
@@ -100,7 +99,6 @@ void ZprimePreSelectionCycle::BeginInputData( const SInputData& id ) throw( SErr
     m_corrector = new FactorizedJetCorrector(pars);
 
     return;
-
 }
 
 void ZprimePreSelectionCycle::EndInputData( const SInputData& id ) throw( SError )
@@ -108,7 +106,6 @@ void ZprimePreSelectionCycle::EndInputData( const SInputData& id ) throw( SError
     AnalysisCycle::EndInputData( id );
 
     return;
-
 }
 
 void ZprimePreSelectionCycle::BeginInputFile( const SInputData& id ) throw( SError )
@@ -120,7 +117,6 @@ void ZprimePreSelectionCycle::BeginInputFile( const SInputData& id ) throw( SErr
     AnalysisCycle::BeginInputFile( id );
 
     return;
-
 }
 
 void ZprimePreSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( SError )
@@ -133,7 +129,7 @@ void ZprimePreSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weigh
     AnalysisCycle::ExecuteEvent( id, weight);
 
     Cleaner cleaner;
-    static Selection* preselection = GetSelection("pre-selection");
+    static Selection* preselection = GetSelection("preselection");
 
     ObjectHandler* objs = ObjectHandler::Instance();
     BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
@@ -148,12 +144,12 @@ void ZprimePreSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weigh
     //clean collections here
 
     if(bcc->muons) cleaner.MuonCleaner_noIso(45,2.1);
-    if(bcc->electrons) cleaner.ElectronCleaner_noIso(35,2.5);
+    if(bcc->electrons) cleaner.ElectronCleaner_noIso(35,2.5,m_reversed_electron_selection);
     if(bcc->jets) cleaner.JetLeptonSubtractor(m_corrector,false);
     if(!bcc->isRealData && bcc->jets) cleaner.JetEnergyResolutionShifter();
     if(bcc->jets) cleaner.JetCleaner(30,2.5,true);
 
-    // get the selections
+    //get the jet selections
 
     if(!preselection->passSelection())  throw SError( SError::SkipEvent );
 
@@ -168,7 +164,5 @@ void ZprimePreSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weigh
     WriteOutputTree();
 
     return;
-
-
 }
 

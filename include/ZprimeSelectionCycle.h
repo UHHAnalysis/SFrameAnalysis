@@ -59,7 +59,6 @@ private:
   //
   
   std::string m_Electron_Or_Muon_Selection;
-  bool m_reversed_electron_selection;
  
   int m_Nbtags_max;
   int m_Nbtags_min;  

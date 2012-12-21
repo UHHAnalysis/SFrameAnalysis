@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.20 2012/12/07 11:05:39 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.21 2012/12/17 17:58:22 bazterra Exp $
 
 #include <iostream>
 
@@ -25,12 +25,10 @@ AnalysisCycle::AnalysisCycle()
     m_puwp = NULL;
     m_newrun = false;
     m_lsf = NULL;
-    m_bsf = NULL;
 
     // set some default values
     m_readTTbarReco = false;
     m_writeTTbarReco = false;
-    m_dobsf=false;
 
     // declare variables for lumi file
     DeclareProperty( "LumiFilePath" , m_lumifile_path);
@@ -66,7 +64,10 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "PU_Histname_Data" , m_PUHistnameData);
 
     DeclareProperty( "LeptonScaleFactors", m_leptonweights);
-    DeclareProperty( "BTaggingScaleFactors", m_dobsf);
+
+    // steering property for data-driven qcd in electron channel
+    m_reversed_electron_selection = false;
+    DeclareProperty( "ReversedElectronSelection", m_reversed_electron_selection);
 }
 
 AnalysisCycle::~AnalysisCycle()
@@ -157,6 +158,9 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         m_puwp = NULL;
     }
 
+    if(m_reversed_electron_selection)
+        m_logger << INFO << "Applying reversed electron selection (data-driven qcd) !!!!" << SLogger::endmsg;
+
     // output Ntuple
     if (inputData.GetTrees(STreeType::OutputSimpleTree)) {
         m_logger << INFO << "adding output tree" << SLogger::endmsg;
@@ -189,11 +193,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     if(m_leptonweights.size()>0)
         m_lsf = new LeptonScaleFactors(m_leptonweights);
 
-    if(m_dobsf)
-      m_bsf = new BTaggingScaleFactors();
-
     return;
-
 }
 
 
@@ -431,11 +431,6 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
         if(m_lsf) {
             calc->ProduceWeight(m_lsf->GetWeight());
         }
-        //b tagging scale factor
-        if(m_bsf) {
-            calc->ProduceWeight(m_bsf->GetWeight());
-        }
-
     }
 
     //select only good runs

@@ -297,6 +297,8 @@
            <Item Name="JECDataGlobalTag" Value="GR_R_52_V9" />
            <Item Name="JECMCGlobalTag" Value="START52_V11" />
            <Item Name="JECJetCollection" Value="AK5PFchs" />
+
+           <Item Name="ReversedElectronSelection" Value="false" />
 		</UserConfig>
 	</Cycle>
 </JobConfiguration>

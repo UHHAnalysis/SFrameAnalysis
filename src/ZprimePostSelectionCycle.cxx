@@ -1,4 +1,4 @@
-// $Id: ZprimePostSelectionCycle.cxx,v 1.5 2012/12/19 00:02:01 bazterra Exp $
+// $Id: ZprimePostSelectionCycle.cxx,v 1.6 2012/12/21 13:35:50 bazterra Exp $
 
 #include <iostream>
 
@@ -16,10 +16,12 @@ ZprimePostSelectionCycle::ZprimePostSelectionCycle()
     // obtained from the steering-xml file
 
     m_dobsf = false;
+    m_mttgencut = false;
 
     // steerable properties for making qcd (pre) selection
     DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
     DeclareProperty( "BTaggingScaleFactors", m_dobsf );
+    DeclareProperty( "ApplyMttbarGenCut", m_mttgencut );
 
     // set the integrated luminosity per bin for the lumi-yield control plots
     SetIntLumiPerBin(500.);
@@ -90,6 +92,11 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
     if (doEle)
         KinematicSelection->addSelectionModule(new HypothesisLeptopPtCut( m_chi2discr, 140.0, double_infinity()));
 
+    if ( m_mttgencut && id.GetVersion() == "TTbar" ) {
+        m_logger << INFO << "Applying mttbar generator cut from 0 to 700 GeV" << SLogger::endmsg;
+        KinematicSelection->addSelectionModule(new MttbarGenCut(0,700));
+    }
+
     Selection* Chi2Seletion = new Selection("Chi2Selection");
     Chi2Seletion->addSelectionModule(new HypothesisDiscriminatorCut( m_chi2discr, -1*double_infinity(), 10));
 
@@ -98,8 +105,6 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
 
     Selection* NoBTagSelection = new Selection("NoBTagSelection");
     NoBTagSelection->addSelectionModule(new NBTagSelection(0,0,m_btagtype)); //no b tags
-
-    //chi2_selection->addSelectionModule(new MttbarGenCut(0,700));
 
     Selection* TopTagSelection = new Selection("TopTagSelection");
     //DO NOT use trigger selection in PROOF mode at the moment

@@ -217,7 +217,8 @@ void Cleaner::JetRecorrector(FactorizedJetCorrector *corrector, bool sort)
     resetEventCalc();
 }
 
-bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
+// Old electron id
+/*bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
 {
     Electron ele = bcc->electrons->at(index);
     if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
@@ -235,6 +236,46 @@ bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
             }
         }
     }   
+    return false;
+}*/
+
+// Base on the new top simple cut recomendation for 53x
+/*bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
+{
+    Electron ele = bcc->electrons->at(index);
+    if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
+        if(bcc->pvs->size()>0) {
+            if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02) {
+                if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1) {
+                    if(ele.passconversionveto()) {
+                        if(ele.eleID(Electron::e_Tight)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}*/
+
+// Base on the new top mva recomendation for 53x 
+bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
+{
+    Electron ele = bcc->electrons->at(index);
+    if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
+        if(bcc->pvs->size()>0) {
+            if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02) {
+                if(ele.passconversionveto()) {
+                    if(ele.mvaTrigV0()>0.9) {
+                        if (ele.gsfTrack_trackerExpectedHitsInner_numberOfLostHits() <= 0) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
     return false;
 }
 

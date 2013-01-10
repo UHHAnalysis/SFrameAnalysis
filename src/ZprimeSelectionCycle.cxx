@@ -238,13 +238,10 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
     BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
     EventCalc* calc = EventCalc::Instance();
 
-    if(!first_selection->passSelection())  throw SError( SError::SkipEvent );
-
     if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
     if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(35,2.5, m_reversed_electron_selection);
     if(bcc->muons) m_cleaner->MuonCleaner_noIso(45,2.1);
     if(bcc->jets) m_cleaner->JetLeptonSubtractor(m_corrector,false);
-
     if(!bcc->isRealData && bcc->jets) m_cleaner->JetEnergyResolutionShifter();
 
     //apply loose jet cleaning for 2D cut

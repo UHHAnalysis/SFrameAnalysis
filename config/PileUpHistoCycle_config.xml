@@ -38,7 +38,33 @@
 <!ENTITY ZP3000w300 SYSTEM "ZP3000w300.xml">
 <!ENTITY ZP4000w40 SYSTEM "ZP4000w40.xml">
 <!ENTITY ZP4000w400 SYSTEM "ZP4000w400.xml">
+<!ENTITY RSG1000 SYSTEM "RSG_1000.xml">
+<!ENTITY RSG1500 SYSTEM "RSG_1500.xml">
+<!ENTITY RSG2000 SYSTEM "RSG_2000.xml">
+<!ENTITY RSG2500 SYSTEM "RSG_2500.xml">
+<!ENTITY RSG3000 SYSTEM "RSG_3000.xml">
+<!ENTITY RSG3500 SYSTEM "RSG_3500.xml">
+<!ENTITY RSG4000 SYSTEM "RSG_4000.xml">
 <!ENTITY WW SYSTEM "WW.xml">
+<!ENTITY ZZ SYSTEM "ZZ.xml">
+<!ENTITY QCDMu20to30 SYSTEM "QCDMu20to30.xml">
+<!ENTITY QCDMu30to50 SYSTEM "QCDMu30to50.xml">
+<!ENTITY QCDMu50to80 SYSTEM "QCDMu50to80.xml">
+<!ENTITY QCDMu80to120 SYSTEM "QCDMu80to120.xml">
+<!ENTITY QCDMu120to170 SYSTEM "QCDMu120to170.xml">
+<!ENTITY QCDMu170to300 SYSTEM "QCDMu170to300.xml">
+<!ENTITY QCDMu300to470 SYSTEM "QCDMu300to470.xml">
+<!ENTITY QCDMu470to600 SYSTEM "QCDMu470to600.xml">
+<!ENTITY QCDMu600to800 SYSTEM "QCDMu600to800.xml">
+<!ENTITY QCDMu800to1000 SYSTEM "QCDMu800to1000.xml">
+<!ENTITY DYJets_scaleup SYSTEM "DYJets_scaleup.xml">
+<!ENTITY DYJets_scaledown SYSTEM "DYJets_scaledown.xml">
+<!ENTITY DYJets_matchingup SYSTEM "DYJets_matchingup.xml">
+<!ENTITY DYJets_matchingdown SYSTEM "DYJets_matchingdown.xml">
+<!ENTITY WJets_scaleup SYSTEM "WJets_scaleup.xml">
+<!ENTITY WJets_scaledown SYSTEM "WJets_scaledown.xml">
+<!ENTITY WJets_matchingup SYSTEM "WJets_matchingup.xml">
+<!ENTITY WJets_matchingdown SYSTEM "WJets_matchingdown.xml">
 ]>
 
 <JobConfiguration JobName="PileUpHistoCycleJob" OutputLevel="DEBUG">
@@ -251,7 +277,7 @@
                         &DY_50toInf;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
--->
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DY1Jets_50toInf" Cacheable="True">
                         &DY1Jets_50toInf;
 			<InputTree Name="AnalysisTree" /> 
@@ -283,7 +309,120 @@
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="W4Jets" Cacheable="True">
                         &W4Jets;
 			<InputTree Name="AnalysisTree" /> 
-		</InputData> 
+		</InputData>
+
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1000" Cacheable="True">
+                        &RSG1000;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1500" Cacheable="True">
+                        &RSG1500;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG2000" Cacheable="True">
+                        &RSG2000;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG2500" Cacheable="True">
+                        &RSG2500;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG3000" Cacheable="True">
+                        &RSG3000;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG3500" Cacheable="True">
+                        &RSG3500;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG4000" Cacheable="True">
+                        &RSG4000;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZZ" Cacheable="True">
+                        &ZZ;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DY_10to50" Cacheable="True">
+                        &DY_10to50;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu20to30" Cacheable="True">
+                        &QCDMu20to30;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu30to50" Cacheable="True">
+                        &QCDMu30to50;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu50to80" Cacheable="True">
+                        &QCDMu50to80;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu80to120" Cacheable="True">
+                        &QCDMu80to120;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu120to170" Cacheable="True">
+                        &QCDMu120to170;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu170to300" Cacheable="True">
+                        &QCDMu170to300;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu300to470" Cacheable="True">
+                        &QCDMu300to470;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu470to600" Cacheable="True">
+                        &QCDMu470to600;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu600to800" Cacheable="True">
+                        &QCDMu600to800;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu800to1000" Cacheable="True">
+                        &QCDMu800to1000;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+-->
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DYJets_scaleup" Cacheable="True">
+                        &DYJets_scaleup;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DYJets_scaledown" Cacheable="True">
+                        &DYJets_scaledown;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DYJets_matchingup" Cacheable="True">
+                        &DYJets_matchingup;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DYJets_matchingdown" Cacheable="True">
+                        &DYJets_matchingdown;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WJets_scaleup" Cacheable="True">
+                        &WJets_scaleup;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WJets_scaledown" Cacheable="True">
+                        &WJets_scaledown;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WJets_matchingup" Cacheable="True">
+                        &WJets_matchingup;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WJets_matchingdown" Cacheable="True">
+                        &WJets_matchingdown;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
 
 		<UserConfig>
 

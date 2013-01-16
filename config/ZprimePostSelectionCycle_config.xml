@@ -333,7 +333,7 @@
 		   <Item Name="LumiFileName" Value="Mu40_208686.root" /> 
 		   <Item Name="LumiTrigger" Value="HLT_Mu40_eta2p1_v" /> 
 
-		   <Item Name="BTaggingScaleFactors" Value="true" />
+		   <Item Name="BTaggingScaleFactors" Value="None" />
 
 		    <Item Name="LeptonScaleFactors" Value="MuonRunA 864 MuonRunB 4357 MuonRunC 14105" /> 
 		      

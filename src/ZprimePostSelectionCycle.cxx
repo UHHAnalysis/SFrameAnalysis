@@ -1,4 +1,4 @@
-// $Id: ZprimePostSelectionCycle.cxx,v 1.6 2012/12/21 13:35:50 bazterra Exp $
+// $Id: ZprimePostSelectionCycle.cxx,v 1.7 2012/12/31 15:47:57 bazterra Exp $
 
 #include <iostream>
 
@@ -15,7 +15,7 @@ ZprimePostSelectionCycle::ZprimePostSelectionCycle()
     // constructor, declare additional variables that should be
     // obtained from the steering-xml file
 
-    m_dobsf = false;
+    m_dobsf = "None";
     m_mttgencut = false;
 
     // steerable properties for making qcd (pre) selection
@@ -195,12 +195,24 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
 
     // Data-MC b-tagging reweighting 
     m_bsf = NULL;
-    if(m_dobsf) {
-        m_logger << INFO << "Applying btagging scale factor" << SLogger::endmsg;
+    std::transform(m_dobsf.begin(), m_dobsf.end(), m_dobsf.begin(), ::tolower);
+    if(m_dobsf != "none") {
+        E_SystShift sys;
+        if (m_dobsf == "default") {
+            m_logger << INFO << "Applying btagging scale factor" << SLogger::endmsg;
+            sys = e_Default;
+        } else if (m_dobsf == "up") {
+            m_logger << INFO << "Applying btagging up scale factor" << SLogger::endmsg; 
+            sys = e_Up;
+        } else if (m_dobsf == "down") {
+            m_logger << INFO << "Applying btagging down scale factor" << SLogger::endmsg;
+            sys = e_Down;
+        } else 
+            m_logger << ERROR << "Unknown BTaggingScaleFactors option, default option is applied --- should be either `Default`, `Up` or `Down`" << SLogger::endmsg; 
         if(doEle)  
-            m_bsf = new BTaggingScaleFactors(m_btagtype, e_Electron);
+            m_bsf = new BTaggingScaleFactors(m_btagtype, e_Electron, sys);
         else if(doMu)
-            m_bsf = new BTaggingScaleFactors(m_btagtype, e_Muon);
+            m_bsf = new BTaggingScaleFactors(m_btagtype, e_Muon, sys);
     }
     return;
 }

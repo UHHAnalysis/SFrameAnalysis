@@ -8,7 +8,6 @@ TriggerSelection::TriggerSelection(std::string triggername)
 
 bool TriggerSelection::pass(BaseCycleContainer *bcc)
 {
-
     for(unsigned int i=0; i<bcc->triggerNames_actualrun.size(); ++i) {
         if(!bcc->triggerNames_actualrun.at(i).find(m_name)) {
             return bcc->triggerResults->at(i);
@@ -501,3 +500,58 @@ std::string MttbarGenCut::description()
     sprintf(s, "%.1f < MttbarGen < %.1f",m_mttbar_min, m_mttbar_max);
     return s;
 }
+
+EventFlavorSelecion::EventFlavorSelecion(E_EventFlavor flavor)
+{
+    m_flavor = flavor;
+}
+
+bool EventFlavorSelecion::pass(BaseCycleContainer *bcc)
+{
+    std::map<int,int> counter;
+    for(unsigned int i=0; i<bcc->jets->size(); ++i) {
+        Jet jet = bcc->jets->at(i);
+        int flavor = abs(JetFlavor(&jet));
+        // std::cout << flavor << " ";
+        if (counter.find(flavor) == counter.end())
+            counter[flavor] = 1;
+        else
+            counter[flavor] = counter[flavor] + 1;
+    }
+    
+    // std::cout << std::endl;
+
+    if (m_flavor == e_BFlavor && 
+        counter.find(5) != counter.end()) {
+        // std::cout << "It is a BFlavor event." << std::endl;
+        return true;
+    }
+    if (m_flavor == e_CFlavor && 
+        counter.find(5) == counter.end() &&
+        counter.find(4) != counter.end()) {
+        // std::cout << "It is a CFlavor event." << std::endl;
+        return true;
+    }
+    if (m_flavor == e_LFlavor && 
+        counter.find(5) == counter.end() &&
+        counter.find(4) == counter.end()) {
+        // std::cout << "It is a LFlavor event." << std::endl;
+        return true;
+    }
+
+    return false;
+}
+
+std::string EventFlavorSelecion::description()
+{
+    char s[100], flavor;
+    if (m_flavor == e_BFlavor)
+        flavor = 'B';
+    else if (m_flavor == e_CFlavor)
+        flavor = 'C';
+    else
+        flavor = 'L';
+    sprintf(s, "Filtering by event %c flavor" , flavor);
+    return s;
+}
+

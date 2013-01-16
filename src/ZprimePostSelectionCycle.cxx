@@ -1,4 +1,4 @@
-// $Id: ZprimePostSelectionCycle.cxx,v 1.7 2012/12/31 15:47:57 bazterra Exp $
+// $Id: ZprimePostSelectionCycle.cxx,v 1.8 2013/01/16 13:03:14 bazterra Exp $
 
 #include <iostream>
 
@@ -17,11 +17,13 @@ ZprimePostSelectionCycle::ZprimePostSelectionCycle()
 
     m_dobsf = "None";
     m_mttgencut = false;
+    m_flavor_selection = "None";
 
     // steerable properties for making qcd (pre) selection
     DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
     DeclareProperty( "BTaggingScaleFactors", m_dobsf );
     DeclareProperty( "ApplyMttbarGenCut", m_mttgencut );
+    DeclareProperty( "ApplyFlavorSelection", m_flavor_selection );
 
     // set the integrated luminosity per bin for the lumi-yield control plots
     SetIntLumiPerBin(500.);
@@ -95,6 +97,22 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
     if ( m_mttgencut && id.GetVersion() == "TTbar" ) {
         m_logger << INFO << "Applying mttbar generator cut from 0 to 700 GeV" << SLogger::endmsg;
         KinematicSelection->addSelectionModule(new MttbarGenCut(0,700));
+    }
+
+    std::transform(
+        m_flavor_selection.begin(), m_flavor_selection.end(), m_flavor_selection.begin(), ::tolower
+    );    
+    if (m_flavor_selection == "bflavor") {
+        m_logger << INFO << "Applying b flavor selection" << SLogger::endmsg;
+        KinematicSelection->addSelectionModule(new EventFlavorSelecion(e_BFlavor));
+    } else if (m_flavor_selection == "cflavor") {
+        m_logger << INFO << "Applying c flavor selection" << SLogger::endmsg;
+        KinematicSelection->addSelectionModule(new EventFlavorSelecion(e_CFlavor));
+    } else if (m_flavor_selection == "lflavor") {
+        m_logger << INFO << "Applying l flavor selection" << SLogger::endmsg;
+        KinematicSelection->addSelectionModule(new EventFlavorSelecion(e_LFlavor));
+    } else if (m_flavor_selection != "none") {
+        m_logger << ERROR << "Unknown ApplyFlavorSelection option --- should be either `BFlavor`, `CFlavor` or `LFlavor`" << SLogger::endmsg;        
     }
 
     Selection* Chi2Seletion = new Selection("Chi2Selection");

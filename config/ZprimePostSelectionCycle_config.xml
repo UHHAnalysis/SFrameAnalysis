@@ -335,6 +335,8 @@
 
 		   <Item Name="BTaggingScaleFactors" Value="None" />
 
+        <Item Name="ApplyFlavorSelection" Value="None" />
+
 		    <Item Name="LeptonScaleFactors" Value="MuonRunA 864 MuonRunB 4357 MuonRunC 14105" /> 
 		      
                 </UserConfig>

@@ -267,4 +267,17 @@ private:
 
 };
 
+class EventFlavorSelecion: public SelectionModule {
+public:
+    EventFlavorSelecion(E_EventFlavor flavor);
+    ~EventFlavorSelecion() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+
+    E_EventFlavor m_flavor;
+};
+
 #endif

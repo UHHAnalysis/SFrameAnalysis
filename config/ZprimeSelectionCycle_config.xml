@@ -405,6 +405,9 @@
 
 		   <Item Name="LeptonScaleFactors" Value="MuonRunA 864 MuonRunB 4357 MuonRunC 14105" />
 
+                   <Item Name="SystematicUncertainty" Value="None" />
+                   <Item Name="SystematicVariation" Value="up" />
+
            <Item Name="ReversedElectronSelection" Value="false" />
 
 		</UserConfig>

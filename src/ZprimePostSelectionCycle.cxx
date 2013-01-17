@@ -1,4 +1,4 @@
-// $Id: ZprimePostSelectionCycle.cxx,v 1.8 2013/01/16 13:03:14 bazterra Exp $
+// $Id: ZprimePostSelectionCycle.cxx,v 1.9 2013/01/16 15:17:03 bazterra Exp $
 
 #include <iostream>
 
@@ -215,22 +215,29 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
     m_bsf = NULL;
     std::transform(m_dobsf.begin(), m_dobsf.end(), m_dobsf.begin(), ::tolower);
     if(m_dobsf != "none") {
-        E_SystShift sys;
+        E_SystShift sys_bjets = e_Default;
+        E_SystShift sys_ljets = e_Default;
         if (m_dobsf == "default") {
             m_logger << INFO << "Applying btagging scale factor" << SLogger::endmsg;
-            sys = e_Default;
-        } else if (m_dobsf == "up") {
-            m_logger << INFO << "Applying btagging up scale factor" << SLogger::endmsg; 
-            sys = e_Up;
-        } else if (m_dobsf == "down") {
-            m_logger << INFO << "Applying btagging down scale factor" << SLogger::endmsg;
-            sys = e_Down;
-        } else 
-            m_logger << ERROR << "Unknown BTaggingScaleFactors option, default option is applied --- should be either `Default`, `Up` or `Down`" << SLogger::endmsg; 
+        } else if (m_dobsf == "up-bjets") {
+            m_logger << INFO << "Applying btagging up scale factor for b-jets" << SLogger::endmsg; 
+            sys_bjets = e_Up;
+        } else if (m_dobsf == "down-bjets") {
+            m_logger << INFO << "Applying btagging down scale factor for b-jets" << SLogger::endmsg;
+            sys_bjets = e_Down;
+        } else if (m_dobsf == "up-ljets") {
+            m_logger << INFO << "Applying btagging up scale factor for l-jets" << SLogger::endmsg;
+            sys_ljets = e_Up;
+        } else if (m_dobsf == "down-ljets") {
+            m_logger << INFO << "Applying btagging down scale factor for l-jets" << SLogger::endmsg;
+            sys_ljets = e_Down;
+        } 
+        else 
+            m_logger << ERROR << "Unknown BTaggingScaleFactors option, default option is applied --- should be either `Default`, `Up-bjets`, `Down-bjets`, `Up-ljets`, or `Down-ljets`" << SLogger::endmsg; 
         if(doEle)  
-            m_bsf = new BTaggingScaleFactors(m_btagtype, e_Electron, sys);
+            m_bsf = new BTaggingScaleFactors(m_btagtype, e_Electron, sys_bjets, sys_ljets);
         else if(doMu)
-            m_bsf = new BTaggingScaleFactors(m_btagtype, e_Muon, sys);
+            m_bsf = new BTaggingScaleFactors(m_btagtype, e_Muon, sys_bjets, sys_ljets);
     }
     return;
 }

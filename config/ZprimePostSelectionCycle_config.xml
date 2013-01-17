@@ -15,19 +15,20 @@
 
 <!--	<Cycle Name="ZprimePostSelectionCycle" RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="" OutputDirectory="./" PostFix="" TargetLumi="1.0"> -->
 
-	<Cycle Name="ZprimePostSelectionCycle" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PostSelectionMuon_MuonID_Down/" PostFix="" TargetLumi="1.0"> 
+	<Cycle Name="ZprimePostSelectionCycle" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PostSelectionMuon/" PostFix="" TargetLumi="1.0"> 
 
 <!--
 		<InputData Lumi="1.0" NEventsMax="-1" Type="DATA" Version="DATA" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.DATA.DATA.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
--->
-		<InputData Lumi="92270" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="False">
+
+		<InputData Lumi="92270" NEventsMax="1" Type="MC" Version="TTbar" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.TTbar.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
-
+-->
+<!--
 		<InputData Lumi="92270" NEventsMax="-1" Type="MC" Version="TTbar_0to700" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.TTbar_0to700.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -40,14 +41,14 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.TTbar_1000toInf.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-
+-->
 <!--
 		<InputData Lumi="2097.3" NEventsMax="-1" Type="MC" Version="Wjets" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.Wjets.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 -->
-
+<!--
 	        <InputData Lumi="66635" NEventsMax="-1" Type="MC" Version="SingleTop_T_tch" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.SingleTop_T_tch.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -154,6 +155,7 @@
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 
+
 		<InputData Lumi="3593.1" NEventsMax="-1" Type="MC" Version="W1Jets" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.W1Jets.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -171,7 +173,6 @@
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 
-<!--
 		<InputData Lumi="8390.9" NEventsMax="-1" Type="MC" Version="DY_10to50" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.DY_10to50.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -182,7 +183,7 @@
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 -->
-
+<!--
 	        <InputData Lumi="182490" NEventsMax="-1" Type="MC" Version="WW" Cacheable="False">
  		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.WW.root" Lumi="0.0"/>       
 			<InputTree Name="AnalysisTree" /> 
@@ -220,38 +221,38 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.RSG4000.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
+-->
 
-
-	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu20to30" Cacheable="False">
+	        <InputData Lumi="4.5492" NEventsMax="-1" Type="MC" Version="QCDMu20to30" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.QCDMu20to30.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
 
-	        <InputData Lumi="4.5492" NEventsMax="-1" Type="MC" Version="QCDMu30to50" Cacheable="False">
+	        <InputData Lumi="11.857" NEventsMax="-1" Type="MC" Version="QCDMu30to50" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.QCDMu30to50.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-	        <InputData Lumi="11.857" NEventsMax="-1" Type="MC" Version="QCDMu50to80" Cacheable="False">
+	        <InputData Lumi="58.830" NEventsMax="-1" Type="MC" Version="QCDMu50to80" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.QCDMu50to80.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-	        <InputData Lumi="58.830" NEventsMax="-1" Type="MC" Version="QCDMu80to120" Cacheable="False">
+	        <InputData Lumi="228.41" NEventsMax="-1" Type="MC" Version="QCDMu80to120" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.QCDMu80to120.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-	        <InputData Lumi="228.41" NEventsMax="-1" Type="MC" Version="QCDMu120to170" Cacheable="False">
+	        <InputData Lumi="1139.1" NEventsMax="-1" Type="MC" Version="QCDMu120to170" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.QCDMu120to170.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-	        <InputData Lumi="1139.1" NEventsMax="-1" Type="MC" Version="QCDMu170to300" Cacheable="False">
+	        <InputData Lumi="3335.1" NEventsMax="-1" Type="MC" Version="QCDMu170to300" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.QCDMu170to300.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-	        <InputData Lumi="3335.1" NEventsMax="-1" Type="MC" Version="QCDMu300to470" Cacheable="False">
+	        <InputData Lumi="51594" NEventsMax="-1" Type="MC" Version="QCDMu300to470" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.QCDMu300to470.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-	        <InputData Lumi="51594" NEventsMax="-1" Type="MC" Version="QCDMu470to600" Cacheable="False">
+	        <InputData Lumi="320694" NEventsMax="-1" Type="MC" Version="QCDMu470to600" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.QCDMu470to600.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
@@ -322,7 +323,7 @@
         <Item Name="ApplyMttbarGenCut" Value="false" />
 		      
 		      <Item Name="PU_Filename_MC" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/PileUpHistoCycle" />
-		      <Item Name="PU_Filename_Data" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/MyDataPileupHistogram_69_208686.root" />
+		      <Item Name="PU_Filename_Data" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/MyDataPileupHistogram_73_208686.root" />
 		      <Item Name="PU_Histname_Data" Value="pileup" />
 		      <Item Name="PU_Histname_MC" Value="N_pileup_hist" />
 
@@ -333,9 +334,9 @@
 		   <Item Name="LumiFileName" Value="Mu40_208686.root" /> 
 		   <Item Name="LumiTrigger" Value="HLT_Mu40_eta2p1_v" /> 
 
-		   <Item Name="BTaggingScaleFactors" Value="None" />
+		   <Item Name="BTaggingScaleFactors" Value="default" />
 
-        <Item Name="ApplyFlavorSelection" Value="None" />
+        <Item Name="ApplyFlavorSelection" Value="none" />
 
 		    <Item Name="LeptonScaleFactors" Value="MuonRunA 864 MuonRunB 4357 MuonRunC 14105" /> 
 		      

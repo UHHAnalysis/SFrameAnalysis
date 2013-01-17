@@ -5,6 +5,7 @@
 // SFrame include(s):
 #include "include/AnalysisCycle.h"
 #include "FactorizedJetCorrector.h"
+#include "JetCorrectionUncertainty.h"
 #include "Cleaner.h"
 #include "HypothesisDiscriminator.h"
 #include "HypothesisHists.h"
@@ -64,6 +65,7 @@ private:
   int m_Nbtags_min;  
 
   FactorizedJetCorrector* m_corrector;
+  JetCorrectionUncertainty* m_jes_unc;
   Cleaner* m_cleaner;
   Chi2Discriminator* m_chi2discr;
   BestPossibleDiscriminator* m_bpdiscr;
@@ -75,6 +77,10 @@ private:
   HypothesisStatistics* m_cm_chi2;
   HypothesisStatistics* m_cm_sumdr; 
   HypothesisStatistics* m_cm_bp; 
+
+  // systematic uncertainties
+  E_SystShift m_sys_var;
+  E_SysUnc m_sys_unc;
 
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimeSelectionCycle, 0 );

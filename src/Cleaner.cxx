@@ -4,6 +4,9 @@ Cleaner::Cleaner( BaseCycleContainer* input)
 {
 
     bcc = input;
+    m_jec_unc = NULL;
+    m_jecvar = e_Default;
+    m_jervar = e_Default;
 
 }
 
@@ -12,6 +15,9 @@ Cleaner::Cleaner()
 
     ObjectHandler* objs = ObjectHandler::Instance();
     bcc = objs->GetBaseCycleContainer();
+    m_jec_unc = NULL;
+    m_jecvar = e_Default;
+    m_jervar = e_Default;
 
 }
 
@@ -26,7 +32,7 @@ void Cleaner::resetEventCalc()
 
 }
 
-void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort)
+void Cleaner::JetEnergyResolutionShifter(bool sort)
 {
 
     LorentzVector met(0,0,0,0);
@@ -35,6 +41,8 @@ void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort)
     }
 
     for(unsigned int i=0; i<bcc->jets->size(); ++i) {
+
+      //std::cout << "ResolutionShifter start: Jet " << i << ", pt = " << bcc->jets->at(i).pt() << " correction factor = " << 1./bcc->jets->at(i).JEC_factor_raw() <<  std::endl;
 
         float genpt = bcc->jets->at(i).genjet_pt();
         //ignore unmatched jets (which have zero vector) or jets with very low pt:
@@ -47,12 +55,14 @@ void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort)
 
         LorentzVector jet_v4_raw = jet_v4*bcc->jets->at(i).JEC_factor_raw();
 
-        float recopt = jet_v4.pt();
-        float factor = 0.0;
-        float abseta = fabs(jet_v4.eta());
+        double recopt = jet_v4.pt();
+        double factor = 0.0;
+	double uperr = 0.0;
+	double downerr = 0.0;
+        double abseta = fabs(jet_v4.eta());
 
         //numbers taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
-        if(syst_shift==e_Default) {
+        if(m_jervar==e_Default) {
             if(abseta < 0.5)
                 factor = 0.052;
             else if(abseta >= 0.5 && abseta <1.1)
@@ -65,7 +75,7 @@ void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort)
                 factor = 0.288;
             else
                 factor = 0.288;
-        } else if(syst_shift==e_Up) {
+        } else if(m_jervar==e_Up) {
             if(abseta < 0.5)
                 factor = 0.115;
             else if(abseta >= 0.5 && abseta <1.1)
@@ -76,7 +86,7 @@ void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort)
                 factor = 0.228;
             else if(abseta >= 2.3)
                 factor = 0.488;
-        } else if(syst_shift==e_Down) {
+        } else if(m_jervar==e_Down) {
             if(abseta < 0.5)
                 factor = -0.01;
             else if(abseta >= 0.5 && abseta <1.1)
@@ -89,12 +99,12 @@ void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort)
                 factor = 0.089;
         }
 
-        float ptscale = std::max(0.0f, 1 + factor * (recopt - genpt) / recopt);
+        double ptscale = std::max(0.0, 1 + factor * (recopt - genpt) / recopt);
 
         jet_v4*=ptscale;
 
         bcc->jets->at(i).set_v4(jet_v4);
-
+	//std::cout << "ResolutionShifter: Jet " << i << ", pt = " << jet_v4.pt() << std::endl;
         //propagate JER shifts to MET
         //if(jet_v4.Pt()>25) {
         met += jet_v4_raw;
@@ -103,6 +113,8 @@ void Cleaner::JetEnergyResolutionShifter(E_SystShift syst_shift, bool sort)
         //}
 
         //std::cout << ptscale << " | " << jet_v4.Pt()  << " | "<<  jet_v4.eta() << " | " << genpt << std::endl;
+
+	//std::cout << "ResolutionShifter end: Jet " << i << ", pt = " << bcc->jets->at(i).pt() << " correction factor = " << 1./bcc->jets->at(i).JEC_factor_raw() <<  std::endl;
 
     }
 
@@ -125,7 +137,7 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
 
 
     for(unsigned int i=0; i<bcc->jets->size(); ++i) {
-
+      
         LorentzVector jet_v4_raw = bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw();
 
         //subtract lepton momenta from raw jet momentum
@@ -177,15 +189,32 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
         corrector->setRho(bcc->rho);
         corrector->setNPV(bcc->pvs->size());
 
-        float correctionfactor = corrector->getCorrection();
+        double correctionfactor = corrector->getCorrection();
 
         LorentzVector jet_v4_corrected = jet_v4_raw *correctionfactor;
+
+	if (m_jecvar != e_Default){
+	  if (m_jec_unc==NULL){
+	    std::cerr << "JEC variation should be applied, but JEC uncertainty object is NULL! Abort." << std::endl;
+	    exit(EXIT_FAILURE);
+	  }
+	  m_jec_unc->setJetEta(jet_v4_corrected.Eta());
+	  m_jec_unc->setJetPt(jet_v4_corrected.Pt());
+	  double unc = 0.;	  
+	  if (m_jecvar == e_Up){
+	    unc = m_jec_unc->getUncertainty(1);
+	    correctionfactor *= (1 + fabs(unc));
+	  } else if (m_jecvar == e_Down){
+	    unc = m_jec_unc->getUncertainty(-1);
+	    correctionfactor *= (1 - fabs(unc));
+	  }
+	  jet_v4_corrected = jet_v4_raw * correctionfactor;
+	}
 
         //std::cout << i+1 << " | " << jet_v4_raw.Pt() << " | " <<  bcc->jets->at(i).pt() << " | " << bcc->jets->at(i).jetArea()<< " | " << bcc->rho << " | " << correctionfactor  << " | " << 1./bcc->jets->at(i).JEC_factor_raw() << " | " << std::endl;
 
         bcc->jets->at(i).set_v4(jet_v4_corrected);
         bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);
-
     }
 
     if(sort) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
@@ -208,6 +237,25 @@ void Cleaner::JetRecorrector(FactorizedJetCorrector *corrector, bool sort)
         float correctionfactor = corrector->getCorrection();
 
         LorentzVector jet_v4_corrected = jet_v4_raw *correctionfactor;
+
+	if (m_jecvar != e_Default){
+	  if (m_jec_unc==NULL){
+	    std::cerr << "JEC variation should be applied, but JEC uncertainty object is NULL! Abort." << std::endl;
+	    exit(EXIT_FAILURE);
+	  }
+	  m_jec_unc->setJetEta(jet_v4_corrected.Eta());
+	  m_jec_unc->setJetPt(jet_v4_corrected.Pt());
+	  double unc = 0.;	  
+	  if (m_jecvar == e_Up){
+	    unc = m_jec_unc->getUncertainty(1);
+	    correctionfactor *= (1 + fabs(unc));
+	  } else if (m_jecvar == e_Down){
+	    unc = m_jec_unc->getUncertainty(-1);
+	    correctionfactor *= (1 - fabs(unc));
+	  }
+	  jet_v4_corrected = jet_v4_raw * correctionfactor;
+	}
+
 
         bcc->jets->at(i).set_v4(jet_v4_corrected);
         bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);

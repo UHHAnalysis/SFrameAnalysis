@@ -82,7 +82,7 @@ void JetLeptonCleanerHists::Fill()
   }
 
   cleaner->JetRecorrector(m_corrector,false);
-  cleaner->JetEnergyResolutionShifter(e_Default,false);
+  cleaner->JetEnergyResolutionShifter(false);
 
   std::vector<Jet> uncleaned_jets;
   for(unsigned int i=0; i< bcc->jets->size();++i){
@@ -98,7 +98,7 @@ void JetLeptonCleanerHists::Fill()
   }
 
   cleaner->JetLeptonSubtractor(m_corrector,false);
-  cleaner->JetEnergyResolutionShifter(e_Default,false);
+  cleaner->JetEnergyResolutionShifter(false);
   float met = bcc->met->pt();
 
   //search for changed jets by comparing uncleaned and new jet collection

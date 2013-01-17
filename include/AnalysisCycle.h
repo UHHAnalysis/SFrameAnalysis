@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.14 2012/12/19 00:02:01 bazterra Exp $
+// $Id: AnalysisCycle.h,v 1.15 2012/12/21 13:35:39 bazterra Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -23,7 +23,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.14 $
+ *  @version $Revision: 1.15 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -83,6 +83,12 @@ public:
   /// returns whether generator info is added or not (automatically determined if data type is 'data')
   bool addGenInfo() {return m_addGenInfo;}
 
+  /// Return the systematic uncertainty that should be calculated
+  std::string GetSysUncName(){return m_sys_unc_name;}
+
+  /// Return the systematic shift that should be applied
+  std::string GetSysShiftName(){return m_sys_var_name;}
+
 protected:
 
   // JEC information
@@ -117,6 +123,10 @@ private:
   std::string m_PUHistnameMC;
   std::string m_PUHistnameData;
   PUWeightProducer* m_puwp;
+
+  // systematic uncertainties
+  std::string m_sys_unc_name;
+  std::string m_sys_var_name;
 
   // properties of the NTuples
   std::string m_JetCollection;

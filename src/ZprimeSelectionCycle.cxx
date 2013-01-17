@@ -18,6 +18,10 @@ ZprimeSelectionCycle::ZprimeSelectionCycle()
     SetIntLumiPerBin(25.);
 
     m_corrector = NULL;
+    m_jes_unc = NULL;
+
+    m_sys_var = e_Default;
+    m_sys_unc = e_None;
 
     DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
 
@@ -32,6 +36,7 @@ ZprimeSelectionCycle::~ZprimeSelectionCycle()
 {
     // destructor
     if (m_corrector) delete m_corrector;
+    if (m_jes_unc) delete m_jes_unc;
 }
 
 void ZprimeSelectionCycle::BeginCycle() throw( SError )
@@ -130,6 +135,8 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
     RegisterSelection(chi2_selection);
     RegisterSelection(matchable_selection);
 
+    // ------------- jet energy correction ----------------
+
     std::vector<JetCorrectorParameters> pars;
 
     //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
@@ -143,8 +150,18 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
         pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECJetCollection + ".txt"));
         pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECJetCollection + ".txt"));
     }
-
     m_corrector = new FactorizedJetCorrector(pars);
+
+    // uncertainty
+    TString unc_file = m_JECFileLocation + "/" + m_JECDataGlobalTag + "_Uncertainty_" + m_JECJetCollection + ".txt";
+    m_jes_unc = new JetCorrectionUncertainty(unc_file.Data());
+    
+    if (GetSysUncName()=="JEC" || GetSysUncName()=="jec") m_sys_unc = e_JEC; 
+    if (GetSysUncName()=="JER" || GetSysUncName()=="jer") m_sys_unc = e_JER;
+    if (m_sys_unc != e_None){
+      if (GetSysShiftName()=="UP" || GetSysShiftName()=="up" || GetSysShiftName()=="Up") m_sys_var = e_Up; 
+      if (GetSysShiftName()=="DOWN" || GetSysShiftName()=="down" || GetSysShiftName()=="Down") m_sys_var = e_Down; 
+    }    
 
     // ---------------- set up the histogram collections --------------------
 
@@ -233,6 +250,17 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
     static Selection* matchable_selection = GetSelection("matchable_selection");
 
     m_cleaner = new Cleaner();
+    m_cleaner->SetJECUncertainty(m_jes_unc);
+
+    // settings for jet correction uncertainties
+    if (m_sys_unc==e_JEC){
+      if (m_sys_var==e_Up) m_cleaner->ApplyJECVariationUp();
+      if (m_sys_var==e_Down) m_cleaner->ApplyJECVariationDown();
+    }
+   if (m_sys_unc==e_JER){
+      if (m_sys_var==e_Up) m_cleaner->ApplyJERVariationUp();
+      if (m_sys_var==e_Down) m_cleaner->ApplyJERVariationDown();
+    }
 
     ObjectHandler* objs = ObjectHandler::Instance();
     BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
@@ -314,7 +342,6 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
     m_bp_chi2->FillHyps(bp_hyp,hyp);
     m_bp_sumdr->FillHyps(bp_hyp,sdr_hyp);
-
 
     if(cm_hyp) {
         m_cm_chi2->FillHyps(cm_hyp,hyp);

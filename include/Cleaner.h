@@ -7,6 +7,7 @@
 #include <algorithm>
 #include "Utils.h"
 #include "FactorizedJetCorrector.h"
+#include "JetCorrectionUncertainty.h"
 #include "ObjectHandler.h"
 #include "EventCalc.h"
 
@@ -21,6 +22,7 @@
 class Cleaner{
 
  public:
+
   Cleaner();
   Cleaner(BaseCycleContainer*);
 
@@ -29,10 +31,9 @@ class Cleaner{
   /**
    * Function that corrects the jet momentum to account for differences in jet energy resolution between data and MC.
    * Changes are propagated to missing transverse energy. To be applied on MC only.
-   * Use the options syst_shift=e_Up and syst_shift=e_Down to shift the jet momenta within their systematic uncertainties.
    * Use sort=true if you want to re-order the jets according to corrected pt after the applied shifts.
   */
-  void JetEnergyResolutionShifter(E_SystShift syst_shift=e_Default, bool sort=true);
+  void JetEnergyResolutionShifter(bool sort=true);
   /**
    * Function to subtract lepton momenta from jets if the distance between jet and lepton axis is less than 0.5 in the eta-phi plane.
    * All jets and leptons in the actual BaseCycleContainer are considered.
@@ -45,6 +46,41 @@ class Cleaner{
    * Use sort=false or sort=true if you want to re-order the jets according to corrected pt after the applied shifts.
   */
   void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true);
+
+  /**
+   * Function to pass a jet energy uncertainty object to the cleaner.
+   * To apply a variation of the jet energy uncertainty, use the ApplyJECVariationUp or ApplyJECVariationDown.
+  */
+  void SetJECUncertainty(JetCorrectionUncertainty* jes_unc){m_jec_unc = jes_unc;}
+  JetCorrectionUncertainty* GetJECUncertainty(){return m_jec_unc;}
+
+  /**
+   * Apply an up variation of the jet energy scale uncertainty.
+  */
+  void ApplyJECVariationUp(){m_jecvar=e_Up;}
+  /**
+   * Apply a down variation of the jet energy scale uncertainty.
+  */
+  void ApplyJECVariationDown(){m_jecvar=e_Down;}
+  /**
+   * Do not apply jet energy scale variation.
+   */
+  void NoJECVariation(){m_jecvar=e_Default;}
+
+  /**
+   * Apply an up variation of the jet energy resolution uncertainty.
+  */
+  void ApplyJERVariationUp(){m_jervar=e_Up;}
+  /**
+   * Apply a down variation of the jet energy resolution uncertainty.
+  */
+  void ApplyJERVariationDown(){m_jervar=e_Down;}
+  /**
+   * Do not apply jet energy resolution variation.
+   */
+  void NoJERVariation(){m_jervar=e_Default;}
+
+  E_SystShift GetJECVariation(){return m_jecvar;}
 
   void ElectronCleaner(double ptmin=0, double etamax=9999, double relisomax=0.1, bool reverseID = false, bool reverseIso = false);
   void MuonCleaner(double ptmin=0, double etamax=9999, double relisomax=0.125);
@@ -61,6 +97,11 @@ class Cleaner{
  private:
 
   BaseCycleContainer* bcc;
+
+  JetCorrectionUncertainty* m_jec_unc;
+
+  E_SystShift m_jecvar;  
+  E_SystShift m_jervar;
 
   // helper function to define electron id criteria.
   bool passElectronId(BaseCycleContainer*, unsigned int);

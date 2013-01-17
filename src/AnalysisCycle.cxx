@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.21 2012/12/17 17:58:22 bazterra Exp $
+// $Id: AnalysisCycle.cxx,v 1.22 2012/12/21 13:35:48 bazterra Exp $
 
 #include <iostream>
 
@@ -63,7 +63,12 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "PU_Histname_MC" , m_PUHistnameMC);
     DeclareProperty( "PU_Histname_Data" , m_PUHistnameData);
 
+    // lepton weights
     DeclareProperty( "LeptonScaleFactors", m_leptonweights);
+
+    // uncertainties
+    DeclareProperty("SystematicUncertainty", m_sys_unc_name);
+    DeclareProperty("SystematicVariation", m_sys_var_name);
 
     // steering property for data-driven qcd in electron channel
     m_reversed_electron_selection = false;
@@ -160,6 +165,39 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 
     if(m_reversed_electron_selection)
         m_logger << INFO << "Applying reversed electron selection (data-driven qcd) !!!!" << SLogger::endmsg;
+
+    // check if the settings for the systematic uncertainty make sense
+    if(m_sys_unc_name.size()>0){
+      bool isok = false;
+      if (m_sys_unc_name=="NONE" || m_sys_unc_name=="none" || m_sys_unc_name=="None") isok = true;
+      if (m_sys_unc_name=="JEC" || m_sys_unc_name=="jec") isok = true;
+      if (m_sys_unc_name=="JER" || m_sys_unc_name=="jer") isok = true;
+      
+      if (isok){
+
+	if (m_sys_unc_name=="NONE" || m_sys_unc_name=="none" || m_sys_unc_name=="None"){
+	  m_logger << INFO << "Running without systematic uncertainty" << SLogger::endmsg;
+
+	} else {
+	  m_logger << WARNING << "Running with systematic uncertainty: " << m_sys_unc_name << "  (this is more an info than a warning)" << SLogger::endmsg;
+
+	  if (m_sys_var_name=="UP" || m_sys_var_name=="up" || m_sys_var_name=="Up" 
+	      || m_sys_var_name=="DOWN" || m_sys_var_name=="down" || m_sys_var_name=="Down"){
+	    m_logger << WARNING << "Applying shift: " << m_sys_var_name << SLogger::endmsg;
+
+	  } else {
+	    m_logger << FATAL << "Requested shift: " << m_sys_var_name 
+		     << " is not supported. Please choose \"up\" or \"down\" for SystematicVariation" << SLogger::endmsg;	  
+	    exit(EXIT_FAILURE);
+	  }
+	}
+	
+      } else {
+	m_logger << FATAL << "Systematic uncertainty: " << m_sys_unc_name << " is not known." << SLogger::endmsg;
+	exit(EXIT_FAILURE);
+      }
+      
+    }
 
     // output Ntuple
     if (inputData.GetTrees(STreeType::OutputSimpleTree)) {

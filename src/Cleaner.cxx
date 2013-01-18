@@ -198,8 +198,14 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
 	    std::cerr << "JEC variation should be applied, but JEC uncertainty object is NULL! Abort." << std::endl;
 	    exit(EXIT_FAILURE);
 	  }
-	  m_jec_unc->setJetEta(jet_v4_corrected.Eta());
-	  m_jec_unc->setJetPt(jet_v4_corrected.Pt());
+	  // ignore jets with very low pt or high eta, avoiding a crash from the JESUncertainty tool
+	  double pt = jet_v4_corrected.Pt();
+	  double eta = jet_v4_corrected.Eta();
+	  if (pt<5. || fabs(eta)>5.) continue;
+	  	  
+	  m_jec_unc->setJetEta(eta);
+	  m_jec_unc->setJetPt(pt);
+
 	  double unc = 0.;	  
 	  if (m_jecvar == e_Up){
 	    unc = m_jec_unc->getUncertainty(1);

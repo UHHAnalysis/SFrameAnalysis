@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.22 2012/12/21 13:35:48 bazterra Exp $
+// $Id: AnalysisCycle.cxx,v 1.23 2013/01/17 23:59:03 rkogler Exp $
 
 #include <iostream>
 
@@ -172,6 +172,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       if (m_sys_unc_name=="NONE" || m_sys_unc_name=="none" || m_sys_unc_name=="None") isok = true;
       if (m_sys_unc_name=="JEC" || m_sys_unc_name=="jec") isok = true;
       if (m_sys_unc_name=="JER" || m_sys_unc_name=="jer") isok = true;
+      if (m_sys_unc_name=="LeptonScale") isok = true;
       
       if (isok){
 
@@ -228,9 +229,22 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         DeclareVariable(m_output_triggerResults, "triggerResults");
     }
 
-    if(m_leptonweights.size()>0)
-        m_lsf = new LeptonScaleFactors(m_leptonweights);
+    if(m_leptonweights.size()>0){
 
+      if (m_sys_unc_name == "LeptonScale"){
+	if(m_sys_var_name == "UP" || m_sys_var_name == "Up" || m_sys_var_name == "up"){
+	  m_lsf = new LeptonScaleFactors(m_leptonweights, e_Up);	
+	}
+	else{
+	  m_lsf = new LeptonScaleFactors(m_leptonweights, e_Down);	
+	}
+      }
+      else{
+      	m_lsf = new LeptonScaleFactors(m_leptonweights);	
+      }
+
+
+    }
     return;
 }
 
@@ -495,7 +509,6 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 void AnalysisCycle::WriteOutputTree() throw( SError)
 {
     //write out all objects
-
     m_output_photons.clear();
     m_output_jets.clear();
     m_output_electrons.clear();

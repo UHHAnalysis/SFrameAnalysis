@@ -23,8 +23,8 @@ void EventHists::Init()
   Book( TH1F( "N_PrimVertices_ly","number of primary vertices", 56,-0.5,55.5));
   Book( TH1F( "HT", "H_{T}", 100,0,5000 ) );
   Book( TH1F( "HT_ly", "H_{T}", 100,0,5000 ) );
-  Book( TH1F( "HTLep", "H_{T}Lep", 100,0,5000 ) );
-  Book( TH1F( "HTLep_ly", "H_{T}Lep", 100,0,5000 ) );
+  Book( TH1F( "HTLep", "H_{T}Lep", 100,0,1000 ) );
+  Book( TH1F( "HTLep_ly", "H_{T}Lep", 100,0,1000 ) );
   Book( TH1F( "HT_TopJets", "H_{T} TopJets", 100,0,3500 ) );
   Book( TH1F( "HT_TopJets_ly", "H_{T} TopJets", 100,0,3500 ) );
   Book( TH1F( "HT_Jets", "H_{T} Jets", 100,0,3500 ) );

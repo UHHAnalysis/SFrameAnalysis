@@ -1,4 +1,4 @@
-// $Id: ZprimePostSelectionCycle.cxx,v 1.9 2013/01/16 15:17:03 bazterra Exp $
+// $Id: ZprimePostSelectionCycle.cxx,v 1.10 2013/01/17 17:22:10 bazterra Exp $
 
 #include <iostream>
 
@@ -6,6 +6,7 @@ using namespace std;
 
 // Local include(s):
 #include "include/ZprimePostSelectionCycle.h"
+#include "include/EventFilterFromListStandAlone.h"
 
 ClassImp( ZprimePostSelectionCycle );
 
@@ -24,6 +25,7 @@ ZprimePostSelectionCycle::ZprimePostSelectionCycle()
     DeclareProperty( "BTaggingScaleFactors", m_dobsf );
     DeclareProperty( "ApplyMttbarGenCut", m_mttgencut );
     DeclareProperty( "ApplyFlavorSelection", m_flavor_selection );
+    DeclareProperty( "EventFilterFile", m_filter_file );
 
     // set the integrated luminosity per bin for the lumi-yield control plots
     SetIntLumiPerBin(500.);
@@ -84,6 +86,10 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
     // Chi2 reconstruction and discriminant 
     static Chi2Discriminator* m_chi2discr = new Chi2Discriminator();
 
+    // event filter for HCAL laser events
+    Selection* HCALlaser = new Selection("HCAL_laser_events");
+    HCALlaser->addSelectionModule(new EventFilterSelection(m_filter_file.c_str()) );
+
     // Leading jet selection
     Selection* LeadingJetSelection = new Selection("LeadingJetSelection");
     LeadingJetSelection->addSelectionModule(new NJetSelection(1,int_infinity(),150,2.5));
@@ -95,8 +101,8 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
         KinematicSelection->addSelectionModule(new HypothesisLeptopPtCut( m_chi2discr, 140.0, double_infinity()));
 
     if ( m_mttgencut && id.GetVersion() == "TTbar" ) {
-        m_logger << INFO << "Applying mttbar generator cut from 0 to 700 GeV" << SLogger::endmsg;
-        KinematicSelection->addSelectionModule(new MttbarGenCut(0,700));
+      m_logger << INFO << "Applying mttbar generator cut from 0 to 700 GeV" << SLogger::endmsg;
+      KinematicSelection->addSelectionModule(new MttbarGenCut(0,700));
     }
 
     std::transform(
@@ -104,13 +110,13 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
     );    
     if (m_flavor_selection == "bflavor") {
         m_logger << INFO << "Applying b flavor selection" << SLogger::endmsg;
-        KinematicSelection->addSelectionModule(new EventFlavorSelecion(e_BFlavor));
+        KinematicSelection->addSelectionModule(new EventFlavorSelection(e_BFlavor));
     } else if (m_flavor_selection == "cflavor") {
         m_logger << INFO << "Applying c flavor selection" << SLogger::endmsg;
-        KinematicSelection->addSelectionModule(new EventFlavorSelecion(e_CFlavor));
+        KinematicSelection->addSelectionModule(new EventFlavorSelection(e_CFlavor));
     } else if (m_flavor_selection == "lflavor") {
         m_logger << INFO << "Applying l flavor selection" << SLogger::endmsg;
-        KinematicSelection->addSelectionModule(new EventFlavorSelecion(e_LFlavor));
+        KinematicSelection->addSelectionModule(new EventFlavorSelection(e_LFlavor));
     } else if (m_flavor_selection != "none") {
         m_logger << ERROR << "Unknown ApplyFlavorSelection option --- should be either `BFlavor`, `CFlavor` or `LFlavor`" << SLogger::endmsg;        
     }
@@ -130,6 +136,7 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
     TopTagSelection->addSelectionModule(new NTopJetSelection(1,int_infinity(),350,2.5));
     TopTagSelection->addSelectionModule(new NTopTagSelection(1,int_infinity()));
 
+    RegisterSelection(HCALlaser);
     RegisterSelection(LeadingJetSelection);
     RegisterSelection(KinematicSelection);
     RegisterSelection(TopTagSelection);
@@ -269,6 +276,7 @@ void ZprimePostSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weig
     AnalysisCycle::ExecuteEvent( id, weight );
 
     // get the selections
+    static Selection* HCALlaser = GetSelection("HCAL_laser_events");
     static Selection* LeadingJetSelection = GetSelection("LeadingJetSelection");
     static Selection* KinematicSelection = GetSelection("KinematicSelection");
     static Selection* TopTagSelection = GetSelection("TopTagSelection");
@@ -287,6 +295,11 @@ void ZprimePostSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weig
     BaseHists* BTagEff_HistsChi2sel = GetHistCollection("BTagEff_Chi2sel");
 
     EventCalc* calc = EventCalc::Instance();
+
+    // reject laser events only for data
+    if (calc->IsRealData()){
+      if (!HCALlaser->passSelection()) throw SError( SError::SkipEvent );
+    }
 
     // b tagging scale factor
     if(m_bsf && m_addGenInfo) {

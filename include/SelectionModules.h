@@ -8,6 +8,7 @@
 #include "Selection.h"
 #include "EventCalc.h"
 #include "HypothesisDiscriminator.h"
+#include "EventFilterFromListStandAlone.h"
 
 class TriggerSelection: public SelectionModule {
 public:
@@ -267,10 +268,10 @@ private:
 
 };
 
-class EventFlavorSelecion: public SelectionModule {
+class EventFlavorSelection: public SelectionModule {
 public:
-    EventFlavorSelecion(E_EventFlavor flavor);
-    ~EventFlavorSelecion() {};
+    EventFlavorSelection(E_EventFlavor flavor);
+    ~EventFlavorSelection() {};
 
     virtual bool pass(BaseCycleContainer*);
     virtual std::string description();
@@ -278,6 +279,20 @@ public:
 private:
 
     E_EventFlavor m_flavor;
+};
+
+class EventFilterSelection: public SelectionModule {
+public:
+    EventFilterSelection(const std::string eventfile);
+    ~EventFilterSelection();
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    std::string m_filename;
+    EventFilterFromListStandAlone* m_evfilter;
+
 };
 
 #endif

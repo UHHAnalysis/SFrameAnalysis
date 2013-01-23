@@ -1,4 +1,4 @@
-#include "../include/SelectionModules.h"
+#include "include/SelectionModules.h"
 
 
 TriggerSelection::TriggerSelection(std::string triggername)
@@ -501,12 +501,12 @@ std::string MttbarGenCut::description()
     return s;
 }
 
-EventFlavorSelecion::EventFlavorSelecion(E_EventFlavor flavor)
+EventFlavorSelection::EventFlavorSelection(E_EventFlavor flavor)
 {
     m_flavor = flavor;
 }
 
-bool EventFlavorSelecion::pass(BaseCycleContainer *bcc)
+bool EventFlavorSelection::pass(BaseCycleContainer *bcc)
 {
     std::map<int,int> counter;
     for(unsigned int i=0; i<bcc->jets->size(); ++i) {
@@ -542,7 +542,7 @@ bool EventFlavorSelecion::pass(BaseCycleContainer *bcc)
     return false;
 }
 
-std::string EventFlavorSelecion::description()
+std::string EventFlavorSelection::description()
 {
     char s[100], flavor;
     if (m_flavor == e_BFlavor)
@@ -554,4 +554,29 @@ std::string EventFlavorSelecion::description()
     sprintf(s, "Filtering by event %c flavor" , flavor);
     return s;
 }
+
+EventFilterSelection::EventFilterSelection(const std::string eventfile)
+{
+  m_evfilter = new EventFilterFromListStandAlone(eventfile);
+  m_filename = eventfile;
+}
+
+EventFilterSelection::~EventFilterSelection()
+{
+  delete m_evfilter;
+}
+
+bool EventFilterSelection::pass(BaseCycleContainer* bcc)
+{
+  return m_evfilter->filter(bcc->run, bcc->luminosityBlock, bcc->event);
+}
+
+std::string EventFilterSelection::description()
+{
+  char s[500];
+  sprintf(s, "selection of events based on file: %s", m_filename.c_str());
+  return s;
+
+}
+
 

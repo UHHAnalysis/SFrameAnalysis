@@ -71,6 +71,7 @@
 
 <JobConfiguration JobName="ZprimePreSelectionCycle" OutputLevel="INFO">
 	<Library Name="libfastjet" />
+	<Library Name="libfastjettools" />
 	<Library Name="libJetMETObjects" />
 	<Library Name="libSFrameTools" />
 	<Library Name="libAnalysis" />
@@ -83,15 +84,14 @@
 
 
 	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/dust/naf/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/" PostFix="" TargetLumi="1" >
-<!--	<Cycle Name="ZprimePreSelectionCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/" PostFix="" TargetLumi="1" >  -->
+<!--	<Cycle Name="ZprimePreSelectionCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/" PostFix="_TriggerTest" TargetLumi="1" >  -->
 
-<!--
-                <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="DATA" Cacheable="True">
+                <InputData Lumi="1" NEventsMax="200000" Type="DATA" Version="DATA" Cacheable="True">
                         &MuData;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
-
+<!--
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="False">
 		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000_v3.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" />
@@ -411,7 +411,7 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />
 		</InputData>
--->
+
 
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DYJets_scaleup" Cacheable="True">
                         &DYJets_scaleup;
@@ -454,8 +454,9 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />
 		</InputData>
-
+-->
 		<UserConfig>
+
 		   <Item Name="Electron_Or_Muon_Selection" Value="Muon" />
 
 		   <Item Name="JetCollection" Value="goodPatJetsPFlow" />  

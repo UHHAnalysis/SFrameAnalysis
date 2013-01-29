@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.26 2013/01/29 10:37:02 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.27 2013/01/29 10:51:24 rkogler Exp $
 
 #include <iostream>
 
@@ -522,18 +522,12 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
         if( !LumiHandler()->PassGoodRunsList( m_bcc.run, m_bcc.luminosityBlock )) throw SError( SError::SkipEvent );
     }
 
-    //clear reco hyp pointers from previous events
-    if( m_bcc.recoHyps && !m_readTTbarReco && m_writeTTbarReco) {
-        delete m_bcc.recoHyps ;
-        //m_bcc.recoHyps->clear();
-        //m_bcc.recoHyps = NULL;
-    }
-
     //create new pointer to recoHyps if no recoHyps were read in
     //note: list of recoHyps is still empty, has to be filled in the user cycle
 
-    if(!m_readTTbarReco && m_writeTTbarReco)  m_bcc.recoHyps = new std::vector<ReconstructionHypothesis>;
-
+    if(!m_readTTbarReco && m_writeTTbarReco){  
+      m_bcc.recoHyps = new std::vector<ReconstructionHypothesis>;
+    }
     return;
 
 }
@@ -573,6 +567,14 @@ void AnalysisCycle::WriteOutputTree() throw( SError)
     m_newrun=false;
 
     m_output_triggerResults = *m_bcc.triggerResults;
+
+
+    //clear reco hyp pointers for next event
+    if( m_bcc.recoHyps && !m_readTTbarReco && m_writeTTbarReco){
+      //std::cout <<"recoHyps size = " <<  m_bcc.recoHyps->size() <<std::endl;
+      m_bcc.recoHyps->clear();
+      delete m_bcc.recoHyps;
+    }
 
 }
 

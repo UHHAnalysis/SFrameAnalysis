@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.24 2013/01/22 08:17:11 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.25 2013/01/29 10:23:51 peiffer Exp $
 
 #include <iostream>
 
@@ -467,7 +467,8 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
       for(int i=0; i<N_ent; ++i){
 	tmp_tree->GetEntry(i);
 	
-	if(m_bcc.triggerNames->size()!=0 && m_bcc.run==tmp_run){
+	//search for next event in tree with trigger table filled, check for same run number in case of real data
+	if(m_bcc.triggerNames->size()!=0 && (!m_bcc.isRealData || m_bcc.run==tmp_run)){
 	  m_bcc.triggerNames_actualrun = *m_bcc.triggerNames;
 	  m_newrun=true;
 	  m_logger << WARNING<< "Trigger search was succesful" << SLogger::endmsg;

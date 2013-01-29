@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.25 2013/01/29 10:23:51 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.26 2013/01/29 10:37:02 peiffer Exp $
 
 #include <iostream>
 
@@ -229,22 +229,17 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         DeclareVariable(m_output_triggerResults, "triggerResults");
     }
 
-    if(m_leptonweights.size()>0){
 
-      if (m_sys_unc_name == "LeptonScale"){
-	if(m_sys_var_name == "UP" || m_sys_var_name == "Up" || m_sys_var_name == "up"){
-	  m_lsf = new LeptonScaleFactors(m_leptonweights, e_Up);	
-	}
-	else{
-	  m_lsf = new LeptonScaleFactors(m_leptonweights, e_Down);	
-	}
-      }
-      else{
-      	m_lsf = new LeptonScaleFactors(m_leptonweights);	
-      }
-
-
+    if (m_sys_unc_name == "LeptonScale"){
+      if(m_sys_var_name == "UP" || m_sys_var_name == "Up" || m_sys_var_name == "up"){
+	m_lsf = new LeptonScaleFactors(m_leptonweights, e_Up);	
+      } else {
+	m_lsf = new LeptonScaleFactors(m_leptonweights, e_Down);	
+      } 
+    } else {
+      m_lsf = new LeptonScaleFactors(m_leptonweights);	
     }
+    
     return;
 }
 
@@ -518,7 +513,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 
         //lepton scale factor
         if(m_lsf) {
-            calc->ProduceWeight(m_lsf->GetWeight());
+	  calc->ProduceWeight(m_lsf->GetWeight());
         }
     }
 

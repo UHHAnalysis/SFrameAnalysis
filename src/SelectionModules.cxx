@@ -254,7 +254,6 @@ NBTagSelection::NBTagSelection(int min_nbtag, int max_nbtag, E_BtagType type)
 
 bool NBTagSelection::pass(BaseCycleContainer *bcc)
 {
-
     int nbtag=0;
     for(unsigned int i=0; i<bcc->jets->size(); ++i) {
         if(m_type==e_CSVL && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.244) nbtag++;
@@ -375,6 +374,44 @@ std::string TwoDCut::description()
 {
     char s[100];
     sprintf(s, "2D cut");
+    return s;
+}
+
+bool TwoDCutMuon::pass(BaseCycleContainer *bcc)
+{
+    // same as above, but only for muons
+    for(unsigned int i=0; i<bcc->muons->size(); ++i) {
+        if(deltaRmin(&(bcc->muons->at(i)), bcc->jets)<0.5 && pTrel(&(bcc->muons->at(i)), bcc->jets)<25)
+            return false;
+    }
+
+    return true;
+}
+
+std::string TwoDCutMuon::description()
+{
+    char s[100];
+    sprintf(s, "2D cut");
+    return s;
+}
+
+bool MuonElectronOSCut::pass(BaseCycleContainer *bcc)
+{
+
+    // make sure that you have cleaned the electron and muon collections: bcc should contain at least one muon and one electron
+    // this cut looks only at the leading muon and leading electron
+    if ( bcc->electrons->size()==0) return false;
+    if ( bcc->muons->size()==0) return false;
+    
+    if (bcc->electrons->at(0).charge() == bcc->muons->at(0).charge()) return false;
+
+    return true;
+}
+
+std::string MuonElectronOSCut::description()
+{
+    char s[100];
+    sprintf(s, "Opposite sign of leading muon and leading electron");
     return s;
 }
 

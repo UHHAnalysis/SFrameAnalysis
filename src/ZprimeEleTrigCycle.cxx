@@ -292,8 +292,10 @@ void ZprimeEleTrigCycle::ExecuteEvent( const SInputData& id, Double_t weight) th
     static Selection* mttbar_gen_selection = GetSelection("Mttbar_Gen_Selection");
     if(!mttbar_gen_selection->passSelection())  throw SError( SError::SkipEvent );
 
-    // muon efficiency weights
-    calc->ProduceWeight(m_lsf->GetMuonWeight());
+    // muon efficiency weights 
+    if (!calc->IsRealData()){
+      calc->ProduceWeight(m_lsf->GetMuonWeight());
+    }
 
     // control histograms
     FillControlHists("_Presel");
@@ -353,8 +355,11 @@ void ZprimeEleTrigCycle::ExecuteEvent( const SInputData& id, Double_t weight) th
     FillControlHists("_Electrontrig");
 
     // electron efficiency weights
-    calc->ProduceWeight(m_lsf->GetElectronWeight());
+    if (!calc->IsRealData()){
+      calc->ProduceWeight(m_lsf->GetElectronWeight());
+    }
     FillControlHists("_ElectrontrigWithWeight");
+
 
     //do reconstruction here
 

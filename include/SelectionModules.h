@@ -214,6 +214,26 @@ public:
 
 };
 
+class TwoDCutMuon: public SelectionModule {
+public:
+    TwoDCutMuon() {};
+    ~TwoDCutMuon() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+};
+
+class MuonElectronOSCut: public SelectionModule {
+public:
+    MuonElectronOSCut() {};
+    ~MuonElectronOSCut() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+};
+
 class TriangularCut: public SelectionModule {
 public:
     TriangularCut() {};

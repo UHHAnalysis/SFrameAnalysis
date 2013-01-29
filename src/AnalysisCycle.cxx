@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.23 2013/01/17 23:59:03 rkogler Exp $
+// $Id: AnalysisCycle.cxx,v 1.24 2013/01/22 08:17:11 peiffer Exp $
 
 #include <iostream>
 
@@ -448,17 +448,53 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     }
 
     //fill list of trigger names
+
     if(m_bcc.triggerNames->size()!=0) {
         m_bcc.triggerNames_actualrun = *m_bcc.triggerNames;
         m_newrun=true;
+    }
+    
+    if(m_bcc.triggerNames_actualrun.size()==0){
+
+      m_logger << WARNING<< "No trigger table found for this event -> start trigger search on following events" << SLogger::endmsg;
+
+      int tmp_run= m_bcc.run;
+      int tmp_event = m_bcc.event;
+
+      TTree* tmp_tree = GetInputTree("AnalysisTree");
+
+      int N_ent= tmp_tree->GetEntries();
+      for(int i=0; i<N_ent; ++i){
+	tmp_tree->GetEntry(i);
+	
+	if(m_bcc.triggerNames->size()!=0 && m_bcc.run==tmp_run){
+	  m_bcc.triggerNames_actualrun = *m_bcc.triggerNames;
+	  m_newrun=true;
+	  m_logger << WARNING<< "Trigger search was succesful" << SLogger::endmsg;
+	  break;
+	}
+      }
+
+      //go back to original event
+      for(int i=0; i<N_ent; ++i){
+	tmp_tree->GetEntry(i);
+	if(m_bcc.event==tmp_event && m_bcc.run==tmp_run) break;
+      } 
+
+      if(m_bcc.event!=tmp_event || m_bcc.run!=tmp_run){
+	m_logger << ERROR<< "Trigger search error: can not find original event" << SLogger::endmsg;
+      }
+      
+    }
+    if(m_bcc.triggerNames_actualrun.size()==0){
+      m_logger << ERROR << "Trigger search was NOT succesful!!!" << SLogger::endmsg;
     }
 
     // generate random run Nr for MC samples (consider luminosity of each run)
     // e.g. for proper OTX cut in MC, and needs to be done only once per event
     if( !m_bcc.isRealData && LumiHandler()->IsLumiCalc() ) {
-        m_bcc.run = LumiHandler()->GetRandomRunNr();
+      m_bcc.run = LumiHandler()->GetRandomRunNr();
     }
-
 
     //set the lumiweight to 1 for data
     if(m_bcc.isRealData) weight = 1;

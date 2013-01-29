@@ -82,6 +82,8 @@ private:
   E_SystShift m_sys_var;
   E_SysUnc m_sys_unc;
 
+  bool m_mttgencut;
+
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimeEleTrigCycle, 0 );
 

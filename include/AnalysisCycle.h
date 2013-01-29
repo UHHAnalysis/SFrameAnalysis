@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.15 2012/12/21 13:35:39 bazterra Exp $
+// $Id: AnalysisCycle.h,v 1.16 2013/01/17 23:59:46 rkogler Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -23,7 +23,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.15 $
+ *  @version $Revision: 1.16 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -107,11 +107,20 @@ protected:
   // Gen info is present in MC sample
   bool m_addGenInfo;
 
-private:
+  //MC-data correction weights
+  LeptonScaleFactors* m_lsf;
 
   // wrapper to LuminosityHandler
   LuminosityHandler *LumiHandler() { return (LuminosityHandler*)GetConfigObject("LuminosityHandler"); }
   double m_int_lumi_per_bin; // the integrated luminosity per bin for the lumi handler
+  
+  // flag if it's a new run
+  bool m_newrun;
+
+  // PU-reweighting
+  PUWeightProducer* m_puwp;
+
+private:
 
   // lumi file properties
   std::string m_lumifile_path;
@@ -122,7 +131,6 @@ private:
   std::string m_PUFilenameData;
   std::string m_PUHistnameMC;
   std::string m_PUHistnameData;
-  PUWeightProducer* m_puwp;
 
   // systematic uncertainties
   std::string m_sys_unc_name;
@@ -140,13 +148,11 @@ private:
   std::string m_TopJetCollectionGen;
   std::string m_PrunedJetCollection;
   std::string m_GenParticleCollection;
-  bool m_newrun;
   bool m_writeTTbarReco;
   bool m_readTTbarReco;
 
-  //MC-data correction weights
+  //steering for MC-data correction weights
   std::vector<std::string> m_leptonweights;
-  LeptonScaleFactors* m_lsf;
 
   //output variables
   std::vector< Electron > m_output_electrons;  

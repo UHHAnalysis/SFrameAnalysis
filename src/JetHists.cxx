@@ -19,17 +19,26 @@ JetHists::~JetHists()
 void JetHists::Init()
 {
   // book all histograms here
-  Book( TH1F( "NJets", "number of jets", 13, -0.5, 12.5 ) );
-  Book( TH1F( "NJets_ly", "number of jets", 13, -0.5, 12.5 ) );
+  Book( TH1F( "NJets", "number of jets (selection dependent)", 13, -0.5, 12.5 ) );
+  Book( TH1F( "NJets_ly", "number of jets (selection dependent)", 13, -0.5, 12.5 ) );
 
+  Book( TH1F( "NJets30", "number of jets with P_{T} > 30 GeV", 15, -0.5, 14.5 ) );
+  Book( TH1F( "NJets30_ly", "number of jets with P_{T} > 30 GeV", 15, -0.5, 14.5 ) );
 
+  Book( TH1F( "NJets50", "number of jets with P_{T} > 50 GeV", 10, -0.5, 9.5 ) );
+  Book( TH1F( "NJets50_ly", "number of jets with P_{T} > 50 GeV", 10, -0.5, 9.5 ) );
+
+  Book( TH1F( "NJets100", "number of jets with P_{T} > 100 GeV", 8, -0.5, 7.5 ) );
+  Book( TH1F( "NJets100_ly", "number of jets with P_{T} > 100 GeV", 8, -0.5, 7.5 ) );
+
+  double* logPtjet_bins  = MakeLogBinning(50, 20, 1500);
   double* logPtjet1_bins = MakeLogBinning(50, 100, 1500);
   double* logPtjet2_bins = MakeLogBinning(50, 30, 1000);
-  double* logPtjet3_bins = MakeLogBinning(50, 30, 500);
-  double* logPtjet4_bins = MakeLogBinning(50, 30, 250);
+  double* logPtjet3_bins = MakeLogBinning(50, 20, 500);
+  double* logPtjet4_bins = MakeLogBinning(50, 20, 250);
 
-  Book( TH1F( "pt_lx"," p_{T} all jets", 50, logPtjet1_bins));
-  Book( TH1F( "pt_lxy"," p_{T} all jets", 50, logPtjet1_bins));
+  Book( TH1F( "pt_lx"," p_{T} all jets", 50, logPtjet_bins));
+  Book( TH1F( "pt_lxy"," p_{T} all jets", 50, logPtjet_bins));
 
   Book( TH1F( "eta","#eta all jets", 50,-3,3));
   Book( TH1F( "phi","#phi all jets", 50, -PI, PI));
@@ -69,7 +78,7 @@ void JetHists::Init()
   Book( TH1F( "eta_bJet_2"," #eta 2nd bJet",100,-3,3));
   Book( TH1F( "phi_bJet_1"," #phi leading bJet",100,-PI,PI));
   Book( TH1F( "phi_bJet_2"," #phi 2nd bJet",100,-PI,PI));
-  Book( TH1F( "bjet_tag","b jet",4,0.5,4.5));
+  Book( TH1F( "bjet_tag","index of b jet",4,0.5,4.5));
 }
 
 void JetHists::Fill()
@@ -85,6 +94,9 @@ void JetHists::Fill()
   Hist("NJets")->Fill(NJets, weight);
   Hist("NJets_ly")->Fill(NJets, weight);
   
+  int NJets30 = 0;
+  int NJets50 = 0;
+  int NJets100 = 0;
   for (unsigned int i =0; i<bcc->jets->size(); ++i)
     {
       Jet jet =  bcc->jets->at(i); 
@@ -92,7 +104,16 @@ void JetHists::Fill()
       Hist("pt_lxy") -> Fill(jet.pt(),weight);
       Hist("eta") -> Fill(jet.eta(),weight);
       Hist("phi") -> Fill(jet.phi(),weight);
+      if (jet.pt()>30) ++NJets30;
+      if (jet.pt()>50) ++NJets50;
+      if (jet.pt()>100) ++NJets100;
     }
+  Hist("NJets30")->Fill(NJets30, weight);
+  Hist("NJets30_ly")->Fill(NJets30, weight);
+  Hist("NJets50")->Fill(NJets50, weight);
+  Hist("NJets50_ly")->Fill(NJets50, weight);
+  Hist("NJets100")->Fill(NJets100, weight);
+  Hist("NJets100_ly")->Fill(NJets100, weight);
   
   sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
   for (unsigned int i =0; i<=3; ++i)

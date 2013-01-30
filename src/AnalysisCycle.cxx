@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.27 2013/01/29 10:51:24 rkogler Exp $
+// $Id: AnalysisCycle.cxx,v 1.28 2013/01/29 15:47:14 peiffer Exp $
 
 #include <iostream>
 
@@ -403,9 +403,12 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     if(m_PrimaryVertexCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrimaryVertexCollection.c_str() , m_bcc.pvs);
     if(m_TopJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollection.c_str() , m_bcc.topjets);
     if(m_addGenInfo && m_TopJetCollectionGen.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollectionGen.c_str() , m_bcc.topjetsgen);
+    else m_bcc.topjetsgen=NULL;
     if(m_PrunedJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrunedJetCollection.c_str() , m_bcc.prunedjets);
     if(m_addGenInfo && m_GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenParticleCollection.c_str() , m_bcc.genparticles);
+    else m_bcc.genparticles=NULL;
     if(m_addGenInfo) ConnectVariable( "AnalysisTree", "genInfo" , m_bcc.genInfo);
+    else m_bcc.genInfo=NULL;
     if(m_readTTbarReco) ConnectVariable( "AnalysisTree", "recoHyps", m_bcc.recoHyps);
     ConnectVariable( "AnalysisTree", "run" , m_bcc.run);
     ConnectVariable( "AnalysisTree", "rho" , m_bcc.rho);
@@ -498,7 +501,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     // store the weight (lumiweight) in the eventcalc class and use it
     calc -> ProduceWeight(weight);
 
-    if(m_bcc.genInfo) {
+    if(!m_bcc.isRealData && m_bcc.genInfo) {
 
         std::vector<float> genweights =  m_bcc.genInfo->weights();
         for(unsigned int i=0; i< genweights.size(); ++i) {
@@ -528,6 +531,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     if(!m_readTTbarReco && m_writeTTbarReco){  
       m_bcc.recoHyps = new std::vector<ReconstructionHypothesis>;
     }
+
     return;
 
 }

@@ -5,9 +5,11 @@
 <JobConfiguration JobName="ZprimePostSelectionCycleJob" OutputLevel="INFO">
 
 	<Library Name="libfastjet"/>
+	<Library Name="libfastjettools"/>
 	<Library Name="libSFramePlugIns"/>
 	<Library Name="libSFrameTools"/>
 	<Library Name="libAnalysis"/>
+
 
 	<Package Name="SFrameCore.par" />
 	<Package Name="SFramePlugIns.par" />
@@ -27,8 +29,8 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.TTbar.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
--->
-<!--
+
+
 		<InputData Lumi="92270" NEventsMax="-1" Type="MC" Version="TTbar_0to700" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.TTbar_0to700.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -41,8 +43,8 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.TTbar_1000toInf.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
--->
-<!--
+
+-
 		<InputData Lumi="2097.3" NEventsMax="-1" Type="MC" Version="Wjets" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.Wjets.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -73,6 +75,7 @@
  		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.SingleTop_Tbar_sch.root" Lumi="0.0"/>       
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
+
 		<InputData Lumi="118975" NEventsMax="-1" Type="MC" Version="ZP500w5" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.ZP500w5.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -137,7 +140,8 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.ZP4000w400.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-
+-->
+<!--
 		<InputData Lumi="36088" NEventsMax="-1" Type="MC" Version="DY1Jets_50toInf" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.DY1Jets_50toInf.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -154,8 +158,10 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.DY4Jets_50toInf.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
+-->
 
 
+<!--
 		<InputData Lumi="3593.1" NEventsMax="-1" Type="MC" Version="W1Jets" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.W1Jets.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -172,7 +178,8 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.W4Jets.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
-
+-->
+<!--
 		<InputData Lumi="8390.9" NEventsMax="-1" Type="MC" Version="DY_10to50" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.DY_10to50.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -221,7 +228,7 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.RSG4000.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
--->
+
 
 	        <InputData Lumi="4.5492" NEventsMax="-1" Type="MC" Version="QCDMu20to30" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.QCDMu20to30.root" Lumi="0.0"/> 
@@ -264,49 +271,50 @@
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.QCDMu800to1000.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-
+-->
 <!--
 	        <InputData Lumi="573.26" NEventsMax="-1" Type="MC" Version="WJets_scaleup" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.WJets_scaleup.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" />
 		</InputData>
 	        <InputData Lumi="572.60" NEventsMax="-1" Type="MC" Version="WJets_scaledown" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.WJets_scaledown.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" />
 		</InputData>
 	        <InputData Lumi="578.54" NEventsMax="-1" Type="MC" Version="WJets_matchingup" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.WJets_matchingup.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" />
 		</InputData>
 	        <InputData Lumi="589.25" NEventsMax="-1" Type="MC" Version="WJets_matchingdown" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.WJets_matchingdown.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" />
 		</InputData>
 	        <InputData Lumi="619.42" NEventsMax="-1" Type="MC" Version="DYJets_scaleup" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.DYJets_scaleup.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" />
 		</InputData>
 	        <InputData Lumi="552.24" NEventsMax="-1" Type="MC" Version="DYJets_scaledown" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.DYJets_scaledown.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" />
 		</InputData>
 	        <InputData Lumi="566.69" NEventsMax="-1" Type="MC" Version="DYJets_matchingup" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.DYJets_matchingup.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" />
 		</InputData>
 	        <InputData Lumi="602.90" NEventsMax="-1" Type="MC" Version="DYJets_matchingdown" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.DYJets_matchingdown.root" Lumi="0.0"/>
 			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" />
 		</InputData>
 -->
+	        <InputData Lumi="64071.8" NEventsMax="-1" Type="MC" Version="TT_scaleup" Cacheable="False">
+		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.TT_scaleup.root" Lumi="0.0"/>
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="64096.9" NEventsMax="-1" Type="MC" Version="TT_scaledown" Cacheable="False">
+		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/ZprimeSelectionCycle.MC.TT_scaledown.root" Lumi="0.0"/>
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+
 		<UserConfig>
            <Item Name="Electron_Or_Muon_Selection" Value="Muon" />
 		   <Item Name="JetCollection" Value="goodPatJetsPFlow" />  
@@ -323,7 +331,9 @@
         <Item Name="ApplyMttbarGenCut" Value="false" />
 		      
 		      <Item Name="PU_Filename_MC" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/PileUpHistoCycle" />
+
 		      <Item Name="PU_Filename_Data" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/MyDataPileupHistogram_69_208686.root" />
+
 		      <Item Name="PU_Histname_Data" Value="pileup" />
 		      <Item Name="PU_Histname_MC" Value="N_pileup_hist" />
 
@@ -336,10 +346,17 @@
 
 		   <Item Name="BTaggingScaleFactors" Value="default" />
 
+
 		       <Item Name="ApplyFlavorSelection" Value="none" />
 
 		    <Item Name="LeptonScaleFactors" Value="MuonRunA 864 MuonRunB 4357 MuonRunC 14105" /> 
-		      
+
+                   <Item Name="SystematicUncertainty" Value="None" /> 
+                   <Item Name="SystematicVariation" Value="up" /> 
+		   <!-- Use PDFWeightFilesDirectory only for signal -->
+		   <Item Name="PDFName" Value="cteq66" />
+		   <!--<Item Name="PDFWeightFilesDirectory" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PDFWeightFiles/" />    -->
+				    
                 </UserConfig>
 	</Cycle>
 </JobConfiguration>

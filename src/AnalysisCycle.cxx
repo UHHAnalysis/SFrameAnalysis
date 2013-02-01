@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.28 2013/01/29 15:47:14 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.29 2013/01/30 10:50:08 peiffer Exp $
 
 #include <iostream>
 
@@ -25,6 +25,7 @@ AnalysisCycle::AnalysisCycle()
     m_puwp = NULL;
     m_newrun = false;
     m_lsf = NULL;
+    m_pdfweights=NULL;
 
     // set some default values
     m_readTTbarReco = false;
@@ -69,6 +70,10 @@ AnalysisCycle::AnalysisCycle()
     // uncertainties
     DeclareProperty("SystematicUncertainty", m_sys_unc_name);
     DeclareProperty("SystematicVariation", m_sys_var_name);
+
+    //special configuration for PDF uncertainty
+    DeclareProperty( "PDFName", m_pdfname );
+    DeclareProperty( "PDFWeightFilesDirectory", m_pdfdir );
 
     // steering property for data-driven qcd in electron channel
     m_reversed_electron_selection = false;
@@ -173,7 +178,8 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       if (m_sys_unc_name=="JEC" || m_sys_unc_name=="jec") isok = true;
       if (m_sys_unc_name=="JER" || m_sys_unc_name=="jer") isok = true;
       if (m_sys_unc_name=="LeptonScale") isok = true;
-      
+      if (m_sys_unc_name=="PDF" || m_sys_unc_name=="pdf") isok = true;
+
       if (isok){
 
 	if (m_sys_unc_name=="NONE" || m_sys_unc_name=="none" || m_sys_unc_name=="None"){
@@ -238,6 +244,22 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       } 
     } else {
       m_lsf = new LeptonScaleFactors(m_leptonweights);	
+    }
+
+    if(m_sys_unc_name == "PDF" || m_sys_unc_name == "pdf"){
+
+      TString dirname = m_pdfdir;
+      if(m_pdfdir.size()>0){
+	dirname += "/";
+	dirname += inputData.GetVersion();
+      }
+      
+
+      if(m_sys_var_name == "UP" || m_sys_var_name == "Up" || m_sys_var_name == "up"){
+	m_pdfweights = new PDFWeights(e_Up,m_pdfname,dirname);	
+      } else {
+	m_pdfweights = new PDFWeights(e_Down,m_pdfname,dirname);
+      }   
     }
     
     return;
@@ -518,6 +540,10 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
         if(m_lsf) {
 	  calc->ProduceWeight(m_lsf->GetWeight());
         }
+	//pdf re-weighting for systematics
+	if(m_pdfweights){
+	  calc->ProduceWeight(m_pdfweights->GetWeight());
+	}
     }
 
     //select only good runs

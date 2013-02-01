@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.16 2013/01/17 23:59:46 rkogler Exp $
+// $Id: AnalysisCycle.h,v 1.17 2013/01/29 10:47:12 rkogler Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -10,6 +10,7 @@
 #include "LuminosityHandler.h"
 #include "BaseHists.h"
 #include "MCDataScaleFactors.h"
+#include "PDFWeights.h"
 
 /**
  *   @short Base of every analysis cycle 
@@ -23,7 +24,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.16 $
+ *  @version $Revision: 1.17 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -109,6 +110,11 @@ protected:
 
   //MC-data correction weights
   LeptonScaleFactors* m_lsf;
+
+  //PDF re-weighting 
+  PDFWeights* m_pdfweights;
+  std::string m_pdfname;
+  std::string m_pdfdir;
 
   // wrapper to LuminosityHandler
   LuminosityHandler *LumiHandler() { return (LuminosityHandler*)GetConfigObject("LuminosityHandler"); }

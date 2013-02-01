@@ -17,7 +17,7 @@
 	<Package Name="Analysis.par" />
 
 
-	<Cycle Name="ZprimeSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/dust/naf/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/" PostFix="_TriggerTestProof" TargetLumi="1" > 
+	<Cycle Name="ZprimeSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/dust/naf/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/" PostFix="" TargetLumi="1" > 
 <!--	<Cycle Name="ZprimeSelectionCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/SelectionMuon/" PostFix="_TriggerTest" TargetLumi="1.0" > -->
 
 <!--
@@ -26,7 +26,7 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
--->
+
 
 		<InputData Lumi="92270" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/ZprimePreSelectionCycle.MC.TTbar.root" Lumi="0.0"/> 
@@ -34,7 +34,7 @@
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
 
-<!--
+
 		<InputData Lumi="118975" NEventsMax="-1" Type="MC" Version="ZP500w5" Cacheable="False">
 		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/ZprimePreSelectionCycle.MC.ZP500w5.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
@@ -370,6 +370,16 @@
 			<OutputTree Name="AnalysisTree" />
 		</InputData>
 -->
+	        <InputData Lumi="64071.8" NEventsMax="-1" Type="MC" Version="TT_scaleup" Cacheable="False">
+		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/ZprimePreSelectionCycle.MC.TT_scaleup.root" Lumi="0.0"/>
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
+	        <InputData Lumi="64096.9" NEventsMax="-1" Type="MC" Version="TT_scaledown" Cacheable="False">
+		        <In FileName="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/ZprimePreSelectionCycle.MC.TT_scaledown.root" Lumi="0.0"/>
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
 		<UserConfig>
 
 		   <Item Name="Electron_Or_Muon_Selection" Value="Muon" />
@@ -405,7 +415,7 @@
 		   <Item Name="LumiFileName" Value="Mu40_208686.root" /> 
 		   <Item Name="LumiTrigger" Value="HLT_Mu40_eta2p1_v" /> 
 
-<!--	   <Item Name="LeptonScaleFactors" Value="MuonRunA 864 MuonRunB 4357 MuonRunC 14105" /> -->
+	   <Item Name="LeptonScaleFactors" Value="MuonRunA 864 MuonRunB 4357 MuonRunC 14105" /> 
 
                    <Item Name="SystematicUncertainty" Value="None" />
                    <Item Name="SystematicVariation" Value="up" />

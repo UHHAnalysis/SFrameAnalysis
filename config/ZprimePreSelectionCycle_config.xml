@@ -65,7 +65,8 @@
 <!ENTITY WJets_scaledown SYSTEM "WJets_scaledown.xml">
 <!ENTITY WJets_matchingup SYSTEM "WJets_matchingup.xml">
 <!ENTITY WJets_matchingdown SYSTEM "WJets_matchingdown.xml">
-
+<!ENTITY TT_scaleup SYSTEM "TT_scaleup.xml">
+<!ENTITY TT_scaledown SYSTEM "TT_scaledown.xml">
 ]>
 
 
@@ -86,12 +87,13 @@
 	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/dust/naf/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/" PostFix="" TargetLumi="1" >
 <!--	<Cycle Name="ZprimePreSelectionCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/" PostFix="_TriggerTest" TargetLumi="1" >  -->
 
+<!--
                 <InputData Lumi="1" NEventsMax="200000" Type="DATA" Version="DATA" Cacheable="True">
                         &MuData;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
-<!--
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="False">
 		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000_v3.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" />
@@ -455,6 +457,16 @@
 			<OutputTree Name="AnalysisTree" />
 		</InputData>
 -->
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TT_scaleup" Cacheable="True">
+                        &TT_scaleup;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TT_scaledown" Cacheable="True">
+                        &TT_scaledown;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
 		<UserConfig>
 
 		   <Item Name="Electron_Or_Muon_Selection" Value="Muon" />

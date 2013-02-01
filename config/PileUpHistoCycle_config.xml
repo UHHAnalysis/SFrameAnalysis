@@ -65,10 +65,13 @@
 <!ENTITY WJets_scaledown SYSTEM "WJets_scaledown.xml">
 <!ENTITY WJets_matchingup SYSTEM "WJets_matchingup.xml">
 <!ENTITY WJets_matchingdown SYSTEM "WJets_matchingdown.xml">
+<!ENTITY TT_scaleup SYSTEM "TT_scaleup.xml">
+<!ENTITY TT_scaledown SYSTEM "TT_scaledown.xml">
 ]>
 
 <JobConfiguration JobName="PileUpHistoCycleJob" OutputLevel="DEBUG">
 	<Library Name="libfastjet" />
+	<Library Name="libfastjettools"/>
 	<Library Name="libSFrameTools" />
 	<Library Name="libAnalysis" />
 	<Library Name="libSFramePlugIns" />
@@ -390,7 +393,7 @@
                         &QCDMu800to1000;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
--->
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DYJets_scaleup" Cacheable="True">
                         &DYJets_scaleup;
 			<InputTree Name="AnalysisTree" /> 
@@ -423,7 +426,15 @@
                         &WJets_matchingdown;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-
+-->
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TT_scaleup" Cacheable="True">
+                        &TT_scaleup;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TT_scaledown" Cacheable="True">
+                        &TT_scaledown;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
 		<UserConfig>
 
 		</UserConfig>

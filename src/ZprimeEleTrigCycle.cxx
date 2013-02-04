@@ -93,7 +93,7 @@ void ZprimeEleTrigCycle::BeginInputData( const SInputData& id ) throw( SError )
     } else {
         m_logger << ERROR << "Electron Trigger Cycle needs to be run with muon selection!" << SLogger::endmsg;
     }      
-    static Selection* std_mu_selection= new Selection("std_mu_selection");
+    Selection* std_mu_selection= new Selection("std_mu_selection");
 
     if(doMu) {
       std_mu_selection->addSelectionModule(new TriggerSelection(m_lumi_trigger));
@@ -111,19 +111,20 @@ void ZprimeEleTrigCycle::BeginInputData( const SInputData& id ) throw( SError )
     std_mu_selection->addSelectionModule(new NElectronSelection(0,1)); // 0 or 1 electron
 
     // second part of standard cuts 
-    static Selection* std_mu_selection2 = new Selection("second_std_mu_selection");
+    Selection* std_mu_selection2 = new Selection("second_std_mu_selection");
     std_mu_selection2->addSelectionModule(new NJetSelection(1,int_infinity(),150,2.5));//leading jet with pt>150 GeV
+    std_mu_selection2->addSelectionModule(new NJetSelection(2,int_infinity(), 50,2.5));//second leading jet with pt>50 GeV
     std_mu_selection2->addSelectionModule(new NBTagSelection(m_Nbtags_min,m_Nbtags_max)); //b tags from config file
     std_mu_selection2->addSelectionModule(new HTlepCut(150));
     std_mu_selection2->addSelectionModule(new METCut(20));
 
     // triangular cuts for electron selection
-    static Selection* triangularcut_selection= new Selection("triangularcut_selection");
+    Selection* triangularcut_selection= new Selection("triangularcut_selection");
     triangularcut_selection->addSelectionModule(new NElectronSelection(1,1)); // exactly one electron
     triangularcut_selection->addSelectionModule(new TriangularCut()); // triangular cuts
     triangularcut_selection->addSelectionModule(new MuonElectronOSCut()); // additional cut: OS for ele+muon
 
-    static Selection* ele_trig_selection = new Selection("electron_trigger");
+    Selection* ele_trig_selection = new Selection("electron_trigger");
     ele_trig_selection->addSelectionModule(new TriggerSelection("HLT_Ele30_CaloIdVT_TrkIdT_PFNoPUJet100_PFNoPUJet25_v"));
                                                                 
     // chi2 selection
@@ -255,11 +256,9 @@ void ZprimeEleTrigCycle::ExecuteEvent( const SInputData& id, Double_t weight) th
     if(bcc->isRealData && m_addGenInfo) {
         m_logger << WARNING<< "Running over real data, but addGenInfo=True?!" << SLogger::endmsg;
     }
-    //fill list of trigger names
-    if(bcc->triggerNames->size()!=0) {
-        bcc->triggerNames_actualrun = *bcc->triggerNames;
-        m_newrun=true;
-    }
+    
+    FillTriggerNames();
+
     // generate random run Nr for MC samples (consider luminosity of each run)
     // e.g. for proper OTX cut in MC, and needs to be done only once per event
     if( !bcc->isRealData && LumiHandler()->IsLumiCalc() ) {
@@ -286,7 +285,6 @@ void ZprimeEleTrigCycle::ExecuteEvent( const SInputData& id, Double_t weight) th
     if(bcc->isRealData && LumiHandler()->IsLumiCalc() ) {
         if( !LumiHandler()->PassGoodRunsList( bcc->run, bcc->luminosityBlock )) throw SError( SError::SkipEvent );
     }
-
     
     // now start the actual implementation of the electron trigger efficiency
     static Selection* mttbar_gen_selection = GetSelection("Mttbar_Gen_Selection");
@@ -329,7 +327,7 @@ void ZprimeEleTrigCycle::ExecuteEvent( const SInputData& id, Double_t weight) th
     if(!std_mu_selection->passSelection())  throw SError( SError::SkipEvent );
 
     //apply tight jet cleaning
-    if(bcc->jets) m_cleaner->JetCleaner(50,2.5,true);
+    if(bcc->jets) m_cleaner->JetCleaner(30,2.5,true);
 
     //remove all taus from collection for HTlep calculation
     if(bcc->taus) m_cleaner->TauCleaner(double_infinity(),0.0);
@@ -393,3 +391,4 @@ void ZprimeEleTrigCycle::FillControlHists(TString postfix)
     topjethists->Fill();
 
 }
+

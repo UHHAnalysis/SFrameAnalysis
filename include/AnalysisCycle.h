@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.17 2013/01/29 10:47:12 rkogler Exp $
+// $Id: AnalysisCycle.h,v 1.18 2013/02/01 12:39:01 peiffer Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -24,7 +24,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.17 $
+ *  @version $Revision: 1.18 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -113,6 +113,7 @@ protected:
 
   //PDF re-weighting 
   PDFWeights* m_pdfweights;
+  int m_pdf_index;
   std::string m_pdfname;
   std::string m_pdfdir;
 

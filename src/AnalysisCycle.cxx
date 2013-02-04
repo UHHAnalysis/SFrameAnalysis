@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.29 2013/01/30 10:50:08 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.30 2013/02/01 12:39:01 peiffer Exp $
 
 #include <iostream>
 
@@ -26,6 +26,7 @@ AnalysisCycle::AnalysisCycle()
     m_newrun = false;
     m_lsf = NULL;
     m_pdfweights=NULL;
+    m_pdf_index=0;
 
     // set some default values
     m_readTTbarReco = false;
@@ -74,6 +75,7 @@ AnalysisCycle::AnalysisCycle()
     //special configuration for PDF uncertainty
     DeclareProperty( "PDFName", m_pdfname );
     DeclareProperty( "PDFWeightFilesDirectory", m_pdfdir );
+    DeclareProperty( "PDFIndex", m_pdf_index);
 
     // steering property for data-driven qcd in electron channel
     m_reversed_electron_selection = false;
@@ -542,7 +544,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
         }
 	//pdf re-weighting for systematics
 	if(m_pdfweights){
-	  calc->ProduceWeight(m_pdfweights->GetWeight());
+	  calc->ProduceWeight(m_pdfweights->GetWeight(m_pdf_index));
 	}
     }
 

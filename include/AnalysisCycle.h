@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.18 2013/02/01 12:39:01 peiffer Exp $
+// $Id: AnalysisCycle.h,v 1.19 2013/02/04 12:47:57 peiffer Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -24,7 +24,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.18 $
+ *  @version $Revision: 1.19 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -80,6 +80,10 @@ public:
 
   /// Function called at the end of every event to store selected data
   void WriteOutputTree() throw( SError );
+  
+  /// Function which fills the list with trigger names, scans the entire tree if information is not present in 
+  /// the actual event
+  void FillTriggerNames();
 
   /// returns whether generator info is added or not (automatically determined if data type is 'data')
   bool addGenInfo() {return m_addGenInfo;}

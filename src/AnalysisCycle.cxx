@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.30 2013/02/01 12:39:01 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.31 2013/02/04 12:47:57 peiffer Exp $
 
 #include <iostream>
 
@@ -469,49 +469,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
         m_logger << WARNING<< "Running over real data, but addGenInfo=True?!" << SLogger::endmsg;
     }
 
-    //fill list of trigger names
-
-    if(m_bcc.triggerNames->size()!=0) {
-        m_bcc.triggerNames_actualrun = *m_bcc.triggerNames;
-        m_newrun=true;
-    }
-    
-    if(m_bcc.triggerNames_actualrun.size()==0){
-
-      m_logger << WARNING<< "No trigger table found for this event -> start trigger search on following events" << SLogger::endmsg;
-
-      int tmp_run= m_bcc.run;
-      int tmp_event = m_bcc.event;
-
-      TTree* tmp_tree = GetInputTree("AnalysisTree");
-
-      int N_ent= tmp_tree->GetEntries();
-      for(int i=0; i<N_ent; ++i){
-	tmp_tree->GetEntry(i);
-	
-	//search for next event in tree with trigger table filled, check for same run number in case of real data
-	if(m_bcc.triggerNames->size()!=0 && (!m_bcc.isRealData || m_bcc.run==tmp_run)){
-	  m_bcc.triggerNames_actualrun = *m_bcc.triggerNames;
-	  m_newrun=true;
-	  m_logger << WARNING<< "Trigger search was succesful" << SLogger::endmsg;
-	  break;
-	}
-      }
-
-      //go back to original event
-      for(int i=0; i<N_ent; ++i){
-	tmp_tree->GetEntry(i);
-	if(m_bcc.event==tmp_event && m_bcc.run==tmp_run) break;
-      } 
-
-      if(m_bcc.event!=tmp_event || m_bcc.run!=tmp_run){
-	m_logger << ERROR<< "Trigger search error: can not find original event" << SLogger::endmsg;
-      }
-      
-    }
-    if(m_bcc.triggerNames_actualrun.size()==0){
-      m_logger << ERROR << "Trigger search was NOT succesful!!!" << SLogger::endmsg;
-    }
+    FillTriggerNames();
 
     // generate random run Nr for MC samples (consider luminosity of each run)
     // e.g. for proper OTX cut in MC, and needs to be done only once per event
@@ -561,6 +519,54 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     }
 
     return;
+
+}
+
+void AnalysisCycle::FillTriggerNames()
+{
+
+    //fill list of trigger names
+    if(m_bcc.triggerNames->size()!=0) {
+        m_bcc.triggerNames_actualrun = *m_bcc.triggerNames;
+        m_newrun=true;
+    }
+    
+    if(m_bcc.triggerNames_actualrun.size()==0){
+
+      m_logger << WARNING<< "No trigger table found for this event -> start trigger search on following events" << SLogger::endmsg;
+
+      int tmp_run= m_bcc.run;
+      int tmp_event = m_bcc.event;
+
+      TTree* tmp_tree = GetInputTree("AnalysisTree");
+
+      int N_ent= tmp_tree->GetEntries();
+      for(int i=0; i<N_ent; ++i){
+	tmp_tree->GetEntry(i);
+	
+	//search for next event in tree with trigger table filled, check for same run number in case of real data
+	if(m_bcc.triggerNames->size()!=0 && (!m_bcc.isRealData || m_bcc.run==tmp_run)){
+	  m_bcc.triggerNames_actualrun = *m_bcc.triggerNames;
+	  m_newrun=true;
+	  m_logger << WARNING<< "Trigger search was succesful" << SLogger::endmsg;
+	  break;
+	}
+      }
+
+      //go back to original event
+      for(int i=0; i<N_ent; ++i){
+	tmp_tree->GetEntry(i);
+	if(m_bcc.event==tmp_event && m_bcc.run==tmp_run) break;
+      } 
+
+      if(m_bcc.event!=tmp_event || m_bcc.run!=tmp_run){
+	m_logger << ERROR<< "Trigger search error: can not find original event" << SLogger::endmsg;
+      }
+      
+    }
+    if(m_bcc.triggerNames_actualrun.size()==0){
+      m_logger << ERROR << "Trigger search was NOT succesful!!!" << SLogger::endmsg;
+    }
 
 }
 

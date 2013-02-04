@@ -19,8 +19,8 @@ JetHists::~JetHists()
 void JetHists::Init()
 {
   // book all histograms here
-  Book( TH1F( "NJets", "number of jets (selection dependent)", 13, -0.5, 12.5 ) );
-  Book( TH1F( "NJets_ly", "number of jets (selection dependent)", 13, -0.5, 12.5 ) );
+  Book( TH1F( "NJets", "number of jets", 13, -0.5, 12.5 ) );
+  Book( TH1F( "NJets_ly", "number of jets", 13, -0.5, 12.5 ) );
 
   Book( TH1F( "NJets30", "number of jets with P_{T} > 30 GeV", 15, -0.5, 14.5 ) );
   Book( TH1F( "NJets30_ly", "number of jets with P_{T} > 30 GeV", 15, -0.5, 14.5 ) );
@@ -64,6 +64,12 @@ void JetHists::Init()
   Book( TH1F( "phi_2","#phi 2nd jet",100,-PI,PI));
   Book( TH1F( "phi_3","#phi 3rd jet",100,-PI,PI));
   Book( TH1F( "phi_4","#phi 4th jet",100,-PI,PI));
+
+  // Delta_R
+  Book( TH1F( "deltaRmin_1", "#Delta R_{min}(first jet, nearest jet)", 40, 0, 2.0) );
+  Book( TH1F( "deltaRmin_1_ly", "#Delta R_{min}(first jet, nearest jet)", 40, 0, 2.0) );
+  Book( TH1F( "deltaRmin_2", "#Delta R_{min}(2nd jet, nearest jet)", 40, 0, 2.0) );
+  Book( TH1F( "deltaRmin_2_ly", "#Delta R_{min}(2nd jet, nearest jet)", 40, 0, 2.0) );
 
   // b-jets
   Book( TH1F( "NbJets", "number of bJets", 8, -0.5, 7.5 ) );
@@ -133,6 +139,13 @@ void JetHists::Fill()
 	    {
 	      Hist("bjet_tag")-> Fill(i+1,weight);
 	    }
+	  if (i<2){
+	    TString hname_deltaRmin = TString::Format("deltaRmin_%d", i+1);
+	    Hist(hname_deltaRmin)->Fill( deltaRmin(&jet, bcc->jets), weight);
+	    TString hname_deltaRmin_ly = TString::Format("deltaRmin_%d_ly", i+1); 
+	    Hist(hname_deltaRmin_ly)->Fill( deltaRmin(&jet, bcc->jets), weight);
+	  }
+
 	}
     } 
     

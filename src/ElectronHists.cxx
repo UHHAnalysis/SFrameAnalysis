@@ -18,6 +18,7 @@ ElectronHists::~ElectronHists()
 
 void ElectronHists::Init()
 {
+
     // book all histograms here
     Book( TH1F( "number","number of electrons",7,-0.5,6.5));
     Book( TH1F( "number_ly","number of electrons",7,-0.5,6.5));
@@ -65,6 +66,7 @@ void ElectronHists::Init()
     Book( TH1F( "charge","charge electron",3,-1.5,1.5));
     Book( TH1F( "charge_1","charge leading electron",3,-1.5,1.5));
     Book( TH1F( "charge_2","charge 2nd electron",3,-1.5,1.5));
+
 }
 
 
@@ -102,6 +104,7 @@ void ElectronHists::Fill()
             h->Fill(deltaRmin(&electron, jets), pTrel(&electron, jets), weight);
         }
     }
+
     sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
     for (unsigned int i =0; i<=1; ++i) {
         if (bcc->electrons->size()> i) {

@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.31 2013/02/04 12:47:57 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.32 2013/02/04 12:49:42 rkogler Exp $
 
 #include <iostream>
 
@@ -27,6 +27,7 @@ AnalysisCycle::AnalysisCycle()
     m_lsf = NULL;
     m_pdfweights=NULL;
     m_pdf_index=0;
+    m_actual_run=-99999;
 
     // set some default values
     m_readTTbarReco = false;
@@ -469,6 +470,8 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
         m_logger << WARNING<< "Running over real data, but addGenInfo=True?!" << SLogger::endmsg;
     }
 
+    //fill list of trigger names
+
     FillTriggerNames();
 
     // generate random run Nr for MC samples (consider luminosity of each run)
@@ -524,6 +527,13 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 
 void AnalysisCycle::FillTriggerNames()
 {
+
+    //remove trigger list when starting a new run
+    if( m_bcc.run != m_actual_run){
+      m_bcc.triggerNames_actualrun.clear();
+      m_newrun=true;
+    }
+    m_actual_run = m_bcc.run;
 
     //fill list of trigger names
     if(m_bcc.triggerNames->size()!=0) {

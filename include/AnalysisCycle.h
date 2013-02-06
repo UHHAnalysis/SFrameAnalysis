@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.19 2013/02/04 12:47:57 peiffer Exp $
+// $Id: AnalysisCycle.h,v 1.20 2013/02/04 12:50:52 rkogler Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -24,7 +24,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.19 $
+ *  @version $Revision: 1.20 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -191,6 +191,9 @@ private:
   // important: the container with all variables
   BaseCycleContainer m_bcc;
  
+  //run number of actual run
+  int m_actual_run;
+
   // Macro adding the functions for dictionary generation
   ClassDef( AnalysisCycle, 0 );
 

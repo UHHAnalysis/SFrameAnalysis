@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.32 2013/02/04 12:49:42 rkogler Exp $
+// $Id: AnalysisCycle.cxx,v 1.33 2013/02/06 10:45:15 peiffer Exp $
 
 #include <iostream>
 
@@ -544,16 +544,28 @@ void AnalysisCycle::FillTriggerNames()
     if(m_bcc.triggerNames_actualrun.size()==0){
 
       m_logger << WARNING<< "No trigger table found for this event -> start trigger search on following events" << SLogger::endmsg;
-
+      
       int tmp_run= m_bcc.run;
       int tmp_event = m_bcc.event;
 
       TTree* tmp_tree = GetInputTree("AnalysisTree");
 
-      int N_ent= tmp_tree->GetEntries();
+      tmp_tree->SetBranchStatus("*",0);
+      tmp_tree->SetBranchStatus("run",1); 
+      tmp_tree->SetBranchStatus("event",1);
+      tmp_tree->SetBranchStatus("triggerNames",1);
+
+      int N_ent= tmp_tree->GetEntriesFast();
+
+      int event_index=-1;
+      int counter =0;
       for(int i=0; i<N_ent; ++i){
+	counter++;
+	//if(i%10000==0) std::cout << "Search trigger " << i << std::endl;
 	tmp_tree->GetEntry(i);
 	
+	if(m_bcc.event==tmp_event && m_bcc.run==tmp_run) event_index = i;
+
 	//search for next event in tree with trigger table filled, check for same run number in case of real data
 	if(m_bcc.triggerNames->size()!=0 && (!m_bcc.isRealData || m_bcc.run==tmp_run)){
 	  m_bcc.triggerNames_actualrun = *m_bcc.triggerNames;
@@ -564,14 +576,22 @@ void AnalysisCycle::FillTriggerNames()
       }
 
       //go back to original event
-      for(int i=0; i<N_ent; ++i){
-	tmp_tree->GetEntry(i);
-	if(m_bcc.event==tmp_event && m_bcc.run==tmp_run) break;
-      } 
+      if(event_index>=0){
+	tmp_tree->GetEntry(event_index);
+      }
+      else{
+	tmp_tree->SetBranchStatus("triggerNames",0);
+	for(int i=counter-1; i<N_ent; ++i){
+	  tmp_tree->GetEntry(i);
+	  if(m_bcc.event==tmp_event && m_bcc.run==tmp_run) break;
+	} 
+      }
 
       if(m_bcc.event!=tmp_event || m_bcc.run!=tmp_run){
 	m_logger << ERROR<< "Trigger search error: can not find original event" << SLogger::endmsg;
       }
+
+      tmp_tree->SetBranchStatus("*",1);
       
     }
     if(m_bcc.triggerNames_actualrun.size()==0){

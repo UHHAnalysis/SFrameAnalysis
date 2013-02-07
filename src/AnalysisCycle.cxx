@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.34 2013/02/06 17:37:19 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.35 2013/02/07 13:47:16 peiffer Exp $
 
 #include <iostream>
 
@@ -531,7 +531,7 @@ void AnalysisCycle::FillTriggerNames()
 {
 
     //remove trigger list when starting a new run
-    if( m_bcc.run != m_actual_run){
+    if( m_bcc.run != m_actual_run && m_bcc.isRealData){
       m_bcc.triggerNames_actualrun.clear();
       m_newrun=true;
     }

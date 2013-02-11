@@ -272,7 +272,8 @@ void Cleaner::JetRecorrector(FactorizedJetCorrector *corrector, bool sort)
 }
 
 // Old electron id
-/*bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
+/*
+bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
 {
     Electron ele = bcc->electrons->at(index);
     if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
@@ -294,26 +295,29 @@ void Cleaner::JetRecorrector(FactorizedJetCorrector *corrector, bool sort)
 }*/
 
 // Base on the new top simple cut recomendation for 53x
-/*bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
+ /*
+bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
 {
     Electron ele = bcc->electrons->at(index);
     if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
         if(bcc->pvs->size()>0) {
             if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02) {
                 if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1) {
-                    if(ele.passconversionveto()) {
-                        if(ele.eleID(Electron::e_Tight)) {
-                            return true;
-                        }
-                    }
+		  if(ele.passconversionveto()) {
+		      if(ele.eleID(Electron::e_Tight)) {
+			return true;
+		      }
+		  }
                 }
             }
         }
     }
     return false;
-}*/
-
+}
+ */
 // Base on the new top mva recomendation for 53x 
+
+
 bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
 {
     Electron ele = bcc->electrons->at(index);
@@ -332,6 +336,7 @@ bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
     }
     return false;
 }
+
 
 void Cleaner::ElectronCleaner_noID_noIso(double ptmin, double etamax)
 {
@@ -567,4 +572,22 @@ void Cleaner::PrimaryVertexCleaner(int ndofmax, double zmax, double rhomax)
         bcc->pvs->push_back(good_pvs[i]);
     }
     resetEventCalc();
+}
+
+void Cleaner::METPhiCorrector()
+{
+  
+  float met_x = bcc->met->v4().x();
+  float met_y = bcc->met->v4().y();
+
+  met_x += 0.2661+0.3217*bcc->pvs->size();
+  met_y += -0.2252-0.1747*bcc->pvs->size();
+
+  float met = sqrt(met_x*met_x + met_y*met_y);
+  float phi = atan(met_y/met_x);
+
+  bcc->met->set_phi(phi);
+  bcc->met->set_pt(met);
+  
+  resetEventCalc();
 }

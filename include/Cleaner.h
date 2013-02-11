@@ -94,6 +94,12 @@ class Cleaner{
 
   void PrimaryVertexCleaner(int ndofmax=4, double zmax=24.0, double rhomax=2.0);
 
+
+  /**
+   * Function to correct phi modulation of MET in data
+  */
+  void METPhiCorrector();
+
  private:
 
   BaseCycleContainer* bcc;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd" [
 <!ENTITY MuData SYSTEM "SingleMu.xml">
+<!ENTITY MuData2 SYSTEM "SingleMu_C_recover.xml">
 <!ENTITY Wjets SYSTEM "Wjets.xml">
 <!ENTITY W1Jets SYSTEM "W1Jets.xml">
 <!ENTITY W2Jets SYSTEM "W2Jets.xml">
@@ -67,6 +68,10 @@
 <!ENTITY WJets_matchingdown SYSTEM "WJets_matchingdown.xml">
 <!ENTITY TT_scaleup SYSTEM "TT_scaleup.xml">
 <!ENTITY TT_scaledown SYSTEM "TT_scaledown.xml">
+<!ENTITY TT700to1000_scaleup SYSTEM "TT700to1000_scaleup.xml">
+<!ENTITY TT700to1000_scaledown SYSTEM "TT700to1000_scaledown.xml">
+<!ENTITY TT1000toInf_scaleup SYSTEM "TT1000toInf_scaleup.xml">
+<!ENTITY TT1000toInf_scaledown SYSTEM "TT1000toInf_scaledown.xml">
 ]>
 
 
@@ -84,12 +89,18 @@
 	<Package Name="Analysis.par" />
 
 
-	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/dust/naf/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/" PostFix="" TargetLumi="1" >
-<!--	<Cycle Name="ZprimePreSelectionCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/" PostFix="_TriggerTest" TargetLumi="1" >  -->
+<!--	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/dust/naf/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/" PostFix="" TargetLumi="1" >-->
+	<Cycle Name="ZprimePreSelectionCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PreSelectionMuon/" PostFix="" TargetLumi="1" >  
 
 <!--
-                <InputData Lumi="1" NEventsMax="200000" Type="DATA" Version="DATA" Cacheable="True">
+                <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="DATA" Cacheable="True">
                         &MuData;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> 
+
+                <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="DATA2" Cacheable="True">
+                        &MuData2;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
@@ -456,7 +467,7 @@
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />
 		</InputData>
--->
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TT_scaleup" Cacheable="True">
                         &TT_scaleup;
 			<InputTree Name="AnalysisTree" /> 
@@ -464,6 +475,30 @@
 		</InputData>
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TT_scaledown" Cacheable="True">
                         &TT_scaledown;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
+-->
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TT700to1000_scaleup" Cacheable="True">
+                        &TT700to1000_scaleup;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
+
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TT700to1000_scaledown" Cacheable="True">
+                        &TT700to1000_scaledown;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
+
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TT1000toInf_scaleup" Cacheable="True">
+                        &TT1000toInf_scaleup;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
+
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TT1000toInf_scaledown" Cacheable="True">
+                        &TT1000toInf_scaledown;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />
 		</InputData>

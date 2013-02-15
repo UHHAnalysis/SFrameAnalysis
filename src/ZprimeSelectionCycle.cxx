@@ -15,7 +15,7 @@ ZprimeSelectionCycle::ZprimeSelectionCycle()
     // obtained from the steering-xml file
 
     // set the integrated luminosity per bin for the lumi-yield control plots
-    SetIntLumiPerBin(25.);
+    SetIntLumiPerBin(500.);
 
     m_corrector = NULL;
     m_jes_unc = NULL;
@@ -156,13 +156,6 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
     TString unc_file = m_JECFileLocation + "/" + m_JECDataGlobalTag + "_Uncertainty_" + m_JECJetCollection + ".txt";
     m_jes_unc = new JetCorrectionUncertainty(unc_file.Data());
     
-    if (GetSysUncName()=="JEC" || GetSysUncName()=="jec") m_sys_unc = e_JEC; 
-    if (GetSysUncName()=="JER" || GetSysUncName()=="jer") m_sys_unc = e_JER;
-    if (m_sys_unc != e_None){
-      if (GetSysShiftName()=="UP" || GetSysShiftName()=="up" || GetSysShiftName()=="Up") m_sys_var = e_Up; 
-      if (GetSysShiftName()=="DOWN" || GetSysShiftName()=="down" || GetSysShiftName()=="Down") m_sys_var = e_Down; 
-    }    
-
     // ---------------- set up the histogram collections --------------------
 
     // histograms without any cuts
@@ -238,6 +231,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
 
     // first step: call Execute event of base class to perform basic consistency checks
     // also, the good-run selection is performed there and the calculator is reset
+
     AnalysisCycle::ExecuteEvent( id, weight);
 
     // control histograms
@@ -257,7 +251,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
       if (m_sys_var==e_Up) m_cleaner->ApplyJECVariationUp();
       if (m_sys_var==e_Down) m_cleaner->ApplyJECVariationDown();
     }
-   if (m_sys_unc==e_JER){
+    if (m_sys_unc==e_JER){
       if (m_sys_var==e_Up) m_cleaner->ApplyJERVariationUp();
       if (m_sys_var==e_Down) m_cleaner->ApplyJERVariationDown();
     }

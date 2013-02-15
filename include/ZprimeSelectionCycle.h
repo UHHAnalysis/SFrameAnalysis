@@ -78,10 +78,6 @@ private:
   HypothesisStatistics* m_cm_sumdr; 
   HypothesisStatistics* m_cm_bp; 
 
-  // systematic uncertainties
-  E_SystShift m_sys_var;
-  E_SysUnc m_sys_unc;
-
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimeSelectionCycle, 0 );
 

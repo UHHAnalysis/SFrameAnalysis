@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.20 2013/02/04 12:50:52 rkogler Exp $
+// $Id: AnalysisCycle.h,v 1.21 2013/02/06 10:45:15 peiffer Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -24,7 +24,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.20 $
+ *  @version $Revision: 1.21 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -114,6 +114,10 @@ protected:
 
   //MC-data correction weights
   LeptonScaleFactors* m_lsf;
+
+  // information on systematic uncertainty
+  E_SystShift m_sys_var;
+  E_SysUnc m_sys_unc;
 
   //PDF re-weighting 
   PDFWeights* m_pdfweights;

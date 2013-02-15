@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.35 2013/02/07 13:47:16 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.36 2013/02/07 13:57:56 peiffer Exp $
 
 #include <iostream>
 
@@ -29,6 +29,8 @@ AnalysisCycle::AnalysisCycle()
     m_lsf = NULL;
     m_pdfweights=NULL;
     m_pdf_index=0;
+
+    m_sys_unc = e_None;
     m_actual_run=-99999;
 
     // set some default values
@@ -179,15 +181,43 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     // check if the settings for the systematic uncertainty make sense
     if(m_sys_unc_name.size()>0){
       bool isok = false;
-      if (m_sys_unc_name=="NONE" || m_sys_unc_name=="none" || m_sys_unc_name=="None") isok = true;
-      if (m_sys_unc_name=="JEC" || m_sys_unc_name=="jec") isok = true;
-      if (m_sys_unc_name=="JER" || m_sys_unc_name=="jer") isok = true;
-      if (m_sys_unc_name=="LeptonScale") isok = true;
-      if (m_sys_unc_name=="PDF" || m_sys_unc_name=="pdf") isok = true;
+      if (m_sys_unc_name=="NONE" || m_sys_unc_name=="none" || m_sys_unc_name=="None"){
+	m_sys_unc = e_None;
+	isok = true;
+      }
+      if (m_sys_unc_name=="JEC" || m_sys_unc_name=="jec"){
+	m_sys_unc = e_JEC;
+	isok = true;
+      }
+      if (m_sys_unc_name=="JER" || m_sys_unc_name=="jer"){
+	m_sys_unc = e_JER; 
+	isok = true;
+      }
+      if (m_sys_unc_name=="MuonSF"){
+	m_sys_unc = e_MuonSF;
+	isok = true;
+      }
+      if (m_sys_unc_name=="EleSF"){
+	m_sys_unc = e_EleSF;
+	isok = true;
+      }
+      if (m_sys_unc_name=="TauSF"){
+	m_sys_unc = e_TauSF;
+	isok = true;
+      }
+      if (m_sys_unc_name=="PDF" || m_sys_unc_name=="pdf"){
+	m_sys_unc = e_PDF;
+	isok = true;
+      }
+
+      if (m_sys_unc != e_None){
+	if (GetSysShiftName()=="UP" || GetSysShiftName()=="up" || GetSysShiftName()=="Up") m_sys_var = e_Up; 
+	if (GetSysShiftName()=="DOWN" || GetSysShiftName()=="down" || GetSysShiftName()=="Down") m_sys_var = e_Down; 
+      } 
 
       if (isok){
 
-	if (m_sys_unc_name=="NONE" || m_sys_unc_name=="none" || m_sys_unc_name=="None"){
+	if (m_sys_unc == e_None){
 	  m_logger << INFO << "Running without systematic uncertainty" << SLogger::endmsg;
 
 	} else {
@@ -241,17 +271,35 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     }
 
 
-    if (m_sys_unc_name == "LeptonScale"){
-      if(m_sys_var_name == "UP" || m_sys_var_name == "Up" || m_sys_var_name == "up"){
-	m_lsf = new LeptonScaleFactors(m_leptonweights, e_Up);	
+    m_lsf = new LeptonScaleFactors(m_leptonweights);	
+
+    if (m_sys_unc == e_MuonSF){
+      if(m_sys_var == e_Up){
+	cout << "apply muon up var" << endl;
+	m_lsf->DoUpVarMuonSF();
       } else {
-	m_lsf = new LeptonScaleFactors(m_leptonweights, e_Down);	
+	cout << "apply muon down var" << endl;
+	m_lsf->DoDownVarMuonSF();
       } 
-    } else {
-      m_lsf = new LeptonScaleFactors(m_leptonweights);	
+    }
+    if (m_sys_unc == e_EleSF){
+      if(m_sys_var == e_Up){
+	m_lsf->DoUpVarEleSF();
+      } else {
+	m_lsf->DoDownVarEleSF();
+      } 
+    }
+    if (m_sys_unc == e_TauSF){
+      if(m_sys_var == e_Up){
+	m_lsf->DoUpVarTauSF();
+      } else {
+	m_lsf->DoDownVarTauSF();
+      } 
     }
 
-    if(m_sys_unc_name == "PDF" || m_sys_unc_name == "pdf"){
+
+
+    if(m_sys_unc == e_PDF){
 
       TString dirname = m_pdfdir;
       if(m_pdfdir.size()>0){
@@ -260,7 +308,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       }
       
 
-      if(m_sys_var_name == "UP" || m_sys_var_name == "Up" || m_sys_var_name == "up"){
+      if(m_sys_var == e_Up){
 	m_pdfweights = new PDFWeights(e_Up,m_pdfname,dirname);	
       } else {
 	m_pdfweights = new PDFWeights(e_Down,m_pdfname,dirname);

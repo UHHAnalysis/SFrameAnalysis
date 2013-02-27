@@ -70,8 +70,9 @@ void HypothesisHists::Fill()
   double mttbar_rec = 0;
   if( (hyp->top_v4()+hyp->antitop_v4()).isTimelike() ) 
     mttbar_rec = (hyp->top_v4()+hyp->antitop_v4()).M();
-  else
-    mttbar_rec = -sqrt( (hyp->top_v4()+hyp->antitop_v4()).mass2());
+  else{
+    mttbar_rec = sqrt( -(hyp->top_v4()+hyp->antitop_v4()).mass2());
+  }
   double ptttbar_rec = (hyp->top_v4()+hyp->antitop_v4()).Pt();
   double mttbar_gen = 0;
   double ptttbar_gen = 0;

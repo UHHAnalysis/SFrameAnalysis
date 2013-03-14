@@ -54,6 +54,12 @@ void HypothesisHists::Init()
 
   Book( TH2F("M_ttbar_rec_vs_M_ttbar_gen","M_{t#bar{t}}^{rec} [GeV/c^{2}] vs M_{t#bar{t}}^{gen} [GeV/c^{2}]",100,0,3000,100,0,3000));
   Book( TH1F("M_ttbar_resolution", "(M_{t#bar{t}}^{gen} - M_{t#bar{t}}^{rec})/M_{t#bar{t}}^{rec}", 100, -5,5) );
+
+  Book( TH2F("M_ttbar_rec_vs_pt_lepton","M_{t#bar{t}}^{rec} [GeV/c^{2}] vs p_{T}^{lep} [GeV/c]",100,0,3000,100,0,500));
+  Book( TH2F("M_ttbar_rec_vs_reliso_lepton","M_{t#bar{t}}^{rec} [GeV/c^{2}] vs reliso lep",100,0,3000,100,0,0.5));
+  Book( TH2F("M_ttbar_rec_vs_deltarmin_lepton","M_{t#bar{t}}^{rec} [GeV/c^{2}] vs #Delta R_{min}",100,0,3000,100,0,3.0));
+  Book( TH2F("M_ttbar_rec_vs_ptrel_lepton","M_{t#bar{t}}^{rec} [GeV/c^{2}] vs p_{T}^{rel} [GeV/c]",100,0,3000,100,0,200));
+
 }
 
 void HypothesisHists::Fill()
@@ -108,6 +114,30 @@ void HypothesisHists::Fill()
   Hist("Pt_ttbar_gen")->Fill ( ptttbar_gen, weight); 
   Hist("Pt_ttbar_rec_vs_Pt_ttbar_gen")->Fill(ptttbar_rec, ptttbar_gen);
 
+  std::vector< Muon >* muons = calc->GetMuons();
+  std::vector< Electron >* electrons = calc->GetElectrons();
+
+  double lep_pt=0;
+  double lep_reliso=0;
+  double lep_ptrel=0;
+  double lep_deltar=0;
+  if(muons->size()==1 && electrons->size()==0){
+    lep_pt = muons->at(0).pt();
+    lep_reliso = muons->at(0).relIso();
+    lep_ptrel= pTrel(&muons->at(0), calc->GetJets());
+    lep_deltar = deltaRmin(&muons->at(0), calc->GetJets());
+  }
+  if(muons->size()==0 && electrons->size()==1){
+    lep_pt = electrons->at(0).pt();
+    lep_reliso = electrons->at(0).relIso();
+    lep_ptrel= pTrel(&electrons->at(0), calc->GetJets());
+    lep_deltar = deltaRmin(&electrons->at(0), calc->GetJets());
+  }
+  Hist("M_ttbar_rec_vs_pt_lepton")->Fill(mttbar_rec, lep_pt);
+  Hist("M_ttbar_rec_vs_reliso_lepton")->Fill(mttbar_rec, lep_reliso);
+  Hist("M_ttbar_rec_vs_ptrel_lepton")->Fill(mttbar_rec, lep_ptrel);
+  Hist("M_ttbar_rec_vs_deltarmin_lepton")->Fill(mttbar_rec, lep_deltar);
+  
 }
 
 void HypothesisHists::Finish()

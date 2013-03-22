@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd" [
+<!ENTITY TTbar SYSTEM "TTbar_Powheg.xml">
+<!ENTITY TTbar_MadGraph SYSTEM "TTbar_MadGraph.xml">
+<!ENTITY TTbar_700to1000 SYSTEM "TTbar_Powheg_700to1000.xml">
+<!ENTITY TTbar_1000toInf SYSTEM "TTbar_Powheg_1000toInf.xml">
+<!ENTITY ZP500w5 SYSTEM "ZP500w5.xml">
+<!ENTITY ZP500w50 SYSTEM "ZP500w50.xml">
+<!ENTITY ZP750w7p5 SYSTEM "ZP750w7p5.xml">
+<!ENTITY ZP750w75 SYSTEM "ZP750w75.xml">
+<!ENTITY ZP1000w10 SYSTEM "ZP1000w10.xml">
+<!ENTITY ZP1000w100 SYSTEM "ZP1000w100.xml">
+<!ENTITY ZP1250w12p5 SYSTEM "ZP1250w12p5.xml">
+<!ENTITY ZP1250w125 SYSTEM "ZP1250w125.xml">
+<!ENTITY ZP1500w15 SYSTEM "ZP1500w15.xml">
+<!ENTITY ZP1500w150 SYSTEM "ZP1500w150.xml">
+<!ENTITY ZP2000w20 SYSTEM "ZP2000w20.xml">
+<!ENTITY ZP2000w200 SYSTEM "ZP2000w200.xml">
+<!ENTITY ZP3000w30 SYSTEM "ZP3000w30.xml">
+<!ENTITY ZP3000w300 SYSTEM "ZP3000w300.xml">
+<!ENTITY ZP4000w40 SYSTEM "ZP4000w40.xml">
+<!ENTITY ZP4000w400 SYSTEM "ZP4000w400.xml">
+<!ENTITY RSG1000 SYSTEM "RSG_1000.xml">
+<!ENTITY RSG1500 SYSTEM "RSG_1500.xml">
+<!ENTITY RSG2000 SYSTEM "RSG_2000.xml">
+<!ENTITY RSG2500 SYSTEM "RSG_2500.xml">
+<!ENTITY RSG3000 SYSTEM "RSG_3000.xml">
+<!ENTITY RSG3500 SYSTEM "RSG_3500.xml">
+<!ENTITY RSG4000 SYSTEM "RSG_4000.xml">
+]>
+
+
+<JobConfiguration JobName="GenTTbarCycle" OutputLevel="INFO">
+	<Library Name="libfastjet" />
+	<Library Name="libfastjettools" />
+	<Library Name="libJetMETObjects" />
+	<Library Name="libSFrameTools" />
+	<Library Name="libAnalysis" />
+	<Library Name="libSFramePlugIns" />
+
+	<Package Name="SFrameCore.par" />
+	<Package Name="SFramePlugIns.par" />
+	<Package Name="SFrameTools.par" />
+	<Package Name="Analysis.par" />
+
+
+	<Cycle Name="GenTTbarCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/dust/naf/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/GenTTbar/" PostFix="" TargetLumi="1" > 
+<!--	<Cycle Name="GenTTbarCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/GenTTbar/" PostFix="" TargetLumi="1" >  -->
+
+<!--
+	        <InputData Lumi="92270" NEventsMax="-1" Type="MC" Version="TTbar_0to700" Cacheable="True">
+                        &TTbar;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData>
+-->
+
+
+	        <InputData Lumi="178197" NEventsMax="-1" Type="MC" Version="TTbar_700to1000" Cacheable="True">
+                        &TTbar_700to1000;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData>
+
+	        <InputData Lumi="378518" NEventsMax="-1" Type="MC" Version="TTbar_1000toInf" Cacheable="True">
+                        &TTbar_1000toInf;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData>
+
+
+	        <InputData Lumi="29589" NEventsMax="-1" Type="MC" Version="TTbar_MadGraph" Cacheable="True">
+                        &TTbar_MadGraph;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData>
+
+	        <InputData Lumi="118975" NEventsMax="-1" Type="MC" Version="ZP500w5" Cacheable="True">
+                        &ZP500w5;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+
+	        <InputData Lumi="110507" NEventsMax="-1" Type="MC" Version="ZP500w50" Cacheable="True">
+                        &ZP500w50;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+
+	        <InputData Lumi="93281" NEventsMax="-1" Type="MC" Version="ZP750w7p5" Cacheable="True">
+                        &ZP750w7p5;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+	        <InputData Lumi="106587" NEventsMax="-1" Type="MC" Version="ZP750w75" Cacheable="True">
+                        &ZP750w75;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+	        <InputData Lumi="103095" NEventsMax="-1" Type="MC" Version="ZP1000w10" Cacheable="True">
+                        &ZP1000w10;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+	        <InputData Lumi="104043" NEventsMax="-1" Type="MC" Version="ZP1000w100" Cacheable="True">
+                        &ZP1000w100;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData>  
+
+	        <InputData Lumi="97864" NEventsMax="-1" Type="MC" Version="ZP1250w12p5" Cacheable="True">
+                        &ZP1250w12p5;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+
+	        <InputData Lumi="85297" NEventsMax="-1" Type="MC" Version="ZP1250w125" Cacheable="True">
+                        &ZP1250w125;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+	        <InputData Lumi="97349" NEventsMax="-1" Type="MC" Version="ZP1500w15" Cacheable="True">
+                        &ZP1500w15;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+	        <InputData Lumi="98775" NEventsMax="-1" Type="MC" Version="ZP1500w150" Cacheable="True">
+                        &ZP1500w150;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+	        <InputData Lumi="94817" NEventsMax="-1" Type="MC" Version="ZP2000w20" Cacheable="True">
+                        &ZP2000w20;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+	        <InputData Lumi="97240" NEventsMax="-1" Type="MC" Version="ZP2000w200" Cacheable="True">
+                        &ZP2000w200;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData>  
+
+	        <InputData Lumi="96371" NEventsMax="-1" Type="MC" Version="ZP3000w30" Cacheable="True">
+                        &ZP3000w30;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+
+	        <InputData Lumi="100554" NEventsMax="-1" Type="MC" Version="ZP3000w300" Cacheable="True">
+                        &ZP3000w300;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+	        <InputData Lumi="102490" NEventsMax="-1" Type="MC" Version="ZP4000w40" Cacheable="True">
+                        &ZP4000w40;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+	        <InputData Lumi="103388" NEventsMax="-1" Type="MC" Version="ZP4000w400" Cacheable="True">
+                        &ZP4000w400;
+			<InputTree Name="AnalysisTree" /> 
+			  
+		</InputData> 
+
+
+ 	        <InputData Lumi="84122" NEventsMax="-1" Type="MC" Version="RSG1000" Cacheable="True">
+                        &RSG1000;
+			<InputTree Name="AnalysisTree" /> 
+			
+		</InputData>
+ 	        <InputData Lumi="99214" NEventsMax="-1" Type="MC" Version="RSG1500" Cacheable="True">
+                        &RSG1500;
+			<InputTree Name="AnalysisTree" /> 
+			
+		</InputData>
+ 	        <InputData Lumi="91438" NEventsMax="-1" Type="MC" Version="RSG2000" Cacheable="True">
+                        &RSG2000;
+			<InputTree Name="AnalysisTree" /> 
+			
+		</InputData>
+ 	        <InputData Lumi="99093" NEventsMax="-1" Type="MC" Version="RSG2500" Cacheable="True">
+                        &RSG2500;
+			<InputTree Name="AnalysisTree" /> 
+			
+		</InputData>
+
+ 	        <InputData Lumi="99162" NEventsMax="-1" Type="MC" Version="RSG3000" Cacheable="False">
+                        &RSG3000;
+			<InputTree Name="AnalysisTree" /> 
+			
+		</InputData>
+
+ 	        <InputData Lumi="84023" NEventsMax="-1" Type="MC" Version="RSG3500" Cacheable="True">
+                        &RSG3500;
+			<InputTree Name="AnalysisTree" /> 
+			
+		</InputData>
+ 	        <InputData Lumi="84091" NEventsMax="-1" Type="MC" Version="RSG4000" Cacheable="True">
+                        &RSG4000;
+			<InputTree Name="AnalysisTree" /> 
+			
+		</InputData>
+
+		<UserConfig>
+
+		   <Item Name="GenParticleCollection" Value="GenParticles" /> 
+
+		      <Item Name="PU_Filename_MC" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/PileUpHistoCycle" />
+
+		      <Item Name="PU_Filename_Data" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/MyDataPileupHistogram_69p3_208686.root" />
+
+		      <Item Name="PU_Histname_Data" Value="pileup" />
+		      <Item Name="PU_Histname_MC" Value="N_pileup_hist" />
+
+		   <Item Name="LumiFilePath" Value="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/LumiFiles/" /> 
+		   <Item Name="LumiFileName" Value="Mu40_208686_ECALRecover.root" /> 
+		   <Item Name="LumiTrigger" Value="HLT_Mu40_eta2p1_v" /> 
+		   
+
+		</UserConfig>
+	</Cycle>
+</JobConfiguration>

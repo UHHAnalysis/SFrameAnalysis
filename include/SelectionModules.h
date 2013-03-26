@@ -132,6 +132,62 @@ private:
     int m_max_ntoptag;
 };
 
+class NHEPTopTagSelection: public SelectionModule{
+ public:
+  NHEPTopTagSelection(int min_nheptoptag, int max_nheptoptag=int_infinity());
+  ~NHEPTopTagSelection(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  int m_min_nheptoptag;
+  int m_max_nheptoptag;
+};
+
+// Selects events with b-tagged subjet in the HEPTopTagged jets
+class NHEPTopAndSubBTagSelection: public SelectionModule{
+ public:
+  NHEPTopAndSubBTagSelection(int min_nheptoptag, int max_nheptoptag, E_BtagType type);
+  ~NHEPTopAndSubBTagSelection(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  int m_min_nheptoptag;
+  int m_max_nheptoptag;
+  E_BtagType m_type;
+  
+};
+
+class HEPTopAndSubBTagPlusOtherHiggsTag: public SelectionModule{
+ public:
+  HEPTopAndSubBTagPlusOtherHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3);
+  ~HEPTopAndSubBTagPlusOtherHiggsTag(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  E_BtagType m_type1;
+  E_BtagType m_type2;
+  E_BtagType m_type3;
+};
+
+class HTCut: public SelectionModule{
+ public:
+  HTCut(double min_ht, double max_ht=double_infinity());
+  ~HTCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  double m_min_ht;
+  double m_max_ht;
+};
+
 
 class NWTagSelection: public SelectionModule {
 public:

@@ -65,6 +65,12 @@ void JetHists::Init()
   Book( TH1F( "phi_3","#phi 3rd jet",100,-PI,PI));
   Book( TH1F( "phi_4","#phi 4th jet",100,-PI,PI));
 
+  //jet masses
+  Book( TH1F( "mass_1","m [GeV/c^{2}] leading jet",100,0,250));
+  Book( TH1F( "mass_2","m [GeV/c^{2}] 2nd jet",100,0,250)); 
+  Book( TH1F( "mass_3","m [GeV/c^{2}] 3rd jet",100,0,250));
+  Book( TH1F( "mass_4","m [GeV/c^{2}] 4th jet",100,0,250));
+
   // Delta_R
   Book( TH1F( "deltaRmin_1", "#Delta R_{min}(first jet, nearest jet)", 40, 0, 2.0) );
   Book( TH1F( "deltaRmin_1_ly", "#Delta R_{min}(first jet, nearest jet)", 40, 0, 2.0) );
@@ -135,6 +141,13 @@ void JetHists::Fill()
 	  Hist(hname_eta)->Fill(jet.eta(),weight);
 	  TString hname_phi = TString::Format("phi_%d", i+1);
 	  Hist(hname_phi)->Fill(jet.phi(),weight);
+	  TString hname_mass = TString::Format("mass_%d", i+1);
+	  if(jet.v4().isTimelike()){
+	    Hist(hname_mass)->Fill(jet.v4().M(),weight);
+	  }
+	  else{
+	    Hist(hname_mass)->Fill(sqrt(-jet.v4().M2()),weight);
+	  }
 	  if (jet.btag_combinedSecondaryVertex()>0.244)
 	    {
 	      Hist("bjet_tag")-> Fill(i+1,weight);

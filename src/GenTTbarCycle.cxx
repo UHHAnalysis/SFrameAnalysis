@@ -58,14 +58,21 @@ void GenTTbarCycle::BeginInputData( const SInputData& id ) throw( SError )
 
 
   Selection* mtt_selection= new Selection("mtt_selection");
-  mtt_selection->addSelectionModule(new MttbarGenCut(0,700));
+  mtt_selection->addSelectionModule(new MttbarGenCut(1400,1600));
 
   RegisterSelection(mtt_selection);
+
+//    Selection* Zmumu_selection= new Selection("Zmumu_selection");
+//    Zmumu_selection->addSelectionModule(new ZGenCut(13));
+//    RegisterSelection(Zmumu_selection);
 
   // ---------------- set up the histogram collections --------------------
 
   // histograms without any cuts
   RegisterHistCollection( new GenTTbarHists("NoCuts") );
+  RegisterHistCollection( new GenTTbarHists("quarks") );
+  RegisterHistCollection( new GenTTbarHists("gluons") );
+  RegisterHistCollection( new GenTTbarHists("2to2quarks") );
 
   // important: initialise histogram collections after their definition
   InitHistos();
@@ -102,17 +109,52 @@ void GenTTbarCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( 
   // also, the good-run selection is performed there and the calculator is reset
   AnalysisCycle::ExecuteEvent( id, weight );
 
+
+//   static Selection* Zmumu_selection = GetSelection("Zmumu_selection");
+//   if(!Zmumu_selection->passSelection()) throw SError( SError::SkipEvent ); 
+//   WriteOutputTree();
+
+//   return;
+
   // get the selections
-//   static Selection* mtt_selection = GetSelection("mtt_selection");
-//   if(!mtt_selection->passSelection())  throw SError( SError::SkipEvent );
+  static Selection* mtt_selection = GetSelection("mtt_selection");
+  if(!mtt_selection->passSelection())  throw SError( SError::SkipEvent );
+
 
   // get the histogram collections
   BaseHists* HistsNoCuts = GetHistCollection("NoCuts");
-
-
-
   HistsNoCuts->Fill();
-  
+
+  EventCalc* calc = EventCalc::Instance();
+  //std::cout << calc->GetGenParticles()->at(2).pdgId() << "   " << calc->GetGenParticles()->at(3).pdgId() << std::endl;
+  if( abs(calc->GetGenParticles()->at(0).pdgId())<=5 && abs(calc->GetGenParticles()->at(1).pdgId())<=5 ){
+    GetHistCollection("quarks")->Fill();
+
+    int n_finalstate=0;
+    for(unsigned int i=0; i< calc->GetGenParticles()->size(); ++i){
+      GenParticle p = calc->GetGenParticles()->at(i);
+      if(p.status()!=3) continue;
+      if(p.daughter(calc->GetGenParticles(),1)){
+	if(p.daughter(calc->GetGenParticles(),1)->status()==3){
+	  continue;
+	}
+      }
+      if(p.daughter(calc->GetGenParticles(),2)){
+	if(p.daughter(calc->GetGenParticles(),2)->status()==3){
+	  continue;
+	}
+      }
+
+      n_finalstate++;
+	
+    }
+    if(n_finalstate==6)
+      GetHistCollection("2to2quarks")->Fill();
+
+  }else{
+    GetHistCollection("gluons")->Fill(); 
+  }
+
   return;
   
 }

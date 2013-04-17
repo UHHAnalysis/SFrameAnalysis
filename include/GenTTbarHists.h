@@ -5,6 +5,7 @@
 #include <TObject.h>
 #include <TString.h>
 #include "TH2.h"
+#include "TLorentzVector.h"
 
 // Local include(s):
 #include "include/BaseHists.h"

@@ -574,6 +574,40 @@ std::string TriangularCut::description()
     return s;
 }
 
+bool TriangularCutMuon::pass(BaseCycleContainer *bcc)
+{
+    if(bcc->muons->size()!=1) {
+        std::cout << "WARNING: called triangular cut but muon collection contains " << bcc->muons->size()<< " !=1 entries. Cut is not applied" <<std::endl;
+        return true;
+    }
+    if(bcc->jets->size()<1) {
+        std::cout << "WARNING: called triangular cut but jet collection is empty. Cut is not applied" <<std::endl;
+        return true;
+    }
+
+    double k=1.5/75.;
+
+    Particle METp;
+    METp.set_pt(bcc->met->pt());
+    METp.set_phi(bcc->met->phi());
+    METp.set_eta(0);
+    METp.set_energy(0);
+
+    if(METp.deltaPhi(bcc->muons->at(0)) > k* METp.pt()+1.5) return false;
+    if(METp.deltaPhi(bcc->muons->at(0)) < -1*k* METp.pt()+1.5) return false;
+    if(METp.deltaPhi(bcc->jets->at(0)) > k* METp.pt()+1.5) return false;
+    if(METp.deltaPhi(bcc->jets->at(0)) < -1*k* METp.pt()+1.5) return false;
+
+    return true;
+}
+
+std::string TriangularCutMuon::description()
+{
+    char s[100];
+    sprintf(s, "triangular cut for muons");
+    return s;
+}
+
 HypothesisDiscriminatorCut::HypothesisDiscriminatorCut(HypothesisDiscriminator* discr, double min_discr, double max_discr)
 {
     m_discr=discr;
@@ -662,6 +696,43 @@ std::string MttbarGenCut::description()
     sprintf(s, "%.1f < MttbarGen < %.1f",m_mttbar_min, m_mttbar_max);
     return s;
 }
+
+
+ZGenCut::ZGenCut(int pdgid)
+{
+  m_pdgid = abs(pdgid);
+}
+
+bool ZGenCut::pass(BaseCycleContainer *bcc)
+{
+    EventCalc* calc = EventCalc::Instance();
+    if(!calc->GetGenParticles() ) {
+      return false;
+    }
+
+    for(unsigned int i=0; i< calc->GetGenParticles()->size(); ++i){
+
+      GenParticle genp = calc->GetGenParticles()->at(i);
+      if(genp.pdgId()==23){
+	if(genp.daughter(calc->GetGenParticles(),1) && genp.daughter(calc->GetGenParticles(),2)){
+	  if( abs(genp.daughter(calc->GetGenParticles(),1)->pdgId()) == m_pdgid && abs(genp.daughter(calc->GetGenParticles(),2)->pdgId()) == m_pdgid){
+	    return true;
+	  }
+	}
+      }
+    }
+
+    return false;
+}
+
+std::string ZGenCut::description()
+{
+    char s[100];
+    sprintf(s, "generated Z decaying to pdgid = %.1d",m_pdgid);
+    return s;
+}
+
+
 
 EventFlavorSelection::EventFlavorSelection(E_EventFlavor flavor)
 {

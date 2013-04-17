@@ -300,6 +300,16 @@ public:
 
 };
 
+class TriangularCutMuon: public SelectionModule {
+public:
+    TriangularCutMuon() {};
+    ~TriangularCutMuon() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+};
+
 class HypothesisDiscriminatorCut: public SelectionModule {
 public:
     HypothesisDiscriminatorCut(HypothesisDiscriminator* discr, double min_discr, double max_discr);
@@ -341,6 +351,19 @@ public:
 private:
     double m_mttbar_min;
     double m_mttbar_max;
+
+};
+
+class ZGenCut: public SelectionModule {
+public:
+    ZGenCut(int pdgid);
+    ~ZGenCut() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    int m_pdgid;
 
 };
 

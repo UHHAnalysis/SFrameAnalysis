@@ -1,7 +1,9 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: ZprimePostSelectionCycle.h,v 1.7 2013/01/16 15:17:03 bazterra Exp $
+// $Id: ZprimePostSelectionCycle.h,v 1.8 2013/01/23 11:06:59 rkogler Exp $
 #ifndef ZprimePostSelectionCycle_H
 #define ZprimePostSelectionCycle_H
+
+#include <iostream>
 
 // SFrame include(s):
 #include "include/AnalysisCycle.h"
@@ -25,7 +27,7 @@
  *          be used for quick cross checks of the system setup.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.7 $
+ *  @version $Revision: 1.8 $
  */
 
 class ZprimePostSelectionCycle : public AnalysisCycle {
@@ -67,6 +69,9 @@ private:
   BTaggingScaleFactors* m_bsf;
 
   bool m_mttgencut;
+
+  bool m_writeeventlist;
+  ofstream m_eventlist;
 
   std::string m_flavor_selection; 
   std::string m_filter_file;

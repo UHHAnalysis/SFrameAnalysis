@@ -1,6 +1,4 @@
-// $Id: ZprimePostSelectionCycle.cxx,v 1.10 2013/01/17 17:22:10 bazterra Exp $
-
-#include <iostream>
+// $Id: ZprimePostSelectionCycle.cxx,v 1.11 2013/01/23 11:05:18 rkogler Exp $
 
 using namespace std;
 
@@ -19,6 +17,7 @@ ZprimePostSelectionCycle::ZprimePostSelectionCycle()
     m_dobsf = "None";
     m_mttgencut = false;
     m_flavor_selection = "None";
+    m_writeeventlist = false;
 
     // steerable properties for making qcd (pre) selection
     DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
@@ -26,6 +25,7 @@ ZprimePostSelectionCycle::ZprimePostSelectionCycle()
     DeclareProperty( "ApplyMttbarGenCut", m_mttgencut );
     DeclareProperty( "ApplyFlavorSelection", m_flavor_selection );
     DeclareProperty( "EventFilterFile", m_filter_file );
+    DeclareProperty( "WriteEventList", m_writeeventlist);
 
     // set the integrated luminosity per bin for the lumi-yield control plots
     SetIntLumiPerBin(500.);
@@ -246,12 +246,18 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
         else if(doMu)
             m_bsf = new BTaggingScaleFactors(m_btagtype, e_Muon, sys_bjets, sys_ljets);
     }
+
+    if(m_writeeventlist)
+      m_eventlist.open( id.GetVersion()+"_eventlist.txt" );
+
     return;
 }
 
 void ZprimePostSelectionCycle::EndInputData( const SInputData& id ) throw( SError )
 {
     AnalysisCycle::EndInputData( id );
+    if(m_writeeventlist)
+      m_eventlist.close();
     return;
 }
 
@@ -262,7 +268,7 @@ void ZprimePostSelectionCycle::BeginInputFile( const SInputData& id ) throw( SEr
 
     // important: call to base function to connect all variables to Ntuples from the input tree
     AnalysisCycle::BeginInputFile( id );
-
+    
     return;
 }
 
@@ -341,6 +347,14 @@ void ZprimePostSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weig
     if(NoBTagSelection->passSelection()) {
         Chi2_HistsNoBTag->Fill();
         FillControlHistos("_NoBTag");
+    }
+
+    if(m_writeeventlist){
+      if(id.GetType()=="DATA" || id.GetType()=="Data" || id.GetType()=="data" )
+	m_eventlist << calc->GetRunNum() << ":" << calc->GetLumiBlock() << ":" << calc->GetEventNum() << std::endl;
+      else
+	//don't fill the random run number produced by LumiHandler for MC samples
+	m_eventlist << "1:" << calc->GetLumiBlock() << ":" << calc->GetEventNum() << std::endl; 
     }
 
     return;

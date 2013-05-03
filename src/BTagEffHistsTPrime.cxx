@@ -102,7 +102,7 @@ void BTagEffHistsTPrime::Fill()
         unsigned int flavor = abs(flavorsub_top[j]);
         bool btag = checkbtag;
 	
-        switch(flavorsub_top[j]) {
+        switch(flavor) {
         case 5: // b-jets
 	  Hist("pt_bJet") -> Fill(subjet.pt(),weight);
 	  Hist("eta_bJet") -> Fill(subjet.eta(),weight);

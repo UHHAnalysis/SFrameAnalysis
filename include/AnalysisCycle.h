@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.21 2013/02/06 10:45:15 peiffer Exp $
+// $Id: AnalysisCycle.h,v 1.22 2013/02/15 00:06:48 rkogler Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -24,7 +24,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.21 $
+ *  @version $Revision: 1.22 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -153,6 +153,7 @@ private:
 
   // properties of the NTuples
   std::string m_JetCollection;
+  std::string m_GenJetCollection;
   std::string m_ElectronCollection;
   std::string m_MuonCollection;
   std::string m_TauCollection;
@@ -176,6 +177,7 @@ private:
   std::vector< Photon > m_output_photons;
   std::vector< PrimaryVertex > m_output_pvs;
   std::vector< Jet > m_output_jets;
+  std::vector< Particle > m_output_genjets;
   std::vector< TopJet > m_output_topjets;
   std::vector< TopJet > m_output_topjetsgen;
   std::vector< TopJet > m_output_prunedjets;

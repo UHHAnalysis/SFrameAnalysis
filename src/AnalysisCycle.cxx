@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.36 2013/02/07 13:57:56 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.37 2013/02/15 00:01:45 rkogler Exp $
 
 #include <iostream>
 
@@ -44,6 +44,7 @@ AnalysisCycle::AnalysisCycle()
 
     // steerable properties of the Ntuple files
     DeclareProperty( "JetCollection", m_JetCollection );
+    DeclareProperty( "GenJetCollection", m_GenJetCollection );
     DeclareProperty( "ElectronCollection", m_ElectronCollection );
     DeclareProperty( "MuonCollection", m_MuonCollection );
     DeclareProperty( "TauCollection", m_TauCollection );
@@ -257,6 +258,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         if(m_MuonCollection.size()>0) DeclareVariable(m_output_muons, m_MuonCollection.c_str() );
         if(m_TauCollection.size()>0) DeclareVariable(m_output_taus, m_TauCollection.c_str() );
         if(m_JetCollection.size()>0) DeclareVariable(m_output_jets, m_JetCollection.c_str() );
+        if(m_addGenInfo && m_GenJetCollection.size()>0) DeclareVariable(m_output_genjets, m_GenJetCollection.c_str() );	
         if(m_PhotonCollection.size()>0) DeclareVariable(m_output_photons, m_PhotonCollection.c_str() );
         if(m_METName.size()>0) DeclareVariable(m_output_met, m_METName.c_str() );
         if(m_PrimaryVertexCollection.size()>0) DeclareVariable(m_output_pvs, m_PrimaryVertexCollection.c_str());
@@ -473,6 +475,7 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     if(m_MuonCollection.size()>0) ConnectVariable( "AnalysisTree", m_MuonCollection.c_str() , m_bcc.muons);
     if(m_TauCollection.size()>0) ConnectVariable( "AnalysisTree", m_TauCollection.c_str() , m_bcc.taus);
     if(m_JetCollection.size()>0) ConnectVariable( "AnalysisTree", m_JetCollection.c_str() , m_bcc.jets);
+    if(m_addGenInfo && m_GenJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenJetCollection.c_str() , m_bcc.genjets);
     if(m_PhotonCollection.size()>0) ConnectVariable( "AnalysisTree", m_PhotonCollection.c_str() , m_bcc.photons);
     if(m_METName.size()>0) ConnectVariable( "AnalysisTree", m_METName.c_str() , m_bcc.met);
     if(m_PrimaryVertexCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrimaryVertexCollection.c_str() , m_bcc.pvs);
@@ -637,6 +640,7 @@ void AnalysisCycle::WriteOutputTree() throw( SError)
     //write out all objects
     m_output_photons.clear();
     m_output_jets.clear();
+    m_output_genjets.clear();
     m_output_electrons.clear();
     m_output_muons.clear();
     m_output_taus.clear();
@@ -651,6 +655,7 @@ void AnalysisCycle::WriteOutputTree() throw( SError)
 
     if(m_PhotonCollection.size()>0) m_output_photons=*m_bcc.photons;
     if(m_JetCollection.size()>0) m_output_jets=*m_bcc.jets;
+    if(m_addGenInfo && m_GenJetCollection.size()>0) m_output_genjets=*m_bcc.genjets;
     if(m_ElectronCollection.size()>0) m_output_electrons=*m_bcc.electrons;
     if(m_MuonCollection.size()>0) m_output_muons=*m_bcc.muons;
     if(m_TauCollection.size()>0) m_output_taus=*m_bcc.taus;

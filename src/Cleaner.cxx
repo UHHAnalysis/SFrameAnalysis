@@ -487,8 +487,8 @@ void Cleaner::TauCleaner(double ptmin, double etamax)
             if(fabs(tau.eta())<etamax) {
                 if(bcc->taus->at(i).decayModeFinding()) {
                     if(bcc->taus->at(i).byMediumCombinedIsolationDeltaBetaCorr()) {
-                        if(bcc->taus->at(i).againstElectronTight()) {
-                            if(bcc->taus->at(i).againstMuonTight()) {
+                        if(bcc->taus->at(i).againstElectronTightMVA3()) {
+                            if(bcc->taus->at(i).againstMuonTight2()) {
                                 good_taus.push_back(tau);
                             }
                         }

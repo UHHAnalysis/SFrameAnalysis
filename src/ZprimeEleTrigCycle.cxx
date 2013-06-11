@@ -17,9 +17,6 @@ ZprimeEleTrigCycle::ZprimeEleTrigCycle()
     // set the integrated luminosity per bin for the lumi-yield control plots
     SetIntLumiPerBin(25.);
 
-    m_corrector = NULL;
-    m_jes_unc = NULL;
-
     m_sys_var = e_Default;
     m_sys_unc = e_None;
 
@@ -38,8 +35,6 @@ ZprimeEleTrigCycle::ZprimeEleTrigCycle()
 ZprimeEleTrigCycle::~ZprimeEleTrigCycle()
 {
     // destructor
-    if (m_corrector) delete m_corrector;
-    if (m_jes_unc) delete m_jes_unc;
 }
 
 void ZprimeEleTrigCycle::BeginCycle() throw( SError )
@@ -138,28 +133,6 @@ void ZprimeEleTrigCycle::BeginInputData( const SInputData& id ) throw( SError )
     RegisterSelection(triangularcut_selection);
     RegisterSelection(ele_trig_selection);
 
-
-    // ------------- jet energy correction ----------------
-
-    std::vector<JetCorrectorParameters> pars;
-
-    //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
-    if(!addGenInfo()) {
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECJetCollection + ".txt"));
-    } else {
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECJetCollection + ".txt"));
-    }
-    m_corrector = new FactorizedJetCorrector(pars);
-
-    // uncertainty
-    TString unc_file = m_JECFileLocation + "/" + m_JECDataGlobalTag + "_Uncertainty_" + m_JECJetCollection + ".txt";
-    m_jes_unc = new JetCorrectionUncertainty(unc_file.Data());
-    
     if (GetSysUncName()=="JEC" || GetSysUncName()=="jec") m_sys_unc = e_JEC; 
     if (GetSysUncName()=="JER" || GetSysUncName()=="jer") m_sys_unc = e_JER;
     if (m_sys_unc != e_None){

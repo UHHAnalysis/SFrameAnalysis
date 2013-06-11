@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.22 2013/02/15 00:06:48 rkogler Exp $
+// $Id: AnalysisCycle.h,v 1.23 2013/06/05 15:04:12 peiffer Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -11,6 +11,10 @@
 #include "BaseHists.h"
 #include "MCDataScaleFactors.h"
 #include "PDFWeights.h"
+#include "FactorizedJetCorrector.h"
+#include "JetCorrectorParameters.h"
+#include "Cleaner.h"
+#include "JetCorrectionUncertainty.h"
 
 /**
  *   @short Base of every analysis cycle 
@@ -24,7 +28,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.22 $
+ *  @version $Revision: 1.23 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -134,6 +138,10 @@ protected:
 
   // PU-reweighting
   PUWeightProducer* m_puwp;
+
+  //jet energy corrections  
+  FactorizedJetCorrector* m_corrector;
+  JetCorrectionUncertainty* m_jes_unc;
 
 private:
 

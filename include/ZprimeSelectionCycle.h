@@ -4,15 +4,12 @@
 
 // SFrame include(s):
 #include "include/AnalysisCycle.h"
-#include "FactorizedJetCorrector.h"
-#include "JetCorrectionUncertainty.h"
 #include "Cleaner.h"
 #include "HypothesisDiscriminator.h"
 #include "HypothesisHists.h"
 #include "include/SelectionModules.h"
 #include "include/ObjectHandler.h"
 #include "HypothesisStatistics.h"
-#include "JetCorrectorParameters.h"
 
 #include "EventHists.h"
 #include "JetHists.h"
@@ -64,8 +61,6 @@ private:
   int m_Nbtags_max;
   int m_Nbtags_min;  
 
-  FactorizedJetCorrector* m_corrector;
-  JetCorrectionUncertainty* m_jes_unc;
   Cleaner* m_cleaner;
   Chi2Discriminator* m_chi2discr;
   BestPossibleDiscriminator* m_bpdiscr;

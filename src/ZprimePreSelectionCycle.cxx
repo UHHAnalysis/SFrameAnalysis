@@ -21,15 +21,13 @@ ZprimePreSelectionCycle::ZprimePreSelectionCycle()
     // set the integrated luminosity per bin for the lumi-yield control plots
     SetIntLumiPerBin(25.);
 
-    m_corrector = NULL;
-
     DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
 }
 
 ZprimePreSelectionCycle::~ZprimePreSelectionCycle()
 {
     // destructor
-    if (m_corrector) delete m_corrector;
+
 }
 
 void ZprimePreSelectionCycle::BeginCycle() throw( SError )
@@ -81,22 +79,6 @@ void ZprimePreSelectionCycle::BeginInputData( const SInputData& id ) throw( SErr
     preselection->addSelectionModule(new NJetSelection(2));//at least two jets
 
     RegisterSelection(preselection);
-
-    std::vector<JetCorrectorParameters> pars;
-
-    //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
-    if(!addGenInfo()) {
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECJetCollection + ".txt"));
-    } else {
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECJetCollection + ".txt"));
-    }
-
-    m_corrector = new FactorizedJetCorrector(pars);
 
     return;
 }

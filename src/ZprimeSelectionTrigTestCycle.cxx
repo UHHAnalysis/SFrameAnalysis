@@ -16,8 +16,6 @@ ZprimeSelectionTrigTestCycle::ZprimeSelectionTrigTestCycle()
   // set the integrated luminosity per bin for the lumi-yield control plots
   SetIntLumiPerBin(25.);
 
-  m_corrector = NULL;
-
   DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
 
   //default: no btagging cuts applied, other cuts can be defined in config file
@@ -31,7 +29,6 @@ ZprimeSelectionTrigTestCycle::ZprimeSelectionTrigTestCycle()
 ZprimeSelectionTrigTestCycle::~ZprimeSelectionTrigTestCycle() 
 {
   // destructor
-  if (m_corrector) delete m_corrector;
 }
 
 void ZprimeSelectionTrigTestCycle::BeginCycle() throw( SError ) 
@@ -127,23 +124,6 @@ void ZprimeSelectionTrigTestCycle::BeginInputData( const SInputData& id ) throw(
   RegisterSelection(trig_selection);
   RegisterSelection(second_selection);
   RegisterSelection(chi2_selection); 
-
-  std::vector<JetCorrectorParameters> pars;
-
-  //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
-  if(!addGenInfo()){
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/GR_R_52_V9_L1FastJet_AK5PFchs.txt"));
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/GR_R_52_V9_L2Relative_AK5PFchs.txt"));  
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/GR_R_52_V9_L3Absolute_AK5PFchs.txt")); 
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/GR_R_52_V9_L2L3Residual_AK5PFchs.txt")); 
-  }
-  else{
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/START52_V11_L1FastJet_AK5PFchs.txt"));
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/START52_V11_L2Relative_AK5PFchs.txt"));  
-    pars.push_back(JetCorrectorParameters("/afs/desy.de/user/p/peiffer/JECFiles/START52_V11_L3Absolute_AK5PFchs.txt")); 
-  } 
- 
-  m_corrector = new FactorizedJetCorrector(pars);
 
   // ---------------- set up the histogram collections --------------------
 

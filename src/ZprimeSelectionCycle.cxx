@@ -17,9 +17,6 @@ ZprimeSelectionCycle::ZprimeSelectionCycle()
     // set the integrated luminosity per bin for the lumi-yield control plots
     SetIntLumiPerBin(500.);
 
-    m_corrector = NULL;
-    m_jes_unc = NULL;
-
     m_sys_var = e_Default;
     m_sys_unc = e_None;
 
@@ -35,8 +32,6 @@ ZprimeSelectionCycle::ZprimeSelectionCycle()
 ZprimeSelectionCycle::~ZprimeSelectionCycle()
 {
     // destructor
-    if (m_corrector) delete m_corrector;
-    if (m_jes_unc) delete m_jes_unc;
 }
 
 void ZprimeSelectionCycle::BeginCycle() throw( SError )
@@ -135,26 +130,7 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
     RegisterSelection(chi2_selection);
     RegisterSelection(matchable_selection);
 
-    // ------------- jet energy correction ----------------
 
-    std::vector<JetCorrectorParameters> pars;
-
-    //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
-    if(!addGenInfo()) {
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECJetCollection + ".txt"));
-    } else {
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECJetCollection + ".txt"));
-        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECJetCollection + ".txt"));
-    }
-    m_corrector = new FactorizedJetCorrector(pars);
-
-    // uncertainty
-    TString unc_file = m_JECFileLocation + "/" + m_JECDataGlobalTag + "_Uncertainty_" + m_JECJetCollection + ".txt";
-    m_jes_unc = new JetCorrectionUncertainty(unc_file.Data());
     
     // ---------------- set up the histogram collections --------------------
 
@@ -264,7 +240,7 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
     if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(35,2.5, m_reversed_electron_selection);
     if(bcc->muons) m_cleaner->MuonCleaner_noIso(45,2.1);
     if(bcc->jets) m_cleaner->JetLeptonSubtractor(m_corrector,false);
-    if(!bcc->isRealData && bcc->jets) m_cleaner->JetEnergyResolutionShifter();
+    //if(!bcc->isRealData && bcc->jets) m_cleaner->JetEnergyResolutionShifter();
 
     //apply loose jet cleaning for 2D cut
     if(bcc->jets) m_cleaner->JetCleaner(25,double_infinity(),true);

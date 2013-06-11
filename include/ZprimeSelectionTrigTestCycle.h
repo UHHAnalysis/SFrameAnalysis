@@ -14,13 +14,7 @@
 #include "JetHists.h"
 #include "include/SelectionModules.h"
 #include "include/ObjectHandler.h"
-#include "JetCorrectorParameters.h"
 
-/**
- *  @short Selection cycle to perform 
- *         full selection for Z'->ttbar analysis
- *  @author Thomas Peiffer
- */
 
 class ZprimeSelectionTrigTestCycle : public AnalysisCycle {
 

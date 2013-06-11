@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.37 2013/02/15 00:01:45 rkogler Exp $
+// $Id: AnalysisCycle.cxx,v 1.38 2013/06/05 15:04:12 peiffer Exp $
 
 #include <iostream>
 
@@ -29,6 +29,8 @@ AnalysisCycle::AnalysisCycle()
     m_lsf = NULL;
     m_pdfweights=NULL;
     m_pdf_index=0;
+    m_corrector = NULL;
+    m_jes_unc = NULL;
 
     m_sys_unc = e_None;
     m_actual_run=-99999;
@@ -92,10 +94,9 @@ AnalysisCycle::~AnalysisCycle()
 {
     // destructor
 
-    if (m_puwp) {
-        delete m_puwp;
-    }
-
+    if (m_puwp) delete m_puwp;
+    if (m_corrector) delete m_corrector;
+    if (m_jes_unc) delete m_jes_unc;
 }
 
 void AnalysisCycle::BeginCycle() throw( SError )
@@ -316,7 +317,35 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_pdfweights = new PDFWeights(e_Down,m_pdfname,dirname);
       }   
     }
-    
+
+    // ------------- jet energy correction ----------------
+
+    if(m_JECFileLocation.size()>0 && m_JECJetCollection.size()>0 )
+    {
+
+      std::vector<JetCorrectorParameters> pars;
+      
+      //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
+      if(!addGenInfo()) {
+        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECJetCollection + ".txt"));
+        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECJetCollection + ".txt"));
+        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECJetCollection + ".txt"));
+        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECJetCollection + ".txt"));
+      } else {
+        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECJetCollection + ".txt"));
+        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECJetCollection + ".txt"));
+        pars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECJetCollection + ".txt"));
+      }
+
+      m_corrector = new FactorizedJetCorrector(pars);
+
+      // jec uncertainty
+      TString unc_file = m_JECFileLocation + "/" + m_JECDataGlobalTag + "_Uncertainty_" + m_JECJetCollection + ".txt";
+      m_jes_unc = new JetCorrectionUncertainty(unc_file.Data());
+    }
+
+
+
     return;
 }
 
@@ -560,6 +589,13 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 	if(m_pdfweights){
 	  calc->ProduceWeight(m_pdfweights->GetWeight(m_pdf_index));
 	}
+
+	//fill pointers to genjet
+	if(calc->GetJets()){
+	  for(unsigned int i=0; i<calc->GetJets()->size(); ++i){
+	    calc->GetJets()->at(i).set_genjet(calc->GetGenJets());
+	  }
+	}
     }
 
     //select only good runs
@@ -574,12 +610,28 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
       m_bcc.recoHyps = new std::vector<ReconstructionHypothesis>;
     }
 
+    //apply jet energy corrections
+    if(calc->GetJets() && m_corrector){
+      Cleaner* cleaner = new Cleaner();
+
+      cleaner->SetJECUncertainty(m_jes_unc);
+
+      // settings for jet correction uncertainties
+      if (m_sys_unc==e_JEC){
+	if (m_sys_var==e_Up) cleaner->ApplyJECVariationUp();
+	if (m_sys_var==e_Down) cleaner->ApplyJECVariationDown();
+      }
+      cleaner->JetRecorrector(m_corrector);
+    }
+
     return;
 
 }
 
 void AnalysisCycle::FillTriggerNames()
 {
+
+    if(!m_bcc.triggerNames) return;
 
     //remove trigger list when starting a new run
     if( m_bcc.run != m_actual_run && m_bcc.isRealData){

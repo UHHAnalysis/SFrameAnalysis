@@ -4,7 +4,6 @@
 
 // SFrame include(s):
 #include "include/AnalysisCycle.h"
-#include "FactorizedJetCorrector.h"
 #include "Cleaner.h"
 
 /**
@@ -44,8 +43,6 @@ private:
   //
   
   std::string m_Electron_Or_Muon_Selection;
-
-  FactorizedJetCorrector* m_corrector;
 
   // Macro adding the functions for dictionary generation
   ClassDef( ZprimePreSelectionCycle, 0 );

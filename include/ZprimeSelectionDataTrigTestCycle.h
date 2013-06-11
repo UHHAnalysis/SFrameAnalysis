@@ -4,7 +4,6 @@
 
 // SFrame include(s):
 #include "include/AnalysisCycle.h"
-#include "FactorizedJetCorrector.h"
 #include "Cleaner.h"
 #include "HypothesisDiscriminator.h"
 #include "ElectronHists.h"
@@ -14,13 +13,6 @@
 #include "JetHists.h"
 #include "include/SelectionModules.h"
 #include "include/ObjectHandler.h"
-#include "JetCorrectorParameters.h"
-
-/**
- *  @short Selection cycle to perform 
- *         full selection for Z'->ttbar analysis
- *  @author Thomas Peiffer
- */
 
 class ZprimeSelectionDataTrigTestCycle : public AnalysisCycle {
 
@@ -56,7 +48,6 @@ private:
   int m_Nbtags_min;  
   bool doEle;
   bool doMu;
-  FactorizedJetCorrector* m_corrector;
   Cleaner* m_cleaner;
   Chi2Discriminator* m_chi2discr;
   BestPossibleDiscriminator* m_bpdiscr;

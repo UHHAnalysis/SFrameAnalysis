@@ -12,7 +12,6 @@
 #include "ElectronEffHists.h"
 #include "JetHists.h"
 #include "include/SelectionModules.h"
-#include "include/ObjectHandler.h"
 
 class ZprimeSelectionDataTrigTestCycle : public AnalysisCycle {
 

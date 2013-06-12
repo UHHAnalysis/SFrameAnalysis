@@ -232,9 +232,8 @@ void ZprimeSelectionDataTrigTestCycle::ExecuteEvent( const SInputData& id, Doubl
  
   m_cleaner = new Cleaner();
 
-  ObjectHandler* objs = ObjectHandler::Instance();
-  BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
   EventCalc* calc = EventCalc::Instance();
+  BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
 
   if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
   if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(155,2.5);

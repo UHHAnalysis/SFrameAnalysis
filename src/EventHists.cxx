@@ -1,5 +1,4 @@
 #include "include/EventHists.h"
-#include "include/ObjectHandler.h"
 #include "include/SelectionModules.h"
 #include <iostream>
 
@@ -41,9 +40,8 @@ void EventHists::Fill()
   EventCalc* calc = EventCalc::Instance();
   double weight = calc -> GetWeight();
   
-  ObjectHandler* objs = ObjectHandler::Instance();
   LuminosityHandler* lumih = calc->GetLumiHandler();
-  BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+  BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
 
 
   int NPrimVertices = bcc-> pvs -> size();

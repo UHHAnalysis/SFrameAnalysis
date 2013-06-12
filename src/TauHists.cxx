@@ -1,5 +1,4 @@
 #include "include/TauHists.h"
-#include "include/ObjectHandler.h"
 #include "include/SelectionModules.h"
 #include "TH2.h"
 #include "TLorentzVector.h"
@@ -69,9 +68,7 @@ void TauHists::Fill()
   EventCalc* calc = EventCalc::Instance();
   double weight = calc -> GetWeight();
   
-
-  ObjectHandler* objs = ObjectHandler::Instance();
-  BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+  BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
   
   int NTaus = bcc-> taus -> size();
   Hist("number")->Fill(NTaus, weight);

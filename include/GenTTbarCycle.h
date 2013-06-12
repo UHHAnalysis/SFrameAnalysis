@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: GenTTbarCycle.h,v 1.3 2012/12/07 14:21:52 peiffer Exp $
+// $Id: GenTTbarCycle.h,v 1.1 2013/03/22 15:45:33 peiffer Exp $
 #ifndef GenTTbarCycle_H
 #define GenTTbarCycle_H
 
@@ -7,7 +7,6 @@
 #include "include/AnalysisCycle.h"
 #include "include/SelectionModules.h"
 #include "include/GenTTbarHists.h"
-#include "include/ObjectHandler.h"
 #include "include/HypothesisHists.h"
 
 class GenTTbarCycle : public AnalysisCycle {

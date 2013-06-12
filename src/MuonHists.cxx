@@ -1,5 +1,4 @@
 #include "include/MuonHists.h"
-#include "include/ObjectHandler.h"
 #include "include/SelectionModules.h"
 #include <iostream>
 
@@ -74,8 +73,7 @@ void MuonHists::Fill()
     EventCalc* calc = EventCalc::Instance();
     double weight = calc -> GetWeight();
 
-    ObjectHandler* objs = ObjectHandler::Instance();
-    BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+    BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
 
     int NMuons = bcc->muons->size();
     Hist("number")-> Fill(NMuons,weight);

@@ -8,7 +8,6 @@
 #include "HypothesisDiscriminator.h"
 #include "HypothesisHists.h"
 #include "include/SelectionModules.h"
-#include "include/ObjectHandler.h"
 #include "HypothesisStatistics.h"
 
 #include "EventHists.h"
@@ -57,6 +56,9 @@ private:
   //
   
   std::string m_Electron_Or_Muon_Selection;
+
+  // Flg use to reverse electron selection
+  bool m_reversed_electron_selection;
  
   int m_Nbtags_max;
   int m_Nbtags_min;  

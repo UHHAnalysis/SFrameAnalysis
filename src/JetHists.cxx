@@ -1,5 +1,4 @@
 #include "include/JetHists.h"
-#include "include/ObjectHandler.h"
 #include "include/SelectionModules.h"
 #include <iostream>
 
@@ -104,8 +103,7 @@ void JetHists::Fill()
     EventCalc* calc = EventCalc::Instance();
     double weight = calc -> GetWeight();
 
-    ObjectHandler* objs = ObjectHandler::Instance();
-    BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+    BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
 
     int NJets = bcc-> jets -> size();
     Hist("NJets")->Fill(NJets, weight);

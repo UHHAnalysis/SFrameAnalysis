@@ -106,8 +106,8 @@ void JetLeptonCleanerCycle::ExecuteEvent( const SInputData& id, Double_t weight)
   // also, the good-run selection is performed there and the calculator is reset
   AnalysisCycle::ExecuteEvent( id, weight);
 
-  ObjectHandler* objs = ObjectHandler::Instance();
-  BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+  EventCalc* calc = EventCalc::Instance();
+  BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
 
 
   // get the histogram collections

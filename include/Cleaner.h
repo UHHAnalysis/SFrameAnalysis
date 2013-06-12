@@ -8,7 +8,6 @@
 #include "Utils.h"
 #include "FactorizedJetCorrector.h"
 #include "JetCorrectionUncertainty.h"
-#include "ObjectHandler.h"
 #include "EventCalc.h"
 
 /**

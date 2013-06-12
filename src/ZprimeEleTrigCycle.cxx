@@ -30,6 +30,10 @@ ZprimeEleTrigCycle::ZprimeEleTrigCycle()
     DeclareProperty( "Nbtags_min", m_Nbtags_min);
     DeclareProperty( "Nbtags_max", m_Nbtags_max);
     DeclareProperty( "ApplyMttbarGenCut", m_mttgencut );
+
+    // steering property for data-driven qcd in electron channel
+    m_reversed_electron_selection = false;
+    DeclareProperty( "ReversedElectronSelection", m_reversed_electron_selection);
 }
 
 ZprimeEleTrigCycle::~ZprimeEleTrigCycle()
@@ -222,8 +226,7 @@ void ZprimeEleTrigCycle::ExecuteEvent( const SInputData& id, Double_t weight) th
 
     // first thing to do: call reset of event calc
     EventCalc* calc = EventCalc::Instance();
-    ObjectHandler* objs = ObjectHandler::Instance();
-    BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+    BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
     calc->Reset();
 
     if(bcc->isRealData && m_addGenInfo) {

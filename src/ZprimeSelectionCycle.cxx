@@ -27,6 +27,10 @@ ZprimeSelectionCycle::ZprimeSelectionCycle()
     m_Nbtags_max=int_infinity();
     DeclareProperty( "Nbtags_min", m_Nbtags_min);
     DeclareProperty( "Nbtags_max", m_Nbtags_max);
+
+    // steering property for data-driven qcd in electron channel
+    m_reversed_electron_selection = false;
+    DeclareProperty( "ReversedElectronSelection", m_reversed_electron_selection);
 }
 
 ZprimeSelectionCycle::~ZprimeSelectionCycle()
@@ -70,6 +74,9 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
 
     bool doEle=false;
     bool doMu=false;
+
+    if(m_reversed_electron_selection)
+        m_logger << INFO << "Applying reversed electron selection (data-driven qcd) !!!!" << SLogger::endmsg;
 
     if(m_Electron_Or_Muon_Selection=="Electrons" || m_Electron_Or_Muon_Selection=="Electron" || m_Electron_Or_Muon_Selection=="Ele" || m_Electron_Or_Muon_Selection=="ELE") {
         doEle=true;
@@ -232,9 +239,8 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
       if (m_sys_var==e_Down) m_cleaner->ApplyJERVariationDown();
     }
 
-    ObjectHandler* objs = ObjectHandler::Instance();
-    BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
     EventCalc* calc = EventCalc::Instance();
+    BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
 
     if(bcc->pvs)  m_cleaner->PrimaryVertexCleaner(4, 24., 2.);
     if(bcc->electrons) m_cleaner->ElectronCleaner_noIso(35,2.5, m_reversed_electron_selection);

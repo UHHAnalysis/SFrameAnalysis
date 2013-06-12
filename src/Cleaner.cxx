@@ -13,8 +13,8 @@ Cleaner::Cleaner( BaseCycleContainer* input)
 Cleaner::Cleaner()
 {
 
-    ObjectHandler* objs = ObjectHandler::Instance();
-    bcc = objs->GetBaseCycleContainer();
+    EventCalc* calc = EventCalc::Instance();
+    bcc = calc->GetBaseCycleContainer();
     m_jec_unc = NULL;
     m_jecvar = e_Default;
     m_jervar = e_Default;

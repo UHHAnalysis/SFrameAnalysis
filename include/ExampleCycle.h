@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: ExampleCycle.h,v 1.2 2012/12/06 08:24:48 peiffer Exp $
+// $Id: ExampleCycle.h,v 1.3 2012/12/07 14:21:52 peiffer Exp $
 #ifndef ExampleCycle_H
 #define ExampleCycle_H
 
@@ -7,7 +7,6 @@
 #include "include/AnalysisCycle.h"
 #include "include/SelectionModules.h"
 #include "include/ExampleHists.h"
-#include "include/ObjectHandler.h"
 #include "include/HypothesisHists.h"
 
 /**
@@ -18,7 +17,7 @@
  *          be used for quick cross checks of the system setup.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.2 $
+ *  @version $Revision: 1.3 $
  */
 
 class ExampleCycle : public AnalysisCycle {

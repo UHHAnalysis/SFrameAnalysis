@@ -1,5 +1,4 @@
 #include "include/ElectronEffHists.h"
-#include "include/ObjectHandler.h"
 #include "include/SelectionModules.h"
 #include <iostream>
 
@@ -30,8 +29,7 @@ void ElectronEffHists::Fill()
   double weight = calc -> GetWeight();
 
   
-  ObjectHandler* objs = ObjectHandler::Instance();
-  BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+  BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
   for(unsigned int i=0; i< bcc->electrons->size(); ++i)
     {
       Electron electron  = bcc->electrons->at(i); 

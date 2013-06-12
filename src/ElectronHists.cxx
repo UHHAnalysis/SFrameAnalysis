@@ -1,5 +1,4 @@
 #include "include/ElectronHists.h"
-#include "include/ObjectHandler.h"
 #include "include/SelectionModules.h"
 #include <iostream>
 
@@ -76,9 +75,7 @@ void ElectronHists::Fill()
     EventCalc* calc = EventCalc::Instance();
     double weight = calc -> GetWeight();
 
-
-    ObjectHandler* objs = ObjectHandler::Instance();
-    BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+    BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
     int NElectrons = bcc->electrons->size();
     Hist("number")-> Fill(NElectrons,weight);
     Hist("number_ly")-> Fill(NElectrons,weight);

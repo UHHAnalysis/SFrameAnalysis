@@ -1,4 +1,4 @@
-// $Id: PDFWeightsCycle.cxx,v 1.4 2012/05/23 13:20:10 peiffer Exp $
+// $Id: PDFWeightsCycle.cxx,v 1.1 2013/02/01 12:39:01 peiffer Exp $
 
 // Local include(s):
 #include "../include/PDFWeightsCycle.h"
@@ -77,10 +77,10 @@ void PDFWeightsCycle::BeginInputFile( const SInputData& ) throw( SError ) {
 
   ConnectVariable( "AnalysisTree", "genInfo" , bcc.genInfo);
 
-  ObjectHandler* objs = ObjectHandler::Instance();
-  objs->SetBaseCycleContainer(&bcc);
+  EventCalc* calc = EventCalc::Instance();
+  calc->SetBaseCycleContainer(&bcc);
   LuminosityHandler *lumiHandler = new LuminosityHandler();
-  objs->SetLumiHandler( lumiHandler );
+  calc->SetLumiHandler( lumiHandler );
   return;
 
 }

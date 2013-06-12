@@ -6,7 +6,6 @@ using namespace std;
 #include "include/ZprimePreSelectionCycle.h"
 #include "include/SelectionModules.h"
 #include "include/ExampleHists.h"
-#include "include/ObjectHandler.h"
 #include "JetCorrectorParameters.h"
 
 ClassImp( ZprimePreSelectionCycle );
@@ -22,6 +21,10 @@ ZprimePreSelectionCycle::ZprimePreSelectionCycle()
     SetIntLumiPerBin(25.);
 
     DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
+
+    // steering property for data-driven qcd in electron channel
+    m_reversed_electron_selection = false;
+    DeclareProperty( "ReversedElectronSelection", m_reversed_electron_selection);
 }
 
 ZprimePreSelectionCycle::~ZprimePreSelectionCycle()
@@ -113,8 +116,8 @@ void ZprimePreSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weigh
     Cleaner cleaner;
     static Selection* preselection = GetSelection("preselection");
 
-    ObjectHandler* objs = ObjectHandler::Instance();
-    BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+    EventCalc* calc = EventCalc::Instance();
+    BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
 
     //save uncleaned jet collection and MET to be stored in output
     std::vector<Jet> uncleaned_jets;

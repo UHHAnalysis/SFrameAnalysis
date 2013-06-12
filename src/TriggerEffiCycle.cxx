@@ -7,7 +7,6 @@ using namespace std;
 #include "include/TriggerEffiCycle.h"
 #include "include/SelectionModules.h"
 #include "include/ExampleHists.h"
-#include "include/ObjectHandler.h"
 
 ClassImp( TriggerEffiCycle );
 

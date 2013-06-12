@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.23 2013/06/05 15:04:12 peiffer Exp $
+// $Id: AnalysisCycle.h,v 1.24 2013/06/11 09:54:23 peiffer Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -28,7 +28,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.23 $
+ *  @version $Revision: 1.24 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -109,9 +109,6 @@ protected:
   // Luminosity property used to define the trigger
   // use in the analysis
   std::string m_lumi_trigger;
-
-  // Flg use to reverse electron selection
-  bool m_reversed_electron_selection;
 
   // Gen info is present in MC sample
   bool m_addGenInfo;

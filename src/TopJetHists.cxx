@@ -1,5 +1,4 @@
 #include "include/TopJetHists.h"
-#include "include/ObjectHandler.h"
 #include "include/SelectionModules.h"
 #include <iostream>
 
@@ -89,9 +88,8 @@ void TopJetHists::Fill()
    // important: get the event weight
   EventCalc* calc = EventCalc::Instance();
   double weight = calc -> GetWeight();
-  
-  ObjectHandler* objs = ObjectHandler::Instance();
-  BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+
+  BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
   
   int NTopJets = bcc-> topjets -> size();
   Hist("NTopJets")->Fill(NTopJets, weight);

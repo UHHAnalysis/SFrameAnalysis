@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: ZprimePostSelectionCycle.h,v 1.8 2013/01/23 11:06:59 rkogler Exp $
+// $Id: ZprimePostSelectionCycle.h,v 1.9 2013/04/30 07:52:00 peiffer Exp $
 #ifndef ZprimePostSelectionCycle_H
 #define ZprimePostSelectionCycle_H
 
@@ -8,7 +8,6 @@
 // SFrame include(s):
 #include "include/AnalysisCycle.h"
 #include "include/SelectionModules.h"
-#include "include/ObjectHandler.h"
 #include "include/HypothesisHists.h"
 
 #include "EventHists.h"
@@ -27,7 +26,7 @@
  *          be used for quick cross checks of the system setup.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.8 $
+ *  @version $Revision: 1.9 $
  */
 
 class ZprimePostSelectionCycle : public AnalysisCycle {

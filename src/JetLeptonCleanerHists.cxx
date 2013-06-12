@@ -1,5 +1,4 @@
 #include "include/JetLeptonCleanerHists.h"
-#include "include/ObjectHandler.h"
 #include "include/EventCalc.h"
 #include <iostream>
 
@@ -69,9 +68,7 @@ void JetLeptonCleanerHists::Fill()
 
   EventCalc* calc = EventCalc::Instance();
 
-  ObjectHandler* objs = ObjectHandler::Instance();
-
-  BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+  BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
   
 
   Cleaner* cleaner = new Cleaner(bcc);

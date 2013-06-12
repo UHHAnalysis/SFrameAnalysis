@@ -1,5 +1,4 @@
 #include "include/BTagEffHists.h"
-#include "include/ObjectHandler.h"
 #include "include/SelectionModules.h"
 #include <iostream>
 
@@ -62,8 +61,7 @@ void BTagEffHists::Fill()
     EventCalc* calc = EventCalc::Instance();
     double weight = calc -> GetWeight();
 
-    ObjectHandler* objs = ObjectHandler::Instance();
-    BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+    BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
 
     for (unsigned int i =0; i<bcc->jets->size(); ++i) {
 

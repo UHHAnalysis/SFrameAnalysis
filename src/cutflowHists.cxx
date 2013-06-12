@@ -1,6 +1,5 @@
 #include "TTbarGen.h"
 #include "include/cutflowHists.h"
-#include "include/ObjectHandler.h"
 #include "include/EventCalc.h"
 #include <iostream>
 #include "../include/Utils.h"
@@ -92,8 +91,7 @@ void cutflowHists::Fill()
   int Npvs = calc->GetPrimaryVertices()->size();
   std::vector<Jet>* jets = calc->GetJets();
   int Njets = 0;
-  ObjectHandler* objs = ObjectHandler::Instance();
-  BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+  BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
   for (unsigned int itj=0;itj<bcc->jets->size();itj++){
     if(bcc->jets->at(itj).pt()<ptcutjets) continue;
     Njets=Njets+1;

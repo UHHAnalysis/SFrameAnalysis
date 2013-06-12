@@ -1,5 +1,5 @@
 
-// $Id: cutflowCycle.cxx,v 1.4 2012/06/22 07:46:17 peiffer Exp $
+// $Id: cutflowCycle.cxx,v 1.1 2013/03/26 12:50:16 hoeing Exp $
 
 #include <iostream>
 
@@ -9,7 +9,6 @@ using namespace std;
 #include "include/cutflowCycle.h"
 #include "include/SelectionModules.h"
 #include "include/cutflowHists.h"
-#include "include/ObjectHandler.h"
 
 ClassImp( cutflowCycle );
 
@@ -166,10 +165,11 @@ void cutflowCycle::ExecuteEvent( const SInputData& id, Double_t weight) throw( S
 
   // start the analysis
   HistsNoCuts->Fill();
-  ObjectHandler* objs = ObjectHandler::Instance();
-  BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+
+
 
   EventCalc* calc = EventCalc::Instance();
+  BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
    bool IsRealData = calc->IsRealData();
 
 

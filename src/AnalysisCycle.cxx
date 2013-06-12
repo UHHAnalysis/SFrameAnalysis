@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.38 2013/06/05 15:04:12 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.39 2013/06/11 09:54:23 peiffer Exp $
 
 #include <iostream>
 
@@ -7,7 +7,6 @@ using namespace std;
 // Local include(s):
 #include "include/AnalysisCycle.h"
 #include "include/SelectionModules.h"
-#include "include/ObjectHandler.h"
 #include "include/EventCalc.h"
 #include "STreeType.h"
 
@@ -85,9 +84,6 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "PDFWeightFilesDirectory", m_pdfdir );
     DeclareProperty( "PDFIndex", m_pdf_index);
 
-    // steering property for data-driven qcd in electron channel
-    m_reversed_electron_selection = false;
-    DeclareProperty( "ReversedElectronSelection", m_reversed_electron_selection);
 }
 
 AnalysisCycle::~AnalysisCycle()
@@ -176,9 +172,6 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     } else {
         m_puwp = NULL;
     }
-
-    if(m_reversed_electron_selection)
-        m_logger << INFO << "Applying reversed electron selection (data-driven qcd) !!!!" << SLogger::endmsg;
 
     // check if the settings for the systematic uncertainty make sense
     if(m_sys_unc_name.size()>0){
@@ -496,7 +489,7 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     // Connect all variables from the Ntuple file with the ones needed for the analysis.
     // The different collections that should be loaded are steerable through the XML file.
     // The variables are commonly stored in the BaseCycleContaincer and can be
-    // accessed afterwards through the ObjectHandler
+    // accessed afterwards through EventCalc
 
     ConnectVariable( "AnalysisTree", "triggerResults" , m_bcc.triggerResults);
     ConnectVariable( "AnalysisTree", "triggerNames" , m_bcc.triggerNames);
@@ -530,9 +523,9 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     //if(m_caTopTagGen.size()>0) ConnectVariable("AnalysisTree", m_caTopTagGen.c_str(), m_bcc.topjets);
 
 
-    ObjectHandler* objs = ObjectHandler::Instance();
-    objs->SetBaseCycleContainer(&m_bcc);
-    objs->SetLumiHandler( LumiHandler() );
+    EventCalc* calc = EventCalc::Instance();
+    calc->SetBaseCycleContainer(&m_bcc);
+    calc->SetLumiHandler( LumiHandler() );
 
     return;
 

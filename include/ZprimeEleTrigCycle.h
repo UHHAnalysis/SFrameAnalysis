@@ -8,7 +8,6 @@
 #include "HypothesisDiscriminator.h"
 #include "HypothesisHists.h"
 #include "include/SelectionModules.h"
-#include "include/ObjectHandler.h"
 #include "HypothesisStatistics.h"
 
 #include "EventHists.h"
@@ -50,6 +49,9 @@ private:
   //
   // Put all your private variables here
   //
+
+  // Flg use to reverse electron selection
+  bool m_reversed_electron_selection;
   
   std::string m_Electron_Or_Muon_Selection;
  

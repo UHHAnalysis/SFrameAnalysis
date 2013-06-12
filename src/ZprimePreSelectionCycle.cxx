@@ -5,7 +5,6 @@ using namespace std;
 // Local include(s):
 #include "include/ZprimePreSelectionCycle.h"
 #include "include/SelectionModules.h"
-#include "include/ExampleHists.h"
 #include "JetCorrectorParameters.h"
 
 ClassImp( ZprimePreSelectionCycle );

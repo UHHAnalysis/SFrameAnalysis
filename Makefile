@@ -12,7 +12,6 @@ INCLUDES += -I$(FASTJETDIR)/include
 INCLUDES += -I$(FASTJETDIR)/../include
 
 INCLUDES += -I$(SFRAME_DIR)/SFrameTools
-INCLUDES += -I$(SFRAME_DIR)/SFrameTools/include
 INCLUDES += -I$(SFRAME_DIR)/core
 INCLUDES += -I$(SFRAME_DIR)/core/include
 INCLUDES += -I$(SFRAME_DIR)/include

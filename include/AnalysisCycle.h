@@ -1,10 +1,10 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.24 2013/06/11 09:54:23 peiffer Exp $
+// $Id: AnalysisCycle.h,v 1.25 2013/06/12 12:40:14 peiffer Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
 // SFrame include(s):
-#include "core/include/SCycleBase.h"
+#include "SCycleBase.h"
 #include "Selection.h"
 #include "PUWeightProducer.h"
 #include "LuminosityHandler.h"
@@ -28,7 +28,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.24 $
+ *  @version $Revision: 1.25 $
  */
 
 class AnalysisCycle : public SCycleBase {

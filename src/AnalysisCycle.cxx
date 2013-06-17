@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.39 2013/06/11 09:54:23 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.40 2013/06/12 12:37:29 peiffer Exp $
 
 #include <iostream>
 
@@ -37,6 +37,7 @@ AnalysisCycle::AnalysisCycle()
     // set some default values
     m_readTTbarReco = false;
     m_writeTTbarReco = false;
+    m_readCommonInfo = true;
 
     // declare variables for lumi file
     DeclareProperty( "LumiFilePath" , m_lumifile_path);
@@ -59,6 +60,7 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "GenParticleCollection", m_GenParticleCollection);
     DeclareProperty( "readTTbarReco", m_readTTbarReco);
     DeclareProperty( "writeTTbarReco", m_writeTTbarReco);
+    DeclareProperty( "readCommonInfo", m_readCommonInfo);
 
     // steerable properties for the jec
     DeclareProperty( "JECFileLocation" , m_JECFileLocation);
@@ -260,7 +262,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         if(m_addGenInfo && m_TopJetCollectionGen.size()>0) DeclareVariable(m_output_topjetsgen, m_TopJetCollectionGen.c_str());
         if(m_PrunedJetCollection.size()>0) DeclareVariable(m_output_prunedjets, m_PrunedJetCollection.c_str());
         if(m_addGenInfo && m_GenParticleCollection.size()>0) DeclareVariable(m_output_genparticles, m_GenParticleCollection.c_str());
-        if(m_addGenInfo) DeclareVariable(m_output_genInfo, "genInfo" );
+        if(m_addGenInfo && m_readCommonInfo) DeclareVariable(m_output_genInfo, "genInfo" );
         if(m_writeTTbarReco) DeclareVariable(m_output_recoHyps, "recoHyps");
         DeclareVariable(m_output_triggerNames, "triggerNames");
         DeclareVariable(m_output_triggerResults, "triggerResults");
@@ -491,8 +493,6 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     // The variables are commonly stored in the BaseCycleContaincer and can be
     // accessed afterwards through EventCalc
 
-    ConnectVariable( "AnalysisTree", "triggerResults" , m_bcc.triggerResults);
-    ConnectVariable( "AnalysisTree", "triggerNames" , m_bcc.triggerNames);
     if(m_ElectronCollection.size()>0) ConnectVariable( "AnalysisTree", m_ElectronCollection.c_str() ,m_bcc. electrons);
     if(m_MuonCollection.size()>0) ConnectVariable( "AnalysisTree", m_MuonCollection.c_str() , m_bcc.muons);
     if(m_TauCollection.size()>0) ConnectVariable( "AnalysisTree", m_TauCollection.c_str() , m_bcc.taus);
@@ -507,18 +507,23 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     if(m_PrunedJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrunedJetCollection.c_str() , m_bcc.prunedjets);
     if(m_addGenInfo && m_GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenParticleCollection.c_str() , m_bcc.genparticles);
     else m_bcc.genparticles=NULL;
-    if(m_addGenInfo) ConnectVariable( "AnalysisTree", "genInfo" , m_bcc.genInfo);
+    if(m_addGenInfo && m_readCommonInfo) ConnectVariable( "AnalysisTree", "genInfo" , m_bcc.genInfo);
     else m_bcc.genInfo=NULL;
     if(m_readTTbarReco) ConnectVariable( "AnalysisTree", "recoHyps", m_bcc.recoHyps);
-    ConnectVariable( "AnalysisTree", "run" , m_bcc.run);
-    ConnectVariable( "AnalysisTree", "rho" , m_bcc.rho);
-    ConnectVariable( "AnalysisTree", "luminosityBlock" , m_bcc.luminosityBlock);
-    ConnectVariable( "AnalysisTree" ,"event" ,m_bcc.event);
-    ConnectVariable( "AnalysisTree" ,"isRealData", m_bcc.isRealData);
-    //ConnectVariable( "AnalysisTree" ,"HBHENoiseFilterResult", m_bcc.HBHENoiseFilterResult);
-    ConnectVariable( "AnalysisTree" ,"beamspot_x0", m_bcc.beamspot_x0);
-    ConnectVariable( "AnalysisTree" ,"beamspot_y0", m_bcc.beamspot_y0);
-    ConnectVariable( "AnalysisTree" ,"beamspot_z0", m_bcc.beamspot_z0);
+
+    if(m_readCommonInfo){
+        ConnectVariable( "AnalysisTree", "triggerResults" , m_bcc.triggerResults);
+        ConnectVariable( "AnalysisTree", "triggerNames" , m_bcc.triggerNames);
+        ConnectVariable( "AnalysisTree", "run" , m_bcc.run);
+        ConnectVariable( "AnalysisTree", "rho" , m_bcc.rho);
+        ConnectVariable( "AnalysisTree", "luminosityBlock" , m_bcc.luminosityBlock);
+        ConnectVariable( "AnalysisTree" ,"event" ,m_bcc.event);
+        ConnectVariable( "AnalysisTree" ,"isRealData", m_bcc.isRealData);
+        //ConnectVariable( "AnalysisTree" ,"HBHENoiseFilterResult", m_bcc.HBHENoiseFilterResult);
+        ConnectVariable( "AnalysisTree" ,"beamspot_x0", m_bcc.beamspot_x0);
+        ConnectVariable( "AnalysisTree" ,"beamspot_y0", m_bcc.beamspot_y0);
+        ConnectVariable( "AnalysisTree" ,"beamspot_z0", m_bcc.beamspot_z0);
+    }
 
     //if(m_caTopTagGen.size()>0) ConnectVariable("AnalysisTree", m_caTopTagGen.c_str(), m_bcc.topjets);
 

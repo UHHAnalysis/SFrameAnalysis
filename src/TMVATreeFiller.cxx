@@ -1,12 +1,11 @@
 #include "include/TMVATreeFiller.h"
-#include "include/ObjectHandler.h"
 #include "include/EventCalc.h"
 #include "include/JetProps.h"
 #include <iostream>
 
 using namespace std;
 
-TMVATreeFiller::TMVATreeFiller(const char* name) : BaseHists(name)
+TMVATreeFiller::TMVATreeFiller(const char* name, TTree * t) : BaseHists(name), m_tree(t)
 {
   // named default constructor
 }
@@ -17,27 +16,7 @@ TMVATreeFiller::~TMVATreeFiller()
 }
 
 void TMVATreeFiller::Init()
-{
-  // book the TMVA Tree here
-
-  const char* directory = "";
-  GetTempDir()->cd();
-  TTree tree( "TopTagTree", "TopTagTree" );
-  
-  TString path = "" + TString( tree.GetName() );
-  SCycleOutput* out = dynamic_cast< SCycleOutput* >( m_output->FindObject( path ) );
-  if( ! out ) {
-    out = new SCycleOutput( tree.Clone(), path, directory );
-    m_output->TList::AddLast( out );
-    REPORT_VERBOSE( "Added new object with name \"" << tree.GetName()
-		    << "\" in directory \"" << ( directory ? directory : "" ) << "\"" );
-  }
-  
-  m_tree = dynamic_cast< TTree* >( out->GetObject() );
-  
-  gROOT->cd(); // So that the temporary objects would be
-               // created in a general memory space.
-  
+{  
   m_tree->Branch("TopJet_px", &m_px, "TopJet_px/D");
   m_tree->Branch("TopJet_py", &m_py, "TopJet_py/D");
   m_tree->Branch("TopJet_pz", &m_pz, "TopJet_pz/D");
@@ -130,7 +109,7 @@ void TMVATreeFiller::Fill()
 
   // check if we got a ttbar event on generator level
 
-  TTbarGen geninfo;
+  TTbarGen geninfo(calc->GetBaseCycleContainer());
   GenParticle top = geninfo.Top();
   GenParticle atop = geninfo.Antitop();
 
@@ -406,35 +385,36 @@ void TMVATreeFiller::FillTopJetProperties(TopJet topjet, GenParticle topquark)
 
   // calculate pruned masses
   std::vector<fastjet::PseudoJet> jets = jp.GetFastJet(2.0);   // something large to make sure jet is inside radius
-  fastjet::PseudoJet pjet = jp.GetPrunedJet(jets[0]);
-  std::vector<fastjet::PseudoJet> prunedsubjets;
-  if (pjet.constituents().size()>=2){
-    prunedsubjets = pjet.exclusive_subjets(2);
+  if(jets.empty()){
+      m_logger << WARNING << "TMVATreeFiller::FillTopJetProperties: no jet found!" << SLogger::endmsg; 
   }
-  if (pjet.constituents().size()>=3){
-    prunedsubjets = pjet.exclusive_subjets(3);
+  else{
+    fastjet::PseudoJet pjet = jp.GetPrunedJet(jets[0]);
+    std::vector<fastjet::PseudoJet> prunedsubjets;
+    if (pjet.constituents().size()>=2){
+        prunedsubjets = pjet.exclusive_subjets(2);
+    }
+    if (pjet.constituents().size()>=3){
+        prunedsubjets = pjet.exclusive_subjets(3);
+    }
+
+    unsigned int pnsubs = prunedsubjets.size();
+
+    fastjet::PseudoJet psubjets(0,0,0,0);
+    
+    for(unsigned int j=0; j<pnsubs; ++j){
+        psubjets += pjet.pieces()[j];
+    }
+
+    m_pruned_mass = psubjets.m();
+
+    if (pnsubs>=2) {
+        m_pruned_m12 = (prunedsubjets[0]+prunedsubjets[1]).m();
+    }
+
+    if (pnsubs>=3) {
+        m_pruned_m13 = (prunedsubjets[0]+prunedsubjets[2]).m();
+        m_pruned_m23 = (prunedsubjets[1]+prunedsubjets[2]).m();
+    }
   }
-
-  unsigned int pnsubs = prunedsubjets.size();
-
-  fastjet::PseudoJet psubjets(0,0,0,0);
-  
-  for(unsigned int j=0; j<pnsubs; ++j){
-    psubjets += pjet.pieces()[j];
-  }
-
-  m_pruned_mass = psubjets.m();
-
-  if (pnsubs>=2) {
-    m_pruned_m12 = (prunedsubjets[0]+prunedsubjets[1]).m();
-  }
-
-  if (pnsubs>=3) {
-    m_pruned_m13 = (prunedsubjets[0]+prunedsubjets[2]).m();
-    m_pruned_m23 = (prunedsubjets[1]+prunedsubjets[2]).m();
-  }
-
-
-  return;
-
 }

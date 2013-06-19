@@ -28,7 +28,7 @@ class TMVATreeFiller : public BaseHists {
 
 public:
    /// Named constructor
-   TMVATreeFiller(const char* name);
+   TMVATreeFiller(const char* name, TTree* tree);
 
    /// Default destructor
    ~TMVATreeFiller();

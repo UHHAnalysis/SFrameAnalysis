@@ -1,4 +1,4 @@
-// $Id: TopTagTMVACycle.cxx,v 1.8 2012/11/07 10:06:24 rkogler Exp $
+// $Id: TopTagTMVACycle.cxx,v 1.1 2013/05/21 14:40:03 rkogler Exp $
 
 #include <iostream>
 
@@ -8,8 +8,6 @@ using namespace std;
 #include "include/TopTagTMVACycle.h"
 #include "include/TMVATreeFiller.h"
 #include "include/SelectionModules.h"
-#include "include/ExampleHists.h"
-#include "include/ObjectHandler.h"
 #include "include/HypothesisHists.h"
 
 ClassImp( TopTagTMVACycle );
@@ -67,7 +65,8 @@ void TopTagTMVACycle::BeginInputData( const SInputData& id ) throw( SError )
   RegisterSelection(CAJetSel);
   
   // this class fills the tree for the TMVA analysis
-  RegisterHistCollection( new TMVATreeFiller("TopTagFiller") );
+  TTree * toptagtree = GetOutputMetadataTree("TopTagTree");
+  RegisterHistCollection( new TMVATreeFiller("TopTagFiller", toptagtree) );
 
   // important: initialise histogram collections after their definition
   InitHistos();

@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.40 2013/06/12 12:37:29 peiffer Exp $
+// $Id: AnalysisCycle.cxx,v 1.41 2013/06/17 08:02:08 jott Exp $
 
 #include <iostream>
 
@@ -399,7 +399,7 @@ Selection* AnalysisCycle::GetSelection(const std::string name)
             return m_selections[i];
         }
     }
-    m_logger << DEBUG << "Could not find selection with name " << InName << "." << SLogger::endmsg;
+    m_logger << WARNING << "Could not find selection with name " << InName << "." << SLogger::endmsg;
     return NULL;
 }
 
@@ -511,29 +511,35 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     else m_bcc.genInfo=NULL;
     if(m_readTTbarReco) ConnectVariable( "AnalysisTree", "recoHyps", m_bcc.recoHyps);
 
+    ConnectVariable( "AnalysisTree", "run" , m_bcc.run);
+    ConnectVariable( "AnalysisTree", "rho" , m_bcc.rho);
+    ConnectVariable( "AnalysisTree", "luminosityBlock" , m_bcc.luminosityBlock);
+    ConnectVariable( "AnalysisTree" ,"event" ,m_bcc.event);
+    ConnectVariable( "AnalysisTree" ,"isRealData", m_bcc.isRealData);
+
     if(m_readCommonInfo){
         ConnectVariable( "AnalysisTree", "triggerResults" , m_bcc.triggerResults);
         ConnectVariable( "AnalysisTree", "triggerNames" , m_bcc.triggerNames);
-        ConnectVariable( "AnalysisTree", "run" , m_bcc.run);
-        ConnectVariable( "AnalysisTree", "rho" , m_bcc.rho);
-        ConnectVariable( "AnalysisTree", "luminosityBlock" , m_bcc.luminosityBlock);
-        ConnectVariable( "AnalysisTree" ,"event" ,m_bcc.event);
-        ConnectVariable( "AnalysisTree" ,"isRealData", m_bcc.isRealData);
         //ConnectVariable( "AnalysisTree" ,"HBHENoiseFilterResult", m_bcc.HBHENoiseFilterResult);
         ConnectVariable( "AnalysisTree" ,"beamspot_x0", m_bcc.beamspot_x0);
         ConnectVariable( "AnalysisTree" ,"beamspot_y0", m_bcc.beamspot_y0);
         ConnectVariable( "AnalysisTree" ,"beamspot_z0", m_bcc.beamspot_z0);
     }
+    else{
+        m_bcc.triggerResults = 0;
+        m_bcc.triggerNames = 0;
+        m_bcc.beamspot_x0 = m_bcc.beamspot_y0 = m_bcc.beamspot_z0 = NAN;
+    }
 
     //if(m_caTopTagGen.size()>0) ConnectVariable("AnalysisTree", m_caTopTagGen.c_str(), m_bcc.topjets);
 
-
     EventCalc* calc = EventCalc::Instance();
     calc->SetBaseCycleContainer(&m_bcc);
-    calc->SetLumiHandler( LumiHandler() );
+    calc->SetLumiHandler(LumiHandler());
+
+    
 
     return;
-
 }
 
 void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError )

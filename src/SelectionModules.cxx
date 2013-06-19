@@ -744,7 +744,7 @@ bool EventFlavorSelection::pass(BaseCycleContainer *bcc)
     std::map<int,int> counter;
     for(unsigned int i=0; i<bcc->jets->size(); ++i) {
         Jet jet = bcc->jets->at(i);
-        int flavor = abs(JetFlavor(&jet));
+        int flavor = abs(jet.flavor());
         // std::cout << flavor << " ";
         if (counter.find(flavor) == counter.end())
             counter[flavor] = 1;

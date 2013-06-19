@@ -66,10 +66,10 @@ void BTagEffHists::Fill()
     for (unsigned int i =0; i<bcc->jets->size(); ++i) {
 
         Jet jet =  bcc->jets->at(i);
-        unsigned int flavor = abs(JetFlavor(&jet));
+        unsigned int flavor = abs(jet.flavor());
         bool btag = IsTagged(jet, m_type);
 
-        switch(abs(JetFlavor(&jet))) {
+        switch(flavor) {
         case 5: // b-jets
             Hist("pt_bJet") -> Fill(jet.pt(),weight);
             Hist("eta_bJet") -> Fill(jet.eta(),weight);

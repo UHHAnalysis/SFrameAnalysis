@@ -117,12 +117,13 @@ void JetLeptonCleanerHists::Fill()
 
 	//lepton removal from jets on generator level
 	LorentzVector genlep_v4(0,0,0,0);
-	for(unsigned int j=0; j<bcc->jets->at(i).genparticles_indices().size(); ++j){
-	  unsigned int index = bcc->jets->at(i).genparticles_indices().at(j);
-	  int pdgId = abs(bcc->genparticles->at(index).pdgId());
-	  int status = abs(bcc->genparticles->at(index).status());
+	for(unsigned int j=0; j<calc->GetGenParticles()->size(); ++j){
+	  GenParticle gp = calc->GetGenParticles()->at(j);
+	  int pdgId= abs(gp.pdgId());
+	  int status = gp.status();
 	  if(status==1 &&(  pdgId==11 || pdgId==13)){
-	    genlep_v4+= bcc->genparticles->at(index).v4();
+	    if(deltaR( gp.v4(), bcc->jets->at(i).genjet_v4() )<0.5)
+	      genlep_v4+=gp.v4();
 	  }
 	}
 

@@ -423,6 +423,7 @@
   		   <Item Name="Nbtags_min" Value="0" />
  <!-- 		   <Item Name="Nbtags_max" Value="0" />-->
 
+		   <Item Name="ApplyMttbarGenCut" Value="true" />
 		   <Item Name="writeTTbarReco" Value="True" />  
    		   <Item Name="readTTbarReco" Value="False" /> 
 

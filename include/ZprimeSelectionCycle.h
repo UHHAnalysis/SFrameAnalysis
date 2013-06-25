@@ -57,6 +57,9 @@ private:
   
   std::string m_Electron_Or_Muon_Selection;
 
+  // flag to cut on generated mttbar
+  bool m_mttgencut;
+
   // Flg use to reverse electron selection
   bool m_reversed_electron_selection;
  

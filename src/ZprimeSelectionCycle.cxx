@@ -20,6 +20,8 @@ ZprimeSelectionCycle::ZprimeSelectionCycle()
     m_sys_var = e_Default;
     m_sys_unc = e_None;
 
+    m_mttgencut = false;
+    DeclareProperty( "ApplyMttbarGenCut", m_mttgencut );
     DeclareProperty( "Electron_Or_Muon_Selection", m_Electron_Or_Muon_Selection );
 
     //default: no btagging cuts applied, other cuts can be defined in config file
@@ -69,6 +71,17 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
     AnalysisCycle::BeginInputData( id );
 
     // -------------------- set up the selections ---------------------------
+
+    // cut out mttbar events for the 0_to_700 sample to not double-count them
+    static Selection* mttbar_gen_selection = new Selection("Mttbar_Gen_Selection");
+    if ( m_mttgencut && ((id.GetVersion() == "TTbar_0to700") || (id.GetVersion() == "TTbar") )  ) {
+      m_logger << INFO << "Applying mttbar generator cut from 0 to 700 GeV." << SLogger::endmsg;
+      mttbar_gen_selection->addSelectionModule(new MttbarGenCut(0,700));
+      mttbar_gen_selection->EnableSelection();
+    } else {
+      m_logger << INFO << "Disabling mttbar generator cut." << SLogger::endmsg;
+      mttbar_gen_selection->DisableSelection();
+    }
 
     //Set-Up Selection
 
@@ -131,6 +144,7 @@ void ZprimeSelectionCycle::BeginInputData( const SInputData& id ) throw( SError 
     Selection* matchable_selection = new Selection("matchable_selection");
     matchable_selection->addSelectionModule(new HypothesisDiscriminatorCut( m_cmdiscr, -1*double_infinity(), 999));
 
+    RegisterSelection(mttbar_gen_selection);
     RegisterSelection(first_selection);
     RegisterSelection(second_selection);
     RegisterSelection(trangularcut_selection);
@@ -216,6 +230,9 @@ void ZprimeSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weight) 
     // also, the good-run selection is performed there and the calculator is reset
 
     AnalysisCycle::ExecuteEvent( id, weight);
+
+    static Selection* mttbar_gen_selection = GetSelection("Mttbar_Gen_Selection");
+    if(!mttbar_gen_selection->passSelection())  throw SError( SError::SkipEvent );
 
     // control histograms
     FillControlHists("_Presel");

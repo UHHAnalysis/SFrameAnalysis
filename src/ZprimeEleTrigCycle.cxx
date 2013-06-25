@@ -229,6 +229,9 @@ void ZprimeEleTrigCycle::ExecuteEvent( const SInputData& id, Double_t weight) th
     BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
     calc->Reset();
 
+    // look at period A+B only
+    if (calc->GetRunNum()<196600) return; 
+
     if(bcc->isRealData && m_addGenInfo) {
         m_logger << WARNING<< "Running over real data, but addGenInfo=True?!" << SLogger::endmsg;
     }

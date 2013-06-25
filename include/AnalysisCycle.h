@@ -1,5 +1,5 @@
 // Dear emacs, this is -*- c++ -*-
-// $Id: AnalysisCycle.h,v 1.26 2013/06/13 15:26:26 peiffer Exp $
+// $Id: AnalysisCycle.h,v 1.27 2013/06/17 08:02:08 jott Exp $
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
@@ -28,7 +28,7 @@
  *          should inherit from this class.
  *
  *  @author Roman Kogler
- *  @version $Revision: 1.26 $
+ *  @version $Revision: 1.27 $
  */
 
 class AnalysisCycle : public SCycleBase {
@@ -169,6 +169,7 @@ private:
   std::string m_TopJetCollectionGen;
   std::string m_PrunedJetCollection;
   std::string m_GenParticleCollection;
+  std::string m_PFParticleCollection;
   bool m_writeTTbarReco;
   bool m_readTTbarReco;
   bool m_readCommonInfo;
@@ -185,12 +186,13 @@ private:
   std::vector< Jet > m_output_jets;
   std::vector< Particle > m_output_genjets;
   std::vector< TopJet > m_output_topjets;
-  std::vector< TopJet > m_output_topjetsgen;
+  std::vector< GenTopJet > m_output_topjetsgen;
   std::vector< TopJet > m_output_prunedjets;
   MET m_output_met;
   std::vector<std::string> m_output_triggerNames;
   std::vector<bool> m_output_triggerResults;
   std::vector< GenParticle > m_output_genparticles;
+  std::vector< PFParticle > m_output_pfparticles;
   GenInfo m_output_genInfo;
   std::vector< ReconstructionHypothesis > m_output_recoHyps;
 

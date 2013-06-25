@@ -1,4 +1,4 @@
-// $Id: ZprimePostSelectionCycle.cxx,v 1.11 2013/01/23 11:05:18 rkogler Exp $
+// $Id: ZprimePostSelectionCycle.cxx,v 1.12 2013/04/30 07:51:59 peiffer Exp $
 
 using namespace std;
 
@@ -100,9 +100,14 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
     if (doEle)
         KinematicSelection->addSelectionModule(new HypothesisLeptopPtCut( m_chi2discr, 140.0, double_infinity()));
 
-    if ( m_mttgencut && id.GetVersion() == "TTbar" ) {
-      m_logger << INFO << "Applying mttbar generator cut from 0 to 700 GeV" << SLogger::endmsg;
-      KinematicSelection->addSelectionModule(new MttbarGenCut(0,700));
+    static Selection* mttbar_gen_selection = new Selection("Mttbar_Gen_Selection");
+    if ( m_mttgencut && ((id.GetVersion() == "TTbar_0to700") || (id.GetVersion() == "TTbar") )  ) {
+      m_logger << INFO << "Applying mttbar generator cut from 0 to 700 GeV." << SLogger::endmsg;
+      mttbar_gen_selection->addSelectionModule(new MttbarGenCut(0,700));
+      mttbar_gen_selection->EnableSelection();
+    } else {
+      m_logger << INFO << "Disabling mttbar generator cut." << SLogger::endmsg;
+      mttbar_gen_selection->DisableSelection();
     }
 
     std::transform(
@@ -136,6 +141,7 @@ void ZprimePostSelectionCycle::BeginInputData( const SInputData& id ) throw( SEr
     TopTagSelection->addSelectionModule(new NTopJetSelection(1,int_infinity(),350,2.5));
     TopTagSelection->addSelectionModule(new NTopTagSelection(1,int_infinity()));
 
+    RegisterSelection(mttbar_gen_selection);
     RegisterSelection(HCALlaser);
     RegisterSelection(LeadingJetSelection);
     RegisterSelection(KinematicSelection);
@@ -306,6 +312,10 @@ void ZprimePostSelectionCycle::ExecuteEvent( const SInputData& id, Double_t weig
     if (calc->IsRealData()){
       if (!HCALlaser->passSelection()) throw SError( SError::SkipEvent );
     }
+
+    // cut out events from the inclusive ttbar sample to avoid double counting
+    static Selection* mttbar_gen_selection = GetSelection("Mttbar_Gen_Selection");
+    if(!mttbar_gen_selection->passSelection())  throw SError( SError::SkipEvent );
 
     // b tagging scale factor
     if(m_bsf && m_addGenInfo) {

@@ -21,18 +21,18 @@ void ElectronHists::Init()
     // book all histograms here
     Book( TH1F( "number","number of electrons",7,-0.5,6.5));
     Book( TH1F( "number_ly","number of electrons",7,-0.5,6.5));
-    Book( TH1F( "pT","p_{T} electron",100,0,500));
-    Book( TH1F( "pT_ly","p_{T} electron",100,0,500));
+    Book( TH1F( "pt","p_{T} electron",100,0,500));
+    Book( TH1F( "pt_ly","p_{T} electron",100,0,500));
     Book( TH1F( "eta","#eta electron",100,-3,3));
     Book( TH1F( "eta_ly","#eta electron",100,-3,3));
     Book( TH1F( "phi","#phi electron",100,-PI,PI));
     Book( TH1F( "phi_ly","#phi electron",100,-PI,PI));
     Book( TH1F( "isolation","relIso electron",100,0,0.5));
     Book( TH1F( "isolation_ly","relIso electron",100,0,0.5));
-    Book( TH1F( "pT_1"," p_{T} leading electron",100,0,500));
-    Book( TH1F( "pT_1_ly"," p_{T} leading electron",100,0,500));
-    Book( TH1F( "pT_2","p_{T} 2nd electron",100,0,500));
-    Book( TH1F( "pT_2_ly","p_{T} 2nd electron",100,0,500));
+    Book( TH1F( "pt_1"," p_{T} leading electron",100,0,500));
+    Book( TH1F( "pt_1_ly"," p_{T} leading electron",100,0,500));
+    Book( TH1F( "pt_2","p_{T} 2nd electron",100,0,500));
+    Book( TH1F( "pt_2_ly","p_{T} 2nd electron",100,0,500));
     Book( TH1F( "eta_1","#eta leading electron",100,-3,3));
     Book( TH1F( "eta_1_ly","#eta leading electron",100,-3,3));
     Book( TH1F( "eta_2","#eta 2nd electron",100,-3,3));
@@ -81,8 +81,8 @@ void ElectronHists::Fill()
     Hist("number_ly")-> Fill(NElectrons,weight);
     for(unsigned int i=0; i< bcc->electrons->size(); ++i) {
         Electron electron  = bcc->electrons->at(i);
-        Hist("pT")-> Fill(electron.pt(),weight);
-        Hist("pT_ly")-> Fill(electron.pt(),weight);
+        Hist("pt")-> Fill(electron.pt(),weight);
+        Hist("pt_ly")-> Fill(electron.pt(),weight);
         Hist("eta") -> Fill(electron.eta(),weight);
         Hist("eta_ly") -> Fill(electron.eta(),weight);
         Hist("phi") -> Fill(electron.phi(),weight);
@@ -106,9 +106,9 @@ void ElectronHists::Fill()
     for (unsigned int i =0; i<=1; ++i) {
         if (bcc->electrons->size()> i) {
             Electron electron =  bcc->electrons->at(i);
-            TString hname = TString::Format("pT_%d", i+1);
+            TString hname = TString::Format("pt_%d", i+1);
             Hist(hname)->Fill(electron.pt(),weight);
-            TString hname_ly = TString::Format("pT_%d_ly", i+1);
+            TString hname_ly = TString::Format("pt_%d_ly", i+1);
             Hist(hname_ly)->Fill(electron.pt(),weight);
             TString hname_eta = TString::Format("eta_%d", i+1);
             Hist(hname_eta)->Fill(electron.eta(),weight);

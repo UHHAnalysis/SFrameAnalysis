@@ -203,6 +203,72 @@ void HypothesisHists::Fill()
     }
 
   }
+
+
+  /*
+  static int event_old = 0;
+  // overlap events with all-hadronic analysis
+  if(calc->IsRealData()){
+    if ( (calc->GetRunNum()==198116 && calc->GetLumiBlock()==41 && calc->GetEventNum()==27270859) ||
+	 (calc->GetRunNum()==200525 && calc->GetLumiBlock()==241 && calc->GetEventNum()==309368924 ) ||
+	 (calc->GetRunNum()==201173 && calc->GetLumiBlock()==424 && calc->GetEventNum()==350340588  ) ||
+	 (calc->GetRunNum()==202299 && calc->GetLumiBlock()==89  && calc->GetEventNum()==56368653   ) ||
+	 (calc->GetRunNum()==204563 && calc->GetLumiBlock()==245 && calc->GetEventNum()==311658256  ) ||
+	 (calc->GetRunNum()==205233 && calc->GetLumiBlock()==111 && calc->GetEventNum()==73745087  ) ||
+	 (calc->GetRunNum()==206512 && calc->GetLumiBlock()==776 && calc->GetEventNum()==978745688 ) ||
+	 (calc->GetRunNum()==206598 && calc->GetLumiBlock()==18  && calc->GetEventNum()==15951290  ) ||
+	 (calc->GetRunNum()==207477 && calc->GetLumiBlock()==154 && calc->GetEventNum()==208407209 )){
+      
+      if (event_old != calc->GetEventNum()){
+
+	cout << calc->GetRunNum() << ":" << calc->GetLumiBlock() << ":" << calc->GetEventNum() << std::endl;
+	cout << "mttbar = " << mttbar_rec << endl;
+	Muon muon = calc->GetMuons()->at(0);
+	cout << "Muon: pt = " << muon.pt() << " eta = " << muon.eta() << " phi = " << muon.phi() << endl;
+	cout << "LepTop: pt = " << hyp->toplep_v4().Pt() << " eta = " << hyp->toplep_v4().Eta() << " phi = " << hyp->toplep_v4().Phi() << endl;
+	for (unsigned int i=0; i<hyp->toplep_jets_indices().size(); ++i){
+	  Jet jet = calc->GetJets()->at(hyp->toplep_jets_indices().at(i));
+	  cout << "Jet from lep top " << i << ": pt = " << jet.pt() << " eta = " << jet.eta() << " phi = " << jet.phi() << endl;
+	}
+	cout << "HadTop: pt = " << hyp->tophad_v4().Pt() << " eta = " << hyp->tophad_v4().Eta() << " phi = " << hyp->tophad_v4().Phi() << endl;
+	cout << "Njets of TopHad = " << hyp->tophad_jets_indices().size() << endl;
+	for (unsigned int i=0; i<hyp->tophad_jets_indices().size(); ++i){
+	  Jet jet = calc->GetJets()->at(hyp->tophad_jets_indices().at(i));
+	  cout << "Jet from had top " << i << ": pt = " << jet.pt() << " eta = " << jet.eta() << " phi = " << jet.phi() << endl;
+	}
+	event_old = calc->GetEventNum();
+      }
+
+    }
+  }
+  */
+  
+  /*
+  // check some high m_ttbar events
+  if (calc->IsRealData()){
+    if (mttbar_rec>2500){   
+      if (event_old != calc->GetEventNum()){   
+	cout << "run: " << calc->GetRunNum() << "   lb: " << calc->GetLumiBlock() << "  event: " << calc->GetEventNum() << "   N(jets): " << calc->GetJets()->size() << std::endl;
+	cout << "mttbar = " << mttbar_rec << endl;
+	Muon muon = calc->GetMuons()->at(0);
+	cout << "Muon: pt = " << muon.pt() << " eta = " << muon.eta() << " phi = " << muon.phi() << endl;
+	cout << "LepTop: pt = " << hyp->toplep_v4().Pt() << " eta = " << hyp->toplep_v4().Eta() << " phi = " << hyp->toplep_v4().Phi() << endl;
+	for (unsigned int i=0; i<hyp->toplep_jets_indices().size(); ++i){
+	  Jet jet = calc->GetJets()->at(hyp->toplep_jets_indices().at(i));
+	  cout << "Jet from lep top " << i << ": pt = " << jet.pt() << " eta = " << jet.eta() << " phi = " << jet.phi() << endl;
+	}
+	cout << "HadTop: pt = " << hyp->tophad_v4().Pt() << " eta = " << hyp->tophad_v4().Eta() << " phi = " << hyp->tophad_v4().Phi() << endl;
+	cout << "Njets of TopHad = " << hyp->tophad_jets_indices().size() << endl;
+	for (unsigned int i=0; i<hyp->tophad_jets_indices().size(); ++i){
+	  Jet jet = calc->GetJets()->at(hyp->tophad_jets_indices().at(i));
+	  cout << "Jet from had top " << i << ": pt = " << jet.pt() << " eta = " << jet.eta() << " phi = " << jet.phi() << endl;
+	}
+	event_old = calc->GetEventNum();
+      }
+    }
+  }
+  */
+
 }
 
 void HypothesisHists::Finish()

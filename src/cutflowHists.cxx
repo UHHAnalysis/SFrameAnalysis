@@ -161,8 +161,8 @@ void cutflowHists::Fill()
     HTJets += jets->at(itj).pt();
   }
   Hist("HTJets")-> Fill(HTJets, weight);
-  int HTTopJets = 0.;
-  for(int i =0; i<bcc->topjets->size(); i++ ){
+  double HTTopJets = 0.;
+  for(unsigned int i =0; i<bcc->topjets->size(); i++ ){
     if(bcc->topjets->at(i).pt()<ptcut) continue;
     TopJet myJet = bcc->topjets->at(i);
     HTTopJets += myJet.pt();
@@ -182,10 +182,10 @@ void cutflowHists::Fill()
       if (countTopTagPlusSubBTagM == 1 && indexFirstTopJet == -99)indexFirstTopJet = i;
     }
   }
-  for(int i =0; i<bcc->topjets->size(); i++ ){
+  for(unsigned int i =0; i<bcc->topjets->size(); i++ ){
     if(bcc->topjets->at(i).pt()<ptcut) continue;
     TopJet myJet = bcc->topjets->at(i);
-    if(i != indexFirstTopJet){
+    if((int)i != indexFirstTopJet){
       if (HiggsTag(myJet, e_CSVL, e_CSVL)) countHiggsTagLL++;  
       if (HiggsTag(myJet, e_CSVL, e_CSVM)) countHiggsTagLM++; 
       if (HiggsTag(myJet, e_CSVM, e_CSVM)) countHiggsTagMM++; 
@@ -269,7 +269,7 @@ void cutflowHists::Fill()
       GenParticle TPrime1;
       GenParticle TPrime2;
 
-      for( int i=0; i<bcc->genparticles->size(); ++i){
+      for(unsigned int i=0; i<bcc->genparticles->size(); ++i){
  
 	GenParticle genp = bcc->genparticles->at(i); 
 	if (abs(genp.pdgId()) > 15000){//selects the Tprime

@@ -20,7 +20,7 @@ void EventHists::Init()
   // book all histograms here
   Book( TH1F( "N_PrimVertices","number of primary vertices", 56,-0.5,55.5));
   Book( TH1F( "N_PrimVertices_ly","number of primary vertices", 56,-0.5,55.5));
-  Book( TH1F( "N_events_perlumibin", "N^{evt}", 40, 0, 20) );
+  Book( TH1F( "N_events_perlumibin", "N^{evt}", 44, 0, 22) );
   Book( TH1F( "HT", "H_{T}", 100,0,5000 ) );
   Book( TH1F( "HT_ly", "H_{T}", 100,0,5000 ) );
   Book( TH1F( "HTLep", "H_{T}Lep", 100,0,1000 ) );
@@ -42,7 +42,6 @@ void EventHists::Fill()
   
   LuminosityHandler* lumih = calc->GetLumiHandler();
   BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
-
 
   int NPrimVertices = bcc-> pvs -> size();
   Hist("N_PrimVertices")-> Fill(NPrimVertices,weight);

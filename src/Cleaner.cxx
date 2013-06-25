@@ -135,6 +135,12 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
     //std::cout<< "event: " <<bcc->event <<std::endl;
     //std::cout<< "ID| pt raw  | PAT pt | area     | rho     | corr    | old cor| JER ptscale | pt new | eta new | ptgen " <<std::endl;
 
+    if (!corrector){
+      std::cerr << "JetLeptonSubtractor: called without a valid JetCorrector! Please correct the error." << std::endl; 
+      std::cerr << "Hint: have you supplied correct JEC files in your xml steering?" << std::endl;
+      exit(EXIT_FAILURE);
+    }
+  
 
     for(unsigned int i=0; i<bcc->jets->size(); ++i) {
       

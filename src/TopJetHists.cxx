@@ -1,5 +1,5 @@
+#include "include/EventCalc.h"
 #include "include/TopJetHists.h"
-#include "include/SelectionModules.h"
 #include <iostream>
 
 using namespace std;
@@ -80,6 +80,23 @@ void TopJetHists::Init()
   Book( TH1F( "NSubjets_3_ly", "number of subjets 3rd topjet", 6,-0.5,5.5 ) );
   Book( TH1F( "NSubjets_4", "number of subjets 4th topjet", 6,-0.5,5.5 ) ); 
   Book( TH1F( "NSubjets_4_ly", "number of subjets 4th topjet", 6,-0.5,5.5 ) ); 
+
+  Book( TH1F( "QjetsVol_1", "Qjets volatility leading topjet", 50, 0.0, 2.0) );
+  Book( TH1F( "QjetsVol_1_ly", "Qjets volatility leading topjet", 50, 0.0, 2.0 ) );
+
+  Book( TH1F( "Nsubjettiness1_1", "#tau_{1} leading topjet", 50, 0.0, 1.0) );
+  Book( TH1F( "Nsubjettiness1_1_ly", "#tau_{1} leading topjet", 50, 0.0, 1.0 ) );
+
+  Book( TH1F( "Nsubjettiness2_1", "#tau_{2} leading topjet", 50, 0.0, 1.0) );
+  Book( TH1F( "Nsubjettiness2_1_ly", "#tau_{2} leading topjet", 50, 0.0, 1.0 ) );
+  
+  Book( TH1F( "Nsubjettiness3_1", "#tau_{3} leading topjet", 50, 0.0, 1.0) );
+  Book( TH1F( "Nsubjettiness3_1_ly", "#tau_{3} leading topjet", 50, 0.0, 1.0 ) );
+
+  Book( TH1F( "Nsubjettiness3_2_1", "#tau_{2}/#tau_{3} leading topjet", 50, 0.0, 1.0) );
+  Book( TH1F( "Nsubjettiness3_2_1_ly", "#tau_{2}/#tau_{3} leading topjet", 50, 0.0, 1.0 ) );
+
+
 }
 
 
@@ -169,8 +186,33 @@ void TopJetHists::Fill()
 	  Hist( hname_NSubjets )->Fill( nsubjets, weight ); 
 	  TString hname_NSubjets_ly = TString::Format("NSubjets_%d_ly", i+1);
 	  Hist( hname_NSubjets_ly )->Fill( nsubjets, weight ); 
+
+
+	  if (i==0){
+	    
+	    Hist("QjetsVol_1")->Fill(topjet.qjets_volatility(), weight);
+	    Hist("QjetsVol_1_ly")->Fill(topjet.qjets_volatility(), weight);
+
+	    Hist( "Nsubjettiness1_1")->Fill(topjet.tau1(), weight);
+	    Hist( "Nsubjettiness1_1_ly")->Fill(topjet.tau1(), weight);
+
+	    Hist( "Nsubjettiness2_1")->Fill(topjet.tau2(), weight);
+	    Hist( "Nsubjettiness2_1_ly")->Fill(topjet.tau2(), weight);
+
+	    Hist( "Nsubjettiness3_1")->Fill(topjet.tau3(), weight);
+	    Hist( "Nsubjettiness3_1_ly")->Fill(topjet.tau3(), weight);
+
+	    if (topjet.tau2()>0){
+	      Hist( "Nsubjettiness3_2_1")->Fill(topjet.tau3()/topjet.tau2(), weight);
+	      Hist( "Nsubjettiness3_2_1_ly")->Fill(topjet.tau3()/topjet.tau2(), weight);
+	    }	  
+	  }
+
+	  
 	}
-    } 
+      
+    }
+
 }
  
 

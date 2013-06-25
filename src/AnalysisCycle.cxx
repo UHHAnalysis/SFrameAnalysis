@@ -1,4 +1,4 @@
-// $Id: AnalysisCycle.cxx,v 1.41 2013/06/17 08:02:08 jott Exp $
+// $Id: AnalysisCycle.cxx,v 1.42 2013/06/19 14:04:46 jott Exp $
 
 #include <iostream>
 
@@ -58,6 +58,7 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "PrunedJetCollection", m_PrunedJetCollection );
     //DeclareProperty( "addGenInfo", m_addGenInfo);
     DeclareProperty( "GenParticleCollection", m_GenParticleCollection);
+    DeclareProperty( "PFParticleCollection", m_PFParticleCollection);
     DeclareProperty( "readTTbarReco", m_readTTbarReco);
     DeclareProperty( "writeTTbarReco", m_writeTTbarReco);
     DeclareProperty( "readCommonInfo", m_readCommonInfo);
@@ -262,6 +263,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         if(m_addGenInfo && m_TopJetCollectionGen.size()>0) DeclareVariable(m_output_topjetsgen, m_TopJetCollectionGen.c_str());
         if(m_PrunedJetCollection.size()>0) DeclareVariable(m_output_prunedjets, m_PrunedJetCollection.c_str());
         if(m_addGenInfo && m_GenParticleCollection.size()>0) DeclareVariable(m_output_genparticles, m_GenParticleCollection.c_str());
+        if(m_PFParticleCollection.size()>0) DeclareVariable(m_output_pfparticles, m_PFParticleCollection.c_str());
         if(m_addGenInfo && m_readCommonInfo) DeclareVariable(m_output_genInfo, "genInfo" );
         if(m_writeTTbarReco) DeclareVariable(m_output_recoHyps, "recoHyps");
         DeclareVariable(m_output_triggerNames, "triggerNames");
@@ -506,6 +508,7 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     else m_bcc.topjetsgen=NULL;
     if(m_PrunedJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrunedJetCollection.c_str() , m_bcc.prunedjets);
     if(m_addGenInfo && m_GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenParticleCollection.c_str() , m_bcc.genparticles);
+    if(m_PFParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_PFParticleCollection.c_str() , m_bcc.pfparticles);
     else m_bcc.genparticles=NULL;
     if(m_addGenInfo && m_readCommonInfo) ConnectVariable( "AnalysisTree", "genInfo" , m_bcc.genInfo);
     else m_bcc.genInfo=NULL;
@@ -722,6 +725,7 @@ void AnalysisCycle::WriteOutputTree() throw( SError)
     if(m_addGenInfo && m_TopJetCollectionGen.size()>0) m_output_topjetsgen=*m_bcc.topjetsgen;
     if(m_PrunedJetCollection.size()>0) m_output_prunedjets=*m_bcc.prunedjets;
     if(m_addGenInfo && m_GenParticleCollection.size()>0) m_output_genparticles=*m_bcc.genparticles;
+    if(m_PFParticleCollection.size()>0) m_output_pfparticles=*m_bcc.pfparticles;
     if(m_writeTTbarReco) m_output_recoHyps=*m_bcc.recoHyps;
 
     if(m_newrun) m_output_triggerNames = m_bcc.triggerNames_actualrun;//store trigger names only for new runs

@@ -14,7 +14,6 @@
 // #pragma link C++ class MySuperClass+;
 
 #pragma link C++ class AnalysisCycle+;
-#pragma link C++ class TestCycle+;
 #pragma link C++ class PileUpHistoCycle+;
 //#pragma link C++ class LeptoquarkCycle+;
 //#pragma link C++ class LeptoquarkPreSelectionCycle+;
@@ -39,7 +38,6 @@
 #pragma link C++ class ZprimeSelectionCycle+;
 #pragma link C++ class ZprimePostSelectionCycle+;
 #pragma link C++ class ZprimeEleTrigCycle+;
-#pragma link C++ class ZprimeMCTrigEff+;
 //#pragma link C++ class TriggerEffiCycle+;
 #pragma link C++ class ZprimeSelectionTrigTestCycle+;
 #pragma link C++ class ZprimeSelectionDataTrigTestCycle+;

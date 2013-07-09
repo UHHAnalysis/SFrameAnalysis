@@ -233,16 +233,29 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
     resetEventCalc();
 }
 
-void Cleaner::JetRecorrector(FactorizedJetCorrector *corrector, bool sort)
+void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool useTopJets)
 {
 
+  std::vector<Jet*>* jets = new std::vector<Jet*>;
+  if(!useTopJets){
     for(unsigned int i=0; i<bcc->jets->size(); ++i) {
-
-        LorentzVector jet_v4_raw = bcc->jets->at(i).v4()*bcc->jets->at(i).JEC_factor_raw();
+      Jet* jet = &bcc->jets->at(i);
+      jets->push_back( jet );
+    }
+  }
+  else{
+    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
+      Jet* jet = &bcc->topjets->at(i);
+      jets->push_back( jet );
+    }
+  }
+  
+    for(unsigned int i=0; i<jets->size(); ++i) {
+        LorentzVector jet_v4_raw = jets->at(i)->v4()*jets->at(i)->JEC_factor_raw();
         corrector->setJetPt(jet_v4_raw.Pt());
         corrector->setJetEta(jet_v4_raw.Eta());
         corrector->setJetE(jet_v4_raw.E());
-        corrector->setJetA(bcc->jets->at(i).jetArea());
+        corrector->setJetA(jets->at(i)->jetArea());
         corrector->setRho(bcc->rho);
         corrector->setNPV(bcc->pvs->size());
 
@@ -269,11 +282,12 @@ void Cleaner::JetRecorrector(FactorizedJetCorrector *corrector, bool sort)
 	}
 
 
-        bcc->jets->at(i).set_v4(jet_v4_corrected);
-        bcc->jets->at(i).set_JEC_factor_raw(1./correctionfactor);
+        jets->at(i)->set_v4(jet_v4_corrected);
+        jets->at(i)->set_JEC_factor_raw(1./correctionfactor);
     }
 
-    if(sort) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+    if(sort && !useTopJets) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+    if(sort && useTopJets) std::sort(bcc->topjets->begin(), bcc->topjets->end(), HigherPt()); 
     resetEventCalc();
 }
 

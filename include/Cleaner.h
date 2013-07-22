@@ -44,7 +44,8 @@ class Cleaner{
    * Function to apply new jet corrections to all jets of the BaseCycleContainer.
    * Use sort=false or sort=true if you want to re-order the jets according to corrected pt after the applied shifts.
   */
-  void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true);
+
+  void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true, bool useTopJets=false);
 
   /**
    * Function to pass a jet energy uncertainty object to the cleaner.

@@ -85,15 +85,16 @@ class Cleaner{
   void MuonCleaner(double ptmin=0, double etamax=9999, double relisomax=0.125);
   void ElectronCleaner_noIso(double ptmin=0, double etamax=9999, bool reverseID = false);
   void MuonCleaner_noIso(double ptmin=0, double etamax=9999);
+  void MuonCleaner_Loose(double ptmin=0, double etamax=9999);
   void ElectronCleaner_noID_noIso(double ptmin=0, double etamax=9999);
   void MuonCleaner_noID_noIso(double ptmin=0, double etamax=9999);
   void TauCleaner(double ptmin=0, double etamax=9999);
+  void TauCleanerDecayModeFinding(double ptmin=0, double etamax=9999);
   void JetCleaner(double ptmin=0, double etamax=9999, bool doPFID=true);
   void TopJetCleaner(double ptmin=0, double etamax=9999, bool doPFID=true);
-
+  void JetLeptonOverlapRemoval();
   void PrimaryVertexCleaner(int ndofmax=4, double zmax=24.0, double rhomax=2.0);
-
-
+  
   /**
    * Function to correct phi modulation of MET in data
   */

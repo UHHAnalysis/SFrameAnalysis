@@ -175,6 +175,19 @@ class HEPTopAndSubBTagPlusOtherHiggsTag: public SelectionModule{
   E_BtagType m_type3;
 };
 
+class STCut: public SelectionModule{
+ public:
+  STCut(double min_st, double max_st=double_infinity());
+  ~STCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  double m_min_st;
+  double m_max_st;
+};
+
 class HTCut: public SelectionModule{
  public:
   HTCut(double min_ht, double max_ht=double_infinity());
@@ -187,7 +200,6 @@ class HTCut: public SelectionModule{
   double m_min_ht;
   double m_max_ht;
 };
-
 
 class NWTagSelection: public SelectionModule {
 public:
@@ -290,6 +302,17 @@ public:
 
 };
 
+
+class MuonTauOSCut: public SelectionModule {
+public:
+    MuonTauOSCut() {};
+    ~MuonTauOSCut() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+};
+
 class TriangularCut: public SelectionModule {
 public:
     TriangularCut() {};
@@ -309,6 +332,7 @@ public:
     virtual std::string description();
 
 };
+
 
 class HypothesisDiscriminatorCut: public SelectionModule {
 public:
@@ -340,6 +364,32 @@ private:
 
 };
 
+
+class TauMuonInvMassCut: public SelectionModule{
+ public:
+  TauMuonInvMassCut(double min_InvMass, double max_InvMass);
+  ~TauMuonInvMassCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  double m_min_InvMass;
+  double m_max_InvMass;
+};
+
+class SameSignCut: public SelectionModule{
+ public:
+  SameSignCut();
+  ~SameSignCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+ 
+};
+
 class MttbarGenCut: public SelectionModule {
 public:
     MttbarGenCut(double mttbar_min=0, double mttbar_max=double_infinity());
@@ -367,6 +417,22 @@ private:
 
 };
 
+
+class TauMuonMassCut: public SelectionModule{
+ public:
+  TauMuonMassCut(double massmin =0, double massmax = double_infinity());
+  ~TauMuonMassCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  double m_massmin;
+  double m_massmax;
+
+};
+
+
 class EventFlavorSelection: public SelectionModule {
 public:
     EventFlavorSelection(E_EventFlavor flavor);
@@ -391,6 +457,18 @@ public:
 private:
     std::string m_filename;
     EventFilterFromListStandAlone* m_evfilter;
+
+};
+
+class GenTauSelection: public SelectionModule {
+public:
+    GenTauSelection();
+    ~GenTauSelection(){};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:   
 
 };
 

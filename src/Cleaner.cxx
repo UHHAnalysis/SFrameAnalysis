@@ -1,4 +1,5 @@
 #include "../include/Cleaner.h"
+#include "../../SFrameTools/include/Utils.h"
 
 Cleaner::Cleaner( BaseCycleContainer* input)
 {
@@ -104,18 +105,11 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
         jet_v4*=ptscale;
 
         bcc->jets->at(i).set_v4(jet_v4);
-	//std::cout << "ResolutionShifter: Jet " << i << ", pt = " << jet_v4.pt() << std::endl;
+	
         //propagate JER shifts to MET
-        //if(jet_v4.Pt()>25) {
         met += jet_v4_raw;
         jet_v4_raw*=ptscale;
         met -= jet_v4_raw;
-        //}
-
-        //std::cout << ptscale << " | " << jet_v4.Pt()  << " | "<<  jet_v4.eta() << " | " << genpt << std::endl;
-
-	//std::cout << "ResolutionShifter end: Jet " << i << ", pt = " << bcc->jets->at(i).pt() << " correction factor = " << 1./bcc->jets->at(i).JEC_factor_raw() <<  std::endl;
-
     }
 
     //store changed MET
@@ -483,6 +477,32 @@ void Cleaner::MuonCleaner(double ptmin, double etamax, double relisomax)
     resetEventCalc();
 }
 
+void Cleaner::MuonCleaner_Loose(double ptmin, double etamax)
+{
+
+    MuonCleaner_noID_noIso(ptmin, etamax);
+    std::vector<Muon> good_mus;
+    for(unsigned int i=0; i<bcc->muons->size(); ++i) 
+      {
+        Muon mu = bcc->muons->at(i);
+        if(mu.isPFMuon()) 
+	  {
+	    if(mu.isGlobalMuon() || mu.isTrackerMuon())
+	      {
+		good_mus.push_back(mu);	
+	      }
+	  }
+      }
+    
+    bcc->muons->clear();
+
+    for(unsigned int i=0; i<good_mus.size(); ++i) {
+        bcc->muons->push_back(good_mus[i]);
+    }
+    sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
+    resetEventCalc();
+}
+
 void Cleaner::TauCleaner(double ptmin, double etamax)
 {
 
@@ -495,7 +515,17 @@ void Cleaner::TauCleaner(double ptmin, double etamax)
                     if(bcc->taus->at(i).byMediumCombinedIsolationDeltaBetaCorr()) {
                         if(bcc->taus->at(i).againstElectronTightMVA3()) {
                             if(bcc->taus->at(i).againstMuonTight2()) {
-                                good_taus.push_back(tau);
+			      double deltaRmin = 100;
+			      for(unsigned int k=0; k<bcc->muons->size(); ++k) 
+				{
+				  Muon muon = bcc->muons->at(k);
+				  double deltaR = muon.deltaR(tau);
+				  if (deltaR < deltaRmin) deltaRmin = deltaR;
+				}
+			      if (deltaRmin > 0.5)
+				{
+				  good_taus.push_back(tau);
+				}
                             }
                         }
                     }
@@ -537,6 +567,77 @@ void Cleaner::JetCleaner(double ptmin, double etamax, bool doPFID)
     sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
     resetEventCalc();
 }
+
+void Cleaner::JetLeptonOverlapRemoval()
+{
+  
+  std::vector<Jet> good_jets;
+  for(unsigned int i=0; i<bcc->jets->size(); ++i) 
+    {
+      Jet jet = bcc->jets->at(i);
+      double deltaRmin = 100;
+      for(unsigned int j=0; j<bcc->taus->size(); ++j) 
+	{
+	  Tau tau = bcc->taus->at(j);
+	  double deltaR = tau.deltaR(jet);
+	  if (deltaR < deltaRmin) deltaRmin = deltaR;
+	}
+      if (deltaRmin > 0.5)
+	{
+	  deltaRmin = 100;
+	  for(unsigned int k=0; k<bcc->muons->size(); ++k) 
+	    {
+	      Muon muon = bcc->muons->at(k);
+	      double deltaR = muon.deltaR(jet);
+	      if (deltaR < deltaRmin) deltaRmin = deltaR;
+	    }
+	  if (deltaRmin > 0.5)
+	    {
+	      good_jets.push_back(jet);
+	    }
+	}  
+      
+    }	     
+  
+  bcc->jets->clear();
+  
+  for(unsigned int i=0; i<good_jets.size(); ++i) {
+    bcc->jets->push_back(good_jets[i]);
+  }
+  sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+  resetEventCalc();
+}
+
+
+
+void Cleaner::TauCleanerDecayModeFinding(double ptmin, double etamax)
+{
+  std::vector<Tau> good_taus;
+  for(unsigned int i=0; i<bcc->taus->size(); ++i) 
+    {
+      Tau tau = bcc->taus->at(i);
+      if(tau.pt()>ptmin) 
+	{
+	  if(fabs(tau.eta())<etamax) 
+	    {
+	      if(bcc->taus->at(i).decayModeFinding()) 
+		{
+		  good_taus.push_back(tau);
+		}
+	    }
+	}
+    }
+  
+  bcc->taus->clear();
+  
+  for(unsigned int i=0; i<good_taus.size(); ++i) {
+    bcc->taus->push_back(good_taus[i]);
+  }
+  sort(bcc->taus->begin(), bcc->taus->end(), HigherPt());
+  resetEventCalc();
+  
+}
+
 
 void Cleaner::TopJetCleaner(double ptmin, double etamax, bool doPFID)
 {

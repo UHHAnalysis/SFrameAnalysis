@@ -1,5 +1,6 @@
 #include "include/EventHists.h"
 #include "include/SelectionModules.h"
+#include "include/AnalysisCycle.h"
 #include <iostream>
 
 using namespace std;
@@ -20,6 +21,8 @@ void EventHists::Init()
   // book all histograms here
   Book( TH1F( "N_PrimVertices","number of primary vertices", 56,-0.5,55.5));
   Book( TH1F( "N_PrimVertices_ly","number of primary vertices", 56,-0.5,55.5));
+  Book( TH1F( "Weights","weights", 100,0,2));
+  Book( TH1F( "Weights_ly","weights", 100,0,2));
   Book( TH1F( "N_events_perlumibin", "N^{evt}", 44, 0, 22) );
   Book( TH1F( "HT", "H_{T}", 100,0,5000 ) );
   Book( TH1F( "HT_ly", "H_{T}", 100,0,5000 ) );
@@ -29,9 +32,8 @@ void EventHists::Init()
   Book( TH1F( "HT_Jets_ly", "H_{T} Jets", 100,0,3500 ) );
   Book( TH1F( "MET", "missing E_{T}", 200,0,1000 ) );
   Book( TH1F( "MET_ly", "missing E_{T}", 200,0,1000 ) );
-  Book( TH1F( "HT_MET_Jets", "H_{T} Jets + missing E_{T}", 100,0,3500 ) );
-  Book( TH1F( "HT_MET_Jets_ly", "H_{T} Jets + missing E_{T}", 100,0,3500 ) );
-  
+  Book( TH1F( "ChargeSign", "",3,-1.5,1.5 ) );
+  Book( TH1F( "ChargeSign_ly", "",3,-1.5,1.5 ) );
 }
 
 void EventHists::Fill()
@@ -53,34 +55,55 @@ void EventHists::Fill()
     Hist( "N_events_perlumibin")->Fill( lumih->GetLumiBin(run, lumiblock)*0.5, weight);
   }
 
-  double H_T =0;
+  Hist("Weights")-> Fill(weight);
+  Hist("Weights_ly")-> Fill(weight); 
+
+  double HT =0;
   double HT_MET = 0;
-  double H_T_Jets =0;
-  double HT_MET_Jets = 0;
+  double HT_Jets =0;
   
-  H_T = calc -> GetHT();
-  double H_Tlep = calc -> GetHTlep();
+  HT = calc -> GetHT();
+  double HTlep = calc -> GetHTlep();
 
   for(unsigned int i=0; i< bcc->jets->size(); ++i)
    {
      Jet jet =  bcc->jets->at(i);
-     H_T_Jets= H_T_Jets + jet.pt();      
+     HT_Jets= HT_Jets + jet.pt();      
    }
   double met = bcc->met->pt();
-  HT_MET_Jets = H_T_Jets+ met;
   
-  Hist("HT")->Fill(H_T, weight);
-  Hist("HT_ly")->Fill(H_T, weight);
-  Hist("HTLep")->Fill(H_Tlep, weight);
-  Hist("HTLep_ly")->Fill(H_Tlep, weight);
-  Hist("HT_Jets")->Fill(H_T_Jets, weight);
-  Hist("HT_Jets_ly")->Fill(H_T_Jets, weight);
+  
+  Hist("HT")->Fill(HT, weight);
+  Hist("HT_ly")->Fill(HT, weight);
+  Hist("HTLep")->Fill(HTlep, weight);
+  Hist("HTLep_ly")->Fill(HTlep, weight);
+  Hist("HT_Jets")->Fill(HT_Jets, weight);
+  Hist("HT_Jets_ly")->Fill(HT_Jets, weight);
   Hist("MET")->Fill(met, weight);
   Hist("MET_ly")->Fill(met, weight);
-  Hist("HT_MET_Jets")->Fill(HT_MET_Jets, weight);
-  Hist("HT_MET_Jets_ly")->Fill(HT_MET_Jets, weight);
+ 
 
+double charge = 1;
+  
+  if (bcc->muons->size() == 1 && bcc->taus->size() == 1) 
+    {
+      Muon muon = bcc->muons->at(0);
+      Tau tau = bcc->taus->at(0);
+      if (muon.charge() != tau.charge()) charge = -1;
+    }
+  if (bcc->taus->size() == 0 && bcc->muons->size() == 2)
+    {
+      Muon muon1 = bcc->muons->at(0);
+      Muon muon2 = bcc->muons->at(1);
+      if (muon1.charge() != muon2.charge()) charge = -1;
+    }
+  if (bcc->taus->size() == 0 && bcc->muons->size() == 1) charge = 0;
+  
+  Hist("ChargeSign")->Fill(charge, weight);
+  Hist("ChargeSign_ly")->Fill(charge, weight);
 }
+
+
 
 
 

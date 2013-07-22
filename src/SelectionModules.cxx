@@ -1,9 +1,9 @@
 #include "include/SelectionModules.h"
-
+#include "TLorentzVector.h"
 
 TriggerSelection::TriggerSelection(std::string triggername)
 {
-    m_name=triggername;
+  m_name=triggername;
 }
 
 bool TriggerSelection::pass(BaseCycleContainer *bcc)
@@ -315,6 +315,27 @@ std::string HEPTopAndSubBTagPlusOtherHiggsTag::description(){
   return s;
 }
 
+STCut::STCut(double min_st, double max_st){
+  m_min_st = min_st;
+  m_max_st = max_st;
+}
+
+bool STCut::pass(BaseCycleContainer *bcc){
+  
+  EventCalc* calc = EventCalc::Instance();
+  double st = calc->GetHT();
+  if( st < m_min_st) return false;
+  if( st > m_max_st) return false;
+  return true;
+
+}
+
+std::string STCut::description(){
+  char s[100];
+  sprintf(s, "%.1f GeV < ST < %.1f GeV",m_min_st,m_max_st);
+  return s;
+}
+
 HTCut::HTCut(double min_ht, double max_ht){
  m_min_ht = min_ht;
   m_max_ht = max_ht;
@@ -337,6 +358,7 @@ std::string HTCut::description(){
   sprintf(s, "%.1f GeV < HT < %.1f GeV",m_min_ht,m_max_ht);
   return s;
 }
+
 
 NWTagSelection::NWTagSelection(int min_nwtag, int max_nwtag)
 {
@@ -540,6 +562,28 @@ std::string MuonElectronOSCut::description()
     return s;
 }
 
+bool MuonTauOSCut::pass(BaseCycleContainer *bcc)
+{
+
+    // make sure that you have cleaned the tau and muon collections: bcc should contain at least one tau and one muon
+    // this cut looks only at the leading muon and leading tau
+    if ( bcc->taus->size()==0) return false;
+    if ( bcc->muons->size()==0) return false;
+    
+    if (bcc->taus->at(0).charge() == bcc->muons->at(0).charge()) return false;
+
+    return true;
+}
+
+std::string MuonTauOSCut::description()
+{
+    char s[100];
+    sprintf(s, "Opposite sign of leading muon and leading tau");
+    return s;
+}
+
+
+
 bool TriangularCut::pass(BaseCycleContainer *bcc)
 {
     if(bcc->electrons->size()!=1) {
@@ -631,6 +675,8 @@ bool HypothesisDiscriminatorCut::pass(BaseCycleContainer *bcc)
 
     return true;
 }
+
+
 
 std::string HypothesisDiscriminatorCut::description()
 {
@@ -811,5 +857,136 @@ std::string EventFilterSelection::description()
   return s;
 
 }
+
+
+TauMuonInvMassCut::TauMuonInvMassCut(double min_InvMass, double max_InvMass){
+ m_min_InvMass = min_InvMass;
+ m_max_InvMass = max_InvMass;
+}
+
+bool TauMuonInvMassCut::pass(BaseCycleContainer *bcc)
+{
+  if (bcc->taus->size() == 1 && bcc->muons->size() == 1)
+    {
+      Tau tau = bcc->taus->at(0);
+      TLorentzVector Tau;
+      Tau.SetPtEtaPhiE(tau.pt() ,tau.eta() ,tau.phi() ,tau.energy() );
+   
+      Muon muon = bcc->muons->at(0);
+      TLorentzVector Mu;
+      Mu.SetPtEtaPhiE(muon.pt() ,muon.eta() ,muon.phi() ,muon.energy() );
+      TLorentzVector MuTau = Tau +Mu;
+      double InvMass = MuTau.M();    
+    
+      if (InvMass < m_min_InvMass || InvMass > m_max_InvMass) return true;
+      return false;
+    }
+  else return true;
+}
+
+
+SameSignCut::SameSignCut(){ 
+}
+
+bool SameSignCut::pass(BaseCycleContainer *bcc)
+{
+  for(unsigned int i=0; i< bcc->muons->size(); ++i)
+    {
+      Muon muon1 = bcc->muons->at(i);
+      for(unsigned int j=0; j< bcc->muons->size(); ++j)
+	{
+	  if (i!=j)
+	    {
+	      Muon muon2 = bcc->muons->at(j); 
+	      if (muon1.charge() == muon2.charge()) return true;
+	    }
+	}
+      for(unsigned int j=0; j< bcc->taus->size(); ++j)
+	{
+	  Tau tau = bcc->taus->at(j);
+	  if (muon1.charge() == tau.charge()) return true;
+	}
+      
+    }
+  for(unsigned int i=0; i< bcc->taus->size(); ++i)
+    {
+      Tau tau1 = bcc->taus->at(i);
+      for(unsigned int j=0; j< bcc->taus->size(); ++j)
+	{
+	  if (i!=j)
+	    {
+	      Tau tau2 = bcc->taus->at(j); 
+	      if (tau1.charge() == tau2.charge()) return true;
+	    }
+	}
+    }
+  return false;
+}
+
+ std::string SameSignCut::description(){
+   char s[100];
+   sprintf(s, "same-sign lepton pair requirement");
+   return s;
+ }
+
+
+bool TauMuonMassCut::pass(BaseCycleContainer *bcc)
+{ 
+  if (bcc->muons->size() > 0 && bcc->taus->size() > 0)
+    {
+      double max_InvMass =0;
+      for(unsigned int i=0; i< bcc->muons->size(); ++i)
+	{
+	  Muon muon = bcc->muons->at(i);
+	  TLorentzVector Mu;
+	  Mu.SetPtEtaPhiE(muon.pt() ,muon.eta() ,muon.phi() ,muon.energy() );
+	  for(unsigned int j=0; j< bcc->taus->size(); ++j)
+	    {
+	      Tau tau = bcc->taus->at(j);
+	      TLorentzVector Tau;
+	      Tau.SetPtEtaPhiE(tau.pt() ,tau.eta() ,tau.phi() ,tau.energy() );
+	      TLorentzVector DiLepton = Tau +Mu;
+	      double InvMass = DiLepton.M();
+	      if (InvMass > max_InvMass)  max_InvMass = InvMass;
+	    }
+	}
+      if (max_InvMass > m_massmin && max_InvMass < m_massmax) return true;
+    }
+  return false;
+}
+
+std::string TauMuonMassCut::description()
+{
+  char s[100];
+  sprintf(s, "%.1f < invariant mass leading muon and leading tau  < %.1f",m_massmin, m_massmax);
+  return s;
+}
+
+GenTauSelection::GenTauSelection()
+{ 
+}
+
+bool GenTauSelection::pass(BaseCycleContainer* bcc)
+{
+  if (bcc->taus->size()>0)
+    {
+      Tau tau = bcc->taus->at(0);
+      for(unsigned int i=0; i<bcc->genparticles->size(); ++i)
+	{
+	  GenParticle genp = bcc->genparticles->at(i);
+	  double deltaR = genp.deltaR(tau);
+	  if (deltaR < 0.5 && abs(genp.pdgId())==15) return true;
+	}
+    }
+  return false;
+}
+
+std::string GenTauSelection::description()
+{
+  char s[500];
+  sprintf(s, "found a real tau");
+  return s;
+}
+
 
 

@@ -32,6 +32,7 @@ AnalysisCycle::AnalysisCycle()
     m_jes_unc = NULL;
 
     m_sys_unc = e_None;
+    m_sys_var = e_Default;
     m_actual_run=-99999;
 
     // set some default values
@@ -203,6 +204,14 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_sys_unc = e_TauSF;
 	isok = true;
       }
+      if (m_sys_unc_name=="TauEffSF"){
+	m_sys_unc = e_TauEffSF;
+	isok = true;
+      }
+      if (m_sys_unc_name=="TauEnergy"){
+	m_sys_unc = e_TauEnergy;
+	isok = true;
+      }
       if (m_sys_unc_name=="PDF" || m_sys_unc_name=="pdf"){
 	m_sys_unc = e_PDF;
 	isok = true;
@@ -296,7 +305,13 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_lsf->DoDownVarTauSF();
       } 
     }
-
+       if (m_sys_unc == e_TauEffSF){
+      if(m_sys_var == e_Up){
+	m_lsf->DoUpVarTauEffSF();
+      } else {
+	m_lsf->DoDownVarTauEffSF();
+      } 
+    }
 
 
     if(m_sys_unc == e_PDF){
@@ -574,6 +589,17 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 
     // store the weight (lumiweight) in the eventcalc class and use it
     calc -> ProduceWeight(weight);
+
+    
+    // apply energy shift of tau candidates for uncertainty
+    if (m_sys_unc == e_TauEnergy){
+      if(m_sys_var == e_Up){
+	calc->ApplyTauEnergySmearing(1.03);
+      } else {
+	calc->ApplyTauEnergySmearing(0.97);
+      } 
+    }
+
 
     if(!m_bcc.isRealData && m_bcc.genInfo) {
 

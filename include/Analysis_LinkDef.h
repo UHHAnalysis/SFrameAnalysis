@@ -15,8 +15,7 @@
 
 #pragma link C++ class AnalysisCycle+;
 #pragma link C++ class PileUpHistoCycle+;
-//#pragma link C++ class LeptoquarkCycle+;
-//#pragma link C++ class LeptoquarkPreSelectionCycle+;
+
 #pragma link C++ class TauEffiCycle+;
 #pragma link C++ class TopTagTMVACycle+;
 //#pragma link C++ class ExampleCycle+;
@@ -31,6 +30,7 @@
 #pragma link C++ class BTagEffHists;
 #pragma link C++ class BTagEffHistsTPrime+;
 #pragma link C++ class TMVATreeFiller;
+#pragma link C++ class GenparticleHists;
 
 //#pragma link C++ class WResonanceCycle+;
 #pragma link C++ class JetLeptonCleanerCycle+;

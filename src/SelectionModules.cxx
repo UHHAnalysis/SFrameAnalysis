@@ -887,7 +887,7 @@ bool TauMuonInvMassCut::pass(BaseCycleContainer *bcc)
 std::string TauMuonInvMassCut::description()
 {
   char s[100];
-  sprintf(s, "%.1f < invariant mass leading muon and leading tau  < %.1f",m_massmin, m_massmax);
+  sprintf(s, "%.1f < invariant mass leading muon and leading tau  < %.1f",m_min_InvMass, m_max_InvMass);
   return s;
 }
 

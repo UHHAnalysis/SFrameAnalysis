@@ -25,6 +25,93 @@ std::string TriggerSelection::description()
     return "Trigger: "+m_name;
 }
 
+
+
+TopTagOverlapSelection::TopTagOverlapSelection(double delR_Lep_TopTag, double delR_Jet_TopTag)
+{
+  m_delR_Lep_TopTag=delR_Lep_TopTag;
+  m_delR_Jet_TopTag=delR_Jet_TopTag;
+}
+
+
+bool TopTagOverlapSelection::pass(BaseCycleContainer* bcc)
+{
+
+  double mjet = 0;
+  int nsubjets = 0;
+  double mmin = 0;
+
+  for(unsigned int i = 0; i< bcc->topjets->size();++i){
+    TopJet topjet = bcc->topjets->at(i);
+    if(TopTag(topjet,mjet,nsubjets,mmin) &&  m_delR_Lep_TopTag < topjet.deltaR(bcc->muons->at(0))){
+      for(unsigned int m =0; m< bcc->jets->size(); ++m){
+	if(topjet.deltaR(bcc->jets->at(m))>m_delR_Jet_TopTag)return true;
+      }
+    }
+  }
+
+  return false;
+
+}
+
+std::string TopTagOverlapSelection::description()
+{
+    char s[100];
+    sprintf(s, "delR(Muon,TopTag)> %.1f  &&at least one Jet with  delR(Jet,TopTag) > %.1f ",m_delR_Lep_TopTag,m_delR_Jet_TopTag);
+
+    return s;
+}
+
+
+
+RazorSelection::RazorSelection(HypothesisDiscriminator *discr, double mrazor, double mrazorT)
+{
+  m_mrazor=mrazor;
+  m_mrazorT=mrazorT;
+  m_discr=discr;
+ 
+}
+
+bool RazorSelection::pass(BaseCycleContainer* bcc)
+{
+  ReconstructionHypothesis* hyp = m_discr->GetBestHypothesis();
+ 
+  LorentzVector toplep;
+  LorentzVector tophad; 
+  TVector3 phadT;
+  TVector3 pwlepT; 
+  Particle wlep;
+
+  wlep.set_v4(hyp->wlep_v4());
+
+  toplep = hyp->toplep_v4();
+  tophad = hyp->tophad_v4();
+
+  phadT.SetPtEtaPhi(tophad.pt(),0,tophad.phi());
+  pwlepT.SetPtEtaPhi(wlep.pt(),0,wlep.phi());
+
+
+
+  TVector3 met3Vec; 
+  met3Vec.SetPtEtaPhi(bcc->met->pt(),0,bcc->met->phi());
+
+  double mrT = sqrt(bcc->met->pt()*(wlep.pt()+tophad.pt())- met3Vec*(pwlepT+phadT));
+  double mr = sqrt(pow(wlep.v4().E()+tophad.E(),2)-pow(wlep.v4().Pz()+tophad.Pz(),2));
+
+  return mr > m_mrazor || mrT/mr >  m_mrazorT;
+
+}
+
+
+std::string RazorSelection::description()
+{
+    char s[100];
+    sprintf(s, " mrazor <= %.1f  && mrazorT/mrazor <= %.1f ",m_mrazor,m_mrazorT);
+
+    return s;
+}
+
+
 NMuonSelection::NMuonSelection(int min_nparticle, int max_nparticle, double ptmin, double etamax)
 {
     m_min_nparticle=min_nparticle;
@@ -138,6 +225,84 @@ NTopJetSelection::NTopJetSelection(int min_nparticle, int max_nparticle, double 
     m_etamax=etamax;
 }
 
+
+CAAntiktJetSelection::CAAntiktJetSelection(unsigned int min_Topjets, unsigned  int min_Jets, double min_distance, unsigned int max_Topjets, unsigned int max_Jets){
+  m_min_Topjets=min_Topjets; 
+  m_max_Topjets=max_Topjets;
+  m_min_Jets=min_Jets;
+  m_max_Jets=max_Jets;
+  m_min_distance=min_distance;             
+}
+
+bool CAAntiktJetSelection::pass(BaseCycleContainer *bcc){
+
+  if(bcc->topjets->size()< m_min_Topjets || bcc->topjets->size()> m_max_Topjets ) return false;
+  if(bcc->jets->size() < m_min_Jets || bcc->jets->size()> m_max_Jets ) return false;
+
+  //for(unsigned int p=0; p< bcc->jets->size(); ++p){
+  //  Jet antiktjet = bcc->jets->at(p);
+    for(unsigned int i=0; i< bcc->topjets->size(); ++i){
+      TopJet topjet =  bcc->topjets->at(i);
+      //if(topjet.deltaR(antiktjet)> m_min_distance)return true;
+      if(topjet.deltaR(bcc->muons->at(0))> m_min_distance)return true;
+    }
+    //}
+  return false;
+}
+
+std::string CAAntiktJetSelection::description(){
+  char s[100];
+  sprintf(s, "%d <= N(CA-Jets) <= %d , %d <= N(Jets)<= %d ,with minimal delR <%.1f",m_min_Topjets,m_max_Topjets,m_min_Jets,m_max_Jets,m_min_distance);
+  return s;
+}
+
+TopTagAntiktJetSelection::TopTagAntiktJetSelection(unsigned int min_TopTag, unsigned  int min_Jets, double min_distance, unsigned int max_TopTag, unsigned int max_Jets){
+  m_min_TopTag=min_TopTag; 
+  m_max_TopTag=max_TopTag;
+  m_min_Jets=min_Jets;
+  m_max_Jets=max_Jets;
+  m_min_distance=min_distance;             
+}
+
+bool TopTagAntiktJetSelection::pass(BaseCycleContainer *bcc){
+
+  if(bcc->jets->size() < m_min_Jets || bcc->jets->size()> m_max_Jets ) return false;
+  double mjet = 0;
+  int nsubjets = 0;
+  double mmin = 0;
+  unsigned int nTopTags = 0;
+
+  double deltaR_Lep_Tophad = -1;
+  TopJet top_had;
+  Particle lepton;
+  lepton.set_v4(bcc->muons->at(0).v4());
+
+  for(unsigned int i = 0; i< bcc->topjets->size();++i){
+    TopJet topjet = bcc->topjets->at(i);
+    if(TopTag(topjet,mjet,nsubjets,mmin) && deltaR_Lep_Tophad < topjet.deltaR(lepton)){
+      top_had = topjet;
+      deltaR_Lep_Tophad = topjet.deltaR(lepton);
+    }
+    if(TopTag(topjet,mjet,nsubjets,mmin)) nTopTags++;
+  }
+   
+  if(nTopTags < m_min_TopTag || nTopTags > m_max_TopTag) return false;
+
+  
+  for(unsigned int p=0; p< bcc->jets->size(); ++p){
+    Jet antiktjet = bcc->jets->at(p);
+    if(top_had.deltaR(antiktjet)> m_min_distance) return true; 
+  }
+
+  return false;
+}
+
+std::string TopTagAntiktJetSelection::description(){
+  char s[100];
+  sprintf(s, "%d <= N(TopTags) <= %d , %d <= N(Jets)<= %d ,with minimal delR <%.1f",m_min_TopTag,m_max_TopTag,m_min_Jets,m_max_Jets,m_min_distance);
+  return s;
+}
+
 bool NTopJetSelection::pass(BaseCycleContainer *bcc)
 {
     int nparticle=0;
@@ -146,6 +311,7 @@ bool NTopJetSelection::pass(BaseCycleContainer *bcc)
     }
     return nparticle>=m_min_nparticle && nparticle<=m_max_nparticle;
 }
+
 
 std::string NTopJetSelection::description()
 {
@@ -475,6 +641,37 @@ std::string HTlepCut::description()
     return s;
 }
 
+HTmuonCut::HTmuonCut(double min_htmuon, double max_htmuon)
+{
+    m_min_htmuon = min_htmuon;
+    m_max_htmuon = max_htmuon;
+}
+
+bool HTmuonCut::pass(BaseCycleContainer *bcc)
+{
+    //double htmuon = HTmuon(bcc);
+    EventCalc* calc = EventCalc::Instance();
+    double htmuon = 0;
+
+    for(unsigned int i=0; i<calc->GetMuons()->size(); ++i){
+      htmuon += calc->GetMuons()->at(i).pt();
+    }
+    if(bcc->met) htmuon += bcc->met->pt(); 
+
+    if( htmuon < m_min_htmuon) return false;
+    if( htmuon > m_max_htmuon) return false;
+    return true;
+
+}
+
+std::string HTmuonCut::description()
+{
+    char s[100];
+    sprintf(s, "%.1f GeV < HTmuon < %.1f GeV",m_min_htmuon,m_max_htmuon);
+    return s;
+}
+
+
 
 METCut::METCut(double min_met, double max_met)
 {
@@ -524,11 +721,18 @@ std::string TwoDCut::description()
     return s;
 }
 
+
+TwoDCutMuon::TwoDCutMuon(double delRmin , double pTrelmin)
+{
+  m_delRmin = delRmin;
+  m_pTrelmin = pTrelmin;
+}
+
 bool TwoDCutMuon::pass(BaseCycleContainer *bcc)
 {
     // same as above, but only for muons
     for(unsigned int i=0; i<bcc->muons->size(); ++i) {
-        if(deltaRmin(&(bcc->muons->at(i)), bcc->jets)<0.5 && pTrel(&(bcc->muons->at(i)), bcc->jets)<25)
+        if(deltaRmin(&(bcc->muons->at(i)), bcc->jets)< m_delRmin && pTrel(&(bcc->muons->at(i)), bcc->jets)< m_pTrelmin)
             return false;
     }
 
@@ -887,7 +1091,7 @@ bool TauMuonInvMassCut::pass(BaseCycleContainer *bcc)
 std::string TauMuonInvMassCut::description()
 {
   char s[100];
-  sprintf(s, "%.1f < invariant mass leading muon and leading tau  < %.1f",m_massmin, m_massmax);
+  sprintf(s, "%.1f < invariant mass leading muon and leading tau  < %.1f",m_min_InvMass, m_max_InvMass);
   return s;
 }
 

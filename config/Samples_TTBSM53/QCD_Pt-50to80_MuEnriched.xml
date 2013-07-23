@@ -1,0 +1,1383 @@
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1206_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1207_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1208_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1209_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1210_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1211_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1212_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1213_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1214_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1215_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1216_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1217_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1218_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1219_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1220_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1221_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1222_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1223_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1224_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1225_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1226_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1227_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1228_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1229_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1230_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1231_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1232_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1233_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1234_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1235_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1236_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1237_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1238_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1239_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1240_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1241_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1242_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1243_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1244_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1245_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1246_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1247_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1248_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1249_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1250_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1251_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1252_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1253_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1254_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1255_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1256_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1257_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1258_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1259_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1260_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1261_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1262_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1263_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1264_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1265_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1266_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1267_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1268_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1269_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1270_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1271_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1272_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1273_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1274_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1275_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1276_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1277_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1278_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1279_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1280_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1281_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1282_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1283_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1284_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1285_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1286_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1287_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1288_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1289_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1290_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1291_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1292_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1293_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1294_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1295_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1296_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1297_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1298_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1299_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1300_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1301_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1302_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1303_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1304_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1305_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1306_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1307_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1308_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1309_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1310_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1311_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1312_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1313_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1314_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1315_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1316_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1317_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1318_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1319_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1320_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1321_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1322_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1323_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1324_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1325_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1326_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1327_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1328_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1329_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1330_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1331_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1332_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1333_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1334_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1335_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1336_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1337_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1338_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1339_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1340_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1341_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1342_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1343_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1344_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1345_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1346_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1347_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1348_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1349_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1350_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1351_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1352_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1353_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1354_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1355_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1356_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1357_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1358_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1359_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1360_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1361_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1362_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1363_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1364_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1365_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1366_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1367_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1368_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1369_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1370_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1371_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1372_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1373_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1374_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1375_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1376_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1377_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1378_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1379_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1380_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1381_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1382_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1383_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1384_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1385_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1386_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1387_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1388_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1389_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1390_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1391_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1392_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1393_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1394_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1395_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1396_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1397_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1398_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1399_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1400_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1401_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1402_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1403_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1404_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1405_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1406_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1407_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1408_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1409_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1410_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1411_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1412_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1413_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1414_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1415_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1416_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1417_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1418_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1419_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1420_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1421_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1422_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1423_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1424_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1425_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1426_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1427_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1428_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1429_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1430_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1431_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1432_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1433_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1434_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1435_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1436_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1437_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1438_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1439_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1440_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1441_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1442_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1443_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1444_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1445_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1446_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1447_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1448_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1449_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1450_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1451_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1452_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1453_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1454_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1455_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1456_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1457_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1458_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1459_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1460_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1461_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1462_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1463_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1464_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1465_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1466_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1467_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1468_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1469_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1470_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1471_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1472_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1473_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1474_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1475_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1476_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1477_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1478_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1479_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1480_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1481_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1482_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1483_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1484_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1485_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1486_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1487_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1488_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1489_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1490_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1491_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1492_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1493_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1494_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1495_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1496_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1497_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1498_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1499_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1500_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1501_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1502_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1503_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1504_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1505_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1506_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1507_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1508_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1509_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1510_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1511_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1512_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1513_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1514_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1515_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1516_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1517_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1518_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1519_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1520_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1521_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1522_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1523_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1524_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1525_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1526_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1527_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1528_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1529_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1530_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1531_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1532_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1533_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1534_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1535_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1536_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1537_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1538_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1539_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1540_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1541_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1542_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1543_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1544_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1545_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1546_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1547_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1548_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1549_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1550_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1551_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1552_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1553_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1554_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1555_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1556_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1557_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1558_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1559_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1560_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1561_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1562_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1563_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1564_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1565_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1566_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1567_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1568_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1569_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1570_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1571_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1572_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1573_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1574_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1575_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1576_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1577_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1578_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1579_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1580_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1581_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1582_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1583_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1584_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1585_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1586_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1587_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1588_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1589_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1590_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1591_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1592_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1593_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1594_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1595_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1596_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1597_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1598_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1599_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1600_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1601_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1602_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1603_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1604_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1605_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1606_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1607_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1608_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1609_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1610_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1611_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1612_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1613_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1614_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1615_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1616_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1617_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1618_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1619_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1620_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1621_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1622_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1623_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1624_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1625_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1626_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1627_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1628_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1629_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1630_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1631_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1632_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1633_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1634_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1635_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1636_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1637_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1638_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1639_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1640_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1641_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1642_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1643_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1644_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1645_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1646_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1647_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1648_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1649_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1650_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1651_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1652_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1653_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1654_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1655_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1656_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1657_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1658_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1659_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1660_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1661_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1662_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1663_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1664_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1665_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1666_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1667_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1668_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1669_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1670_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1671_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1672_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1673_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1674_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1675_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1676_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1677_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1678_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1679_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1680_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1681_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1682_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1683_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1684_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1685_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1686_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1687_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1688_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1689_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1690_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1691_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1692_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1693_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1694_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1695_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1696_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1697_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1698_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1699_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1700_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1701_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1702_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1703_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1704_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1705_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1706_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1707_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1708_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1709_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1710_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1711_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1712_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1713_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1714_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1715_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1716_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1717_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1718_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1719_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1720_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1721_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1722_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1723_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1724_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1725_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1726_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1727_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1728_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1729_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1730_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1731_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1732_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1733_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1734_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1735_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1736_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1737_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1738_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1739_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1740_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1741_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1742_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1743_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1744_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1745_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1746_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1747_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1748_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1749_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1750_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1751_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1752_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1753_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1754_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1755_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1756_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1757_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1758_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1759_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1760_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1761_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1762_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1763_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1764_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1765_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1766_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1767_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1768_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1769_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1770_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1771_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1772_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1773_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1774_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1775_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1776_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1777_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1778_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1779_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1780_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1781_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1782_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1783_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1784_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1785_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1786_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1787_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1788_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1789_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1790_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1791_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1792_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1793_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1794_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1795_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1796_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1797_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1798_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1799_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1800_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1801_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1802_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1803_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1804_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1805_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1806_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1807_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1808_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1809_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1810_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1811_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1812_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1813_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1814_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1815_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1816_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1817_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1818_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1819_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1820_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1821_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1822_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1823_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1824_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1825_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1826_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1827_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1828_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1829_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1830_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1831_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1832_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1833_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1834_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1835_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1836_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1837_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1838_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1839_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1840_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1841_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1842_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1843_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1844_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1845_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1846_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1847_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1848_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1849_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1850_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1851_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1852_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1853_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1854_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1855_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1856_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1857_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1858_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1859_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1860_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1861_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1862_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1863_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1864_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1865_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1866_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1867_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1868_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1869_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1870_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1871_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1872_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1873_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1874_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1875_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1876_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1877_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1878_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1879_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1880_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1881_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1882_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1883_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1884_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1885_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1886_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1887_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1888_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1889_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1890_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1891_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1892_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1893_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1894_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1895_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1896_Ntuple.root"   Lumi="0.0"/>
+<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/dagonzal/SFrame_Ntuples_53X_ttbsm_v3/QCD_MuEnriched/QCD_Pt-50to80_MuEnrichedPt5_TuneZ2star_8TeV_pythia6_1897_Ntuple.root"   Lumi="0.0"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

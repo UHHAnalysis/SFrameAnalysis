@@ -82,6 +82,9 @@ public:
   /// Function called for every event
   void ExecuteEvent( const SInputData&, Double_t ) throw( SError );
 
+  /// Function called for every event to clear the hypo list
+  void ClearEvent() throw( SError );
+
   /// Function called at the end of every event to store selected data
   void WriteOutputTree() throw( SError );
   

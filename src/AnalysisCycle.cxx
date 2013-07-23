@@ -661,6 +661,15 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 
 }
 
+void AnalysisCycle::ClearEvent() throw( SError )
+{
+  //clear reco hyp pointers for next event
+  m_bcc.recoHyps->clear();
+  delete m_bcc.recoHyps;
+  throw SError( SError::SkipEvent );
+
+}
+
 void AnalysisCycle::FillTriggerNames()
 {
 

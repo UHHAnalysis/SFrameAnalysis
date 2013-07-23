@@ -23,6 +23,44 @@ private:
 
 };
 
+
+class TopTagOverlapSelection: public SelectionModule {
+ public:
+  TopTagOverlapSelection(double delR_Lep_TopTag = 0.8 , double delR_Jet_TopTag = 1.3);
+  ~TopTagOverlapSelection(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+
+ private:
+  double m_delR_Lep_TopTag;
+  double m_delR_Jet_TopTag;
+
+
+};
+
+
+
+
+
+class RazorSelection: public SelectionModule {
+ public:
+  RazorSelection(HypothesisDiscriminator *discr, double mrazor = 1050, double mrazorT = 0.54);
+  ~RazorSelection(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+
+ private:
+  double m_mrazor;
+  double m_mrazorT;
+  HypothesisDiscriminator *m_discr;
+
+
+};
+
 class NMuonSelection: public SelectionModule {
 public:
     NMuonSelection(int min_nparticle, int max_nparticle=int_infinity(), double ptmin=0., double etamax=double_infinity() );
@@ -119,10 +157,43 @@ private:
 };
 
 
+
+class CAAntiktJetSelection : public SelectionModule{
+ public:
+  CAAntiktJetSelection(unsigned int min_Topjets, unsigned int min_Jets, double min_distance,unsigned int max_Topjets=int_infinity(),unsigned int max_Jets=int_infinity());
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  unsigned int m_min_Topjets; 		   
+  unsigned int m_max_Topjets;
+  unsigned int m_min_Jets;		   
+  unsigned int m_max_Jets;   
+  double m_min_distance;           
+};
+
+class TopTagAntiktJetSelection : public SelectionModule{
+ public:
+  TopTagAntiktJetSelection(unsigned int min_TopTag, unsigned int min_Jets, double min_distance,unsigned int max_TopTag=int_infinity(),unsigned int max_Jets=int_infinity());
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  unsigned int m_min_TopTag; 		   
+  unsigned int m_max_TopTag;
+  unsigned int m_min_Jets;		   
+  unsigned int m_max_Jets;   
+  double m_min_distance;           
+};
+
+
 class NTopTagSelection: public SelectionModule {
 public:
     NTopTagSelection(int min_ntoptag, int max_ntoptag=int_infinity());
     ~NTopTagSelection() {};
+
 
     virtual bool pass(BaseCycleContainer*);
     virtual std::string description();
@@ -259,6 +330,20 @@ private:
     double m_max_htlep;
 };
 
+class HTmuonCut: public SelectionModule {
+public:
+    HTmuonCut(double min_htmuon, double max_htmuon=double_infinity());
+    ~HTmuonCut() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    double m_min_htmuon;
+    double m_max_htmuon;
+};
+
+
 class METCut: public SelectionModule {
 public:
     METCut(double min_met, double max_met=double_infinity());
@@ -284,11 +369,15 @@ public:
 
 class TwoDCutMuon: public SelectionModule {
 public:
-    TwoDCutMuon() {};
+    TwoDCutMuon(double delRmin= 0.5 , double pTrelmin = 25);
     ~TwoDCutMuon() {};
 
     virtual bool pass(BaseCycleContainer*);
     virtual std::string description();
+
+private:
+    double m_delRmin;
+    double m_pTrelmin;
 
 };
 

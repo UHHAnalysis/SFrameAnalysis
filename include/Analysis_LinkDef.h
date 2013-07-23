@@ -30,7 +30,7 @@
 #pragma link C++ class BTagEffHists;
 #pragma link C++ class BTagEffHistsTPrime+;
 #pragma link C++ class TMVATreeFiller;
-#pragma link C++ class GenparticleHists;
+//#pragma link C++ class GenparticleHists;
 
 //#pragma link C++ class WResonanceCycle+;
 #pragma link C++ class JetLeptonCleanerCycle+;

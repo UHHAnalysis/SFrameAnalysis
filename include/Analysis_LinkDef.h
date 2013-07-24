@@ -17,10 +17,8 @@
 #pragma link C++ class PileUpHistoCycle+;
 
 #pragma link C++ class TauEffiCycle+;
-#pragma link C++ class TopTagTMVACycle+;
 //#pragma link C++ class ExampleCycle+;
 #pragma link C++ class EventFilterFromListStandAlone+;
-
 #pragma link C++ class TopJetHists;
 #pragma link C++ class JetHists;
 #pragma link C++ class EventHists;
@@ -31,26 +29,11 @@
 #pragma link C++ class BTagEffHistsTPrime+;
 #pragma link C++ class TMVATreeFiller;
 //#pragma link C++ class GenparticleHists;
-
 //#pragma link C++ class WResonanceCycle+;
-#pragma link C++ class JetLeptonCleanerCycle+;
-#pragma link C++ class ZprimePreSelectionCycle+;
-#pragma link C++ class ZprimeSelectionCycle+;
-#pragma link C++ class ZprimePostSelectionCycle+;
-#pragma link C++ class ZprimeEleTrigCycle+;
 //#pragma link C++ class TriggerEffiCycle+;
-#pragma link C++ class ZprimeSelectionTrigTestCycle+;
-#pragma link C++ class ZprimeSelectionDataTrigTestCycle+;
 //#pragma link C++ class ZSelectionCycle+;
-#pragma link C++ class ZprimeEleTrigCycle+;
 #pragma link C++ class PDFWeightsCycle+;
-
-#pragma link C++ class TopTagTMVACycle+;
-
 #pragma link C++ class cutflowCycle+;
 
-
-#pragma link C++ class GenTTbarCycle+;
-//#pragma link C++ class LQReconstructionCycle+;
 
 #endif // __CINT__

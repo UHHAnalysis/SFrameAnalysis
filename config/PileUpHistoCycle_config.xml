@@ -1,76 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd" [
-<!ENTITY Wjets SYSTEM "Wjets.xml">
-<!ENTITY W1Jets SYSTEM "W1Jets.xml">
-<!ENTITY W2Jets SYSTEM "W2Jets.xml">
-<!ENTITY W3Jets SYSTEM "W3Jets.xml">
-<!ENTITY W4Jets SYSTEM "W4Jets.xml">
-<!ENTITY DY_10to50 SYSTEM "DY_10to50.xml">
-<!ENTITY DY_50toInf SYSTEM "DY_50toInf.xml">
-<!ENTITY DY1Jets_50toInf SYSTEM "DY1Jets_50toInf.xml">
-<!ENTITY DY2Jets_50toInf SYSTEM "DY2Jets_50toInf.xml">
-<!ENTITY DY3Jets_50toInf SYSTEM "DY3Jets_50toInf.xml">
-<!ENTITY DY4Jets_50toInf SYSTEM "DY4Jets_50toInf.xml">
-<!ENTITY TTbar SYSTEM "TTbar_Powheg.xml">
-<!ENTITY TTbar_MadGraph SYSTEM "TTbar_MadGraph.xml">
-<!ENTITY TTbar_700to1000 SYSTEM "TTbar_Powheg_700to1000.xml">
-<!ENTITY TTbar_1000toInf SYSTEM "TTbar_Powheg_1000toInf.xml">
-<!ENTITY SingleTop_T_tch SYSTEM "ST_t_t.xml">
-<!ENTITY SingleTop_T_tWch SYSTEM "ST_t_tW.xml">
-<!ENTITY SingleTop_T_sch SYSTEM "ST_t_s.xml">
-<!ENTITY SingleTop_Tbar_tch SYSTEM "ST_tbar_t.xml">
-<!ENTITY SingleTop_Tbar_tWch SYSTEM "ST_tbar_tW.xml">
-<!ENTITY SingleTop_Tbar_sch SYSTEM "ST_tbar_s.xml">
-<!ENTITY ttZ SYSTEM "ttZ.xml">
-<!ENTITY ZP500w5 SYSTEM "ZP500w5.xml">
-<!ENTITY ZP500w50 SYSTEM "ZP500w50.xml">
-<!ENTITY ZP750w7p5 SYSTEM "ZP750w7p5.xml">
-<!ENTITY ZP750w75 SYSTEM "ZP750w75.xml">
-<!ENTITY ZP1000w10 SYSTEM "ZP1000w10.xml">
-<!ENTITY ZP1000w100 SYSTEM "ZP1000w100.xml">
-<!ENTITY ZP1250w12p5 SYSTEM "ZP1250w12p5.xml">
-<!ENTITY ZP1250w125 SYSTEM "ZP1250w125.xml">
-<!ENTITY ZP1500w15 SYSTEM "ZP1500w15.xml">
-<!ENTITY ZP1500w150 SYSTEM "ZP1500w150.xml">
-<!ENTITY ZP2000w20 SYSTEM "ZP2000w20.xml">
-<!ENTITY ZP2000w200 SYSTEM "ZP2000w200.xml">
-<!ENTITY ZP3000w30 SYSTEM "ZP3000w30.xml">
-<!ENTITY ZP3000w300 SYSTEM "ZP3000w300.xml">
-<!ENTITY ZP4000w40 SYSTEM "ZP4000w40.xml">
-<!ENTITY ZP4000w400 SYSTEM "ZP4000w400.xml">
-<!ENTITY RSG1000 SYSTEM "RSG_1000.xml">
-<!ENTITY RSG1500 SYSTEM "RSG_1500.xml">
-<!ENTITY RSG2000 SYSTEM "RSG_2000.xml">
-<!ENTITY RSG2500 SYSTEM "RSG_2500.xml">
-<!ENTITY RSG3000 SYSTEM "RSG_3000.xml">
-<!ENTITY RSG3500 SYSTEM "RSG_3500.xml">
-<!ENTITY RSG4000 SYSTEM "RSG_4000.xml">
-<!ENTITY WW SYSTEM "WW.xml">
-<!ENTITY ZZ SYSTEM "ZZ.xml">
-<!ENTITY QCDMu20to30 SYSTEM "QCDMu20to30.xml">
-<!ENTITY QCDMu30to50 SYSTEM "QCDMu30to50.xml">
-<!ENTITY QCDMu50to80 SYSTEM "QCDMu50to80.xml">
-<!ENTITY QCDMu80to120 SYSTEM "QCDMu80to120.xml">
-<!ENTITY QCDMu120to170 SYSTEM "QCDMu120to170.xml">
-<!ENTITY QCDMu170to300 SYSTEM "QCDMu170to300.xml">
-<!ENTITY QCDMu300to470 SYSTEM "QCDMu300to470.xml">
-<!ENTITY QCDMu470to600 SYSTEM "QCDMu470to600.xml">
-<!ENTITY QCDMu600to800 SYSTEM "QCDMu600to800.xml">
-<!ENTITY QCDMu800to1000 SYSTEM "QCDMu800to1000.xml">
-<!ENTITY DYJets_scaleup SYSTEM "DYJets_scaleup.xml">
-<!ENTITY DYJets_scaledown SYSTEM "DYJets_scaledown.xml">
-<!ENTITY DYJets_matchingup SYSTEM "DYJets_matchingup.xml">
-<!ENTITY DYJets_matchingdown SYSTEM "DYJets_matchingdown.xml">
-<!ENTITY WJets_scaleup SYSTEM "WJets_scaleup.xml">
-<!ENTITY WJets_scaledown SYSTEM "WJets_scaledown.xml">
-<!ENTITY WJets_matchingup SYSTEM "WJets_matchingup.xml">
-<!ENTITY WJets_matchingdown SYSTEM "WJets_matchingdown.xml">
-<!ENTITY TT_scaleup SYSTEM "TT_scaleup.xml">
-<!ENTITY TT_scaledown SYSTEM "TT_scaledown.xml">
-<!ENTITY TT700to1000_scaleup SYSTEM "TT700to1000_scaleup.xml">
-<!ENTITY TT700to1000_scaledown SYSTEM "TT700to1000_scaledown.xml">
-<!ENTITY TT1000toInf_scaleup SYSTEM "TT1000toInf_scaleup.xml">
-<!ENTITY TT1000toInf_scaledown SYSTEM "TT1000toInf_scaledown.xml">
+<!ENTITY TTbar SYSTEM "Samples_TTBSM53/TT_Powheg.xml">
+<!ENTITY ZP500w5 SYSTEM "Samples_TTBSM53/ZP500W5.xml">
+<!ENTITY ZP500w50 SYSTEM "Samples_TTBSM53/ZP500W50.xml">
+<!ENTITY ZP750w7p5 SYSTEM "Samples_TTBSM53/ZP750W7p5.xml">
+<!ENTITY ZP750w75 SYSTEM "Samples_TTBSM53/ZP750W75.xml">
+<!ENTITY ZP1000w10 SYSTEM "Samples_TTBSM53/ZP1000W10.xml">
+<!ENTITY ZP1000w100 SYSTEM "Samples_TTBSM53/ZP1000W100.xml">
+<!ENTITY ZP1250w12p5 SYSTEM "Samples_TTBSM53/ZP1250W12p5.xml">
+<!ENTITY ZP1250w125 SYSTEM "Samples_TTBSM53/ZP1250W125.xml">
+<!ENTITY ZP1500w15 SYSTEM "Samples_TTBSM53/ZP1500W15.xml">
+<!ENTITY ZP1500w150 SYSTEM "Samples_TTBSM53/ZP1500W150.xml">
+<!ENTITY ZP2000w20 SYSTEM "Samples_TTBSM53/ZP2000W20.xml">
+<!ENTITY ZP2000w200 SYSTEM "Samples_TTBSM53/ZP2000W200.xml">
+<!ENTITY ZP3000w30 SYSTEM "Samples_TTBSM53/ZP3000W30.xml">
+<!ENTITY ZP3000w300 SYSTEM "Samples_TTBSM53/ZP3000W300.xml">
+<!ENTITY ZP4000w40 SYSTEM "Samples_TTBSM53/ZP4000W40.xml">
+<!ENTITY ZP4000w400 SYSTEM "Samples_TTBSM53/ZP4000W400.xml">
+<!ENTITY TTbar_700to1000 SYSTEM "Samples_TTBSM53/TT_Mtt-700to1000.xml">
+<!ENTITY TTbar_1000toInf SYSTEM "Samples_TTBSM53/TT_Mtt-1000toInf.xml">
+<!ENTITY SingleTop_T_tch SYSTEM "Samples_TTBSM53/T_t-channel.xml">
+<!ENTITY SingleTop_T_tWch SYSTEM "Samples_TTBSM53/T_tW-channel.xml">
+<!ENTITY SingleTop_T_sch SYSTEM "Samples_TTBSM53/T_s-channel.xml">
+<!ENTITY SingleTop_Tbar_tch SYSTEM "Samples_TTBSM53/Tbar_t-channel.xml">
+<!ENTITY SingleTop_Tbar_tWch SYSTEM "Samples_TTBSM53/Tbar_tW-channel.xml">
+<!ENTITY SingleTop_Tbar_sch SYSTEM "Samples_TTBSM53/Tbar_s-channel.xml">
+<!ENTITY SingleTop_T_sch SYSTEM "Samples_TTBSM53/T_s-channel.xml">
+<!ENTITY DY1Jets_50toInf SYSTEM "Samples_TTBSM53/DY1Jets.xml">
+<!ENTITY WW SYSTEM "Samples_TTBSM53/WW.xml">
+<!ENTITY WZ SYSTEM "Samples_TTBSM53/WZ.xml">
+<!ENTITY ZZ SYSTEM "Samples_TTBSM53/ZZ.xml">
+<!ENTITY LQ200 SYSTEM "Samples_TTBSM53/LQToTTau_M200.xml">
+<!ENTITY LQ250 SYSTEM "Samples_TTBSM53/LQToTTau_M250.xml">
+<!ENTITY LQ300 SYSTEM "Samples_TTBSM53/LQToTTau_M300.xml">
+<!ENTITY LQ350 SYSTEM "Samples_TTBSM53/LQToTTau_M350.xml">
+<!ENTITY LQ400 SYSTEM "Samples_TTBSM53/LQToTTau_M400.xml">
+<!ENTITY LQ450 SYSTEM "Samples_TTBSM53/LQToTTau_M450.xml">
+<!ENTITY LQ500 SYSTEM "Samples_TTBSM53/LQToTTau_M500.xml">
+<!ENTITY LQ550 SYSTEM "Samples_TTBSM53/LQToTTau_M550.xml">
+<!ENTITY LQ600 SYSTEM "Samples_TTBSM53/LQToTTau_M600.xml">
+<!ENTITY LQ650 SYSTEM "Samples_TTBSM53/LQToTTau_M650.xml">
+<!ENTITY LQ700 SYSTEM "Samples_TTBSM53/LQToTTau_M700.xml">
+<!ENTITY LQ750 SYSTEM "Samples_TTBSM53/LQToTTau_M750.xml">
+<!ENTITY LQ800 SYSTEM "Samples_TTBSM53/LQToTTau_M800.xml">
+<!ENTITY LQ850 SYSTEM "Samples_TTBSM53/LQToTTau_M850.xml">
+<!ENTITY LQ900 SYSTEM "Samples_TTBSM53/LQToTTau_M900.xml">
+<!ENTITY LQ950 SYSTEM "Samples_TTBSM53/LQToTTau_M950.xml">
+<!ENTITY LQ1000 SYSTEM "Samples_TTBSM53/LQToTTau_M1000.xml">
+<!ENTITY QCDMu15to20 SYSTEM "Samples_TTBSM53/QCD_Pt-15to20_MuEnriched.xml" >
+<!ENTITY QCDMu20to30 SYSTEM "Samples_TTBSM53/QCD_Pt-20to30_MuEnriched.xml" >
+<!ENTITY QCDMu30to50 SYSTEM "Samples_TTBSM53/QCD_Pt-30to50_MuEnriched.xml" >
+<!ENTITY QCDMu50to80 SYSTEM "Samples_TTBSM53/QCD_Pt-50to80_MuEnriched.xml" >
+<!ENTITY QCDMu80to120 SYSTEM "Samples_TTBSM53/QCD_Pt-80to120_MuEnriched.xml" >
+<!ENTITY QCDMu120to170 SYSTEM "Samples_TTBSM53/QCD_Pt-120to170_MuEnriched.xml" >
+<!ENTITY QCDMu170to300 SYSTEM "Samples_TTBSM53/QCD_Pt-170to300_MuEnriched.xml" >
+<!ENTITY QCDMu300to470 SYSTEM "Samples_TTBSM53/QCD_Pt-300to470_MuEnriched.xml" >
+<!ENTITY QCDMu470to600 SYSTEM "Samples_TTBSM53/QCD_Pt-470to600_MuEnriched.xml" >
+<!ENTITY QCDMu600to800 SYSTEM "Samples_TTBSM53/QCD_Pt-600to800_MuEnriched.xml" >
+<!ENTITY QCDMu800to1000 SYSTEM "Samples_TTBSM53/QCD_Pt-800to1000_MuEnriched.xml" >
+<!ENTITY QCDMu1000 SYSTEM "Samples_TTBSM53/QCD_Pt-1000_MuEnriched.xml" >
 ]>
 
 <JobConfiguration JobName="PileUpHistoCycleJob" OutputLevel="DEBUG">
@@ -85,7 +73,7 @@
 	<Package Name="SFrameTools.par" />
 	<Package Name="Analysis.par" />
 
-	<Cycle Name="PileUpHistoCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PileUpHistos/" PostFix="" TargetLumi="1" > 
+	<Cycle Name="PileUpHistoCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X_v3/PileUpHistos/" PostFix="" TargetLumi="1" > 
 <!--	<Cycle Name="PileUpHistoCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/PileUpHistos/" PostFix="" TargetLumi="1" > -->
 <!--
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
@@ -203,83 +191,89 @@
                         &TTbar_MadGraph;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WW" Cacheable="True">
                         &WW;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-
-		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ150" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ150/Ntuple_1_1_HSR.root" Lumi="0.0"/> 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WZ" Cacheable="True">
+                        &WZ;
 			<InputTree Name="AnalysisTree" /> 
-		</InputData> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZZ" Cacheable="True">
+                        &ZZ;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ200" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ200/Ntuple_1_1_cTI.root" Lumi="0.0"/> 
+		        &LQ200;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ250" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ250/Ntuple_1_1_nyj.root" Lumi="0.0"/> 
+		        &LQ250;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ300" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ300/Ntuple_1_1_9gy.root" Lumi="0.0"/> 
+		        &LQ300;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ350" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ350/Ntuple_1_1_hyA.root" Lumi="0.0"/> 
+		        &LQ350;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ400" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ400/Ntuple_1_1_Jam.root" Lumi="0.0"/> 
+		        &LQ400;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ450" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ450/Ntuple_1_1_KgB.root" Lumi="0.0"/> 
+		        &LQ450;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ500" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ500/Ntuple_1_1_BDV.root" Lumi="0.0"/> 
+		        &LQ500;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ550" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ550/Ntuple_1_1_Vqu.root" Lumi="0.0"/> 
+		        &LQ550;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ600" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ600/Ntuple_1_1_cUa.root" Lumi="0.0"/> 
+		        &LQ600;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ650" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ650/Ntuple_1_1_R13.root" Lumi="0.0"/> 
+		        &LQ650;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ700" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ700/Ntuple_1_1_rC2.root" Lumi="0.0"/> 
+		        &LQ700;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ750" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ750/Ntuple_1_1_GqC.root" Lumi="0.0"/> 
+		        &LQ750;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ800" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ800/Ntuple_1_1_6Ib.root" Lumi="0.0"/> 
+		        &LQ800;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ850" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ850/Ntuple_1_1_tzE.root" Lumi="0.0"/> 
+		        &LQ850;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ900" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ900/Ntuple_1_1_qhm.root" Lumi="0.0"/> 
+		        &LQ900;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ950" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ950/Ntuple_1_1_q1m.root" Lumi="0.0"/> 
+		        &LQ950;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="False">
-		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ1000/Ntuple_1_1_ceB.root" Lumi="0.0"/> 
+		        &LQ1000;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DY_50toInf" Cacheable="True">
                         &DY_50toInf;
 			<InputTree Name="AnalysisTree" /> 
@@ -355,7 +349,11 @@
                         &DY_10to50;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-
+-->
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu15to20" Cacheable="True">
+                        &QCDMu15to20;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu20to30" Cacheable="True">
                         &QCDMu20to30;
 			<InputTree Name="AnalysisTree" /> 
@@ -397,7 +395,11 @@
                         &QCDMu800to1000;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu1000" Cacheable="True">
+                        &QCDMu1000;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+<!--
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DYJets_scaleup" Cacheable="True">
                         &DYJets_scaleup;
 			<InputTree Name="AnalysisTree" /> 
@@ -439,7 +441,7 @@
                         &TT_scaledown;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
--->
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TT700to1000_scaleup" Cacheable="True">
                         &TT700to1000_scaleup;
 			<InputTree Name="AnalysisTree" /> 
@@ -456,7 +458,7 @@
                         &TT1000toInf_scaledown;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-
+-->
 		<UserConfig>
 
 		</UserConfig>

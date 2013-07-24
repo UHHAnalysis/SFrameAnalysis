@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd" [
 <!ENTITY MuDataA SYSTEM "Samples_TTBSM53/SingleMu_A.xml">
+<!ENTITY MuDataB SYSTEM "Samples_TTBSM53/SingleMu_B.xml">
+<!ENTITY MuDataC SYSTEM "Samples_TTBSM53/SingleMu_C.xml">
+<!ENTITY MuDataD SYSTEM "Samples_TTBSM53/SingleMu_D.xml">
 <!ENTITY TTbar SYSTEM "Samples_TTBSM53/TT_Powheg.xml">
 <!ENTITY ZP500w5 SYSTEM "Samples_TTBSM53/ZP500W5.xml">
 <!ENTITY ZP500w50 SYSTEM "Samples_TTBSM53/ZP500W50.xml">
@@ -28,6 +31,21 @@
 <!ENTITY SingleTop_Tbar_sch SYSTEM "Samples_TTBSM53/Tbar_s-channel.xml">
 <!ENTITY SingleTop_T_sch SYSTEM "Samples_TTBSM53/T_s-channel.xml">
 <!ENTITY DY1Jets_50toInf SYSTEM "Samples_TTBSM53/DY1Jets.xml">
+<!ENTITY QCDMu15to20 SYSTEM "Samples_TTBSM53/QCD_Pt-15to20_MuEnriched.xml" >
+<!ENTITY QCDMu20to30 SYSTEM "Samples_TTBSM53/QCD_Pt-20to30_MuEnriched.xml" >
+<!ENTITY QCDMu30to50 SYSTEM "Samples_TTBSM53/QCD_Pt-30to50_MuEnriched.xml" >
+<!ENTITY QCDMu50to80 SYSTEM "Samples_TTBSM53/QCD_Pt-50to80_MuEnriched.xml" >
+<!ENTITY QCDMu80to120 SYSTEM "Samples_TTBSM53/QCD_Pt-80to120_MuEnriched.xml" >
+<!ENTITY QCDMu120to170 SYSTEM "Samples_TTBSM53/QCD_Pt-120to170_MuEnriched.xml" >
+<!ENTITY QCDMu170to300 SYSTEM "Samples_TTBSM53/QCD_Pt-170to300_MuEnriched.xml" >
+<!ENTITY QCDMu300to470 SYSTEM "Samples_TTBSM53/QCD_Pt-300to470_MuEnriched.xml" >
+<!ENTITY QCDMu470to600 SYSTEM "Samples_TTBSM53/QCD_Pt-470to600_MuEnriched.xml" >
+<!ENTITY QCDMu600to800 SYSTEM "Samples_TTBSM53/QCD_Pt-600to800_MuEnriched.xml" >
+<!ENTITY QCDMu800to1000 SYSTEM "Samples_TTBSM53/QCD_Pt-800to1000_MuEnriched.xml" >
+<!ENTITY QCDMu1000 SYSTEM "Samples_TTBSM53/QCD_Pt-1000_MuEnriched.xml" >
+<!ENTITY WW SYSTEM "Samples_TTBSM53/WW.xml">
+<!ENTITY WZ SYSTEM "Samples_TTBSM53/WZ.xml">
+<!ENTITY ZZ SYSTEM "Samples_TTBSM53/ZZ.xml">
 ]>
 
 <!--
@@ -52,34 +70,32 @@ Kommentar
 	<Package Name="Analysis.par" />
 
 
-	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/dust/naf/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X_v3/PreSelectionMuon/" PostFix="" TargetLumi="1" > 
+	<Cycle Name="ZprimePreSelectionCycle"  RunMode="PROOF" ProofServer="pod://"  ProofWorkDir="/scratch/hh/dust/naf/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X_v3/PreSelectionMuon/" PostFix="" TargetLumi="1" > 
 <!--	<Cycle Name="ZprimePreSelectionCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X_v3/PreSelectionMuon/" PostFix="_TEST" TargetLumi="1" > -->
 
-
-                <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="DATA" Cacheable="True">
+<!--
+                <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="DATA_A" Cacheable="True">
                         &MuDataA;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
-<!--
-                <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="DATA2" Cacheable="True">
-                        &MuData2;
+-->
+                <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="DATA_B" Cacheable="True">
+                        &MuDataB;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
-
-	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ1000_v3.root" Lumi="0.0"/> 
-			<InputTree Name="AnalysisTree" />
-			<OutputTree Name="AnalysisTree" /> 
-		</InputData>
-		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ600" Cacheable="False">
-		<In FileName="/scratch/hh/lustre/cms/user/peiffer/SFrame_Ntuples/LQ600_v3.root" Lumi="0.0"/> 
+<!--
+                <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="DATA_C" Cacheable="True">
+                        &MuDataC;
 			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" /> 
-		</InputData>  
-
--->
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> 
+                <InputData Lumi="1" NEventsMax="-1" Type="DATA" Version="DATA_D" Cacheable="True">
+                        &MuDataD;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> 
 
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZP500w5" Cacheable="True">
                         &ZP500w5;
@@ -223,7 +239,7 @@ Kommentar
 		</InputData> 
 
 
-<!--
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="Wjets" Cacheable="True">
                         &Wjets;
 			<InputTree Name="AnalysisTree" /> 
@@ -234,21 +250,25 @@ Kommentar
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData>
--->
-<!--
+
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WW" Cacheable="True">
                         &WW;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
-
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WZ" Cacheable="True">
+                        &WZ;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />  
+		</InputData> 
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZZ" Cacheable="True">
                         &ZZ;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData> 
--->
-<!--
+
+
 
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbar_MadGraph" Cacheable="True">
                         &TTbar_MadGraph;
@@ -256,13 +276,12 @@ Kommentar
 			<OutputTree Name="AnalysisTree" />  
 		</InputData>
 
--->
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DY1Jets_50toInf" Cacheable="True">
                         &DY1Jets_50toInf;
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />  
 		</InputData>
-<!--
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DY2Jets_50toInf" Cacheable="True">
                         &DY2Jets_50toInf;
 			<InputTree Name="AnalysisTree" /> 
@@ -338,6 +357,11 @@ Kommentar
 			<OutputTree Name="AnalysisTree" />
 		</InputData>
 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu15to20" Cacheable="True">
+                        &QCDMu15to20;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu20to30" Cacheable="True">
                         &QCDMu20to30;
 			<InputTree Name="AnalysisTree" /> 
@@ -389,8 +413,13 @@ Kommentar
 			<InputTree Name="AnalysisTree" /> 
 			<OutputTree Name="AnalysisTree" />
 		</InputData>
-
-
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu1000" Cacheable="True">
+                        &QCDMu1000;
+			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
+-->
+<!--
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DYJets_scaleup" Cacheable="True">
                         &DYJets_scaleup;
 			<InputTree Name="AnalysisTree" /> 

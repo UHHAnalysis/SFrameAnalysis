@@ -4,7 +4,7 @@
 
 export ANALYSISNAME=$1
 
-#git clone https://github.com/UHHAnalysis/ExampleAnalysis ${SFRAME_DIR}/${ANALYSISNAME}Analysis
+git clone https://github.com/UHHAnalysis/ExampleAnalysis ${SFRAME_DIR}/${ANALYSISNAME}Analysis
 
 cd ${SFRAME_DIR}/${ANALYSISNAME}Analysis
 rm -rf .git

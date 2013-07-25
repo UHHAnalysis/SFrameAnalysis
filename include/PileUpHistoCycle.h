@@ -6,8 +6,8 @@
 // SFrame include(s):
 #include "core/include/SCycleBase.h"
 
-#include "Objects.h"
-#include "BaseCycleContainer.h"
+#include "SFrameTools/include/Objects.h"
+#include "SFrameTools/include/BaseCycleContainer.h"
 
 /**
  *   @short Put short description of class here

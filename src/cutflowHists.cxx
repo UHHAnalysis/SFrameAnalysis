@@ -1,12 +1,15 @@
-#include "TTbarGen.h"
 #include "include/cutflowHists.h"
-#include "include/EventCalc.h"
-#include <iostream>
-#include "../include/Utils.h"
+
+#include "SFrameTools/include/EventCalc.h"
+#include "SFrameTools/include/Utils.h"
+#include "SFrameTools/include/TTbarGen.h"
+
 #include <TH2.h>
 #include <TGraph.h> 
 #include <TVectorT.h>
 #include <TLorentzVector.h>
+
+#include <iostream>
 
 using namespace std;
 

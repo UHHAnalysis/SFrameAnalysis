@@ -1,17 +1,10 @@
 #ifndef HypothesisHists_H
 #define HypothesisHists_H
 
-// ROOT include(s):
-#include <TObject.h>
-#include <TString.h>
-
 // Local include(s):
-#include "include/BaseHists.h"
-#include "include/BaseCycleContainer.h"
-#include "HypothesisDiscriminator.h"
-#include "EventCalc.h"
-#include <iostream>
-#include "TH2.h"
+#include "SFrameTools/include/BaseHists.h"
+#include "SFrameTools/include/HypothesisDiscriminator.h"
+
 
 /**
  * @short histogram class to draw histograms for the ttbar reconstruction

@@ -1,6 +1,8 @@
 #include "include/TMVATreeFiller.h"
-#include "include/EventCalc.h"
-#include "include/JetProps.h"
+
+#include "SFrameTools/include/EventCalc.h"
+#include "NtupleWriter/include/JetProps.h"
+
 #include <iostream>
 
 using namespace std;

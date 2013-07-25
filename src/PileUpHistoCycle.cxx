@@ -1,7 +1,7 @@
 // $Id: PileUpHistoCycle.cxx,v 1.3 2012/04/23 12:51:29 peiffer Exp $
 
 // Local include(s):
-#include "../include/PileUpHistoCycle.h"
+#include "include/PileUpHistoCycle.h"
 
 ClassImp( PileUpHistoCycle );
 

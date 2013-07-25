@@ -1,4 +1,5 @@
 #include "include/HypothesisHists.h"
+#include "TH2F.h"
 
 using namespace std;
 

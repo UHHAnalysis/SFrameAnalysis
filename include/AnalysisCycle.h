@@ -3,18 +3,20 @@
 #ifndef AnalysisCycle_H
 #define AnalysisCycle_H
 
-// SFrame include(s):
-#include "SCycleBase.h"
-#include "Selection.h"
-#include "PUWeightProducer.h"
-#include "LuminosityHandler.h"
-#include "BaseHists.h"
-#include "MCDataScaleFactors.h"
-#include "PDFWeights.h"
-#include "FactorizedJetCorrector.h"
-#include "JetCorrectorParameters.h"
-#include "Cleaner.h"
-#include "JetCorrectionUncertainty.h"
+#include "core/include/SCycleBase.h"
+
+#include "SFrameTools/include/Selection.h"
+#include "SFrameTools/include/PUWeightProducer.h"
+#include "SFrameTools/include/LuminosityHandler.h"
+#include "SFrameTools/include/BaseHists.h"
+#include "SFrameTools/include/MCDataScaleFactors.h"
+#include "SFrameTools/include/PDFWeights.h"
+
+#include "SFrameAnalysis/include/Cleaner.h"
+
+#include "SFrameTools/JetMETObjects/interface/FactorizedJetCorrector.h"
+#include "SFrameTools/JetMETObjects/interface/JetCorrectorParameters.h"
+#include "SFrameTools/JetMETObjects/interface/JetCorrectionUncertainty.h"
 
 /**
  *   @short Base of every analysis cycle 

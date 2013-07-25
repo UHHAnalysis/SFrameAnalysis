@@ -1,7 +1,7 @@
 // $Id: PDFWeightsCycle.cxx,v 1.1 2013/02/01 12:39:01 peiffer Exp $
 
 // Local include(s):
-#include "../include/PDFWeightsCycle.h"
+#include "include/PDFWeightsCycle.h"
 
 ClassImp( PDFWeightsCycle );
 

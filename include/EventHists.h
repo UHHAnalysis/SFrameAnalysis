@@ -1,13 +1,8 @@
 #ifndef EventHists_H
 #define EventHists_H
 
-// ROOT include(s):
-#include <TObject.h>
-#include <TString.h>
-
 // Local include(s):
-#include "include/BaseHists.h"
-#include "include/BaseCycleContainer.h"
+#include "SFrameTools/include/BaseHists.h"
 
 /**
  *   Class for booking and filling Event histograms

@@ -1,14 +1,8 @@
 #ifndef MuonHists_H
 #define MuonHists_H
 
-// ROOT include(s):
-#include <TObject.h>
-#include <TString.h>
-#include "TH2.h"
-
 // Local include(s):
-#include "include/BaseHists.h"
-#include "include/BaseCycleContainer.h"
+#include "SFrameTools/include/BaseHists.h"
 
 /**
  *   Class for booking and filling muon histograms

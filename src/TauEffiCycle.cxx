@@ -1,7 +1,7 @@
 // $Id: TauEffiCycle.cxx,v 1.1 2012/04/23 14:53:22 peiffer Exp $
 
-// Local include(s):
-#include "../include/TauEffiCycle.h"
+#include "include/TauEffiCycle.h"
+#include "TGraphAsymmErrors.h"
 
 ClassImp( TauEffiCycle );
 

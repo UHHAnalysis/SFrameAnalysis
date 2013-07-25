@@ -2,6 +2,9 @@
 #include "include/SelectionModules.h"
 #include <iostream>
 
+#include "TH1F.h"
+#include "TH2F.h"
+
 using namespace std;
 
 MuonHists::MuonHists(const char* name) : BaseHists(name)

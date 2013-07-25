@@ -2,13 +2,15 @@
 #define Cleaner_H
 
 #include "TVector2.h"
-#include "Objects.h"
-#include "BaseCycleContainer.h"
 #include <algorithm>
-#include "Utils.h"
-#include "FactorizedJetCorrector.h"
-#include "JetCorrectionUncertainty.h"
-#include "EventCalc.h"
+
+#include "SFrameTools/include/Objects.h"
+#include "SFrameTools/include/BaseCycleContainer.h"
+#include "SFrameTools/include/Utils.h"
+#include "SFrameTools/include/EventCalc.h"
+#include "SFrameTools/JetMETObjects/interface/FactorizedJetCorrector.h"
+#include "SFrameTools/JetMETObjects/interface/JetCorrectionUncertainty.h"
+
 
 /**
  *  @short Modules to clean event content

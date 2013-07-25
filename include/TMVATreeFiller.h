@@ -1,14 +1,9 @@
 #ifndef TMVATreeFiller_H
 #define TMVATreeFiller_H
 
-// ROOT include(s):
-#include <TObject.h>
-#include <TString.h>
-#include <TLorentzVector.h>
-
-// Local include(s):
-#include "include/BaseHists.h"
-#include "include/BaseCycleContainer.h"
+#include "SFrameTools/include/BaseHists.h"
+#include "NtupleWriter/include/TopJet.h"
+#include "NtupleWriter/include/GenParticle.h"
 
 /**
  *   Example class for booking and filling histograms

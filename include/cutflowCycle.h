@@ -3,10 +3,9 @@
 #ifndef cutflowCycle_H
 #define cutflowCycle_H
 
-// SFrame include(s):
-#include "include/AnalysisCycle.h"
-#include "include/BTagEffHistsTPrime.h"
-//#include "include/Scaling.h"
+#include "SFrameAnalysis/include/AnalysisCycle.h"
+#include "SFrameAnalysis/include/BTagEffHistsTPrime.h"
+
 /**
  *   @short Example of an analysis cycle
  *

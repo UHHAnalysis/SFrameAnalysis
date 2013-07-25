@@ -1,14 +1,9 @@
 #ifndef BTagEffHists_H
 #define BTagEffHists_H
 
-// ROOT include(s):
-#include <TObject.h>
-#include <TString.h>
-
 // Local include(s):
-#include "include/BaseHists.h"
-#include "include/BaseCycleContainer.h"
-#include "include/Utils.h"
+#include "SFrameTools/include/BaseHists.h"
+#include "SFrameTools/include/Utils.h"
 
 /**
  *   Class for booking and filling btag histograms

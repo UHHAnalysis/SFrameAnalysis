@@ -1,14 +1,15 @@
 #ifndef SelectionModules_H
 #define SelectionModules_H
 
-#include "Objects.h"
-#include "Utils.h"
-#include "BaseCycleContainer.h"
+#include "SFrameTools/include/Objects.h"
+#include "SFrameTools/include/Utils.h"
+#include "SFrameTools/include/BaseCycleContainer.h"
+#include "SFrameTools/include/Selection.h"
+#include "SFrameTools/include/EventCalc.h"
+#include "SFrameTools/include/HypothesisDiscriminator.h"
+#include "SFrameAnalysis/include/EventFilterFromListStandAlone.h"
+
 #include <algorithm>
-#include "Selection.h"
-#include "EventCalc.h"
-#include "HypothesisDiscriminator.h"
-#include "EventFilterFromListStandAlone.h"
 
 class TriggerSelection: public SelectionModule {
 public:

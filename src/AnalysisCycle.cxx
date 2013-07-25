@@ -4,13 +4,13 @@
 
 using namespace std;
 
-// Local include(s):
 #include "include/AnalysisCycle.h"
 #include "include/SelectionModules.h"
-#include "include/EventCalc.h"
-#include "STreeType.h"
 
-#include "SCycleStatistics.h"
+#include "SFrameTools/include/EventCalc.h"
+
+#include "core/include/STreeType.h"
+#include "core/include/SCycleStatistics.h"
 
 ClassImp( AnalysisCycle );
 

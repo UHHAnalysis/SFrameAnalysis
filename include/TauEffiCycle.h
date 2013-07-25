@@ -5,10 +5,8 @@
 
 // SFrame include(s):
 #include "core/include/SCycleBase.h"
+#include "SFrameTools/include/BaseCycleContainer.h"
 
-#include "Objects.h"
-#include "BaseCycleContainer.h"
-#include "TGraphAsymmErrors.h"
 
 /**
  *   @short Put short description of class here

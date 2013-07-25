@@ -1,6 +1,7 @@
 #include "include/ElectronHists.h"
 #include "include/SelectionModules.h"
 #include <iostream>
+#include "TH2F.h"
 
 using namespace std;
 

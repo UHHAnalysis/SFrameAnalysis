@@ -9,10 +9,10 @@
 // SFrame include(s):
 #include "core/include/SCycleBase.h"
 
-#include "Objects.h"
-#include "BaseCycleContainer.h"
-#include "EventCalc.h"
-#include "PDFWeights.h"
+#include "SFrameTools/include/Objects.h"
+#include "SFrameTools/include/BaseCycleContainer.h"
+#include "SFrameTools/include/EventCalc.h"
+#include "SFrameTools/include/PDFWeights.h"
 
 /**
  *   @short PDFWeights cycle

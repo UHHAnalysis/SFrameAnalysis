@@ -510,24 +510,36 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     // The variables are commonly stored in the BaseCycleContaincer and can be
     // accessed afterwards through EventCalc
 
-    if(m_ElectronCollection.size()>0) ConnectVariable( "AnalysisTree", m_ElectronCollection.c_str() ,m_bcc. electrons);
-    if(m_MuonCollection.size()>0) ConnectVariable( "AnalysisTree", m_MuonCollection.c_str() , m_bcc.muons);
-    if(m_TauCollection.size()>0) ConnectVariable( "AnalysisTree", m_TauCollection.c_str() , m_bcc.taus);
-    if(m_JetCollection.size()>0) ConnectVariable( "AnalysisTree", m_JetCollection.c_str() , m_bcc.jets);
-    if(m_addGenInfo && m_GenJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenJetCollection.c_str() , m_bcc.genjets);
-    if(m_PhotonCollection.size()>0) ConnectVariable( "AnalysisTree", m_PhotonCollection.c_str() , m_bcc.photons);
-    if(m_METName.size()>0) ConnectVariable( "AnalysisTree", m_METName.c_str() , m_bcc.met);
+    if(m_ElectronCollection.size()>0) ConnectVariable( "AnalysisTree", m_ElectronCollection.c_str(), m_bcc.electrons);
+    else m_bcc.electrons=NULL;
+    if(m_MuonCollection.size()>0) ConnectVariable( "AnalysisTree", m_MuonCollection.c_str(), m_bcc.muons);
+    else m_bcc.muons=NULL;
+    if(m_TauCollection.size()>0) ConnectVariable( "AnalysisTree", m_TauCollection.c_str(), m_bcc.taus);
+    else m_bcc.taus=NULL;
+    if(m_JetCollection.size()>0) ConnectVariable( "AnalysisTree", m_JetCollection.c_str(), m_bcc.jets);
+    else m_bcc.jets=NULL;
+    if(m_addGenInfo && m_GenJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenJetCollection.c_str(), m_bcc.genjets);
+    else m_bcc.genjets=NULL;
+    if(m_PhotonCollection.size()>0) ConnectVariable( "AnalysisTree", m_PhotonCollection.c_str(), m_bcc.photons);
+    else m_bcc.photons=NULL;
+    if(m_METName.size()>0) ConnectVariable( "AnalysisTree", m_METName.c_str(), m_bcc.met);
+    else m_bcc.met=NULL;
     if(m_PrimaryVertexCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrimaryVertexCollection.c_str() , m_bcc.pvs);
-    if(m_TopJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollection.c_str() , m_bcc.topjets);
+    else m_bcc.pvs=NULL;
+    if(m_TopJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollection.c_str(), m_bcc.topjets);
+    else m_bcc.topjets=NULL;
     if(m_addGenInfo && m_TopJetCollectionGen.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollectionGen.c_str() , m_bcc.topjetsgen);
     else m_bcc.topjetsgen=NULL;
     if(m_PrunedJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrunedJetCollection.c_str() , m_bcc.prunedjets);
+    else m_bcc.prunedjets=NULL;
     if(m_addGenInfo && m_GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenParticleCollection.c_str() , m_bcc.genparticles);
-    if(m_PFParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_PFParticleCollection.c_str() , m_bcc.pfparticles);
     else m_bcc.genparticles=NULL;
+    if(m_PFParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_PFParticleCollection.c_str() , m_bcc.pfparticles);
+    else m_bcc.pfparticles=NULL;
     if(m_addGenInfo && m_readCommonInfo) ConnectVariable( "AnalysisTree", "genInfo" , m_bcc.genInfo);
     else m_bcc.genInfo=NULL;
     if(m_readTTbarReco) ConnectVariable( "AnalysisTree", "recoHyps", m_bcc.recoHyps);
+    else m_bcc.recoHyps=NULL;
 
     ConnectVariable( "AnalysisTree", "run" , m_bcc.run);
     ConnectVariable( "AnalysisTree", "rho" , m_bcc.rho);

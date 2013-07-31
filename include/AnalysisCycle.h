@@ -12,8 +12,6 @@
 #include "SFrameTools/include/MCDataScaleFactors.h"
 #include "SFrameTools/include/PDFWeights.h"
 
-#include "SFrameAnalysis/include/Cleaner.h"
-
 #include "SFrameTools/JetMETObjects/interface/FactorizedJetCorrector.h"
 #include "SFrameTools/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "SFrameTools/JetMETObjects/interface/JetCorrectionUncertainty.h"
@@ -48,10 +46,10 @@ public:
   void RegisterHistCollection(BaseHists* hists);
 
   /// returns booked selection
-  Selection* GetSelection(const std::string name);
+  Selection* GetSelection(const std::string & name);
 
   /// returns booked histogram collection
-  BaseHists* GetHistCollection(const std::string name);
+  BaseHists* GetHistCollection(const std::string & name);
 
   /// print out information of the selections
   void PrintSelectionSummary();

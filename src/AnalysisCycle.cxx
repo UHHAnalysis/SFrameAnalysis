@@ -8,6 +8,7 @@ using namespace std;
 #include "include/SelectionModules.h"
 
 #include "SFrameTools/include/EventCalc.h"
+#include "SFrameAnalysis/include/Cleaner.h"
 
 #include "core/include/STreeType.h"
 #include "core/include/SCycleStatistics.h"
@@ -92,11 +93,9 @@ AnalysisCycle::AnalysisCycle()
 
 AnalysisCycle::~AnalysisCycle()
 {
-    // destructor
-
-    if (m_puwp) delete m_puwp;
-    if (m_corrector) delete m_corrector;
-    if (m_jes_unc) delete m_jes_unc;
+    delete m_puwp;
+    delete m_corrector;
+    delete m_jes_unc;
 }
 
 void AnalysisCycle::BeginCycle() throw( SError )
@@ -120,15 +119,10 @@ void AnalysisCycle::BeginCycle() throw( SError )
 
     // adding luminosity handler to gloabl config
     AddConfigObject( lumiHandler );
-
-    return;
-
 }
 
 void AnalysisCycle::EndCycle() throw( SError )
 {
-
-    return;
 
 }
 
@@ -279,7 +273,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         DeclareVariable(m_output_triggerResults, "triggerResults");
     }
 
-
+    
     m_lsf = new LeptonScaleFactors(m_leptonweights);	
 
     if (m_sys_unc == e_MuonSF){
@@ -396,43 +390,32 @@ void AnalysisCycle::RegisterHistCollection(BaseHists* hists)
         m_logger << WARNING << "Got NULL pointer, can not register histogram collection." << SLogger::endmsg;
         return;
     }
-
-
     m_histcollections.push_back(hists);
-
-
-    return;
 }
 
 
-Selection* AnalysisCycle::GetSelection(const std::string name)
+Selection* AnalysisCycle::GetSelection(const std::string & name)
 {
     // get a selection from the list of selections
-
-    TString InName(name.c_str());
     for (unsigned int i=0; i<m_selections.size(); ++i) {
-        TString SelName = m_selections[i]->GetName();
-        if (InName == SelName) {
+        if (name == m_selections[i]->GetName()) {
             return m_selections[i];
         }
     }
-    m_logger << WARNING << "Could not find selection with name " << InName << "." << SLogger::endmsg;
+    m_logger << WARNING << "Could not find selection with name " << name << "." << SLogger::endmsg;
     return NULL;
 }
 
 
-BaseHists* AnalysisCycle::GetHistCollection(const std::string name)
+BaseHists* AnalysisCycle::GetHistCollection(const std::string & name)
 {
     // get a histogram collection from the list
-
-    TString InName(name.c_str());
     for (unsigned int i=0; i<m_histcollections.size(); ++i) {
-        TString HistName = m_histcollections[i]->GetName();
-        if (InName == HistName) {
+        if (name == m_histcollections[i]->GetName()) {
             return m_histcollections[i];
         }
     }
-    m_logger << WARNING << "Could not find hist collection with name " << InName << "." << SLogger::endmsg;
+    m_logger << WARNING << "Could not find hist collection with name " << name << "." << SLogger::endmsg;
     return NULL;
 }
 
@@ -458,6 +441,7 @@ void AnalysisCycle::FinaliseHistos()
 
     for (unsigned int i=0; i<m_histcollections.size(); ++i) {
         m_histcollections[i]->Finish();
+	delete m_histcollections[i];
     }
 
     m_histcollections.clear();
@@ -497,6 +481,9 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     FinaliseHistos();
 
     ResetSelectionStats();
+    
+    delete m_lsf;
+    delete m_pdfweights;
 
     return;
 
@@ -509,37 +496,23 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     // The different collections that should be loaded are steerable through the XML file.
     // The variables are commonly stored in the BaseCycleContaincer and can be
     // accessed afterwards through EventCalc
+    m_bcc.reset();
 
     if(m_ElectronCollection.size()>0) ConnectVariable( "AnalysisTree", m_ElectronCollection.c_str(), m_bcc.electrons);
-    else m_bcc.electrons=NULL;
     if(m_MuonCollection.size()>0) ConnectVariable( "AnalysisTree", m_MuonCollection.c_str(), m_bcc.muons);
-    else m_bcc.muons=NULL;
     if(m_TauCollection.size()>0) ConnectVariable( "AnalysisTree", m_TauCollection.c_str(), m_bcc.taus);
-    else m_bcc.taus=NULL;
     if(m_JetCollection.size()>0) ConnectVariable( "AnalysisTree", m_JetCollection.c_str(), m_bcc.jets);
-    else m_bcc.jets=NULL;
     if(m_addGenInfo && m_GenJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenJetCollection.c_str(), m_bcc.genjets);
-    else m_bcc.genjets=NULL;
     if(m_PhotonCollection.size()>0) ConnectVariable( "AnalysisTree", m_PhotonCollection.c_str(), m_bcc.photons);
-    else m_bcc.photons=NULL;
     if(m_METName.size()>0) ConnectVariable( "AnalysisTree", m_METName.c_str(), m_bcc.met);
-    else m_bcc.met=NULL;
     if(m_PrimaryVertexCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrimaryVertexCollection.c_str() , m_bcc.pvs);
-    else m_bcc.pvs=NULL;
     if(m_TopJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollection.c_str(), m_bcc.topjets);
-    else m_bcc.topjets=NULL;
     if(m_addGenInfo && m_TopJetCollectionGen.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollectionGen.c_str() , m_bcc.topjetsgen);
-    else m_bcc.topjetsgen=NULL;
     if(m_PrunedJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrunedJetCollection.c_str() , m_bcc.prunedjets);
-    else m_bcc.prunedjets=NULL;
     if(m_addGenInfo && m_GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenParticleCollection.c_str() , m_bcc.genparticles);
-    else m_bcc.genparticles=NULL;
     if(m_PFParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_PFParticleCollection.c_str() , m_bcc.pfparticles);
-    else m_bcc.pfparticles=NULL;
     if(m_addGenInfo && m_readCommonInfo) ConnectVariable( "AnalysisTree", "genInfo" , m_bcc.genInfo);
-    else m_bcc.genInfo=NULL;
     if(m_readTTbarReco) ConnectVariable( "AnalysisTree", "recoHyps", m_bcc.recoHyps);
-    else m_bcc.recoHyps=NULL;
 
     ConnectVariable( "AnalysisTree", "run" , m_bcc.run);
     ConnectVariable( "AnalysisTree", "rho" , m_bcc.rho);
@@ -555,11 +528,6 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
         ConnectVariable( "AnalysisTree" ,"beamspot_y0", m_bcc.beamspot_y0);
         ConnectVariable( "AnalysisTree" ,"beamspot_z0", m_bcc.beamspot_z0);
     }
-    else{
-        m_bcc.triggerResults = 0;
-        m_bcc.triggerNames = 0;
-        m_bcc.beamspot_x0 = m_bcc.beamspot_y0 = m_bcc.beamspot_z0 = NAN;
-    }
 
     //if(m_caTopTagGen.size()>0) ConnectVariable("AnalysisTree", m_caTopTagGen.c_str(), m_bcc.topjets);
 
@@ -569,8 +537,6 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
 
     TTree * t = GetInputTree("AnalysisTree");
     m_logger << INFO << "Current file: " << t->GetCurrentFile()->GetName() << SLogger::endmsg;
-
-    return;
 }
 
 void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError )
@@ -653,34 +619,29 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     //note: list of recoHyps is still empty, has to be filled in the user cycle
 
     if(!m_readTTbarReco && m_writeTTbarReco){  
+      delete m_bcc.recoHyps; // would be 0 the first time, but that's Ok
       m_bcc.recoHyps = new std::vector<ReconstructionHypothesis>;
     }
 
     //apply jet energy corrections
     if(calc->GetJets() && m_corrector){
-      Cleaner* cleaner = new Cleaner();
+      Cleaner cleaner;
 
-      cleaner->SetJECUncertainty(m_jes_unc);
+      cleaner.SetJECUncertainty(m_jes_unc);
 
       // settings for jet correction uncertainties
       if (m_sys_unc==e_JEC){
-	if (m_sys_var==e_Up) cleaner->ApplyJECVariationUp();
-	if (m_sys_var==e_Down) cleaner->ApplyJECVariationDown();
+	if (m_sys_var==e_Up) cleaner.ApplyJECVariationUp();
+	if (m_sys_var==e_Down) cleaner.ApplyJECVariationDown();
       }
-      cleaner->JetRecorrector(m_corrector);
+      cleaner.JetRecorrector(m_corrector);
     }
-
-    return;
-
 }
+
 
 void AnalysisCycle::ClearEvent() throw( SError )
 {
-  //clear reco hyp pointers for next event
-  m_bcc.recoHyps->clear();
-  delete m_bcc.recoHyps;
   throw SError( SError::SkipEvent );
-
 }
 
 void AnalysisCycle::FillTriggerNames()
@@ -780,14 +741,5 @@ void AnalysisCycle::WriteOutputTree() throw( SError)
     m_newrun=false;
 
     m_output_triggerResults = *m_bcc.triggerResults;
-
-
-    //clear reco hyp pointers for next event
-    if( m_bcc.recoHyps && !m_readTTbarReco && m_writeTTbarReco){
-      //std::cout <<"recoHyps size = " <<  m_bcc.recoHyps->size() <<std::endl;
-      m_bcc.recoHyps->clear();
-      delete m_bcc.recoHyps;
-    }
-
 }
 

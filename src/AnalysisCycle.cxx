@@ -567,7 +567,8 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     calc->SetBaseCycleContainer(&m_bcc);
     calc->SetLumiHandler(LumiHandler());
 
-    
+    TTree * t = GetInputTree("AnalysisTree");
+    m_logger << INFO << "Current file: " << t->GetCurrentFile()->GetName() << SLogger::endmsg;
 
     return;
 }

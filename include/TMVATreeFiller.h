@@ -38,6 +38,8 @@ public:
    
    void ClearVariables();
 
+   Double_t CalcDR(GenParticle tj, GenParticle gen);
+
    Double_t RecGenMatch(TopJet tj, GenParticle gen);
 
 private:
@@ -53,6 +55,18 @@ private:
    Double_t m_genpx;    // px of the top quark (gen)
    Double_t m_genpy;    // py of the top quark (gen)
    Double_t m_genpz;    // pz of the top quark (gen)
+
+   Double_t m_b_genpx;    // px of the b quark (gen)
+   Double_t m_b_genpy;    // py of the b quark (gen)
+   Double_t m_b_genpz;    // pz of the b quark (gen)
+
+   Double_t m_wq1_genpx;    // px of the W decay quark 1 (gen)
+   Double_t m_wq1_genpy;    // py of the W decay quark 1 (gen)
+   Double_t m_wq1_genpz;    // pz of the W decay quark 1 (gen)
+
+   Double_t m_wq2_genpx;    // px of the W decay quark 1 (gen)
+   Double_t m_wq2_genpy;    // py of the W decay quark 1 (gen)
+   Double_t m_wq2_genpz;    // pz of the W decay quark 1 (gen)
 
    Int_t m_npv;         // number of reconstructed primary vertices
    Double_t m_weight;   // event weight

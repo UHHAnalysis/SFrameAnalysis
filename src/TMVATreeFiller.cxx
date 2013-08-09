@@ -28,6 +28,22 @@ void TMVATreeFiller::Init()
   m_tree->Branch("TopQuark_py", &m_genpy, "TopQuark_py/D");
   m_tree->Branch("TopQuark_pz", &m_genpz, "TopQuark_pz/D");
 
+  m_tree->Branch("TopQuark_px", &m_genpx, "TopQuark_px/D");
+  m_tree->Branch("TopQuark_py", &m_genpy, "TopQuark_py/D");
+  m_tree->Branch("TopQuark_pz", &m_genpz, "TopQuark_pz/D");
+
+  m_tree->Branch("bQuark_px", &m_b_genpx, "bQuark_px/D");
+  m_tree->Branch("bQuark_py", &m_b_genpy, "bQuark_py/D");
+  m_tree->Branch("bQuark_pz", &m_b_genpz, "bQuark_pz/D");
+
+  m_tree->Branch("WQuark1_px", &m_wq1_genpx, "WQuark1_px/D");
+  m_tree->Branch("WQuark1_py", &m_wq1_genpy, "WQuark1_py/D");
+  m_tree->Branch("WQuark1_pz", &m_wq1_genpz, "WQuark1_pz/D");
+
+  m_tree->Branch("WQuark2_px", &m_wq2_genpx, "WQuark2_px/D");
+  m_tree->Branch("WQuark2_py", &m_wq2_genpy, "WQuark2_py/D");
+  m_tree->Branch("WQuark2_pz", &m_wq2_genpz, "WQuark2_pz/D");
+
   m_tree->Branch("Event_NPV", &m_npv, "N_PV/I");
   m_tree->Branch("Event_Weight", &m_weight, "Event_Weight/D");
 
@@ -89,6 +105,8 @@ void TMVATreeFiller::Init()
   Book( TH1F( "TopGen_NPV", "gen top N_{PV} (P_{T} > 200 GeV)", 51, 0, 50));
   Book( TH1F( "MatchedJet_NPV", "matched jet N_{PV} (P_{T} > 200 GeV)", 51, 0, 50));
 
+  Book( TH1F( "DR_max_topjet_decayproducts", "#DeltaR_{max}(topjet, top decay products) ", 50, 0, 3) );
+  Book( TH1F( "mass_decayproducts", "mass of top decay products [GeV]", 50, 170, 176 ) );
 
 }
 
@@ -151,16 +169,72 @@ void TMVATreeFiller::Fill()
     Hist("DR_top")-> Fill(DR1,weight);
     Hist("DR_atop")-> Fill(DR2,weight);
 
+    double djb, djq1, djq2;
+
     if (DR1<0.7){
       if (geninfo.IsTopHadronicDecay()){
 	is_signal = true;
 	topquark = top;
+
+	GenParticle bquark = geninfo.bTop();
+	GenParticle Wdecay1 = geninfo.Wdecay1();
+	GenParticle Wdecay2 = geninfo.Wdecay2();
+	
+	m_b_genpx = bquark.v4().px();
+	m_b_genpy = bquark.v4().py();
+	m_b_genpz = bquark.v4().pz();
+	
+	m_wq1_genpx = Wdecay1.v4().px();
+	m_wq1_genpy = Wdecay1.v4().py();
+	m_wq1_genpz = Wdecay1.v4().pz();
+	
+	m_wq2_genpx = Wdecay2.v4().px();
+	m_wq2_genpy = Wdecay2.v4().py();
+	m_wq2_genpz = Wdecay2.v4().pz();
+
+	// calculate largest value of DeltaR between decay products and top jet
+	djb = CalcDR(bquark, topquark);
+	djq1 = CalcDR(Wdecay1, topquark);
+	djq2 = CalcDR(Wdecay2, topquark);
+
+	LorentzVector v = bquark.v4() + Wdecay1.v4() + Wdecay2.v4();
+	if (v.isTimelike()){
+	  Hist("mass_decayproducts")->Fill(v.mass(), weight);
+	}
+
       }
     }
     if (DR2<0.7){
       if (geninfo.IsAntiTopHadronicDecay()){
 	is_signal = true;
 	topquark = atop;
+	
+	GenParticle bquark = geninfo.bAntitop();
+	GenParticle Wdecay1 = geninfo.WMinusdecay1();
+	GenParticle Wdecay2 = geninfo.WMinusdecay2();
+	
+	m_b_genpx = bquark.v4().px();
+	m_b_genpy = bquark.v4().py();
+	m_b_genpz = bquark.v4().pz();
+	
+	m_wq1_genpx = Wdecay1.v4().px();
+	m_wq1_genpy = Wdecay1.v4().py();
+	m_wq1_genpz = Wdecay1.v4().pz();
+      
+	m_wq2_genpx = Wdecay2.v4().px();
+	m_wq2_genpy = Wdecay2.v4().py();
+	m_wq2_genpz = Wdecay2.v4().pz();
+
+	// calculate largest value of DeltaR between decay products and top jet
+	djb = CalcDR(bquark, topquark);
+	djq1 = CalcDR(Wdecay1, topquark);
+	djq2 = CalcDR(Wdecay2, topquark);
+
+	LorentzVector v = bquark.v4() + Wdecay1.v4() + Wdecay2.v4();
+	if (v.isTimelike()){
+	  Hist("mass_decayproducts")->Fill(v.mass(), weight);
+	}
+	
       }
     }
 
@@ -171,6 +245,11 @@ void TMVATreeFiller::Fill()
     // check if this jet fulfills the cuts
     if (tj.pt()<200) continue;
     if (fabs(tj.eta())>2.5) continue;
+
+    double dmax1 = std::max(djb, djq1);
+    double dmax = std::max(dmax1, djq2);
+    
+    Hist("DR_max_topjet_decayproducts")-> Fill(dmax,weight);
     
     FillTopJetProperties(tj, topquark);
 
@@ -227,6 +306,18 @@ void TMVATreeFiller::ClearVariables()
   m_genpx = 0;
   m_genpy = 0;
   m_genpz = 0;
+
+  m_b_genpx = 0;
+  m_b_genpy = 0;
+  m_b_genpz = 0;
+
+  m_wq1_genpx = 0;
+  m_wq1_genpy = 0;
+  m_wq1_genpz = 0;
+
+  m_wq2_genpx = 0;
+  m_wq2_genpy = 0;
+  m_wq2_genpz = 0;
 
   m_tau1 = 0;
   m_tau2 = 0;
@@ -419,4 +510,33 @@ void TMVATreeFiller::FillTopJetProperties(TopJet topjet, GenParticle topquark)
         m_pruned_m23 = (prunedsubjets[1]+prunedsubjets[2]).m();
     }
   }
+}
+
+
+Double_t TMVATreeFiller::CalcDR(GenParticle tj, GenParticle gen)
+{
+  
+  // protection against non-existant gen particle
+  if (gen.pt()<0.0001) return 9999.;
+
+  double eta1 = tj.eta();
+  double eta2 = gen.eta();
+  double DeltaEta = eta1 - eta2;
+
+  double phi1 = tj.phi();
+  double phi2 = gen.phi();
+
+  // fold difference in phi into [0,pi]
+  static const double pi = 3.14159265358979323846;
+  double DeltaPhi = phi1 - phi2;
+  if (abs(DeltaPhi) > pi){
+    if (DeltaPhi>0) DeltaPhi-=2*pi;
+    else DeltaPhi+=2*pi;
+  }
+  DeltaPhi = abs(DeltaPhi); // projection into [0,pi]
+
+  double DR = sqrt(DeltaEta*DeltaEta + DeltaPhi*DeltaPhi);
+
+  return DR;
+
 }

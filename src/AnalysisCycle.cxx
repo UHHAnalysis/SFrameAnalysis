@@ -93,9 +93,7 @@ AnalysisCycle::AnalysisCycle()
 
 AnalysisCycle::~AnalysisCycle()
 {
-    delete m_puwp;
-    delete m_corrector;
-    delete m_jes_unc;
+
 }
 
 void AnalysisCycle::BeginCycle() throw( SError )
@@ -484,6 +482,9 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     
     delete m_lsf;
     delete m_pdfweights;
+    delete m_puwp;
+    delete m_corrector;
+    delete m_jes_unc;
 
     return;
 

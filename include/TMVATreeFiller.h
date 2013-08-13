@@ -116,6 +116,20 @@ private:
    Double_t m_pruned_m13;      // mass of pruned subjets 1+3
    Double_t m_pruned_m23;      // mass of pruned subjets 2+3
 
+   Double_t m_psi_02;       // jet shape with rmax=0.2
+   Double_t m_psi_04;       // jet shape with rmax=0.4
+   Double_t m_psi_06;       // jet shape with rmax=0.6
+
+   Int_t m_number_of_constituents;
+   Int_t m_number_of_charged_constituents;
+   Double_t m_jet_charge;
+   Double_t m_weighted_jet_charge;
+   Double_t m_weighted_jet_charge_02;
+   Double_t m_weighted_jet_charge_04;
+   Double_t m_weighted_jet_charge_06;
+   Double_t m_weighted_jet_charge_08;
+   Double_t m_first_jet_moment;
+   Double_t m_second_jet_moment;  
 
 }; // class TMVATreeFiller
 

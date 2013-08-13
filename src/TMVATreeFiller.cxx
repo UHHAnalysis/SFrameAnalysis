@@ -57,9 +57,24 @@ void TMVATreeFiller::Init()
   m_tree->Branch("TopJet_pruned_tau3", &m_pruned_tau3, "TopJet_pruned_tau3/D");
   m_tree->Branch("TopJet_pruned_tau4", &m_pruned_tau4, "TopJet_pruned_tau4/D");
 
+  m_tree->Branch("TopJet_psi_02", &m_psi_02, "TopJet_psi_02/D");
+  m_tree->Branch("TopJet_psi_04", &m_psi_04, "TopJet_psi_04/D");
+  m_tree->Branch("TopJet_psi_06", &m_psi_06, "TopJet_psi_06/D");
+
   m_tree->Branch("TopJet_Qjets_volatility", &m_qjets, "TopJet_Qjets_volatility/D");
 
   m_tree->Branch("TopJet_Nsubjets", &m_nsubs, "TopJet_Nsubjets/I");
+
+  m_tree->Branch("TopJet_NConstituents", &m_number_of_constituents, "TopJet_Nconstituents/I");
+  m_tree->Branch("TopJet_NChargedConstituents", &m_number_of_charged_constituents, "TopJet_NChargedConstituents/I");
+  m_tree->Branch("TopJet_Charge", &m_jet_charge, "TopJet_Charge/D");
+  m_tree->Branch("TopJet_WeightedCharge_k02", &m_weighted_jet_charge_02, "TopJet_WeightedCharge_k02/D");
+  m_tree->Branch("TopJet_WeightedCharge_k04", &m_weighted_jet_charge_04, "TopJet_WeightedCharge_k04/D");  
+  m_tree->Branch("TopJet_WeightedCharge_k06", &m_weighted_jet_charge_06, "TopJet_WeightedCharge_k06/D");
+  m_tree->Branch("TopJet_WeightedCharge_k08", &m_weighted_jet_charge_08, "TopJet_WeightedCharge_k08/D");
+  m_tree->Branch("TopJet_WeightedCharge", &m_weighted_jet_charge, "TopJet_WeightedCharge/D");
+  m_tree->Branch("TopJet_FirstMoment", &m_first_jet_moment, "TopJet_FirstMoment/D");
+  m_tree->Branch("TopJet_SecondMoment", &m_second_jet_moment, "TopJet_SecondMoment/D");
 
   m_tree->Branch("Subjet1_px", &m_sub1_px, "Subjet1_px/D");
   m_tree->Branch("Subjet1_py", &m_sub1_py, "Subjet1_py/D");
@@ -329,6 +344,10 @@ void TMVATreeFiller::ClearVariables()
   m_pruned_tau3 = 0;
   m_pruned_tau4 = 0;
 
+  m_psi_02 = 0;
+  m_psi_04 = 0; 
+  m_psi_06 = 0;
+
   m_qjets = 0;
 
   m_sub1_px = 0;
@@ -363,6 +382,16 @@ void TMVATreeFiller::ClearVariables()
   m_HEPTopTag = false;
   m_CMSTopTag = false;
 
+  m_number_of_constituents = 0;
+  m_number_of_constituents = 0;
+  m_jet_charge = 0;
+  m_weighted_jet_charge = 0;
+  m_weighted_jet_charge_02 = 0; 
+  m_weighted_jet_charge_04 = 0; 
+  m_weighted_jet_charge_06 = 0; 
+  m_weighted_jet_charge_08 = 0; 
+  m_first_jet_moment = 0;
+  m_second_jet_moment = 0;
 }
 
 
@@ -391,7 +420,7 @@ void TMVATreeFiller::FillTopJetProperties(TopJet topjet, GenParticle topquark)
 
   // some jet substructure variables
   // N-subjettiness
-  JetProps jp(&topjet);
+  JetProps jp(&topjet, calc->GetPFParticles() );
   m_tau1 = jp.GetNsubjettiness(1, Njettiness::onepass_kt_axes, 1., 0.8);
   m_tau2 = jp.GetNsubjettiness(2, Njettiness::onepass_kt_axes, 1., 0.8);
   m_tau3 = jp.GetNsubjettiness(3, Njettiness::onepass_kt_axes, 1., 0.8);
@@ -403,8 +432,32 @@ void TMVATreeFiller::FillTopJetProperties(TopJet topjet, GenParticle topquark)
   m_pruned_tau4 = jp.GetPrunedNsubjettiness(4, Njettiness::onepass_kt_axes, 1., 0.8);
 
   // Q-jets
-  m_qjets = jp.GetQjetVolatility(calc->GetEventNum(), 0.8);
+  m_qjets = topjet.qjets_volatility(); //jp.GetQjetVolatility(calc->GetEventNum(), 0.8);
 
+  // jet constituents & jet charge
+  std::vector<PFParticle> jetconsts = calc->GetJetPFParticles(&topjet);
+  m_number_of_constituents = jetconsts.size();
+  m_number_of_charged_constituents = 0;
+  m_jet_charge = calc->JetCharge(&topjet);
+  for(int i=0; i< m_number_of_constituents; ++i){
+    if( fabs(jetconsts[i].charge())>0.01) {
+      m_number_of_charged_constituents ++;
+    }
+  }
+  m_weighted_jet_charge = calc->EnergyWeightedJetCharge(&topjet);
+  m_weighted_jet_charge_02 = calc->EnergyWeightedJetCharge(&topjet, 0.2);
+  m_weighted_jet_charge_04 = calc->EnergyWeightedJetCharge(&topjet, 0.4);
+  m_weighted_jet_charge_06 = calc->EnergyWeightedJetCharge(&topjet, 0.6);
+  m_weighted_jet_charge_08 = calc->EnergyWeightedJetCharge(&topjet, 0.8);
+
+  m_first_jet_moment = calc->JetMoment(&topjet,1);
+  m_second_jet_moment = calc->JetMoment(&topjet,2);
+
+  // jet shape
+  m_psi_02 = calc->IntegratedJetShape( &topjet, 0.2, 0.0 , e_CA8);
+  m_psi_04 = calc->IntegratedJetShape( &topjet, 0.4, 0.0 , e_CA8);
+  m_psi_06 = calc->IntegratedJetShape( &topjet, 0.6, 0.0 , e_CA8);
+  
   // HEP TopTag
   m_HEPTopTag = HepTopTag(topjet);
 
@@ -519,24 +572,6 @@ Double_t TMVATreeFiller::CalcDR(GenParticle tj, GenParticle gen)
   // protection against non-existant gen particle
   if (gen.pt()<0.0001) return 9999.;
 
-  double eta1 = tj.eta();
-  double eta2 = gen.eta();
-  double DeltaEta = eta1 - eta2;
-
-  double phi1 = tj.phi();
-  double phi2 = gen.phi();
-
-  // fold difference in phi into [0,pi]
-  static const double pi = 3.14159265358979323846;
-  double DeltaPhi = phi1 - phi2;
-  if (abs(DeltaPhi) > pi){
-    if (DeltaPhi>0) DeltaPhi-=2*pi;
-    else DeltaPhi+=2*pi;
-  }
-  DeltaPhi = abs(DeltaPhi); // projection into [0,pi]
-
-  double DR = sqrt(DeltaEta*DeltaEta + DeltaPhi*DeltaPhi);
-
-  return DR;
+  return tj.deltaR(gen);
 
 }

@@ -27,9 +27,17 @@
 <!ENTITY SingleTop_Tbar_sch SYSTEM "Samples_TTBSM53/Tbar_s-channel.xml">
 <!ENTITY SingleTop_T_sch SYSTEM "Samples_TTBSM53/T_s-channel.xml">
 <!ENTITY DY1Jets_50toInf SYSTEM "Samples_TTBSM53/DY1Jets.xml">
+<!ENTITY DY2Jets_50toInf SYSTEM "Samples_TTBSM53/DY2Jets.xml">
+<!ENTITY DY3Jets_50toInf SYSTEM "Samples_TTBSM53/DY3Jets.xml">
+<!ENTITY DY4Jets_50toInf SYSTEM "Samples_TTBSM53/DY4Jets.xml">
+<!ENTITY W1Jets SYSTEM "Samples_TTBSM53/W1JetsToLNu.xml"> 
+<!ENTITY W2Jets SYSTEM "Samples_TTBSM53/W2JetsToLNu.xml"> 
+<!ENTITY W3Jets SYSTEM "Samples_TTBSM53/W3JetsToLNu.xml"> 
+<!ENTITY W4Jets SYSTEM "Samples_TTBSM53/W4JetsToLNu.xml"> 
 <!ENTITY WW SYSTEM "Samples_TTBSM53/WW.xml">
 <!ENTITY WZ SYSTEM "Samples_TTBSM53/WZ.xml">
 <!ENTITY ZZ SYSTEM "Samples_TTBSM53/ZZ.xml">
+<!ENTITY ttZ SYSTEM "Samples_TTBSM53/ttZ.xml">
 <!ENTITY LQ200 SYSTEM "Samples_TTBSM53/LQToTTau_M200.xml">
 <!ENTITY LQ250 SYSTEM "Samples_TTBSM53/LQToTTau_M250.xml">
 <!ENTITY LQ300 SYSTEM "Samples_TTBSM53/LQToTTau_M300.xml">
@@ -59,9 +67,33 @@
 <!ENTITY QCDMu600to800 SYSTEM "Samples_TTBSM53/QCD_Pt-600to800_MuEnriched.xml" >
 <!ENTITY QCDMu800to1000 SYSTEM "Samples_TTBSM53/QCD_Pt-800to1000_MuEnriched.xml" >
 <!ENTITY QCDMu1000 SYSTEM "Samples_TTBSM53/QCD_Pt-1000_MuEnriched.xml" >
+<!ENTITY RSG700 SYSTEM "Samples_TTBSM53/RSG700.xml">
+<!ENTITY RSG1000 SYSTEM "Samples_TTBSM53/RSG1000.xml">
+<!ENTITY RSG1200 SYSTEM "Samples_TTBSM53/RSG1200.xml">
+<!ENTITY RSG1400 SYSTEM "Samples_TTBSM53/RSG1400.xml">
+<!ENTITY RSG1500 SYSTEM "Samples_TTBSM53/RSG1500.xml">
+<!ENTITY RSG1600 SYSTEM "Samples_TTBSM53/RSG1600.xml">
+<!ENTITY RSG1800 SYSTEM "Samples_TTBSM53/RSG1800.xml">
+<!ENTITY RSG2000 SYSTEM "Samples_TTBSM53/RSG2000.xml">
+<!ENTITY RSG2500 SYSTEM "Samples_TTBSM53/RSG2500.xml">
+<!ENTITY RSG3000 SYSTEM "Samples_TTBSM53/RSG3000.xml">
+<!ENTITY RSG3500 SYSTEM "Samples_TTBSM53/RSG3500.xml">
+<!ENTITY RSG4000 SYSTEM "Samples_TTBSM53/RSG4000.xml">
+<!ENTITY QCD_Pt-20to30_EMEnriched SYSTEM "Samples_TTBSM53/QCD_Pt-20to30_EMEnriched.xml">
+<!ENTITY QCD_Pt-30to80_EMEnriched SYSTEM "Samples_TTBSM53/QCD_Pt-30to80_EMEnriched.xml">
+<!ENTITY QCD_Pt-80to170_EMEnriched SYSTEM "Samples_TTBSM53/QCD_Pt-80to170_EMEnriched.xml">
+<!ENTITY QCD_Pt-170to250_EMEnriched SYSTEM "Samples_TTBSM53/QCD_Pt-170to250_EMEnriched.xml">
+<!ENTITY QCD_Pt-250to350_EMEnriched SYSTEM "Samples_TTBSM53/QCD_Pt-250to350_EMEnriched.xml">
+<!ENTITY QCD_Pt-350_EMEnriched SYSTEM "Samples_TTBSM53/QCD_Pt-350_EMEnriched.xml">
+<!ENTITY QCD_Pt-20to30_BCtoE SYSTEM "Samples_TTBSM53/QCD_Pt_20_30_BCtoE.xml">
+<!ENTITY QCD_Pt-30to80_BCtoE SYSTEM "Samples_TTBSM53/QCD_Pt_30_80_BCtoE.xml">
+<!ENTITY QCD_Pt-80to170_BCtoE SYSTEM "Samples_TTBSM53/QCD_Pt_80_170_BCtoE.xml">
+<!ENTITY QCD_Pt-170to250_BCtoE SYSTEM "Samples_TTBSM53/QCD_Pt_170_250_BCtoE.xml">
+<!ENTITY QCD_Pt-250to350_BCtoE SYSTEM "Samples_TTBSM53/QCD_Pt_250_350_BCtoE.xml">
+<!ENTITY QCD_Pt-350_BCtoE SYSTEM "Samples_TTBSM53/QCD_Pt_350_BCtoE.xml">
 ]>
 
-<JobConfiguration JobName="PileUpHistoCycleJob" OutputLevel="DEBUG">
+<JobConfiguration JobName="PileUpHistoCycleJob" OutputLevel="INFO">
 	<Library Name="libfastjet" />
 	<Library Name="libfastjettools"/>
 	<Library Name="libSFrameTools" />
@@ -74,7 +106,7 @@
 	<Package Name="Analysis.par" />
 
 	<Cycle Name="PileUpHistoCycle"  RunMode="PROOF" ProofServer="lite://"  ProofWorkDir="/scratch/hh/lustre/cms/user/peiffer/PROOF/" OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X_v3/PileUpHistos/" PostFix="" TargetLumi="1" > 
-<!--	<Cycle Name="PileUpHistoCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/PileUpHistos/" PostFix="" TargetLumi="1" > -->
+<!--	<Cycle Name="PileUpHistoCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/PileUpHistos/" PostFix="_Test" TargetLumi="1" > -->
 <!--
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbar" Cacheable="True">
                         &TTbar;
@@ -283,6 +315,7 @@
                         &DY1Jets_50toInf;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DY2Jets_50toInf" Cacheable="True">
                         &DY2Jets_50toInf;
 			<InputTree Name="AnalysisTree" /> 
@@ -302,6 +335,7 @@
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="W2Jets" Cacheable="True">
                         &W2Jets;
 			<InputTree Name="AnalysisTree" /> 
+			<OutputTree Name="AnalysisTree" /> 
 		</InputData> 
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="W3Jets" Cacheable="True">
                         &W3Jets;
@@ -312,14 +346,42 @@
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
 
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ttZ" Cacheable="True">
+                        &ttZ;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG700" Cacheable="True">
+                        &RSG700;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
  	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1000" Cacheable="True">
                         &RSG1000;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1200" Cacheable="True">
+                        &RSG1200;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1400" Cacheable="True">
+                        &RSG1400;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
  	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1500" Cacheable="True">
                         &RSG1500;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
+
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1600" Cacheable="True">
+                        &RSG1600;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1800" Cacheable="True">
+                        &RSG1800;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+
  	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG2000" Cacheable="True">
                         &RSG2000;
 			<InputTree Name="AnalysisTree" /> 
@@ -341,15 +403,11 @@
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
 
-	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZZ" Cacheable="True">
-                        &ZZ;
-			<InputTree Name="AnalysisTree" /> 
-		</InputData>
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DY_10to50" Cacheable="True">
                         &DY_10to50;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
--->
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCDMu15to20" Cacheable="True">
                         &QCDMu15to20;
 			<InputTree Name="AnalysisTree" /> 
@@ -399,7 +457,7 @@
                         &QCDMu1000;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-<!--
+
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="DYJets_scaleup" Cacheable="True">
                         &DYJets_scaleup;
 			<InputTree Name="AnalysisTree" /> 
@@ -456,6 +514,58 @@
 		</InputData>
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TT1000toInf_scaledown" Cacheable="True">
                         &TT1000toInf_scaledown;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-20to30_EMEnriched" Cacheable="True">
+                        &QCD_Pt-20to30_EMEnriched;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-30to80_EMEnriched" Cacheable="True">
+                        &QCD_Pt-30to80_EMEnriched;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-80to170_EMEnriched" Cacheable="True">
+                        &QCD_Pt-80to170_EMEnriched;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-170to250_EMEnriched" Cacheable="True">
+                        &QCD_Pt-170to250_EMEnriched;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-250to350_EMEnriched" Cacheable="True">
+                        &QCD_Pt-250to350_EMEnriched;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-350_EMEnriched" Cacheable="True">
+                        &QCD_Pt-350_EMEnriched;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-20to30_BCtoE" Cacheable="True">
+                        &QCD_Pt-20to30_BCtoE;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-30to80_BCtoE" Cacheable="True">
+                        &QCD_Pt-30to80_BCtoE;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-80to170_BCtoE" Cacheable="True">
+                        &QCD_Pt-80to170_BCtoE;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+-->
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-170to250_BCtoE" Cacheable="True">
+                        &QCD_Pt-170to250_BCtoE;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+<!--
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-250to350_BCtoE" Cacheable="True">
+                        &QCD_Pt-250to350_BCtoE;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-350_BCtoE" Cacheable="True">
+                        &QCD_Pt-350_BCtoE;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
 -->

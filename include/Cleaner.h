@@ -43,11 +43,14 @@ class Cleaner{
   void JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort=true);
 
   /**
-   * Function to apply new jet corrections to all jets of the BaseCycleContainer.
-   * Use sort=false or sort=true if you want to re-order the jets according to corrected pt after the applied shifts.
-  */
-
-  void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true, bool useTopJets=false);
+   * Apply jet corrections and optional JEC Variation to jets in the BaseCycleContainer.
+   * 
+   *  \param sort whether or not to sort the jets in pt in the BaseCycleContainer jet-vector after applying the correction / shift
+   *  \param useTopJets if \c true, correct the topjets instead of the standard jets
+   *  \param propagate_to_met if \c true, propagate the the new correction to MET (this that you have type-I corrected MET). This is
+   *    ignored (effectively always \c false) if \c useTopJets is \c true.
+   */
+  void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true, bool useTopJets=false, bool propagate_to_met = true);
 
   /**
    * Function to pass a jet energy uncertainty object to the cleaner.

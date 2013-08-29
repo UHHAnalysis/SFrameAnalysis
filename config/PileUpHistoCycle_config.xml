@@ -91,6 +91,9 @@
 <!ENTITY QCD_Pt-170to250_BCtoE SYSTEM "Samples_TTBSM53/QCD_Pt_170_250_BCtoE.xml">
 <!ENTITY QCD_Pt-250to350_BCtoE SYSTEM "Samples_TTBSM53/QCD_Pt_250_350_BCtoE.xml">
 <!ENTITY QCD_Pt-350_BCtoE SYSTEM "Samples_TTBSM53/QCD_Pt_350_BCtoE.xml">
+<!ENTITY TTbarHerwig SYSTEM "Samples_TTBSM53/TT_CT10_AUET2_8TeV-powheg-herwig.xml">
+<!ENTITY TTbarHerwig_700to1000 SYSTEM "Samples_TTBSM53/TT_Mtt-700to1000_CT10_AUET2_8TeV-powheg-herwig.xml">
+<!ENTITY TTbarHerwig_1000toInf SYSTEM "Samples_TTBSM53/TT_Mtt-1000toInf_CT10_AUET2_8TeV-powheg-herwig.xml">
 ]>
 
 <JobConfiguration JobName="PileUpHistoCycleJob" OutputLevel="INFO">
@@ -554,12 +557,10 @@
                         &QCD_Pt-80to170_BCtoE;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
--->
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-170to250_BCtoE" Cacheable="True">
                         &QCD_Pt-170to250_BCtoE;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
-<!--
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="QCD_Pt-250to350_BCtoE" Cacheable="True">
                         &QCD_Pt-250to350_BCtoE;
 			<InputTree Name="AnalysisTree" /> 
@@ -568,7 +569,20 @@
                         &QCD_Pt-350_BCtoE;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarHerwig" Cacheable="True">
+                        &TTbarHerwig;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
 -->
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarHerwig_700to1000" Cacheable="True">
+                        &TTbarHerwig_700to1000;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="TTbarHerwig_1000toInf" Cacheable="True">
+                        &TTbarHerwig_1000toInf;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+
 		<UserConfig>
 
 		</UserConfig>

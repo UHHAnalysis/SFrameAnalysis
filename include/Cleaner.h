@@ -91,6 +91,7 @@ class Cleaner{
   void MuonCleaner_Loose(double ptmin=0, double etamax=9999);
   void ElectronCleaner_noID_noIso(double ptmin=0, double etamax=9999);
   void MuonCleaner_noID_noIso(double ptmin=0, double etamax=9999);
+  void TauCleaner_noIso(double ptmin=0, double etamax=9999);
   void TauCleaner(double ptmin=0, double etamax=9999);
   void TauCleanerDecayModeFinding(double ptmin=0, double etamax=9999);
   void JetCleaner(double ptmin=0, double etamax=9999, bool doPFID=true);

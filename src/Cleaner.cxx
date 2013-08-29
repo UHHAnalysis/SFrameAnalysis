@@ -387,6 +387,7 @@ void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax, bool reverseID)
     bcc->electrons->clear();
 
     for(unsigned int i=0; i<good_eles.size(); ++i) {
+
         bcc->electrons->push_back(good_eles[i]);
     }
     sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
@@ -517,44 +518,63 @@ void Cleaner::MuonCleaner_Loose(double ptmin, double etamax)
     resetEventCalc();
 }
 
+void Cleaner::TauCleaner_noIso(double ptmin, double etamax)
+{
+  std::vector<Tau> good_taus;
+  for(unsigned int i=0; i<bcc->taus->size(); ++i) {
+    Tau tau = bcc->taus->at(i);
+    if(tau.pt()>ptmin) {
+      if(fabs(tau.eta())<etamax) {
+	if(bcc->taus->at(i).decayModeFinding()) {
+	  if(bcc->taus->at(i).againstElectronTightMVA3()) {
+	    if(bcc->taus->at(i).againstMuonTight2()) {
+	      double deltaRmin = 100;
+	      for(unsigned int k=0; k<bcc->muons->size(); ++k) 
+		{
+		  Muon muon = bcc->muons->at(k);
+		  double deltaR = muon.deltaR(tau);
+		  if (deltaR < deltaRmin) deltaRmin = deltaR;
+		}
+	      if (deltaRmin > 0.5)
+		{
+		  good_taus.push_back(tau);
+		}
+	    }
+	  }
+	}
+      }
+    }
+  }
+  
+  bcc->taus->clear();
+  
+  for(unsigned int i=0; i<good_taus.size(); ++i) {
+    bcc->taus->push_back(good_taus[i]);
+  }
+  sort(bcc->taus->begin(), bcc->taus->end(), HigherPt());
+  resetEventCalc();
+}
+
+
+
 void Cleaner::TauCleaner(double ptmin, double etamax)
 {
-
-    std::vector<Tau> good_taus;
-    for(unsigned int i=0; i<bcc->taus->size(); ++i) {
-        Tau tau = bcc->taus->at(i);
-        if(tau.pt()>ptmin) {
-            if(fabs(tau.eta())<etamax) {
-                if(bcc->taus->at(i).decayModeFinding()) {
-                    if(bcc->taus->at(i).byMediumCombinedIsolationDeltaBetaCorr()) {
-                        if(bcc->taus->at(i).againstElectronTightMVA3()) {
-                            if(bcc->taus->at(i).againstMuonTight2()) {
-			      double deltaRmin = 100;
-			      for(unsigned int k=0; k<bcc->muons->size(); ++k) 
-				{
-				  Muon muon = bcc->muons->at(k);
-				  double deltaR = muon.deltaR(tau);
-				  if (deltaR < deltaRmin) deltaRmin = deltaR;
-				}
-			      if (deltaRmin > 0.5)
-				{
-				  good_taus.push_back(tau);
-				}
-                            }
-                        }
-                    }
-                }
-            }
-        }
+  TauCleaner_noIso(ptmin, etamax);
+  std::vector<Tau> good_taus;
+  for(unsigned int i=0; i<bcc->taus->size(); ++i) {
+    Tau tau = bcc->taus->at(i);
+    if(bcc->taus->at(i).byMediumCombinedIsolationDeltaBetaCorr()) {
+      good_taus.push_back(tau);
     }
-
-    bcc->taus->clear();
-
-    for(unsigned int i=0; i<good_taus.size(); ++i) {
-        bcc->taus->push_back(good_taus[i]);
-    }
-    sort(bcc->taus->begin(), bcc->taus->end(), HigherPt());
-    resetEventCalc();
+  }
+  
+  bcc->taus->clear();
+  
+  for(unsigned int i=0; i<good_taus.size(); ++i) {
+    bcc->taus->push_back(good_taus[i]);
+  }
+  sort(bcc->taus->begin(), bcc->taus->end(), HigherPt());
+  resetEventCalc();
 }
 
 

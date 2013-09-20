@@ -181,10 +181,3 @@ void AnalysisHists::Fill()
 
 }
 
-void AnalysisHists::Finish()
-{
-  // final calculations, like division and addition of certain histograms
-
-
-}
-

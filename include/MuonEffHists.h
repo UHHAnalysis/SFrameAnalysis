@@ -24,12 +24,6 @@ public:
 
    void Fill();
 
-   TH1* getHist(const char* name);
-
-   void Finish();
-
-private:
-
 }; // class MuonEffHists
 
 

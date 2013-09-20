@@ -34,8 +34,6 @@ public:
 
    void Fill();
 
-   void Finish();
-
 private:
 
    double m_ptMin;

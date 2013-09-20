@@ -26,7 +26,6 @@ public:
 
    void Fill();
 
-   void Finish();
 
 private:
 

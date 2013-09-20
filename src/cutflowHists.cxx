@@ -304,10 +304,6 @@ void cutflowHists::Fill()
 
   
 }
-void cutflowHists::Finish()
-{
-  // final calculations, like division and addition of certain histograms
-  EventCalc* calc = EventCalc::Instance(); 
-}
+
 
 

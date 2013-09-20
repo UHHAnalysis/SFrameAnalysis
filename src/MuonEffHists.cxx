@@ -38,13 +38,3 @@ void MuonEffHists::Fill()
 
 }
  
-
-TH1* MuonEffHists::getHist(const char *name) {
-  return Hist(name);
-}
-
-void MuonEffHists::Finish()
-{
-  // final calculations, like division and addition of certain histograms 
-}
-

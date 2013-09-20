@@ -24,8 +24,8 @@ void TopJetHists::Init()
   Book( TH1F( "pT_ly"," p_{T} topjets",100,0,2000));
   Book( TH1F( "eta"," #eta topjets",100,-3,3));
   Book( TH1F( "eta_ly"," #eta topjets",100,-3,3));
-  Book( TH1F( "phi"," #phi topjets",100,-PI,PI));
-  Book( TH1F( "phi_ly"," #phi topjets",100,-PI,PI));
+  Book( TH1F( "phi"," #phi topjets",100,-M_PI,M_PI));
+  Book( TH1F( "phi_ly"," #phi topjets",100,-M_PI,M_PI));
   Book( TH1F( "MJet", "m_{jet}", 100,0,400 ) );
   Book( TH1F( "MJet_ly", "m_{jet}", 100,0,400 ) );
   Book( TH1F( "Mmin", "m_{min}", 100,0,160 ) );
@@ -48,14 +48,14 @@ void TopJetHists::Init()
   Book( TH1F( "eta_3_ly","#eta 3rd topjet",100,-3,3));
   Book( TH1F( "eta_4","#eta 4th topjet",100,-3,3));
   Book( TH1F( "eta_4_ly","#eta 4th topjet",100,-3,3));
-  Book( TH1F( "phi_1","#phi leading topjet",100,-PI,PI));
-  Book( TH1F( "phi_1_ly","#phi leading topjet",100,-PI,PI));
-  Book( TH1F( "phi_2","#phi 2nd topjet",100,-PI,PI));
-  Book( TH1F( "phi_2_ly","#phi 2nd topjet",100,-PI,PI));
-  Book( TH1F( "phi_3","#phi 3rd topjet",100,-PI,PI));
-  Book( TH1F( "phi_3_ly","#phi 3rd topjet",100,-PI,PI));
-  Book( TH1F( "phi_4","#phi 4th topjet",100,-PI,PI));
-  Book( TH1F( "phi_4_ly","#phi 4th topjet",100,-PI,PI));
+  Book( TH1F( "phi_1","#phi leading topjet",100,-M_PI,M_PI));
+  Book( TH1F( "phi_1_ly","#phi leading topjet",100,-M_PI,M_PI));
+  Book( TH1F( "phi_2","#phi 2nd topjet",100,-M_PI,M_PI));
+  Book( TH1F( "phi_2_ly","#phi 2nd topjet",100,-M_PI,M_PI));
+  Book( TH1F( "phi_3","#phi 3rd topjet",100,-M_PI,M_PI));
+  Book( TH1F( "phi_3_ly","#phi 3rd topjet",100,-M_PI,M_PI));
+  Book( TH1F( "phi_4","#phi 4th topjet",100,-M_PI,M_PI));
+  Book( TH1F( "phi_4_ly","#phi 4th topjet",100,-M_PI,M_PI));
   Book( TH1F( "MJet_1", "m_{jet} leading topjet", 100,0,400 ) );
   Book( TH1F( "MJet_1_ly", "m_{jet} leading topjet", 100,0,400 ) );
   Book( TH1F( "MJet_2", "m_{jet} 2nd topjet", 100,0,400 ) );
@@ -215,9 +215,3 @@ void TopJetHists::Fill()
 
 }
  
-
-void TopJetHists::Finish()
-{
-  // final calculations, like division and addition of certain histograms 
-}
-

@@ -1038,15 +1038,9 @@ std::string EventFlavorSelection::description()
     return s;
 }
 
-EventFilterSelection::EventFilterSelection(const std::string eventfile)
+EventFilterSelection::EventFilterSelection(const std::string & eventfile): m_filename(eventfile)
 {
-  m_evfilter = new EventFilterFromListStandAlone(eventfile);
-  m_filename = eventfile;
-}
-
-EventFilterSelection::~EventFilterSelection()
-{
-  delete m_evfilter;
+  m_evfilter.reset(new EventFilterFromListStandAlone(eventfile));
 }
 
 bool EventFilterSelection::pass(BaseCycleContainer* bcc)

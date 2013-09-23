@@ -122,7 +122,6 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
     resetEventCalc();
 }
 
-
 void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
 {
 
@@ -176,10 +175,10 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
                 }
             }
         }
-        if(ele_energy<=jet_v4_raw.E())
-            bcc->jets->at(i).set_chargedEmEnergyFraction(ele_energy/jet_v4_raw.E());
-        if(mu_energy<=jet_v4_raw.E())
-            bcc->jets->at(i).set_muonEnergyFraction(mu_energy/jet_v4_raw.E());
+        // if(ele_energy<=jet_v4_raw.E())
+        //     bcc->jets->at(i).set_chargedEmEnergyFraction(ele_energy/jet_v4_raw.E());
+        // if(mu_energy<=jet_v4_raw.E())
+        //     bcc->jets->at(i).set_muonEnergyFraction(mu_energy/jet_v4_raw.E());
 
         //apply jet energy corrections to modified raw momentum
         corrector->setJetPt(jet_v4_raw.Pt());

@@ -25,8 +25,6 @@ public:
 
    void Fill();
 
-   void Finish();
-
 private:
 
   E_BtagType m_type;

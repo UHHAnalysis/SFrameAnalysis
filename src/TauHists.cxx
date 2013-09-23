@@ -24,8 +24,8 @@ void TauHists::Init()
   Book( TH1F( "pT_ly", "p_{T} tau [GeV]", 100,0,600 ) );
   Book( TH1F( "eta", "#eta tau", 100,-3,3 ) );
   Book( TH1F( "eta_ly", "#eta tau", 100,-3,3 ) );
-  Book( TH1F( "phi", "#phi tau", 100,-PI,PI ) );
-  Book( TH1F( "phi_ly", "#phi tau", 100,-PI,PI ) );
+  Book( TH1F( "phi", "#phi tau", 100,-M_PI,M_PI ) );
+  Book( TH1F( "phi_ly", "#phi tau", 100,-M_PI,M_PI ) );
   Book( TH1F( "charge", "charge tau", 3,-1.5,1.5 ) );
   Book( TH1F( "energy", "E tau [GeV]", 100,0,1100 ) );
   Book( TH1F( "energy_ly", "E tau [GeV]", 100,0,1100 ) );
@@ -43,8 +43,8 @@ void TauHists::Init()
   Book( TH1F( "pT_1_binned_lx", "p_{T} leading tau [GeV]", 4,bins ) );
   Book( TH1F( "eta_1", "#eta leading tau", 100,-3,3 ) );
   Book( TH1F( "eta_1_ly", "#eta leading tau", 100,-3,3 ) );
-  Book( TH1F( "phi_1", "#phi leading tau", 100,-PI,PI ) );
-  Book( TH1F( "phi_1_ly", "#phi leading tau", 100,-PI,PI ) );
+  Book( TH1F( "phi_1", "#phi leading tau", 100,-M_PI,M_PI ) );
+  Book( TH1F( "phi_1_ly", "#phi leading tau", 100,-M_PI,M_PI ) );
   Book( TH1F( "decayMode_1", "decay mode finding leading tau", 2,0,2 ) );
   Book( TH1F( "isolation_1", "by medium combined isolation DeltaBetaCorr leading tau", 2,0,2 ) );
   Book( TH1F( "againstElectron_1", "against electron loose", 2,0,2 ) );
@@ -53,8 +53,8 @@ void TauHists::Init()
   Book( TH1F( "pT_2_ly", "p_{T} 2nd tau [GeV]", 100,0,500 ) );
   Book( TH1F( "eta_2", "#eta 2nd tau", 100,-3,3 ) );
   Book( TH1F( "eta_2_ly", "#eta 2nd tau ", 100,-3,3 ) );
-  Book( TH1F( "phi_2", "#phi 2nd tau", 100,-PI,PI ) );
-  Book( TH1F( "phi_2_ly", "#phi 2nd tau", 100,-PI,PI ) );
+  Book( TH1F( "phi_2", "#phi 2nd tau", 100,-M_PI,M_PI ) );
+  Book( TH1F( "phi_2_ly", "#phi 2nd tau", 100,-M_PI,M_PI ) );
   Book( TH1F( "decayMode_2", "decay mode finding 2nd tau", 2,0,2 ) );
   Book( TH1F( "isolation_2", "by medium combined isolation DeltaBetaCorr 2nd tau", 2,0,2 ) );
   Book( TH1F( "againstElectron_2", "against electron loose", 2,0,2 ) );
@@ -384,13 +384,4 @@ void TauHists::Fill()
 	} 
     }
 }
-
-void TauHists::Finish()
-{
-  // final calculations, like division and addition of certain histograms
-
- 
-}
-
-
 

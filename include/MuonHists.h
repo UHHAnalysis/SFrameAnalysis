@@ -21,12 +21,8 @@ public:
    ~MuonHists();
 
    void Init();
-
+   
    void Fill();
-
-   void Finish();
-
-private:
 
 }; // class MuonHists
 

@@ -25,8 +25,6 @@ public:
 
    void Fill();
 
-   void Finish();
-
 private:
 
    HypothesisDiscriminator* m_discr;

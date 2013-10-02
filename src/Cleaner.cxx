@@ -633,21 +633,7 @@ void Cleaner::JetLeptonOverlapRemoval()
 	  double deltaR = tau.deltaR(jet);
 	  if (deltaR < deltaRmin) deltaRmin = deltaR;
 	}
-      if (deltaRmin > 0.5)
-	{
-	  deltaRmin = 100;
-	  for(unsigned int k=0; k<bcc->muons->size(); ++k) 
-	    {
-	      Muon muon = bcc->muons->at(k);
-	      double deltaR = muon.deltaR(jet);
-	      if (deltaR < deltaRmin) deltaRmin = deltaR;
-	    }
-	  if (deltaRmin > 0.5)
-	    {
-	      good_jets.push_back(jet);
-	    }
-	}  
-      
+      if (deltaRmin > 0.5) good_jets.push_back(jet);
     }	     
   
   bcc->jets->clear();

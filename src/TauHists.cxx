@@ -30,9 +30,25 @@ void TauHists::Init()
   Book( TH1F( "energy", "E tau [GeV]", 100,0,1100 ) );
   Book( TH1F( "energy_ly", "E tau [GeV]", 100,0,1100 ) );
   Book( TH1F( "decayMode", "decay mode finding tau", 2,0,2 ) );
-  Book( TH1F( "isolation", "by medium combined isolation DeltaBetaCorr tau", 2,0,2 ) );
-  Book( TH1F( "againstElectron", "against electron loose", 2,0,2 ) );
-  Book( TH1F( "againstMuon", "against muon loose", 2,0,2 ) );
+  Book( TH1F( "isolation_loose", "by loose combined isolation DeltaBetaCorr tau", 2,0,2 ) );
+  Book( TH1F( "isolation_medium", "by medium combined isolation DeltaBetaCorr tau", 2,0,2 ) );
+  Book( TH1F( "isolation_tight", "by tight combined isolation DeltaBetaCorr tau", 2,0,2 ) );
+  Book( TH1F( "isolation_loose_3Hits", "by loose combined isolation DeltaBetaCorr3Hits tau", 2,0,2 ) );
+  Book( TH1F( "isolation_medium_3Hits", "by medium combined isolation DeltaBetaCorr3Hits tau", 2,0,2 ) );
+  Book( TH1F( "isolation_tight_3Hits", "by tight combined isolation DeltaBetaCorr3Hits tau", 2,0,2 ) );
+  Book( TH1F( "isolation_loose_MVA", "by loose isolation MVA", 2,0,2 ) );
+  Book( TH1F( "isolation_medium_MVA", "by medium isolation MVA", 2,0,2 ) );
+  Book( TH1F( "isolation_tight_MVA", "by tight isolation MVA", 2,0,2 ) );
+  Book( TH1F( "isolation_loose_MVA2", "by loose isolation MVA2", 2,0,2 ) );
+  Book( TH1F( "isolation_medium_MVA2", "by medium isolation MVA2", 2,0,2 ) );
+  Book( TH1F( "isolation_tight_MVA2", "by tight isolation MVA2", 2,0,2 ) );
+  Book( TH1F( "againstElectronLooseMVA3", "against electron loose", 2,0,2 ) );
+  Book( TH1F( "againstElectronMediumMVA3", "against electron medium", 2,0,2 ) );
+  Book( TH1F( "againstElectronTightMVA3", "against electron tight", 2,0,2 ) );
+  Book( TH1F( "againstElectronVTightMVA3", "against electron very tight", 2,0,2 ) );
+  Book( TH1F( "againstMuonLoose2", "against muon loose", 2,0,2 ) );
+  Book( TH1F( "againstMuonMedium2", "against muon medium", 2,0,2 ) );
+  Book( TH1F( "againstMuonTight2", "against muon tight", 2,0,2 ) );
   Book( TH1F( "invMass", "invariant mass taus [GeV]",100, 0,1200));
   Book( TH1F( "invMass_ly", "invariant mass taus [GeV]",100, 0,1200));
   Book( TH1F( "pT_1", "p_{T} leading tau [GeV]", 100,0,600 ) );
@@ -46,9 +62,25 @@ void TauHists::Init()
   Book( TH1F( "phi_1", "#phi leading tau", 100,-PI,PI ) );
   Book( TH1F( "phi_1_ly", "#phi leading tau", 100,-PI,PI ) );
   Book( TH1F( "decayMode_1", "decay mode finding leading tau", 2,0,2 ) );
-  Book( TH1F( "isolation_1", "by medium combined isolation DeltaBetaCorr leading tau", 2,0,2 ) );
-  Book( TH1F( "againstElectron_1", "against electron loose", 2,0,2 ) );
-  Book( TH1F( "againstMuon_1", "against muon loose", 2,0,2 ) );
+  Book( TH1F( "isolation_loose_1", "by loose combined isolation DeltaBetaCorr leading tau", 2,0,2 ) );
+  Book( TH1F( "isolation_medium_1", "by medium combined isolation DeltaBetaCorr leading tau", 2,0,2 ) );
+  Book( TH1F( "isolation_tight_1", "by tight combined isolation DeltaBetaCorr leading tau", 2,0,2 ) );
+  Book( TH1F( "isolation_loose_3Hits_1", "by loose combined isolation DeltaBetaCorr3Hits leading tau", 2,0,2 ) );
+  Book( TH1F( "isolation_medium_3Hits_1", "by medium combined isolation DeltaBetaCorr3Hits leading tau", 2,0,2 ) );
+  Book( TH1F( "isolation_tight_3Hits_1", "by tight combined isolation DeltaBetaCorr3Hits leading tau", 2,0,2 ) );
+  Book( TH1F( "isolation_loose_MVA_1", "by loose isolation MVA", 2,0,2 ) );
+  Book( TH1F( "isolation_medium_MVA_1", "by medium isolation MVA", 2,0,2 ) );
+  Book( TH1F( "isolation_tight_MVA_1", "by tight isolation MVA", 2,0,2 ) );
+  Book( TH1F( "isolation_loose_MVA2_1", "by loose isolation MVA2", 2,0,2 ) );
+  Book( TH1F( "isolation_medium_MVA2_1", "by medium isolation MVA2", 2,0,2 ) );
+  Book( TH1F( "isolation_tight_MVA2_1", "by tight isolation MVA2", 2,0,2 ) );
+  Book( TH1F( "againstElectronLooseMVA3_1", "against electron loose", 2,0,2 ) );
+  Book( TH1F( "againstElectronMediumMVA3_1", "against electron medium", 2,0,2 ) );
+  Book( TH1F( "againstElectronTightMVA3_1", "against electron tight", 2,0,2 ) );
+  Book( TH1F( "againstElectronVTightMVA3_1", "against electron very tight", 2,0,2 ) );
+  Book( TH1F( "againstMuonLoose2_1", "against muon loose", 2,0,2 ) );
+  Book( TH1F( "againstMuonMedium2_1", "against muon medium", 2,0,2 ) );
+  Book( TH1F( "againstMuonTight2_1", "against muon tight", 2,0,2 ) );
   Book( TH1F( "pT_2", "p_{T} 2nd tau [GeV]", 100,0,500 ) );
   Book( TH1F( "pT_2_ly", "p_{T} 2nd tau [GeV]", 100,0,500 ) );
   Book( TH1F( "eta_2", "#eta 2nd tau", 100,-3,3 ) );
@@ -56,9 +88,28 @@ void TauHists::Init()
   Book( TH1F( "phi_2", "#phi 2nd tau", 100,-PI,PI ) );
   Book( TH1F( "phi_2_ly", "#phi 2nd tau", 100,-PI,PI ) );
   Book( TH1F( "decayMode_2", "decay mode finding 2nd tau", 2,0,2 ) );
-  Book( TH1F( "isolation_2", "by medium combined isolation DeltaBetaCorr 2nd tau", 2,0,2 ) );
-  Book( TH1F( "againstElectron_2", "against electron loose", 2,0,2 ) );
-  Book( TH1F( "againstMuon_2", "against muon loose", 2,0,2 ) );
+  Book( TH1F( "isolation_loose_2", "by loose combined isolation DeltaBetaCorr 2nd tau", 2,0,2 ) );
+  Book( TH1F( "isolation_medium_2", "by medium combined isolation DeltaBetaCorr 2nd tau", 2,0,2 ) );
+  Book( TH1F( "isolation_tight_2", "by tight combined isolation DeltaBetaCorr 2nd tau", 2,0,2 ) );
+  Book( TH1F( "isolation_loose_3Hits_2", "by loose combined isolation DeltaBetaCorr3Hits 2nd tau", 2,0,2 ) );
+  Book( TH1F( "isolation_medium_3Hits_2", "by medium combined isolation DeltaBetaCorr3Hits 2nd tau", 2,0,2 ) );
+  Book( TH1F( "isolation_tight_3Hits_2", "by tight combined isolation DeltaBetaCorr3Hits 2nd tau", 2,0,2 ) );
+  Book( TH1F( "isolation_loose_3Hits_2", "by loose combined isolation DeltaBetaCorr3Hits 2nd tau", 2,0,2 ) );
+  Book( TH1F( "isolation_medium_3Hits_2", "by medium combined isolation DeltaBetaCorr3Hits 2nd tau", 2,0,2 ) );
+  Book( TH1F( "isolation_tight_3Hits_2", "by tight combined isolation DeltaBetaCorr3Hits 2nd tau", 2,0,2 ) );
+  Book( TH1F( "isolation_loose_MVA_2", "by loose isolation MVA", 2,0,2 ) );
+  Book( TH1F( "isolation_medium_MVA_2", "by medium isolation MVA", 2,0,2 ) );
+  Book( TH1F( "isolation_tight_MVA_2", "by tight isolation MVA", 2,0,2 ) );
+  Book( TH1F( "isolation_loose_MVA2_2", "by loose isolation MVA2", 2,0,2 ) );
+  Book( TH1F( "isolation_medium_MVA2_2", "by medium isolation MVA2", 2,0,2 ) );
+  Book( TH1F( "isolation_tight_MVA2_2", "by tight isolation MVA2", 2,0,2 ) );
+  Book( TH1F( "againstElectronLooseMVA3_2", "against electron loose", 2,0,2 ) );
+  Book( TH1F( "againstElectronMediumMVA3_2", "against electron medium", 2,0,2 ) );
+  Book( TH1F( "againstElectronTightMVA3_2", "against electron tight", 2,0,2 ) );
+  Book( TH1F( "againstElectronVTightMVA3_2", "against electron very tight", 2,0,2 ) );
+  Book( TH1F( "againstMuonLoose2_2", "against muon loose", 2,0,2 ) );
+  Book( TH1F( "againstMuonMedium2_2", "against muon medium", 2,0,2 ) );
+  Book( TH1F( "againstMuonTight2_2", "against muon tight", 2,0,2 ) );
   Book( TH2F( "Jet1_Tau1_pT","1.Jet, 1.Tau",100,0,2000,100,0,2000));
   Book( TH2F( "Jet1_Tau2_pT","1.Jet, 2.Tau",100,0,2000,100,0,2000));	
   Book( TH2F( "Jet2_Tau1_pT","2.Jet, 1.Tau",100,0,2000,100,0,2000));
@@ -108,9 +159,15 @@ void TauHists::Init()
   Book( TH1F( "InvMassTauJet1_ly", "M(#tau first jet)", 100, 0, 500) );
   Book( TH1F( "InvMassTauJet2", "M(#tau second jet)", 100, 0, 500) );
   Book( TH1F( "InvMassTauJet2_ly", "M(#tau second jet)", 100, 0, 500) );
-  
-
-}
+  Book( TH2F( "NJets_Tau1_pT","nuber of jets, p_T 1.Tau",8,1.5,9.5,100,0,900));
+  Book( TH2F( "NJets_Tau_pT","nuber of jets, p_T Tau",8,1.5,9.5,100,0,900));
+  Book( TH2F( "NJets_Tau_eta","nuber of jets, #eta Tau",8,1.5,9.5,100,-2.1,2.1));
+  Book( TH2F( "NJets_Tau_phi","nuber of jets, #phi Tau",8,1.5,9.5,100,-4,4));
+  Book( TH2F( "NJets_Tau_decaymode","nuber of jets, decay mode Tau",8,1.5,9.5,11,0,11));
+  Book( TH2F( "NJets_DeltaRTauNextJet","nuber of jets, deltaR tau next jet",8,1.5,9.5,10,0,6));
+  Book( TH1F( "PFParticles_NextJet", "number of PF particles in the jets", 100, 0, 100) );
+  Book( TH2F( "NJets_NPFparticles","number of jets, number pf PF particles in the nearest jet  to a tau",8,1.5,9.5,100,0,100));
+ }
 
 void TauHists::Fill()
 {
@@ -139,9 +196,26 @@ void TauHists::Fill()
       Hist("energy") -> Fill(tau.energy(), weight);
       Hist("energy_ly") -> Fill(tau.energy(), weight);
       Hist("decayMode") -> Fill(tau.decayModeFinding(), weight);
-       Hist("isolation") -> Fill(tau.byMediumCombinedIsolationDeltaBetaCorr(), weight);
-      Hist("againstElectron") -> Fill(tau.againstElectronLooseMVA3(), weight);
-      Hist("againstMuon") -> Fill(tau.againstMuonLoose2(), weight);
+      Hist("isolation_loose_3Hits") -> Fill(tau.byLooseCombinedIsolationDeltaBetaCorr3Hits(), weight);
+      Hist("isolation_medium_3Hits") -> Fill(tau.byMediumCombinedIsolationDeltaBetaCorr3Hits(), weight);
+      Hist("isolation_tight_3Hits") -> Fill(tau.byTightCombinedIsolationDeltaBetaCorr3Hits(), weight);
+      Hist("isolation_loose") -> Fill(tau.byLooseCombinedIsolationDeltaBetaCorr(), weight);
+      Hist("isolation_medium") -> Fill(tau.byMediumCombinedIsolationDeltaBetaCorr(), weight);
+      Hist("isolation_tight") -> Fill(tau.byTightCombinedIsolationDeltaBetaCorr(), weight);
+      Hist("isolation_loose_MVA") -> Fill(tau.byLooseIsolationMVA(), weight);
+      Hist("isolation_medium_MVA") -> Fill(tau.byMediumIsolationMVA(), weight);
+      Hist("isolation_tight_MVA") -> Fill(tau.byTightIsolationMVA(), weight);
+      Hist("isolation_loose_MVA2") -> Fill(tau.byLooseIsolationMVA2(), weight);
+      Hist("isolation_medium_MVA2") -> Fill(tau.byMediumIsolationMVA2(), weight);
+      Hist("isolation_tight_MVA2") -> Fill(tau.byTightIsolationMVA2(), weight);
+      Hist("againstElectronLooseMVA3") -> Fill(tau.againstElectronLooseMVA3(), weight);
+      Hist("againstElectronMediumMVA3") -> Fill(tau.againstElectronMediumMVA3(), weight);
+      Hist("againstElectronTightMVA3") -> Fill(tau.againstElectronTightMVA3(), weight);
+      Hist("againstElectronVTightMVA3") -> Fill(tau.againstElectronVTightMVA3(), weight);
+      Hist("againstMuonLoose2") -> Fill(tau.againstMuonLoose2(), weight);
+      Hist("againstMuonMedium2") -> Fill(tau.againstMuonMedium2(), weight);
+      Hist("againstMuonTight2") -> Fill(tau.againstMuonTight2(), weight);
+      
     }
     if (bcc->taus->size() > 0)
     {
@@ -156,10 +230,27 @@ void TauHists::Fill()
       Hist("phi_1") -> Fill(tau.phi(), weight);
       Hist("phi_1_ly") -> Fill(tau.phi(), weight);
       Hist("decayMode_1") -> Fill(tau.decayModeFinding(), weight);
-      Hist("isolation_1") -> Fill(tau.byMediumCombinedIsolationDeltaBetaCorr(), weight);
-      Hist("againstElectron_1") -> Fill(tau.againstElectronLooseMVA3(), weight);
-      Hist("againstMuon_1") -> Fill(tau.againstMuonLoose2(), weight);
-
+      Hist("isolation_loose_1") -> Fill(tau.byLooseCombinedIsolationDeltaBetaCorr(), weight);
+      Hist("isolation_medium_1") -> Fill(tau.byMediumCombinedIsolationDeltaBetaCorr(), weight);
+      Hist("isolation_tight_1") -> Fill(tau.byTightCombinedIsolationDeltaBetaCorr(), weight);
+      Hist("isolation_loose_3Hits_1") -> Fill(tau.byLooseCombinedIsolationDeltaBetaCorr3Hits(), weight);
+      Hist("isolation_medium_3Hits_1") -> Fill(tau.byMediumCombinedIsolationDeltaBetaCorr3Hits(), weight);
+      Hist("isolation_tight_3Hits_1") -> Fill(tau.byTightCombinedIsolationDeltaBetaCorr3Hits(), weight);
+      Hist("isolation_loose_MVA_1") -> Fill(tau.byLooseIsolationMVA(), weight);
+      Hist("isolation_medium_MVA_1") -> Fill(tau.byMediumIsolationMVA(), weight);
+      Hist("isolation_tight_MVA_1") -> Fill(tau.byTightIsolationMVA(), weight);
+      Hist("isolation_loose_MVA2_1") -> Fill(tau.byLooseIsolationMVA2(), weight);
+      Hist("isolation_medium_MVA2_1") -> Fill(tau.byMediumIsolationMVA2(), weight);
+      Hist("isolation_tight_MVA2_1") -> Fill(tau.byTightIsolationMVA2(), weight);
+      Hist("againstElectronLooseMVA3_1") -> Fill(tau.againstElectronLooseMVA3(), weight);
+      Hist("againstElectronMediumMVA3_1") -> Fill(tau.againstElectronMediumMVA3(), weight);
+      Hist("againstElectronTightMVA3_1") -> Fill(tau.againstElectronTightMVA3(), weight);
+      Hist("againstElectronVTightMVA3_1") -> Fill(tau.againstElectronVTightMVA3(), weight);
+      Hist("againstMuonLoose2_1") -> Fill(tau.againstMuonLoose2(), weight);
+      Hist("againstMuonMedium2_1") -> Fill(tau.againstMuonMedium2(), weight);
+      Hist("againstMuonTight2_1") -> Fill(tau.againstMuonTight2(), weight);
+      
+      
       if (bcc->taus->size() > 1 )
 	{
 	  Tau tau1 = bcc->taus->at(1);
@@ -170,9 +261,25 @@ void TauHists::Fill()
 	  Hist("phi_2") -> Fill(tau1.phi(), weight);
 	  Hist("phi_2_ly") -> Fill(tau1.phi(), weight);
 	  Hist("decayMode_2") -> Fill(tau1.decayModeFinding(), weight);
-	  Hist("isolation_2") -> Fill(tau1.byMediumCombinedIsolationDeltaBetaCorr(), weight);
-	  Hist("againstElectron_2") -> Fill(tau.againstElectronLooseMVA3(), weight);
-	  Hist("againstMuon_2") -> Fill(tau.againstMuonLoose2(), weight);
+	  Hist("isolation_loose_2") -> Fill(tau.byLooseCombinedIsolationDeltaBetaCorr(), weight);
+	  Hist("isolation_medium_2") -> Fill(tau.byMediumCombinedIsolationDeltaBetaCorr(), weight);
+	  Hist("isolation_tight_2") -> Fill(tau.byTightCombinedIsolationDeltaBetaCorr(), weight);
+	  Hist("isolation_loose_3Hits_2") -> Fill(tau.byLooseCombinedIsolationDeltaBetaCorr3Hits(), weight);
+	  Hist("isolation_medium_3Hits_2") -> Fill(tau.byMediumCombinedIsolationDeltaBetaCorr3Hits(), weight);
+	  Hist("isolation_tight_3Hits_2") -> Fill(tau.byTightCombinedIsolationDeltaBetaCorr3Hits(), weight);
+	  Hist("isolation_loose_MVA_2") -> Fill(tau.byLooseIsolationMVA(), weight);
+	  Hist("isolation_medium_MVA_2") -> Fill(tau.byMediumIsolationMVA(), weight);
+	  Hist("isolation_tight_MVA_2") -> Fill(tau.byTightIsolationMVA(), weight);
+	  Hist("isolation_loose_MVA2_2") -> Fill(tau.byLooseIsolationMVA2(), weight);
+	  Hist("isolation_medium_MVA2_2") -> Fill(tau.byMediumIsolationMVA2(), weight);
+	  Hist("isolation_tight_MVA2_2") -> Fill(tau.byTightIsolationMVA2(), weight);
+	  Hist("againstElectronLooseMVA3_2") -> Fill(tau.againstElectronLooseMVA3(), weight);
+	  Hist("againstElectronMediumMVA3_2") -> Fill(tau.againstElectronMediumMVA3(), weight);
+	  Hist("againstElectronTightMVA3_2") -> Fill(tau.againstElectronTightMVA3(), weight);
+	  Hist("againstElectronVTightMVA3_2") -> Fill(tau.againstElectronVTightMVA3(), weight);
+	  Hist("againstMuonLoose2_2") -> Fill(tau.againstMuonLoose2(), weight);
+	  Hist("againstMuonMedium2_2") -> Fill(tau.againstMuonMedium2(), weight);
+	  Hist("againstMuonTight2_2") -> Fill(tau.againstMuonTight2(), weight);
 	  TH2F* h6 = (TH2F*)Hist("Tau1_Tau2_pT"); 
 	  h6->Fill(tau.pt(),tau1.pt(),weight);
 	}
@@ -383,6 +490,51 @@ void TauHists::Fill()
 	  Hist("InvMassTauJet2_ly")->Fill(InvMass, weight);
 	} 
     }
+  if (bcc->taus->size() > 0)
+    {
+      int Njets = bcc->jets->size();
+      Tau tau1 = bcc->taus->at(0);
+      TH2F* h1 = (TH2F*)Hist("NJets_Tau1_pT"); 
+      h1->Fill(Njets,tau1.pt(),weight);
+      for (unsigned int i =0; i<bcc->taus->size(); ++i)
+	{
+	  Tau tau = bcc->taus->at(i);
+	  TH2F* h2 = (TH2F*)Hist("NJets_Tau_pT"); 
+	  h2->Fill(Njets,tau.pt(),weight);
+	  TH2F* h3 = (TH2F*)Hist("NJets_Tau_eta"); 
+	  h3->Fill(Njets,tau.eta(),weight);
+	  TH2F* h4 = (TH2F*)Hist("NJets_Tau_phi"); 
+	  h4->Fill(Njets,tau.phi(),weight);
+	  TH2F* h5 = (TH2F*)Hist("NJets_Tau_decaymode"); 
+	  h5->Fill(Njets,tau.decayMode(),weight);
+	  std::vector<Jet> *jets = calc->GetJets();
+          double deltaR = deltaRmin(&tau, jets);
+	  TH2F* h6 = (TH2F*)Hist("NJets_DeltaRTauNextJet"); 
+	  h6->Fill(Njets,deltaR,weight);
+	}
+    }
+  
+  
+  // if (bcc->taus->size() > 0 && bcc->jets->size() > 0)
+//     {
+//       int Njets = bcc->jets->size();
+//       std::vector< PFParticle > *JetPFParticles = calc ->GetJetPFParticles();
+//       for (unsigned int i =0; i<bcc->taus->size(); ++i)
+// 	{
+// 	  double N_PFparticles =0;
+// 	  Tau tau = bcc->taus->at(i);
+// 	  for (unsigned int j =0; j< JetPFParticles->size(); ++j)
+// 	     {
+// 	       PFParticle p = JetPFParticles -> at(j);
+// 	       double deltaR = tau.deltaR(p);
+// 	       if (deltaR < 0.5)  N_PFparticles = N_PFparticles +1;
+// 	     }
+// 	  TH2F* h7 = (TH2F*)Hist("NJets_NPFparticles"); 
+// 	  h7->Fill(Njets,N_PFparticles,weight);
+// 	  Hist("PFParticles_NextJet")->Fill(N_PFparticles, weight);
+// 	}
+//     }
+
 }
 
 void TauHists::Finish()

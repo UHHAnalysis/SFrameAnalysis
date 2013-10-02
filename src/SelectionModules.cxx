@@ -1201,4 +1201,47 @@ std::string GenTauSelection::description()
 }
 
 
+FakeTauSelectionElectron::FakeTauSelectionElectron()
+{ 
+}
 
+bool FakeTauSelectionElectron::pass(BaseCycleContainer* bcc)
+{
+  for(unsigned int i=0; i<bcc->taus->size(); ++i)
+    {
+      Tau tau = bcc->taus->at(i);
+      for(unsigned int j=0; j<bcc->genparticles->size(); ++j)
+	{
+	  GenParticle genp = bcc->genparticles->at(j);
+	  double deltaR = genp.deltaR(tau);
+	  if (deltaR < 0.5 && abs(genp.pdgId())== 11) return true;
+	}
+    }
+  return false;
+}
+
+std::string FakeTauSelectionElectron::description()
+{
+  char s[500];
+  sprintf(s, "found an electron faking a tau");
+  return s;
+}
+
+
+OneProngTauSelection::OneProngTauSelection()
+{ 
+}
+
+bool OneProngTauSelection::pass(BaseCycleContainer* bcc)
+{
+  Tau tau = bcc->taus->at(0);
+  if (tau.decayMode() == 0 || tau.decayMode() == 1 || tau.decayMode() == 2 || tau.decayMode() == 3 || tau.decayMode() == 4 ) return true;
+  else return false;
+}
+
+std::string OneProngTauSelection::description()
+{
+  char s[500];
+  sprintf(s, "found a one prong tau decay");
+  return s;
+}

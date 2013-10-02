@@ -26,8 +26,8 @@ void ElectronHists::Init()
     Book( TH1F( "pt_ly","p_{T} electron",100,0,500));
     Book( TH1F( "eta","#eta electron",100,-3,3));
     Book( TH1F( "eta_ly","#eta electron",100,-3,3));
-    Book( TH1F( "phi","#phi electron",100,-PI,PI));
-    Book( TH1F( "phi_ly","#phi electron",100,-PI,PI));
+    Book( TH1F( "phi","#phi electron",100,-M_PI,M_PI));
+    Book( TH1F( "phi_ly","#phi electron",100,-M_PI,M_PI));
     Book( TH1F( "isolation","relIso electron",100,0,0.5));
     Book( TH1F( "isolation_ly","relIso electron",100,0,0.5));
     Book( TH1F( "pt_1"," p_{T} leading electron",100,0,500));
@@ -38,10 +38,10 @@ void ElectronHists::Init()
     Book( TH1F( "eta_1_ly","#eta leading electron",100,-3,3));
     Book( TH1F( "eta_2","#eta 2nd electron",100,-3,3));
     Book( TH1F( "eta_2_ly","#eta 2nd electron",100,-3,3));
-    Book( TH1F( "phi_1","#phi leading electron",100,-PI,PI));
-    Book( TH1F( "phi_1_ly","#phi leading electron",100,-PI,PI));
-    Book( TH1F( "phi_2","#phi 2nd electron",100,-PI,PI));
-    Book( TH1F( "phi_2_ly","#phi 2nd electron",100,-PI,PI));
+    Book( TH1F( "phi_1","#phi leading electron",100,-M_PI,M_PI));
+    Book( TH1F( "phi_1_ly","#phi leading electron",100,-M_PI,M_PI));
+    Book( TH1F( "phi_2","#phi 2nd electron",100,-M_PI,M_PI));
+    Book( TH1F( "phi_2_ly","#phi 2nd electron",100,-M_PI,M_PI));
     Book( TH1F( "isolation_1","relIso leading electron",100,0,0.5));
     Book( TH1F( "isolation_1_ly","relIso leading electron",100,0,0.5));
     Book( TH1F( "isolation_2","relIso 2nd electron",100,0,0.5));
@@ -142,8 +142,4 @@ void ElectronHists::Fill()
 }
 
 
-void ElectronHists::Finish()
-{
-    // final calculations, like division and addition of certain histograms
-}
 

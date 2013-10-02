@@ -27,8 +27,8 @@ void MuonHists::Init()
   Book( TH1F( "pT_ly","p_{T} muon [GeV]",100,0,500));
   Book( TH1F( "eta","#eta muon",100,-3,3));
   Book( TH1F( "eta_ly","#eta muon",100,-3,3));
-  Book( TH1F( "phi","#phi muon",100,-PI,PI));
-  Book( TH1F( "phi_ly","#phi muon",100,-PI,PI));
+  Book( TH1F( "phi","#phi muon",100,-M_PI,M_PI));
+  Book( TH1F( "phi_ly","#phi muon",100,-M_PI,M_PI));
   Book( TH1F( "isolation","relIso muon",100,0,0.5));
   Book( TH1F( "isolation_ly","relIso muon",100,0,0.5));
   Book( TH1F( "pT_1"," p_{T} leading muon [GeV]",160,0,800));
@@ -39,10 +39,10 @@ void MuonHists::Init()
   Book( TH1F( "eta_1_ly","#eta leading muon",100,-3,3));
   Book( TH1F( "eta_2","#eta 2nd muon",100,-3,3));
   Book( TH1F( "eta_2_ly","#eta 2nd muon",100,-3,3));
-  Book( TH1F( "phi_1","#phi leading muon",100,-PI,PI));
-  Book( TH1F( "phi_1_ly","#phi leading muon",100,-PI,PI));
-  Book( TH1F( "phi_2","#phi 2nd muon",100,-PI,PI));
-  Book( TH1F( "phi_2_ly","#phi 2nd muon",100,-PI,PI));
+  Book( TH1F( "phi_1","#phi leading muon",100,-M_PI,M_PI));
+  Book( TH1F( "phi_1_ly","#phi leading muon",100,-M_PI,M_PI));
+  Book( TH1F( "phi_2","#phi 2nd muon",100,-M_PI,M_PI));
+  Book( TH1F( "phi_2_ly","#phi 2nd muon",100,-M_PI,M_PI));
   Book( TH1F( "isolation_1","relIso leading  muon",100,0,0.5));
   Book( TH1F( "isolation_1_ly","relIso leading muon",100,0,0.5));
   Book( TH1F( "isolation_2","relIso 2nd muon",100,0,0.5));
@@ -259,11 +259,5 @@ for(unsigned int i=0; i< bcc->muons->size(); ++i)
     }
 
 
-}
-
-
-void MuonHists::Finish()
-{
-    // final calculations, like division and addition of certain histograms
 }
 

@@ -271,11 +271,3 @@ void HypothesisHists::Fill()
   */
 
 }
-
-void HypothesisHists::Finish()
-{
-  // final calculations, like division and addition of certain histograms
-
-
-}
-

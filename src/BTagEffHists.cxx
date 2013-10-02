@@ -33,27 +33,27 @@ void BTagEffHists::Init()
     // basic jet kinematics
     Book( TH1F( "pt_bJet"," p_{T} b-jets", 17, jetpt_bbins));
     Book( TH1F( "eta_bJet","#eta b-jets", 50,-3,3));
-    Book( TH1F( "phi_bJet","#phi b-jets", 50, -PI, PI));
+    Book( TH1F( "phi_bJet","#phi b-jets", 50, -M_PI, M_PI));
 
     Book( TH1F( "pt_cJet"," p_{T} c-jets", 14, jetpt_cbins));
     Book( TH1F( "eta_cJet","#eta c-jets", 50,-3,3));
-    Book( TH1F( "phi_cJet","#phi c-jets", 50, -PI, PI));
+    Book( TH1F( "phi_cJet","#phi c-jets", 50, -M_PI, M_PI));
 
     Book( TH1F( "pt_lJet"," p_{T} l-jets", 16, jetpt_lbins));
     Book( TH1F( "eta_lJet","#eta l-jets", 50,-3,3));
-    Book( TH1F( "phi_lJet","#phi l-jets", 50, -PI, PI));
+    Book( TH1F( "phi_lJet","#phi l-jets", 50, -M_PI, M_PI));
 
     Book( TH1F( "pt_bJet_bTag"," p_{T} tagged b-jets", 17, jetpt_bbins));
     Book( TH1F( "eta_bJet_bTag","#eta tagged b-jets", 50,-3,3));
-    Book( TH1F( "phi_bJet_bTag","#phi tagged b-jets", 50, -PI, PI));
+    Book( TH1F( "phi_bJet_bTag","#phi tagged b-jets", 50, -M_PI, M_PI));
 
     Book( TH1F( "pt_cJet_bTag"," p_{T} tagged c-jets", 14, jetpt_cbins));
     Book( TH1F( "eta_cJet_bTag","#eta tagged c-jets", 50,-3,3));
-    Book( TH1F( "phi_cJet_bTag","#phi tagged c-jets", 50, -PI, PI));
+    Book( TH1F( "phi_cJet_bTag","#phi tagged c-jets", 50, -M_PI, M_PI));
 
     Book( TH1F( "pt_lJet_bTag"," p_{T} tagged l-jets", 16, jetpt_lbins));
     Book( TH1F( "eta_lJet_bTag","#eta tagged l-jets", 50,-3,3));
-    Book( TH1F( "phi_lJet_bTag","#phi tagged l-jets", 50, -PI, PI));
+    Book( TH1F( "phi_lJet_bTag","#phi tagged l-jets", 50, -M_PI, M_PI));
 }
 
 void BTagEffHists::Fill()
@@ -107,11 +107,5 @@ void BTagEffHists::Fill()
             break;
         }
     }
-}
-
-
-void BTagEffHists::Finish()
-{
-    // final calculations, like division and addition of certain histograms
 }
 

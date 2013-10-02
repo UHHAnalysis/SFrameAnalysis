@@ -20,12 +20,8 @@ public:
    ~TauHists();
 
    void Init();
-
+   
    void Fill();
-
-   void Finish();
-
-private:
 
 }; // class TauHists
 

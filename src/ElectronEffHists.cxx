@@ -39,13 +39,3 @@ void ElectronEffHists::Fill()
 
 }
  
-
-TH1* ElectronEffHists::getHist(const char *name) {
-  return Hist(name);
-}
-
-void ElectronEffHists::Finish()
-{
-  // final calculations, like division and addition of certain histograms 
-}
-

@@ -44,7 +44,7 @@ void JetHists::Init()
   Book( TH1F( "pt_lxy"," p_{T} all jets", 50, logPtjet_bins));
 
   Book( TH1F( "eta","#eta all jets", 50,-3,3));
-  Book( TH1F( "phi","#phi all jets", 50, -PI, PI));
+  Book( TH1F( "phi","#phi all jets", 50, -M_PI, M_PI));
 
   Book( TH1F( "pt_jet1_lx", "p_{T}^{jet 1} [GeV/c]", 50, logPtjet1_bins ) );
   Book( TH1F( "pt_jet1_lxy", "p_{T}^{jet 1} [GeV/c]", 50, logPtjet1_bins ) );
@@ -63,10 +63,10 @@ void JetHists::Init()
   Book( TH1F( "eta_4","#eta 4th jet",100,-3,3));
   
   // jet phis
-  Book( TH1F( "phi_1","#phi leading jet",100,-PI,PI));
-  Book( TH1F( "phi_2","#phi 2nd jet",100,-PI,PI));
-  Book( TH1F( "phi_3","#phi 3rd jet",100,-PI,PI));
-  Book( TH1F( "phi_4","#phi 4th jet",100,-PI,PI));
+  Book( TH1F( "phi_1","#phi leading jet",100,-M_PI,M_PI));
+  Book( TH1F( "phi_2","#phi 2nd jet",100,-M_PI,M_PI));
+  Book( TH1F( "phi_3","#phi 3rd jet",100,-M_PI,M_PI));
+  Book( TH1F( "phi_4","#phi 4th jet",100,-M_PI,M_PI));
   
   // jet mass
   Book( TH1F( "m_1", "M^{jet 1} [GeV/c^{2}]", 100, 0, 300) );
@@ -94,8 +94,8 @@ void JetHists::Init()
   
   Book( TH1F( "eta_bJet_1"," #eta leading bJet",100,-3,3));
   Book( TH1F( "eta_bJet_2"," #eta 2nd bJet",100,-3,3));
-  Book( TH1F( "phi_bJet_1"," #phi leading bJet",100,-PI,PI));
-  Book( TH1F( "phi_bJet_2"," #phi 2nd bJet",100,-PI,PI));
+  Book( TH1F( "phi_bJet_1"," #phi leading bJet",100,-M_PI,M_PI));
+  Book( TH1F( "phi_bJet_2"," #phi 2nd bJet",100,-M_PI,M_PI));
   Book( TH1F( "bjet_tag","index of b jet",4,0.5,4.5));
 
   Book( TH1F( "InvMassJet1Jet2", "M(first jet second jet)", 100, 0, 500) );
@@ -214,10 +214,4 @@ void JetHists::Fill()
 
 }
 
-
-
-void JetHists::Finish()
-{
-    // final calculations, like division and addition of certain histograms
-}
 

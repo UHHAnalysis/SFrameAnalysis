@@ -104,11 +104,3 @@ double charge = 1;
 }
 
 
-
-
-
-void EventHists::Finish()
-{
-  // final calculations, like division and addition of certain histograms
-}
-

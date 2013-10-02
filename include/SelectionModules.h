@@ -10,6 +10,7 @@
 #include "SFrameAnalysis/include/EventFilterFromListStandAlone.h"
 
 #include <algorithm>
+#include <memory>
 
 class TriggerSelection: public SelectionModule {
 public:
@@ -21,7 +22,6 @@ public:
 
 private:
     std::string m_name;
-
 };
 
 
@@ -37,8 +37,6 @@ class TopTagOverlapSelection: public SelectionModule {
  private:
   double m_delR_Lep_TopTag;
   double m_delR_Jet_TopTag;
-
-
 };
 
 
@@ -48,7 +46,7 @@ class TopTagOverlapSelection: public SelectionModule {
 class RazorSelection: public SelectionModule {
  public:
   RazorSelection(HypothesisDiscriminator *discr, double mrazor = 1050, double mrazorT = 0.54);
-  ~RazorSelection(){};
+  ~RazorSelection(){}
 
   virtual bool pass(BaseCycleContainer*);
   virtual std::string description();
@@ -58,9 +56,8 @@ class RazorSelection: public SelectionModule {
   double m_mrazor;
   double m_mrazorT;
   HypothesisDiscriminator *m_discr;
-
-
 };
+
 
 class NMuonSelection: public SelectionModule {
 public:
@@ -76,6 +73,7 @@ private:
     double m_ptmin;
     double m_etamax;
 };
+
 
 class NElectronSelection: public SelectionModule {
 public:
@@ -510,7 +508,7 @@ private:
 
 class TauMuonMassCut: public SelectionModule{
  public:
-  TauMuonMassCut(double massmin =0, double massmax = double_infinity());
+  explicit TauMuonMassCut(double massmin =0, double massmax = double_infinity());
   ~TauMuonMassCut(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -525,7 +523,7 @@ class TauMuonMassCut: public SelectionModule{
 
 class EventFlavorSelection: public SelectionModule {
 public:
-    EventFlavorSelection(E_EventFlavor flavor);
+    explicit EventFlavorSelection(E_EventFlavor flavor);
     ~EventFlavorSelection() {};
 
     virtual bool pass(BaseCycleContainer*);
@@ -538,16 +536,15 @@ private:
 
 class EventFilterSelection: public SelectionModule {
 public:
-    EventFilterSelection(const std::string eventfile);
-    ~EventFilterSelection();
+    explicit EventFilterSelection(const std::string & eventfile);
+    ~EventFilterSelection(){}
 
     virtual bool pass(BaseCycleContainer*);
     virtual std::string description();
 
 private:
     std::string m_filename;
-    EventFilterFromListStandAlone* m_evfilter;
-
+    std::auto_ptr<EventFilterFromListStandAlone> m_evfilter;
 };
 
 class GenTauSelection: public SelectionModule {

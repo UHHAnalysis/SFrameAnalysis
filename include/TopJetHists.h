@@ -22,11 +22,6 @@ public:
    void Init();
 
    void Fill();
-
-   void Finish();
-
-private:
-
 }; // class TopJetHists
 
 

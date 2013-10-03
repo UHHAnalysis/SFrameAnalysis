@@ -398,7 +398,7 @@ bool NHEPTopTagSelection::pass(BaseCycleContainer *bcc){
     double mmin=0;
     double mjet=0;
     int nsubjets=0;
-    if(HepTopTag(topjet)) nheptoptag++;
+    if(HepTopTagWithMatch(topjet)) nheptoptag++;
   }
   if(nheptoptag<m_min_nheptoptag) return false;
   if(nheptoptag>m_max_nheptoptag) return false;
@@ -425,7 +425,7 @@ bool NHEPTopAndSubBTagSelection::pass(BaseCycleContainer *bcc){
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
     if(bcc->topjets->at(i).pt()<ptcut) continue;
     TopJet topjet =  bcc->topjets->at(i);
-    if(HepTopTag(topjet) && subJetBTag(topjet, m_type)>=1) nheptoptag++;
+    if(HepTopTagWithMatch(topjet) && subJetBTag(topjet, m_type)>=1) nheptoptag++;
   }
   if(nheptoptag<m_min_nheptoptag) return false;
   if(nheptoptag>m_max_nheptoptag) return false;
@@ -457,7 +457,7 @@ bool HEPTopAndSubBTagPlusOtherHiggsTag::pass(BaseCycleContainer *bcc){
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
     if(bcc->topjets->at(i).pt()<ptcut) continue;
     TopJet topjet =  bcc->topjets->at(i);
-    if(HepTopTag(topjet) && subJetBTag(topjet, m_type1)>=1){
+    if(HepTopTagWithMatch(topjet) && subJetBTag(topjet, m_type1)>=1){
       nheptoptag++;
       topTaggedJets.push_back(i);
     }
@@ -501,7 +501,7 @@ bool InvertedTopTagRegularBTagRegularHiggsTag::pass(BaseCycleContainer *bcc){
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
     if(bcc->topjets->at(i).pt()<ptcut) continue;
     TopJet topjet =  bcc->topjets->at(i);
-    if(HepTopTag(topjet)){
+    if(HepTopTagWithMatch(topjet)){
 	nheptoptag++;
     }
     if (HepTopTagInverted(topjet) && subJetBTag(topjet, m_type1, m_mode, m_filename)>=1){
@@ -548,7 +548,7 @@ bool RegularTopTagRegularBTagFullyInvertedHiggsTag::pass(BaseCycleContainer *bcc
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
     if(bcc->topjets->at(i).pt()<ptcut) continue;
     TopJet topjet =  bcc->topjets->at(i);
-    if(HepTopTag(topjet) && subJetBTag(topjet, m_type1, m_mode, m_filename)>=1){
+    if(HepTopTagWithMatch(topjet) && subJetBTag(topjet, m_type1, m_mode, m_filename)>=1){
       nheptoptag++;
       topTaggedJets.push_back(i);
     }

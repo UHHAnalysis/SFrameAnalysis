@@ -63,6 +63,8 @@ public:
   /// calls finalise for each histogram collection
   void FinaliseHistos();
   
+  void EndMasterInputData(const SInputData & d) throw (SError);
+  
   /// Function to set the integrated luminosity per bin
   void SetIntLumiPerBin(double int_lumi){m_int_lumi_per_bin = int_lumi;}
 
@@ -169,6 +171,8 @@ private:
   std::string m_PrimaryVertexCollection;
   std::string m_METName;
   std::string m_TopJetCollection;
+  std::string m_TopTagJetCollection;
+  std::string m_HiggsTagJetCollection;
   std::string m_TopJetCollectionGen;
   std::string m_PrunedJetCollection;
   std::string m_GenParticleCollection;
@@ -189,6 +193,8 @@ private:
   std::vector< Jet > m_output_jets;
   std::vector< Particle > m_output_genjets;
   std::vector< TopJet > m_output_topjets;
+  std::vector< TopJet > m_output_toptagjets;
+  std::vector< TopJet > m_output_higgstagjets;
   std::vector< GenTopJet > m_output_topjetsgen;
   std::vector< TopJet > m_output_prunedjets;
   MET m_output_met;
@@ -210,6 +216,8 @@ private:
  
   //run number of actual run
   int m_actual_run;
+  
+  TH1D * nprocessed;
 
   // Macro adding the functions for dictionary generation
   ClassDef( AnalysisCycle, 0 );

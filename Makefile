@@ -1,3 +1,9 @@
+# test compiler version and complain if not recent enough:
+GCCOK := $(shell $(SFRAME_DIR)/SFrameTools/gccok.sh)
+ifneq ($(GCCOK),yes)
+   $(error "Your compiler is too old; required is gcc version 46x or higher.")
+endif
+
 # Package information
 LIBRARY = Analysis
 OBJDIR  = obj

@@ -58,6 +58,8 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "TopJetCollection", m_TopJetCollection );
     DeclareProperty( "TopJetCollectionGen", m_TopJetCollectionGen );
     DeclareProperty( "PrunedJetCollection", m_PrunedJetCollection );
+    DeclareProperty( "TopTagJetCollection", m_TopTagJetCollection );
+    DeclareProperty( "HiggsTagJetCollection", m_HiggsTagJetCollection );
     //DeclareProperty( "addGenInfo", m_addGenInfo);
     DeclareProperty( "GenParticleCollection", m_GenParticleCollection);
     DeclareProperty( "PFParticleCollection", m_PFParticleCollection);
@@ -122,6 +124,34 @@ void AnalysisCycle::BeginCycle() throw( SError )
 void AnalysisCycle::EndCycle() throw( SError )
 {
 
+}
+
+void AnalysisCycle::EndMasterInputData(const SInputData & d) throw (SError){
+    // check that all events have actually been processed:
+    // 1. get the number of input events, NEventsMax and NEventsSkip:
+    uint64_t ntotal_input = d.GetEventsTotal();
+    uint64_t nmax = d.GetNEventsMax();
+    uint64_t nskip = d.GetNEventsSkip();
+    // the expected propcessed number of events is the minimum of 
+    // ntotal_input - nskip and nmax:
+    uint64_t nprocessed_expected = min(ntotal_input - nskip, nmax);
+    
+    m_logger << INFO << "Checking how many events have actually been processed (ntot: " << ntotal_input
+             << "; NEventsMax: " << nmax << "; nskip: " << nskip << "; expecting " << nprocessed_expected << ")" << SLogger::endmsg;
+    
+    // 2. get the (merged) histogram of processed events. Note that a double can 
+    // accurately represent an integer up to 52 bits, i.e. 2^52, which is always enough
+    // for our purposes.
+    TList * l = GetHistOutput();
+    SCycleOutput * out = dynamic_cast<SCycleOutput*>(l->FindObject("nprocessed"));
+    assert(out);        
+    TH1D * hprocessed = dynamic_cast<TH1D*>(out->GetObject());
+    assert(hprocessed!=0);
+    uint64_t nprocessed = hprocessed->GetBinContent(1);
+    if(nprocessed != nprocessed_expected){
+        m_logger << FATAL << "Consistency check failed: processed " << nprocessed << " events, but from input dataset info expected " << nprocessed_expected << " events (jobs crashed?)" << SLogger::endmsg;
+        throw SError(SError::StopExecution) << "Failed nprocessed consistency check (see log for details)";
+    }
 }
 
 void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
@@ -261,6 +291,8 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         if(m_METName.size()>0) DeclareVariable(m_output_met, m_METName.c_str() );
         if(m_PrimaryVertexCollection.size()>0) DeclareVariable(m_output_pvs, m_PrimaryVertexCollection.c_str());
         if(m_TopJetCollection.size()>0) DeclareVariable(m_output_topjets, m_TopJetCollection.c_str());
+	if(m_TopTagJetCollection.size()>0) DeclareVariable(m_output_toptagjets, m_TopTagJetCollection.c_str());
+	if(m_HiggsTagJetCollection.size()>0) DeclareVariable(m_output_higgstagjets, m_HiggsTagJetCollection.c_str());
         if(m_addGenInfo && m_TopJetCollectionGen.size()>0) DeclareVariable(m_output_topjetsgen, m_TopJetCollectionGen.c_str());
         if(m_PrunedJetCollection.size()>0) DeclareVariable(m_output_prunedjets, m_PrunedJetCollection.c_str());
         if(m_addGenInfo && m_GenParticleCollection.size()>0) DeclareVariable(m_output_genparticles, m_GenParticleCollection.c_str());
@@ -348,9 +380,8 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       m_jes_unc = new JetCorrectionUncertainty(unc_file.Data());
     }
 
-
-
-    return;
+    // -- nprocessed consistency check --
+    nprocessed = Book(TH1D("nprocessed", "nprocessed", 1, 0, 1));
 }
 
 
@@ -510,6 +541,8 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     if(m_TopJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollection.c_str(), m_bcc.topjets);
     if(m_addGenInfo && m_TopJetCollectionGen.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollectionGen.c_str() , m_bcc.topjetsgen);
     if(m_PrunedJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrunedJetCollection.c_str() , m_bcc.prunedjets);
+    if(m_TopTagJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_TopTagJetCollection.c_str(), m_bcc.toptagjets);
+    if(m_HiggsTagJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_HiggsTagJetCollection.c_str(), m_bcc.higgstagjets);
     if(m_addGenInfo && m_GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenParticleCollection.c_str() , m_bcc.genparticles);
     if(m_PFParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_PFParticleCollection.c_str() , m_bcc.pfparticles);
     if(m_addGenInfo && m_readCommonInfo) ConnectVariable( "AnalysisTree", "genInfo" , m_bcc.genInfo);
@@ -545,6 +578,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     // This method performs basic consistency checks, resets the event calculator,
     // calculates the pile-up weight and performs the good-run selection.
     // It should always be the first thing to be called in each user analysis.
+    nprocessed->Fill(0.5);
 
     // first thing to do: call reset of event calc
     EventCalc* calc = EventCalc::Instance();
@@ -717,6 +751,8 @@ void AnalysisCycle::WriteOutputTree() throw( SError)
     m_output_topjets.clear();
     m_output_topjetsgen.clear();
     m_output_prunedjets.clear();
+    m_output_toptagjets.clear();
+    m_output_higgstagjets.clear();
     m_output_genparticles.clear();
     m_output_triggerNames.clear();
     m_output_triggerResults.clear();
@@ -732,6 +768,8 @@ void AnalysisCycle::WriteOutputTree() throw( SError)
     if(m_METName.size()>0) m_output_met = *m_bcc.met;
     if(m_addGenInfo) m_output_genInfo = *m_bcc.genInfo;
     if(m_TopJetCollection.size()>0) m_output_topjets=*m_bcc.topjets;
+    if(m_TopTagJetCollection.size()>0) m_output_toptagjets=*m_bcc.toptagjets;
+    if(m_HiggsTagJetCollection.size()>0) m_output_higgstagjets=*m_bcc.higgstagjets;
     if(m_addGenInfo && m_TopJetCollectionGen.size()>0) m_output_topjetsgen=*m_bcc.topjetsgen;
     if(m_PrunedJetCollection.size()>0) m_output_prunedjets=*m_bcc.prunedjets;
     if(m_addGenInfo && m_GenParticleCollection.size()>0) m_output_genparticles=*m_bcc.genparticles;

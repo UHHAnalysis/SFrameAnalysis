@@ -126,6 +126,34 @@ void AnalysisCycle::EndCycle() throw( SError )
 
 }
 
+void AnalysisCycle::EndMasterInputData(const SInputData & d) throw (SError){
+    // check that all events have actually been processed:
+    // 1. get the number of input events, NEventsMax and NEventsSkip:
+    uint64_t ntotal_input = d.GetEventsTotal();
+    uint64_t nmax = d.GetNEventsMax();
+    uint64_t nskip = d.GetNEventsSkip();
+    // the expected propcessed number of events is the minimum of 
+    // ntotal_input - nskip and nmax:
+    uint64_t nprocessed_expected = min(ntotal_input - nskip, nmax);
+    
+    m_logger << INFO << "Checking how many events have actually been processed (ntot: " << ntotal_input
+             << "; NEventsMax: " << nmax << "; nskip: " << nskip << "; expecting " << nprocessed_expected << ")" << SLogger::endmsg;
+    
+    // 2. get the (merged) histogram of processed events. Note that a double can 
+    // accurately represent an integer up to 52 bits, i.e. 2^52, which is always enough
+    // for our purposes.
+    TList * l = GetHistOutput();
+    SCycleOutput * out = dynamic_cast<SCycleOutput*>(l->FindObject("nprocessed"));
+    assert(out);        
+    TH1D * hprocessed = dynamic_cast<TH1D*>(out->GetObject());
+    assert(hprocessed!=0);
+    uint64_t nprocessed = hprocessed->GetBinContent(1);
+    if(nprocessed != nprocessed_expected){
+        m_logger << FATAL << "Consistency check failed: processed " << nprocessed << " events, but from input dataset info expected " << nprocessed_expected << " events (jobs crashed?)" << SLogger::endmsg;
+        throw SError(SError::StopExecution) << "Failed nprocessed consistency check (see log for details)";
+    }
+}
+
 void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 {
     // declaration of variables and histograms
@@ -352,9 +380,8 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       m_jes_unc = new JetCorrectionUncertainty(unc_file.Data());
     }
 
-
-
-    return;
+    // -- nprocessed consistency check --
+    nprocessed = Book(TH1D("nprocessed", "nprocessed", 1, 0, 1));
 }
 
 
@@ -551,6 +578,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     // This method performs basic consistency checks, resets the event calculator,
     // calculates the pile-up weight and performs the good-run selection.
     // It should always be the first thing to be called in each user analysis.
+    nprocessed->Fill(0.5);
 
     // first thing to do: call reset of event calc
     EventCalc* calc = EventCalc::Instance();

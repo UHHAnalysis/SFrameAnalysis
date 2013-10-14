@@ -63,6 +63,8 @@ public:
   /// calls finalise for each histogram collection
   void FinaliseHistos();
   
+  void EndMasterInputData(const SInputData & d) throw (SError);
+  
   /// Function to set the integrated luminosity per bin
   void SetIntLumiPerBin(double int_lumi){m_int_lumi_per_bin = int_lumi;}
 
@@ -214,6 +216,8 @@ private:
  
   //run number of actual run
   int m_actual_run;
+  
+  TH1D * nprocessed;
 
   // Macro adding the functions for dictionary generation
   ClassDef( AnalysisCycle, 0 );

@@ -30,6 +30,9 @@ AnalysisCycle::AnalysisCycle()
     m_pdfweights=NULL;
     m_pdf_index=0;
     m_corrector = NULL;
+    m_correctortop = NULL;
+    m_correctortoptag = NULL;
+    m_correctorhiggstag = NULL;
     m_jes_unc = NULL;
 
     m_sys_unc = e_None;

@@ -245,6 +245,60 @@ class HEPTopAndSubBTagPlusOtherHiggsTag: public SelectionModule{
   E_BtagType m_type3;
 };
 
+
+class InvertedTopTagRegularBTagRegularHiggsTag: public SelectionModule{
+ public:
+  InvertedTopTagRegularBTagRegularHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode="default", TString filename="");
+  ~InvertedTopTagRegularBTagRegularHiggsTag(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  E_BtagType m_type1;
+  E_BtagType m_type2;
+  E_BtagType m_type3;
+  /* bool m_doBTag; */
+/*   bool m_doHiggsTag; */
+ TString m_mode;
+  TString m_filename;
+};
+
+
+
+class RegularTopTagRegularBTagFullyInvertedHiggsTag: public SelectionModule{
+ public:
+  RegularTopTagRegularBTagFullyInvertedHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode="default", TString filename="");
+  ~RegularTopTagRegularBTagFullyInvertedHiggsTag(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  E_BtagType m_type1;
+  E_BtagType m_type2;
+  E_BtagType m_type3;
+ TString m_mode;
+  TString m_filename;
+};
+
+
+class InvertedTopTagRegularBTagFullyInvertedHiggsTag: public SelectionModule{
+ public:
+  InvertedTopTagRegularBTagFullyInvertedHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode="default", TString filename="");
+  ~InvertedTopTagRegularBTagFullyInvertedHiggsTag(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  E_BtagType m_type1;
+  E_BtagType m_type2;
+  E_BtagType m_type3;
+ TString m_mode;
+  TString m_filename;
+};
+
 class STCut: public SelectionModule{
  public:
   STCut(double min_st, double max_st=double_infinity());

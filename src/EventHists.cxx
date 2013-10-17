@@ -62,15 +62,15 @@ void EventHists::Fill()
   double HT_MET = 0;
   double HT_Jets =0;
   
-  HT = calc -> GetHT();
-  double HTlep = calc -> GetHTlep();
+  HT = calc->GetHT();
+  double HTlep = calc->GetHTlep();
 
-  for(unsigned int i=0; i< bcc->jets->size(); ++i)
-   {
-     Jet jet =  bcc->jets->at(i);
+  const unsigned int njets = bcc->jets ? bcc->jets->size() : 0;
+  for(unsigned int i=0; i< njets; ++i){
+     const Jet & jet =  bcc->jets->at(i);
      HT_Jets= HT_Jets + jet.pt();      
-   }
-  double met = bcc->met->pt();
+  }
+  double met = bcc->met ? bcc->met->pt() : -1.0;
   
   
   Hist("HT")->Fill(HT, weight);
@@ -82,22 +82,22 @@ void EventHists::Fill()
   Hist("MET")->Fill(met, weight);
   Hist("MET_ly")->Fill(met, weight);
  
-
-double charge = 1;
+  double charge = -1; // -1 means "not available" ...
   
-  if (bcc->muons->size() == 1 && bcc->taus->size() == 1) 
-    {
-      Muon muon = bcc->muons->at(0);
-      Tau tau = bcc->taus->at(0);
-      if (muon.charge() != tau.charge()) charge = -1;
+  if(bcc->muons && bcc->taus){
+    charge = 1;
+    if (bcc->muons->size() == 1 && bcc->taus->size() == 1){
+        const Muon &  muon = bcc->muons->at(0);
+        const Tau & tau = bcc->taus->at(0);
+        if (muon.charge() != tau.charge()) charge = -1;
     }
-  if (bcc->taus->size() == 0 && bcc->muons->size() == 2)
-    {
-      Muon muon1 = bcc->muons->at(0);
-      Muon muon2 = bcc->muons->at(1);
-      if (muon1.charge() != muon2.charge()) charge = -1;
+    else if(bcc->taus->size() == 0 && bcc->muons->size() == 2){
+        const Muon & muon1 = bcc->muons->at(0);
+        const Muon & muon2 = bcc->muons->at(1);
+        if (muon1.charge() != muon2.charge()) charge = -1;
     }
-  if (bcc->taus->size() == 0 && bcc->muons->size() == 1) charge = 0;
+    if (bcc->taus->size() == 0 && bcc->muons->size() == 1) charge = 0;
+  }
   
   Hist("ChargeSign")->Fill(charge, weight);
   Hist("ChargeSign_ly")->Fill(charge, weight);

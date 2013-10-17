@@ -226,21 +226,35 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
     resetEventCalc();
 }
 
-void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool useTopJets, bool propagate_to_met)
+void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool useTopJets, bool propagate_to_met, bool useTopTagJets, bool useHiggsTagJets)
 {
     
   if(useTopJets) propagate_to_met = false;
+  if(useTopTagJets) propagate_to_met = false;
+  if(useHiggsTagJets) propagate_to_met = false;
 
   std::vector<Jet*> jets;
-  if(!useTopJets){
-    for(unsigned int i=0; i<bcc->jets->size(); ++i) {
-      Jet* jet = &bcc->jets->at(i);
+  if(useTopJets){
+    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
+      Jet* jet = &bcc->topjets->at(i);
+      jets.push_back( jet );
+    }
+  }
+  else if(useTopTagJets){
+    for(unsigned int i=0; i<bcc->toptagjets->size(); ++i) {
+      Jet* jet = &bcc->toptagjets->at(i);
+      jets.push_back( jet );
+    }
+  }
+  else if(useHiggsTagJets){
+    for(unsigned int i=0; i<bcc->higgstagjets->size(); ++i) {
+      Jet* jet = &bcc->higgstagjets->at(i);
       jets.push_back( jet );
     }
   }
   else{
-    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
-      Jet* jet = &bcc->topjets->at(i);
+    for(unsigned int i=0; i<bcc->jets->size(); ++i) {
+      Jet* jet = &bcc->jets->at(i);
       jets.push_back( jet );
     }
   }
@@ -296,8 +310,12 @@ void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool
         jets.at(i)->set_JEC_factor_raw(1./correctionfactor);
     }
 
-    if(sort && !useTopJets) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
-    if(sort && useTopJets) std::sort(bcc->topjets->begin(), bcc->topjets->end(), HigherPt()); 
+    if(sort){
+      if(useTopJets) std::sort(bcc->topjets->begin(), bcc->topjets->end(), HigherPt()); 
+      else if(useTopTagJets) std::sort(bcc->toptagjets->begin(), bcc->toptagjets->end(), HigherPt()); 
+      else if(useHiggsTagJets) std::sort(bcc->higgstagjets->begin(), bcc->higgstagjets->end(), HigherPt()); 
+      else std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
+    }
     resetEventCalc();
 }
 

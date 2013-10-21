@@ -30,6 +30,9 @@ AnalysisCycle::AnalysisCycle()
     m_pdfweights=NULL;
     m_pdf_index=0;
     m_corrector = NULL;
+    m_correctortop = NULL;
+    m_correctortoptag = NULL;
+    m_correctorhiggstag = NULL;
     m_jes_unc = NULL;
 
     m_sys_unc = e_None;
@@ -72,6 +75,9 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "JECDataGlobalTag" , m_JECDataGlobalTag);
     DeclareProperty( "JECMCGlobalTag" , m_JECMCGlobalTag);
     DeclareProperty( "JECJetCollection" , m_JECJetCollection);
+    DeclareProperty( "JECTopJetCollection" , m_JECTopJetCollection);
+    DeclareProperty( "JECTopTagJetCollection" , m_JECTopTagJetCollection);
+    DeclareProperty( "JECHiggsTagJetCollection" , m_JECHiggsTagJetCollection);
 
     // steerable properties for the Pile-up reweighting
     DeclareProperty( "PU_Filename_MC" , m_PUFilenameMC);
@@ -180,6 +186,15 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         m_logger << INFO << "Using JEC files from " << m_JECFileLocation << SLogger::endmsg;
         m_logger << INFO << "Using JEC global tags for data " << m_JECDataGlobalTag << " and for MC " << m_JECMCGlobalTag << SLogger::endmsg;
         m_logger << INFO << "Using JEC for jet collection " << m_JECJetCollection << SLogger::endmsg;
+	if(m_JECTopJetCollection.size()>0) {
+	  m_logger << INFO << "Using JEC for topjet collection " << m_JECTopJetCollection << SLogger::endmsg;
+	}
+	if(m_JECTopTagJetCollection.size()>0) {
+	  m_logger << INFO << "Using JEC for toptagjet collection " << m_JECTopTagJetCollection << SLogger::endmsg;
+	}
+	if(m_JECHiggsTagJetCollection.size()>0) {
+	  m_logger << INFO << "Using JEC for higgstagjet collection " << m_JECHiggsTagJetCollection << SLogger::endmsg;
+	}
     } else
         m_logger << WARNING << "No location for JEC files is provided" << SLogger::endmsg;
 
@@ -391,6 +406,75 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       m_jes_unc = new JetCorrectionUncertainty(unc_file.Data());
     }
 
+    // ------------- top jet energy correction ----------------
+
+    if(m_JECFileLocation.size()>0 && m_JECTopJetCollection.size()>0 )
+    {
+
+      std::vector<JetCorrectorParameters> toppars;
+      
+      //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
+      if(!addGenInfo()) {
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECTopJetCollection + ".txt"));
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECTopJetCollection + ".txt"));
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECTopJetCollection + ".txt"));
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECTopJetCollection + ".txt"));
+      } else {
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECTopJetCollection + ".txt"));
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECTopJetCollection + ".txt"));
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECTopJetCollection + ".txt"));
+      }
+
+      m_correctortop = new FactorizedJetCorrector(toppars);
+
+    }
+
+    // ------------- toptag jet energy correction ----------------
+
+    if(m_JECFileLocation.size()>0 && m_JECTopTagJetCollection.size()>0 )
+    {
+
+      std::vector<JetCorrectorParameters> toptagpars;
+      
+      //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
+      if(!addGenInfo()) {
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECTopTagJetCollection + ".txt"));
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECTopTagJetCollection + ".txt"));
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECTopTagJetCollection + ".txt"));
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECTopTagJetCollection + ".txt"));
+      } else {
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECTopTagJetCollection + ".txt"));
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECTopTagJetCollection + ".txt"));
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECTopTagJetCollection + ".txt"));
+      }
+
+      m_correctortoptag = new FactorizedJetCorrector(toptagpars);
+
+    }
+
+    // ------------- higgstag jet energy correction ----------------
+
+    if(m_JECFileLocation.size()>0 && m_JECHiggsTagJetCollection.size()>0 )
+    {
+
+      std::vector<JetCorrectorParameters> higgstagpars;
+      
+      //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
+      if(!addGenInfo()) {
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECHiggsTagJetCollection + ".txt"));
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECHiggsTagJetCollection + ".txt"));
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECHiggsTagJetCollection + ".txt"));
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECHiggsTagJetCollection + ".txt"));
+      } else {
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECHiggsTagJetCollection + ".txt"));
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECHiggsTagJetCollection + ".txt"));
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECHiggsTagJetCollection + ".txt"));
+      }
+
+      m_correctorhiggstag = new FactorizedJetCorrector(higgstagpars);
+
+    }
+
     // -- nprocessed consistency check --
     nprocessed = Book(TH1D("nprocessed", "nprocessed", 1, 0, 1));
 }
@@ -526,6 +610,9 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     delete m_pdfweights;
     delete m_puwp;
     delete m_corrector;
+    delete m_correctortop;
+    delete m_correctortoptag;
+    delete m_correctorhiggstag;
     delete m_jes_unc;
 
     return;
@@ -682,6 +769,25 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
       }
       cleaner.JetRecorrector(m_corrector);
     }
+
+    //apply top jet energy corrections
+    if(m_TopJetCollection.size()>0 && m_correctortop){
+      Cleaner cleanertop;
+      cleanertop.JetRecorrector(m_correctortop,true,true);
+    }
+
+    //apply toptag jet energy corrections
+    if(m_TopTagJetCollection.size()>0 && m_correctortoptag){
+      Cleaner cleanertoptag;
+      cleanertoptag.JetRecorrector(m_correctortoptag,true,false,false,true);
+    }
+
+    //apply higgstag jet energy corrections
+    if(m_HiggsTagJetCollection.size()>0&& m_correctorhiggstag){
+      Cleaner cleanerhiggstag;
+      cleanerhiggstag.JetRecorrector(m_correctorhiggstag,true,false,false,false,true);
+    }
+
 }
 
 

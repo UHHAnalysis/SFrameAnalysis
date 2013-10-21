@@ -110,6 +110,9 @@ protected:
   std::string m_JECDataGlobalTag;
   std::string m_JECMCGlobalTag;
   std::string m_JECJetCollection;
+  std::string m_JECTopJetCollection;
+  std::string m_JECTopTagJetCollection;
+  std::string m_JECHiggsTagJetCollection;
 
   // Luminosity property used to define the trigger
   // use in the analysis
@@ -143,6 +146,9 @@ protected:
 
   //jet energy corrections  
   FactorizedJetCorrector* m_corrector;
+  FactorizedJetCorrector* m_correctortop;
+  FactorizedJetCorrector* m_correctortoptag;
+  FactorizedJetCorrector* m_correctorhiggstag;
   JetCorrectionUncertainty* m_jes_unc;
 
 private:

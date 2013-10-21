@@ -1,5 +1,4 @@
 #include "include/BTagEffHistsTPrime.h"
-#include "include/ObjectHandler.h"
 #include "include/SelectionModules.h"
 #include <iostream>
 
@@ -75,8 +74,7 @@ void BTagEffHistsTPrime::Fill()
     //Only the efficiency matters, no lumi normalization is of interest here
     weight=1.;
 
-    ObjectHandler* objs = ObjectHandler::Instance();
-    BaseCycleContainer* bcc = objs->GetBaseCycleContainer();
+    BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
 
     std::vector<Particle> subjets_top;
     std::vector<float> btagsub_combinedSecondaryVertex_top;

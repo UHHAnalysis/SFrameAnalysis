@@ -6,9 +6,7 @@
 #include <TString.h>
 
 // Local include(s):
-#include "include/BaseHists.h"
-#include "include/BaseCycleContainer.h"
-#include "include/Utils.h"
+#include "SFrameTools/include/BaseHists.h"
 
 /**
  *   Class for booking and filling btag histograms

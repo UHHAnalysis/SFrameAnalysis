@@ -1323,12 +1323,12 @@ GenTauSelection::GenTauSelection()
 
 bool GenTauSelection::pass(BaseCycleContainer* bcc)
 {
-  if (bcc->taus->size()>0)
+  for (unsigned int i=0; i<bcc->taus->size(); ++i) 
     {
-      Tau tau = bcc->taus->at(0);
-      for(unsigned int i=0; i<bcc->genparticles->size(); ++i)
+      Tau tau = bcc->taus->at(i);
+      for(unsigned int j=0; j<bcc->genparticles->size(); ++j)
 	{
-	  GenParticle genp = bcc->genparticles->at(i);
+	  GenParticle genp = bcc->genparticles->at(j);
 	  double deltaR = genp.deltaR(tau);
 	  if (deltaR < 0.5 && abs(genp.pdgId())==15) return true;
 	}
@@ -1357,7 +1357,7 @@ bool FakeTauSelectionElectron::pass(BaseCycleContainer* bcc)
 	{
 	  GenParticle genp = bcc->genparticles->at(j);
 	  double deltaR = genp.deltaR(tau);
-	  if (deltaR < 0.5 && abs(genp.pdgId())== 11) return true;
+	  if (deltaR < 0.5 && abs(genp.pdgId())== 11 && genp.status()==3) return true;
 	}
     }
   return false;

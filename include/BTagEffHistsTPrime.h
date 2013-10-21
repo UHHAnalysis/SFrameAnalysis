@@ -1,8 +1,14 @@
 #ifndef BTagEffHistsTPrime_H
 #define BTagEffHistsTPrime_H
 
-#include "SFrameTools/include/BaseHists.h"
-#include "SFrameTools/include/Utils.h"
+// ROOT include(s):
+#include <TObject.h>
+#include <TString.h>
+
+// Local include(s):
+#include "include/BaseHists.h"
+#include "include/BaseCycleContainer.h"
+#include "include/Utils.h"
 
 /**
  *   Class for booking and filling btag histograms
@@ -15,7 +21,7 @@ class BTagEffHistsTPrime : public BaseHists {
 
 public:
    /// Named constructor
-   BTagEffHistsTPrime(const char*);
+  BTagEffHistsTPrime(const char* name);
 
    /// Default destructor
    ~BTagEffHistsTPrime();
@@ -24,9 +30,9 @@ public:
 
    void Fill();
 
-private:
+   void Finish();
 
-  E_BtagType m_type;
+private:
 
 }; // class BTagEffHistsTPrime
 

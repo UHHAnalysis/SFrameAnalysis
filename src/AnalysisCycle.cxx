@@ -1,8 +1,6 @@
 // $Id: AnalysisCycle.cxx,v 1.42 2013/06/19 14:04:46 jott Exp $
-
 #include <iostream>
-
-using namespace std;
+#include <stdint.h>
 
 #include "include/AnalysisCycle.h"
 #include "include/SelectionModules.h"
@@ -12,6 +10,8 @@ using namespace std;
 
 #include "core/include/STreeType.h"
 #include "core/include/SCycleStatistics.h"
+
+using namespace std;
 
 ClassImp( AnalysisCycle );
 

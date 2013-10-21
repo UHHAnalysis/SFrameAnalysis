@@ -241,6 +241,10 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_sys_unc = e_TauSF;
 	isok = true;
       }
+      if (m_sys_unc_name=="TauEleSF"){
+	m_sys_unc = e_TauEleSF;
+	isok = true;
+      }
       if (m_sys_unc_name=="TauEffSF"){
 	m_sys_unc = e_TauEffSF;
 	isok = true;
@@ -344,7 +348,14 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_lsf->DoDownVarTauSF();
       } 
     }
-       if (m_sys_unc == e_TauEffSF){
+    if (m_sys_unc == e_TauEleSF){
+      if(m_sys_var == e_Up){
+	m_lsf->DoUpVarTauEleSF();
+      } else {
+	m_lsf->DoDownVarTauEleSF();
+      } 
+    }
+    if (m_sys_unc == e_TauEffSF){
       if(m_sys_var == e_Up){
 	m_lsf->DoUpVarTauEffSF();
       } else {

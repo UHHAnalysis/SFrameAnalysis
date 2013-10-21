@@ -1212,20 +1212,21 @@ TauMuonInvMassCut::TauMuonInvMassCut(double min_InvMass, double max_InvMass){
 
 bool TauMuonInvMassCut::pass(BaseCycleContainer *bcc)
 {
-  if (bcc->taus->size() == 1 && bcc->muons->size() == 1)
+  if (bcc->muons->size() == 1)
     {
-      Tau tau = bcc->taus->at(0);
-      TLorentzVector Tau;
-      Tau.SetPtEtaPhiE(tau.pt() ,tau.eta() ,tau.phi() ,tau.energy() );
-   
       Muon muon = bcc->muons->at(0);
       TLorentzVector Mu;
       Mu.SetPtEtaPhiE(muon.pt() ,muon.eta() ,muon.phi() ,muon.energy() );
-      TLorentzVector MuTau = Tau +Mu;
-      double InvMass = MuTau.M();    
-    
-      if (InvMass < m_min_InvMass || InvMass > m_max_InvMass) return true;
-      return false;
+      for(unsigned int i=0; i<bcc->taus->size(); ++i) 
+	{
+	  Tau tau = bcc->taus->at(i);
+	  TLorentzVector Tau;
+	  Tau.SetPtEtaPhiE(tau.pt() ,tau.eta() ,tau.phi() ,tau.energy() );
+   	  TLorentzVector MuTau = Tau +Mu;
+	  double InvMass = MuTau.M();    
+          if (InvMass > m_min_InvMass && InvMass < m_max_InvMass) return false;
+	}
+      return true;
     }
   else return true;
 }
@@ -1322,12 +1323,12 @@ GenTauSelection::GenTauSelection()
 
 bool GenTauSelection::pass(BaseCycleContainer* bcc)
 {
-  if (bcc->taus->size()>0)
+  for (unsigned int i=0; i<bcc->taus->size(); ++i) 
     {
-      Tau tau = bcc->taus->at(0);
-      for(unsigned int i=0; i<bcc->genparticles->size(); ++i)
+      Tau tau = bcc->taus->at(i);
+      for(unsigned int j=0; j<bcc->genparticles->size(); ++j)
 	{
-	  GenParticle genp = bcc->genparticles->at(i);
+	  GenParticle genp = bcc->genparticles->at(j);
 	  double deltaR = genp.deltaR(tau);
 	  if (deltaR < 0.5 && abs(genp.pdgId())==15) return true;
 	}
@@ -1343,4 +1344,47 @@ std::string GenTauSelection::description()
 }
 
 
+FakeTauSelectionElectron::FakeTauSelectionElectron()
+{ 
+}
 
+bool FakeTauSelectionElectron::pass(BaseCycleContainer* bcc)
+{
+  for(unsigned int i=0; i<bcc->taus->size(); ++i)
+    {
+      Tau tau = bcc->taus->at(i);
+      for(unsigned int j=0; j<bcc->genparticles->size(); ++j)
+	{
+	  GenParticle genp = bcc->genparticles->at(j);
+	  double deltaR = genp.deltaR(tau);
+	  if (deltaR < 0.5 && abs(genp.pdgId())== 11 && genp.status()==3) return true;
+	}
+    }
+  return false;
+}
+
+std::string FakeTauSelectionElectron::description()
+{
+  char s[500];
+  sprintf(s, "found an electron faking a tau");
+  return s;
+}
+
+
+OneProngTauSelection::OneProngTauSelection()
+{ 
+}
+
+bool OneProngTauSelection::pass(BaseCycleContainer* bcc)
+{
+  Tau tau = bcc->taus->at(0);
+  if (tau.decayMode() == 0 || tau.decayMode() == 1 || tau.decayMode() == 2 || tau.decayMode() == 3 || tau.decayMode() == 4 ) return true;
+  else return false;
+}
+
+std::string OneProngTauSelection::description()
+{
+  char s[500];
+  sprintf(s, "found a one prong tau decay");
+  return s;
+}

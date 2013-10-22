@@ -425,7 +425,7 @@ bool NHEPTopAndSubBTagSelection::pass(BaseCycleContainer *bcc){
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
     if(bcc->topjets->at(i).pt()<ptcut) continue;
     TopJet topjet =  bcc->topjets->at(i);
-    if(HepTopTagWithMatch(topjet) && subJetBTag(topjet, m_type)>=1) nheptoptag++;
+    if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, m_type)>=1) nheptoptag++;
   }
   if(nheptoptag<m_min_nheptoptag) return false;
   if(nheptoptag>m_max_nheptoptag) return false;
@@ -457,7 +457,7 @@ bool HEPTopAndSubBTagPlusOtherHiggsTag::pass(BaseCycleContainer *bcc){
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
     if(bcc->topjets->at(i).pt()<ptcut) continue;
     TopJet topjet =  bcc->topjets->at(i);
-    if(HepTopTagWithMatch(topjet) && subJetBTag(topjet, m_type1)>=1){
+    if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, m_type1)>=1){
       nheptoptag++;
       topTaggedJets.push_back(i);
     }
@@ -468,7 +468,7 @@ bool HEPTopAndSubBTagPlusOtherHiggsTag::pass(BaseCycleContainer *bcc){
   }
 
 if (nheptoptag ==0) return false;
-if (nhiggstag ==0) return false; 
+if (nhiggstag == 0) return false; 
 if(nheptoptag == 1 && nhiggstag == 1 && topTaggedJets[0] == HiggsTaggedJets[0]) return false;
 return true;
 
@@ -504,7 +504,7 @@ bool InvertedTopTagRegularBTagRegularHiggsTag::pass(BaseCycleContainer *bcc){
     if(HepTopTagWithMatch(topjet)){
 	nheptoptag++;
     }
-    if (HepTopTagInverted(topjet) && subJetBTag(topjet, m_type1, m_mode, m_filename)>=1){
+    if (HepTopTagInverted(topjet) && subJetBTagTop(topjet, m_type1, m_mode, m_filename)>=1){
 	topTaggedJetsInverted.push_back(i);
 	nheptoptagInvertedPlusBTag++;
     }
@@ -548,7 +548,7 @@ bool RegularTopTagRegularBTagFullyInvertedHiggsTag::pass(BaseCycleContainer *bcc
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
     if(bcc->topjets->at(i).pt()<ptcut) continue;
     TopJet topjet =  bcc->topjets->at(i);
-    if(HepTopTagWithMatch(topjet) && subJetBTag(topjet, m_type1, m_mode, m_filename)>=1){
+    if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, m_type1, m_mode, m_filename)>=1){
       nheptoptag++;
       topTaggedJets.push_back(i);
     }
@@ -596,7 +596,7 @@ bool InvertedTopTagRegularBTagFullyInvertedHiggsTag::pass(BaseCycleContainer *bc
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
     if(bcc->topjets->at(i).pt()<ptcut) continue;
     TopJet topjet =  bcc->topjets->at(i);
-    if(HepTopTagInverted(topjet) && subJetBTag(topjet, m_type1, m_mode, m_filename)>=1){
+    if(HepTopTagInverted(topjet) && subJetBTagTop(topjet, m_type1, m_mode, m_filename)>=1){
       nheptoptag++;
       topTaggedJets.push_back(i);
     }

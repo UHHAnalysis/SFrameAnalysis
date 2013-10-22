@@ -8,8 +8,8 @@ git clone https://github.com/UHHAnalysis/ExampleAnalysis ${SFRAME_DIR}/${ANALYSI
 
 cd ${SFRAME_DIR}/${ANALYSISNAME}Analysis
 rm -rf .git
-sed -i "s|Example|${ANALYSISNAME}|g" include/*h
-sed -i "s|Example|${ANALYSISNAME}|g" src/*cxx
+sed -i "s|Example|${ANALYSISNAME}|g" include/Example{Cycle,Hists}.h include/ExampleAnalysis_LinkDef.h
+sed -i "s|Example|${ANALYSISNAME}|g" src/Example{Cycle,Hists}.cxx
 sed -i "s|Example|${ANALYSISNAME}|g" proof/SETUP.C
 sed -i "s|Example|${ANALYSISNAME}|g" Makefile
 sed -i "s|Example|${ANALYSISNAME}|g" config/ExampleCycle_config.xml

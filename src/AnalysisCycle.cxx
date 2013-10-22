@@ -1,8 +1,6 @@
 // $Id: AnalysisCycle.cxx,v 1.42 2013/06/19 14:04:46 jott Exp $
-
 #include <iostream>
-
-using namespace std;
+#include <stdint.h>
 
 #include "include/AnalysisCycle.h"
 #include "include/SelectionModules.h"
@@ -12,6 +10,8 @@ using namespace std;
 
 #include "core/include/STreeType.h"
 #include "core/include/SCycleStatistics.h"
+
+using namespace std;
 
 ClassImp( AnalysisCycle );
 
@@ -30,6 +30,9 @@ AnalysisCycle::AnalysisCycle()
     m_pdfweights=NULL;
     m_pdf_index=0;
     m_corrector = NULL;
+    m_correctortop = NULL;
+    m_correctortoptag = NULL;
+    m_correctorhiggstag = NULL;
     m_jes_unc = NULL;
 
     m_sys_unc = e_None;
@@ -72,6 +75,9 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "JECDataGlobalTag" , m_JECDataGlobalTag);
     DeclareProperty( "JECMCGlobalTag" , m_JECMCGlobalTag);
     DeclareProperty( "JECJetCollection" , m_JECJetCollection);
+    DeclareProperty( "JECTopJetCollection" , m_JECTopJetCollection);
+    DeclareProperty( "JECTopTagJetCollection" , m_JECTopTagJetCollection);
+    DeclareProperty( "JECHiggsTagJetCollection" , m_JECHiggsTagJetCollection);
 
     // steerable properties for the Pile-up reweighting
     DeclareProperty( "PU_Filename_MC" , m_PUFilenameMC);
@@ -126,6 +132,34 @@ void AnalysisCycle::EndCycle() throw( SError )
 
 }
 
+void AnalysisCycle::EndMasterInputData(const SInputData & d) throw (SError){
+    // check that all events have actually been processed:
+    // 1. get the number of input events, NEventsMax and NEventsSkip:
+    uint64_t ntotal_input = d.GetEventsTotal();
+    uint64_t nmax = d.GetNEventsMax();
+    uint64_t nskip = d.GetNEventsSkip();
+    // the expected propcessed number of events is the minimum of 
+    // ntotal_input - nskip and nmax:
+    uint64_t nprocessed_expected = min(ntotal_input - nskip, nmax);
+    
+    m_logger << INFO << "Checking how many events have actually been processed (ntot: " << ntotal_input
+             << "; NEventsMax: " << nmax << "; nskip: " << nskip << "; expecting " << nprocessed_expected << ")" << SLogger::endmsg;
+    
+    // 2. get the (merged) histogram of processed events. Note that a double can 
+    // accurately represent an integer up to 52 bits, i.e. 2^52, which is always enough
+    // for our purposes.
+    TList * l = GetHistOutput();
+    SCycleOutput * out = dynamic_cast<SCycleOutput*>(l->FindObject("nprocessed"));
+    assert(out);        
+    TH1D * hprocessed = dynamic_cast<TH1D*>(out->GetObject());
+    assert(hprocessed!=0);
+    uint64_t nprocessed = hprocessed->GetBinContent(1);
+    if(nprocessed != nprocessed_expected){
+        m_logger << FATAL << "Consistency check failed: processed " << nprocessed << " events, but from input dataset info expected " << nprocessed_expected << " events (jobs crashed?)" << SLogger::endmsg;
+        throw SError(SError::StopExecution) << "Failed nprocessed consistency check (see log for details)";
+    }
+}
+
 void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 {
     // declaration of variables and histograms
@@ -152,6 +186,15 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         m_logger << INFO << "Using JEC files from " << m_JECFileLocation << SLogger::endmsg;
         m_logger << INFO << "Using JEC global tags for data " << m_JECDataGlobalTag << " and for MC " << m_JECMCGlobalTag << SLogger::endmsg;
         m_logger << INFO << "Using JEC for jet collection " << m_JECJetCollection << SLogger::endmsg;
+	if(m_JECTopJetCollection.size()>0) {
+	  m_logger << INFO << "Using JEC for topjet collection " << m_JECTopJetCollection << SLogger::endmsg;
+	}
+	if(m_JECTopTagJetCollection.size()>0) {
+	  m_logger << INFO << "Using JEC for toptagjet collection " << m_JECTopTagJetCollection << SLogger::endmsg;
+	}
+	if(m_JECHiggsTagJetCollection.size()>0) {
+	  m_logger << INFO << "Using JEC for higgstagjet collection " << m_JECHiggsTagJetCollection << SLogger::endmsg;
+	}
     } else
         m_logger << WARNING << "No location for JEC files is provided" << SLogger::endmsg;
 
@@ -196,6 +239,10 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       }
       if (m_sys_unc_name=="TauSF"){
 	m_sys_unc = e_TauSF;
+	isok = true;
+      }
+      if (m_sys_unc_name=="TauEleSF"){
+	m_sys_unc = e_TauEleSF;
 	isok = true;
       }
       if (m_sys_unc_name=="TauEffSF"){
@@ -301,7 +348,14 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_lsf->DoDownVarTauSF();
       } 
     }
-       if (m_sys_unc == e_TauEffSF){
+    if (m_sys_unc == e_TauEleSF){
+      if(m_sys_var == e_Up){
+	m_lsf->DoUpVarTauEleSF();
+      } else {
+	m_lsf->DoDownVarTauEleSF();
+      } 
+    }
+    if (m_sys_unc == e_TauEffSF){
       if(m_sys_var == e_Up){
 	m_lsf->DoUpVarTauEffSF();
       } else {
@@ -352,9 +406,77 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       m_jes_unc = new JetCorrectionUncertainty(unc_file.Data());
     }
 
+    // ------------- top jet energy correction ----------------
 
+    if(m_JECFileLocation.size()>0 && m_JECTopJetCollection.size()>0 )
+    {
 
-    return;
+      std::vector<JetCorrectorParameters> toppars;
+      
+      //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
+      if(!addGenInfo()) {
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECTopJetCollection + ".txt"));
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECTopJetCollection + ".txt"));
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECTopJetCollection + ".txt"));
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECTopJetCollection + ".txt"));
+      } else {
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECTopJetCollection + ".txt"));
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECTopJetCollection + ".txt"));
+        toppars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECTopJetCollection + ".txt"));
+      }
+
+      m_correctortop = new FactorizedJetCorrector(toppars);
+
+    }
+
+    // ------------- toptag jet energy correction ----------------
+
+    if(m_JECFileLocation.size()>0 && m_JECTopTagJetCollection.size()>0 )
+    {
+
+      std::vector<JetCorrectorParameters> toptagpars;
+      
+      //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
+      if(!addGenInfo()) {
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECTopTagJetCollection + ".txt"));
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECTopTagJetCollection + ".txt"));
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECTopTagJetCollection + ".txt"));
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECTopTagJetCollection + ".txt"));
+      } else {
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECTopTagJetCollection + ".txt"));
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECTopTagJetCollection + ".txt"));
+        toptagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECTopTagJetCollection + ".txt"));
+      }
+
+      m_correctortoptag = new FactorizedJetCorrector(toptagpars);
+
+    }
+
+    // ------------- higgstag jet energy correction ----------------
+
+    if(m_JECFileLocation.size()>0 && m_JECHiggsTagJetCollection.size()>0 )
+    {
+
+      std::vector<JetCorrectorParameters> higgstagpars;
+      
+      //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
+      if(!addGenInfo()) {
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECHiggsTagJetCollection + ".txt"));
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECHiggsTagJetCollection + ".txt"));
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECHiggsTagJetCollection + ".txt"));
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECHiggsTagJetCollection + ".txt"));
+      } else {
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECHiggsTagJetCollection + ".txt"));
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECHiggsTagJetCollection + ".txt"));
+        higgstagpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECHiggsTagJetCollection + ".txt"));
+      }
+
+      m_correctorhiggstag = new FactorizedJetCorrector(higgstagpars);
+
+    }
+
+    // -- nprocessed consistency check --
+    nprocessed = Book(TH1D("nprocessed", "nprocessed", 1, 0, 1));
 }
 
 
@@ -488,6 +610,9 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     delete m_pdfweights;
     delete m_puwp;
     delete m_corrector;
+    delete m_correctortop;
+    delete m_correctortoptag;
+    delete m_correctorhiggstag;
     delete m_jes_unc;
 
     return;
@@ -551,6 +676,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     // This method performs basic consistency checks, resets the event calculator,
     // calculates the pile-up weight and performs the good-run selection.
     // It should always be the first thing to be called in each user analysis.
+    nprocessed->Fill(0.5);
 
     // first thing to do: call reset of event calc
     EventCalc* calc = EventCalc::Instance();
@@ -643,6 +769,25 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
       }
       cleaner.JetRecorrector(m_corrector);
     }
+
+    //apply top jet energy corrections
+    if(m_TopJetCollection.size()>0 && m_correctortop){
+      Cleaner cleanertop;
+      cleanertop.JetRecorrector(m_correctortop,true,true);
+    }
+
+    //apply toptag jet energy corrections
+    if(m_TopTagJetCollection.size()>0 && m_correctortoptag){
+      Cleaner cleanertoptag;
+      cleanertoptag.JetRecorrector(m_correctortoptag,true,false,false,true);
+    }
+
+    //apply higgstag jet energy corrections
+    if(m_HiggsTagJetCollection.size()>0&& m_correctorhiggstag){
+      Cleaner cleanerhiggstag;
+      cleanerhiggstag.JetRecorrector(m_correctorhiggstag,true,false,false,false,true);
+    }
+
 }
 
 

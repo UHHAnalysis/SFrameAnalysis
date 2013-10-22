@@ -13,13 +13,19 @@ sed -i "s|Example|${ANALYSISNAME}|g" src/*cxx
 sed -i "s|Example|${ANALYSISNAME}|g" proof/SETUP.C
 sed -i "s|Example|${ANALYSISNAME}|g" Makefile
 sed -i "s|Example|${ANALYSISNAME}|g" config/ExampleCycle_config.xml
+sed -i "s|Example|${ANALYSISNAME}|g" config/ExampleCycleNew_config.xml
 
 mv include/ExampleHists.h include/${ANALYSISNAME}Hists.h
+mv include/ExampleHistsNew.h include/${ANALYSISNAME}HistsNew.h
 mv include/ExampleCycle.h include/${ANALYSISNAME}Cycle.h
+mv include/ExampleCycleNew.h include/${ANALYSISNAME}CycleNew.h
 mv src/ExampleHists.cxx src/${ANALYSISNAME}Hists.cxx
 mv src/ExampleCycle.cxx src/${ANALYSISNAME}Cycle.cxx
+mv src/ExampleHistsNew.cxx src/${ANALYSISNAME}HistsNew.cxx
+mv src/ExampleCycleNew.cxx src/${ANALYSISNAME}CycleNew.cxx
 mv config/ExampleCycle_config.xml config/${ANALYSISNAME}_config.xml
 mv include/ExampleAnalysis_LinkDef.h include/${ANALYSISNAME}Analysis_LinkDef.h
+mv config/ExampleCycleNew_config.xml config/${ANALYSISNAME}New_config.xml
 
 if [ "$#" -eq 2 ] ; then
     

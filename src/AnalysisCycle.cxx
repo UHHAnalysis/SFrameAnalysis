@@ -1,8 +1,6 @@
 // $Id: AnalysisCycle.cxx,v 1.42 2013/06/19 14:04:46 jott Exp $
-
 #include <iostream>
-
-using namespace std;
+#include <stdint.h>
 
 #include "include/AnalysisCycle.h"
 #include "include/SelectionModules.h"
@@ -12,6 +10,8 @@ using namespace std;
 
 #include "core/include/STreeType.h"
 #include "core/include/SCycleStatistics.h"
+
+using namespace std;
 
 ClassImp( AnalysisCycle );
 
@@ -241,6 +241,10 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_sys_unc = e_TauSF;
 	isok = true;
       }
+      if (m_sys_unc_name=="TauEleSF"){
+	m_sys_unc = e_TauEleSF;
+	isok = true;
+      }
       if (m_sys_unc_name=="TauEffSF"){
 	m_sys_unc = e_TauEffSF;
 	isok = true;
@@ -344,7 +348,14 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_lsf->DoDownVarTauSF();
       } 
     }
-       if (m_sys_unc == e_TauEffSF){
+    if (m_sys_unc == e_TauEleSF){
+      if(m_sys_var == e_Up){
+	m_lsf->DoUpVarTauEleSF();
+      } else {
+	m_lsf->DoDownVarTauEleSF();
+      } 
+    }
+    if (m_sys_unc == e_TauEffSF){
       if(m_sys_var == e_Up){
 	m_lsf->DoUpVarTauEffSF();
       } else {

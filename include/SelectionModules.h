@@ -613,4 +613,41 @@ private:
 
 };
 
+class NoSelection: public SelectionModule {
+ public:
+  explicit NoSelection(bool no_sel=true);
+  ~NoSelection(){};
+
+  virtual bool pass(EventCalc & );
+  virtual std::string description();
+
+ private:
+  bool m_no_sel;
+
+};
+class FakeTauSelectionElectron: public SelectionModule {
+
+public:
+    FakeTauSelectionElectron();
+    ~FakeTauSelectionElectron(){};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:   
+
+};
+class OneProngTauSelection: public SelectionModule {
+public:
+    OneProngTauSelection();
+    ~OneProngTauSelection(){};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:   
+
+};
+
+
 #endif

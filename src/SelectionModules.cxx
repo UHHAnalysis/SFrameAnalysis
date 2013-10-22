@@ -1342,5 +1342,20 @@ std::string GenTauSelection::description()
   return s;
 }
 
+NoSelection::NoSelection(bool no_sel)
+{
+  m_no_sel=no_sel;
+}
 
+bool NoSelection::pass(EventCalc &)
+{
+  if (m_no_sel) return true;
+  return false;
+}
 
+std::string NoSelection::description()
+{
+  char s[100];
+  sprintf(s, "all");
+  return s;
+}

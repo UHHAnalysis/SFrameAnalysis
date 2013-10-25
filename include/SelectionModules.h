@@ -613,7 +613,20 @@ private:
 
 };
 
+class NoSelection: public SelectionModule {
+ public:
+  explicit NoSelection(bool no_sel=true);
+  ~NoSelection(){};
+
+  virtual bool pass(EventCalc & );
+  virtual std::string description();
+
+ private:
+  bool m_no_sel;
+
+};
 class FakeTauSelectionElectron: public SelectionModule {
+
 public:
     FakeTauSelectionElectron();
     ~FakeTauSelectionElectron(){};

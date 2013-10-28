@@ -25,6 +25,7 @@ AnalysisCycle::AnalysisCycle()
     SetLogName( GetName() );
 
     m_puwp = NULL;
+    m_tpr = NULL;
     m_newrun = false;
     m_lsf = NULL;
     m_pdfweights=NULL;
@@ -78,6 +79,9 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "JECTopJetCollection" , m_JECTopJetCollection);
     DeclareProperty( "JECTopTagJetCollection" , m_JECTopTagJetCollection);
     DeclareProperty( "JECHiggsTagJetCollection" , m_JECHiggsTagJetCollection);
+
+    //top pag pt reweighting mode
+    DeclareProperty( "toppagptweight", m_toppagptweight);
 
     // steerable properties for the Pile-up reweighting
     DeclareProperty( "PU_Filename_MC" , m_PUFilenameMC);
@@ -212,6 +216,12 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         m_puwp = new PUWeightProducer(m_PUFilenameMC, m_PUFilenameData, m_PUHistnameMC, m_PUHistnameData);
     } else {
         m_puwp = NULL;
+    }
+
+    //toppag pt re-weighting
+    if((m_toppagptweight.size()>0)&&(strcasecmp( inputData.GetVersion(), "ttbar" )>=0)&&(m_addGenInfo==true)){
+      m_logger << INFO << "Top PAG pt re-weighting will be performed" << SLogger::endmsg;
+      m_tpr = new TopPtReweight();
     }
 
     // check if the settings for the systematic uncertainty make sense
@@ -609,6 +619,7 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     delete m_lsf;
     delete m_pdfweights;
     delete m_puwp;
+    delete m_tpr;
     delete m_corrector;
     delete m_correctortop;
     delete m_correctortoptag;
@@ -725,6 +736,22 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
             // set the weight in the eventcalc
             calc -> ProduceWeight(pu_weight);
         }
+
+	if(m_tpr){
+	  double tpr_weight=m_tpr->GetScaleWeight();
+	  if(m_toppagptweight=="mean"||m_toppagptweight=="Mean"||m_toppagptweight=="MEAN"){
+	    calc -> ProduceWeight(tpr_weight);
+	  }
+	  else if(m_toppagptweight=="up"||m_toppagptweight=="Up"||m_toppagptweight=="UP"){
+	    calc -> ProduceWeight(tpr_weight*tpr_weight);
+	  }
+	  else if(m_toppagptweight=="down"||m_toppagptweight=="Down"||m_toppagptweight=="DOWN"){
+	    calc -> ProduceWeight(1.);
+	  }
+	  else{
+	    m_logger << ERROR << "Wrong identifier for Top PAG pt re-weighting!!! Accepted only: mean, up, down!" << SLogger::endmsg;
+	  }
+	}
 
         //lepton scale factor
         if(m_lsf) {

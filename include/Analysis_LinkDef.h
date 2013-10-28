@@ -33,6 +33,6 @@
 //#pragma link C++ class TriggerEffiCycle+;
 //#pragma link C++ class ZSelectionCycle+;
 #pragma link C++ class PDFWeightsCycle+;
-
+#pragma link C++ class TopPtReweight+;
 
 #endif // __CINT__

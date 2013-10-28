@@ -15,6 +15,7 @@
 #include "SFrameTools/JetMETObjects/interface/FactorizedJetCorrector.h"
 #include "SFrameTools/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "SFrameTools/JetMETObjects/interface/JetCorrectionUncertainty.h"
+#include "TopPtReweight.h"
 
 /**
  *   @short Base of every analysis cycle 
@@ -114,6 +115,9 @@ protected:
   std::string m_JECTopTagJetCollection;
   std::string m_JECHiggsTagJetCollection;
 
+  //top pag pt reweighting mode
+  std::string m_toppagptweight;
+
   // Luminosity property used to define the trigger
   // use in the analysis
   std::string m_lumi_trigger;
@@ -150,6 +154,9 @@ protected:
   FactorizedJetCorrector* m_correctortoptag;
   FactorizedJetCorrector* m_correctorhiggstag;
   JetCorrectionUncertainty* m_jes_unc;
+
+  //toppagptreweighting
+  TopPtReweight * m_tpr;
 
 private:
 

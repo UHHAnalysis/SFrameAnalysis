@@ -16,7 +16,7 @@
 #include "SFrameTools/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "SFrameTools/JetMETObjects/interface/JetCorrectionUncertainty.h"
 #include "TopPtReweight.h"
-
+#include "HEPTopTaggerReweightTPrime.h"
 /**
  *   @short Base of every analysis cycle 
  *          This is the mother of every analysis cycle.
@@ -117,6 +117,9 @@ protected:
 
   //top pag pt reweighting mode
   std::string m_toppagptweight;
+  
+  //top SF reweighting mode
+  std::string m_TopTaggingSFMode;
 
   // Luminosity property used to define the trigger
   // use in the analysis
@@ -157,6 +160,9 @@ protected:
 
   //toppagptreweighting
   TopPtReweight * m_tpr;
+
+  //toptagsfreweighting
+  HEPTopTaggerReweightTPrime * m_hepsf;
 
 private:
 

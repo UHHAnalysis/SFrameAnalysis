@@ -763,7 +763,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 	}
 
 	//fill pointers to genjet
-	if(calc->GetJets()){
+	if(calc->GetJets() && calc->GetGenJets()){
 	  for(unsigned int i=0; i<calc->GetJets()->size(); ++i){
 	    calc->GetJets()->at(i).set_genjet(calc->GetGenJets());
 	  }

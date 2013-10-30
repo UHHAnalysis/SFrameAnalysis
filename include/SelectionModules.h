@@ -218,7 +218,7 @@ class NHEPTopTagSelection: public SelectionModule{
 // Selects events with b-tagged subjet in the HEPTopTagged jets
 class NHEPTopAndSubBTagSelection: public SelectionModule{
  public:
-  NHEPTopAndSubBTagSelection(int min_nheptoptag, int max_nheptoptag, E_BtagType type);
+  NHEPTopAndSubBTagSelection(int min_nheptoptag, int max_nheptoptag, E_BtagType type, TString mode="default", TString filename="");
   ~NHEPTopAndSubBTagSelection(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -228,12 +228,13 @@ class NHEPTopAndSubBTagSelection: public SelectionModule{
   int m_min_nheptoptag;
   int m_max_nheptoptag;
   E_BtagType m_type;
-  
+   TString m_mode;
+  TString m_filename;
 };
 
 class HEPTopAndSubBTagPlusOtherHiggsTag: public SelectionModule{
  public:
-  HEPTopAndSubBTagPlusOtherHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3);
+  HEPTopAndSubBTagPlusOtherHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode="default", TString filename="");
   ~HEPTopAndSubBTagPlusOtherHiggsTag(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -243,6 +244,8 @@ class HEPTopAndSubBTagPlusOtherHiggsTag: public SelectionModule{
   E_BtagType m_type1;
   E_BtagType m_type2;
   E_BtagType m_type3;
+ TString m_mode;
+  TString m_filename;
 };
 
 

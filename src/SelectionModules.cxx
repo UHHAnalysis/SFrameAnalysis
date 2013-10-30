@@ -412,11 +412,12 @@ std::string NHEPTopTagSelection::description(){
   return s;
 }
 
-NHEPTopAndSubBTagSelection::NHEPTopAndSubBTagSelection(int min_nheptoptag, int max_nheptoptag, E_BtagType type){
+NHEPTopAndSubBTagSelection::NHEPTopAndSubBTagSelection(int min_nheptoptag, int max_nheptoptag, E_BtagType type,  TString mode, TString filename){
   m_min_nheptoptag = min_nheptoptag;
   m_max_nheptoptag = max_nheptoptag; 
   m_type = type;
-  cout << m_type << " step4" << endl;
+ m_mode = mode;
+  m_filename = filename;
 }
 
 bool NHEPTopAndSubBTagSelection::pass(BaseCycleContainer *bcc){
@@ -425,7 +426,7 @@ bool NHEPTopAndSubBTagSelection::pass(BaseCycleContainer *bcc){
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
     if(bcc->topjets->at(i).pt()<ptcut) continue;
     TopJet topjet =  bcc->topjets->at(i);
-    if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, m_type)>=1) nheptoptag++;
+    if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, m_type,  m_mode, m_filename)>=1) nheptoptag++;
   }
   if(nheptoptag<m_min_nheptoptag) return false;
   if(nheptoptag>m_max_nheptoptag) return false;
@@ -442,10 +443,12 @@ std::string NHEPTopAndSubBTagSelection::description(){
 
 
 //selects events with one jet with a heptoptag and a b-tagged sub-jet and another jet that is higgs-tagged
-HEPTopAndSubBTagPlusOtherHiggsTag::HEPTopAndSubBTagPlusOtherHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3){
+HEPTopAndSubBTagPlusOtherHiggsTag::HEPTopAndSubBTagPlusOtherHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3,  TString mode, TString filename){
    m_type1 = type1; //to be used in top-tag
    m_type2 = type2; //to be used in higgs-tag
    m_type3 = type3; //to be used in higgs-tag
+ m_mode = mode;
+  m_filename = filename;
 }
 
 bool HEPTopAndSubBTagPlusOtherHiggsTag::pass(BaseCycleContainer *bcc){
@@ -457,11 +460,11 @@ bool HEPTopAndSubBTagPlusOtherHiggsTag::pass(BaseCycleContainer *bcc){
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
     if(bcc->topjets->at(i).pt()<ptcut) continue;
     TopJet topjet =  bcc->topjets->at(i);
-    if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, m_type1)>=1){
+    if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, m_type1, m_mode, m_filename)>=1){
       nheptoptag++;
       topTaggedJets.push_back(i);
     }
-    if (HiggsTag(topjet, m_type2, m_type3)){
+    if (HiggsTag(topjet, m_type2, m_type3, m_mode, m_filename)){
       nhiggstag++;
       HiggsTaggedJets.push_back(i);
     }

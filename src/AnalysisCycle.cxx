@@ -26,6 +26,7 @@ AnalysisCycle::AnalysisCycle()
 
     m_puwp = NULL;
     m_tpr = NULL;
+    m_hepsf = NULL;
     m_newrun = false;
     m_lsf = NULL;
     m_pdfweights=NULL;
@@ -82,6 +83,9 @@ AnalysisCycle::AnalysisCycle()
 
     //top pag pt reweighting mode
     DeclareProperty( "toppagptweight", m_toppagptweight);
+
+    //top-tagging sf reweighting mode
+    DeclareProperty( "TopTaggingSFMode", m_TopTaggingSFMode);
 
     // steerable properties for the Pile-up reweighting
     DeclareProperty( "PU_Filename_MC" , m_PUFilenameMC);
@@ -224,6 +228,12 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       m_tpr = new TopPtReweight();
     }
 
+    //top-tagging sf re-weighting
+    if((m_TopTaggingSFMode.size()>0)&&((strcasecmp( inputData.GetVersion(), "ttbar" )>=0)||(strcasecmp( inputData.GetVersion(), "TP")>=0))&&(m_addGenInfo==true)){
+      m_logger << INFO << "HepTopTagger scale factors re-weighting will be performed" << SLogger::endmsg;
+      m_hepsf = new HEPTopTaggerReweightTPrime();
+    }
+ 
     // check if the settings for the systematic uncertainty make sense
     if(m_sys_unc_name.size()>0){
       bool isok = false;
@@ -620,6 +630,7 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     delete m_pdfweights;
     delete m_puwp;
     delete m_tpr;
+    delete m_hepsf;
     delete m_corrector;
     delete m_correctortop;
     delete m_correctortoptag;
@@ -753,6 +764,21 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 	  }
 	}
 
+	if(m_hepsf){
+	  if(m_TopTaggingSFMode=="mean"||m_TopTaggingSFMode=="Mean"||m_TopTaggingSFMode=="MEAN"){
+	    calc -> ProduceWeight(m_hepsf->GetScaleWeight(0));
+	  }
+	  else if(m_TopTaggingSFMode=="down"||m_TopTaggingSFMode=="Down"||m_TopTaggingSFMode=="DOWN"){
+	    calc -> ProduceWeight(m_hepsf->GetScaleWeight(-1));
+	  }
+	  else if(m_TopTaggingSFMode=="up"||m_TopTaggingSFMode=="Up"||m_TopTaggingSFMode=="UP"){
+	    calc -> ProduceWeight(m_hepsf->GetScaleWeight(+1));
+	  }
+	  else{
+	    m_logger << ERROR << "Wrong identifier for Top-tag SF re-weighting!!! Accepted only: mean, up, down!" << SLogger::endmsg;
+	  }
+	}
+
         //lepton scale factor
         if(m_lsf) {
 	  calc->ProduceWeight(m_lsf->GetWeight());
@@ -763,7 +789,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 	}
 
 	//fill pointers to genjet
-	if(calc->GetJets()){
+	if(calc->GetJets() && calc->GetGenJets()){
 	  for(unsigned int i=0; i<calc->GetJets()->size(); ++i){
 	    calc->GetJets()->at(i).set_genjet(calc->GetGenJets());
 	  }

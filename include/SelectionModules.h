@@ -12,6 +12,93 @@
 #include <algorithm>
 #include <memory>
 
+class NAntiMuonTopJetsSelection: public SelectionModule {
+public:
+
+  NAntiMuonTopJetsSelection(int min_ntops, int max_ntops=int_infinity(), double ptmin=0., double etamax=double_infinity());
+    ~NAntiMuonTopJetsSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    int m_min_ntops;
+    int m_max_ntops;
+    double m_ptmin;
+    double m_etamax;
+
+};
+
+class NAntiMuonHEPTopSelection: public SelectionModule {
+public:
+
+  NAntiMuonHEPTopSelection(int min_nbtag, int max_nbtag=int_infinity(), double ptmin=0., double etamax=double_infinity() );
+    ~NAntiMuonHEPTopSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    int m_min_nbtag;
+    int m_max_nbtag;
+    double m_ptmin;
+    double m_etamax;
+};
+
+class NAntiMuonSubBTagSelection: public SelectionModule {
+public:
+
+  NAntiMuonSubBTagSelection(int min_nbtag, int max_nbtag=int_infinity(), E_BtagType type=e_CSVM, double ptmin=0., double etamax=double_infinity() , TString filename="");
+    ~NAntiMuonSubBTagSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    int m_min_nbtag;
+    int m_max_nbtag;
+    E_BtagType m_type;
+    double m_ptmin;
+    double m_etamax;
+    std::string m_filename;
+};
+
+
+class NAntiMuonHEPBTagSelection: public SelectionModule {
+public:
+
+  NAntiMuonHEPBTagSelection(int min_nbtag, int max_nbtag=int_infinity(), E_BtagType type=e_CSVM, double ptmin=0., double etamax=double_infinity() );
+    ~NAntiMuonHEPBTagSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    int m_min_nbtag;
+    int m_max_nbtag;
+    E_BtagType m_type;
+    double m_ptmin;
+    double m_etamax;
+};
+
+
+class NMuonBTagSelection: public SelectionModule {
+public:
+
+  NMuonBTagSelection(int min_nbtag, int max_nbtag=int_infinity(), E_BtagType type=e_CSVM, double ptmin=0., double etamax=double_infinity() );
+    ~NMuonBTagSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    int m_min_nbtag;
+    int m_max_nbtag;
+    E_BtagType m_type;
+    double m_ptmin;
+    double m_etamax;
+};
+
 class TriggerSelection: public SelectionModule {
 public:
     TriggerSelection(std::string);

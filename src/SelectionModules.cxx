@@ -944,6 +944,29 @@ std::string HTCut::description(){
 }
 
 
+HThadCut::HThadCut(double ptmin_jet, double etamax_jet, double min_ht, double max_ht){
+  m_ptmin_jet = ptmin_jet;
+  m_etamax_jet = etamax_jet;
+  m_min_ht = min_ht;
+  m_max_ht = max_ht;
+}
+
+bool HThadCut::pass(BaseCycleContainer *bcc){
+  EventCalc* calc = EventCalc::Instance();
+  double hthad = calc->GetHThad(m_ptmin_jet, m_etamax_jet);
+  if( hthad < m_min_ht) return false;
+  if( hthad > m_max_ht) return false;
+  return true;
+
+}
+
+std::string HThadCut::description(){
+  char s[100];
+  sprintf(s, "%.1f GeV < HThad < %.1f GeV for jets with pt > %.1f GeV, abs(eta) < %.1f",m_min_ht,m_max_ht,m_ptmin_jet, m_etamax_jet);
+  return s;
+}
+
+
 NWTagSelection::NWTagSelection(int min_nwtag, int max_nwtag)
 {
     m_min_nwtag=min_nwtag;
@@ -1673,5 +1696,24 @@ std::string OneProngTauSelection::description()
 {
   char s[500];
   sprintf(s, "found a one prong tau decay");
+  return s;
+}
+
+
+HadronicEventSelection::HadronicEventSelection()
+{
+}
+
+bool HadronicEventSelection::pass(BaseCycleContainer* bcc)
+{
+   if( bcc->electrons->size() == 0 && bcc->muons->size() == 0 ) return true;
+
+   return false;
+}
+
+std::string HadronicEventSelection::description()
+{
+  char s[500];
+  sprintf(s, "veto events with isolated electrons and muons");
   return s;
 }

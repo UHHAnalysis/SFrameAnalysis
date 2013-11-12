@@ -412,6 +412,21 @@ class HTCut: public SelectionModule{
   double m_max_ht;
 };
 
+class HThadCut: public SelectionModule{
+ public:
+   HThadCut(double ptmin_jet,double etamax_jet, double min_ht, double max_ht=double_infinity());
+  ~HThadCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+   double m_ptmin_jet;
+   double m_etamax_jet;
+   double m_min_ht;
+   double m_max_ht;
+};
+
 class NWTagSelection: public SelectionModule {
 public:
     NWTagSelection(int min_nwtag, int max_nwtag=int_infinity());
@@ -733,6 +748,18 @@ public:
     virtual std::string description();
 
 private:   
+
+};
+
+class HadronicEventSelection: public SelectionModule {
+public:
+   HadronicEventSelection();
+   ~HadronicEventSelection(){};
+
+   virtual bool pass(BaseCycleContainer*);
+   virtual std::string description();
+
+private:  
 
 };
 

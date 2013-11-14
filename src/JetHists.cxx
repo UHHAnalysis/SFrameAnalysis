@@ -46,15 +46,15 @@ void JetHists::Init()
   Book( TH1F( "eta","#eta all jets", 50,-3,3));
   Book( TH1F( "phi","#phi all jets", 50, -M_PI, M_PI));
   
-  Book( TH1F( "pt_jet1", "p_{T}^{jet 1} [GeV/c]", 50, 0,1000 ) );
+  Book( TH1F( "pt_jet1", "p_{T}^{jet 1} [GeV/c]", 50, 0,2000 ) );
   Book( TH1F( "pt_jet1_lx", "p_{T}^{jet 1} [GeV/c]", 50, logPtjet1_bins ) );
   Book( TH1F( "pt_jet1_lxy", "p_{T}^{jet 1} [GeV/c]", 50, logPtjet1_bins ) );
   Book( TH1F( "pt_jet1_ly", "p_{T}^{jet 1} [GeV/c]", 50, logPtjet1_bins ) );
-  Book( TH1F( "pt_jet2", "p_{T}^{jet 2} [GeV/c]", 50, 0,1000 ) );
+  Book( TH1F( "pt_jet2", "p_{T}^{jet 2} [GeV/c]", 50, 0,2000 ) );
   Book( TH1F( "pt_jet2_lx", "p_{T}^{jet 2} [GeV/c]", 50, logPtjet2_bins ) );
   Book( TH1F( "pt_jet2_ly", "p_{T}^{jet 2} [GeV/c]", 50, logPtjet2_bins ) );
   Book( TH1F( "pt_jet2_lxy", "p_{T}^{jet 2} [GeV/c]", 50, logPtjet2_bins ) );
-  Book( TH1F( "pt_jet3", "p_{T}^{jet 3} [GeV/c]", 50, 0,1000 ) );
+  Book( TH1F( "pt_jet3", "p_{T}^{jet 3} [GeV/c]", 50, 0,2000 ) );
   Book( TH1F( "pt_jet3_lx", "p_{T}^{jet 3} [GeV/c]", 50, logPtjet3_bins ) );
   Book( TH1F( "pt_jet3_ly", "p_{T}^{jet 3} [GeV/c]", 50, logPtjet3_bins ) );
   Book( TH1F( "pt_jet3_lxy", "p_{T}^{jet 3} [GeV/c]", 50, logPtjet3_bins ) );

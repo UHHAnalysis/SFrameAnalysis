@@ -35,7 +35,7 @@ void Cleaner::resetEventCalc()
 
 void Cleaner::JetEnergyResolutionShifter(bool sort)
 {
-
+  cout <<"in Jet energy resolution shifter"<<endl;
     LorentzVector met(0,0,0,0);
     if(bcc->met) {
         met = bcc->met->v4();
@@ -43,15 +43,15 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
 
     for(unsigned int i=0; i<bcc->jets->size(); ++i) {
 
-      //std::cout << "ResolutionShifter start: Jet " << i << ", pt = " << bcc->jets->at(i).pt() << " correction factor = " << 1./bcc->jets->at(i).JEC_factor_raw() <<  std::endl;
+      std::cout << "ResolutionShifter start: Jet " << i << ", pt = " << bcc->jets->at(i).pt() << " correction factor = " << 1./bcc->jets->at(i).JEC_factor_raw() <<  std::endl;
 
         float genpt = bcc->jets->at(i).genjet_pt();
         //ignore unmatched jets (which have zero vector) or jets with very low pt:
         if(genpt < 15.0) {
-            // std::cout << "1.0 | " <<  bcc->jets->at(i).pt()  << " | " << bcc->jets->at(i).eta() << " | " << genpt << std::endl;
+            std::cout << "1.0 | " <<  bcc->jets->at(i).pt()  << " | " << bcc->jets->at(i).eta() << " | " << genpt << std::endl;
             continue;
         }
-
+	cout <<"after genjet matching"<<endl;
         LorentzVector jet_v4 =  bcc->jets->at(i).v4();
 
         LorentzVector jet_v4_raw = jet_v4*bcc->jets->at(i).JEC_factor_raw();
@@ -64,6 +64,7 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
 
         //numbers taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
         if(m_jervar==e_Default) {
+	  cout <<"in Default"<<endl;
             if(abseta < 0.5)
                 factor = 0.052;
             else if(abseta >= 0.5 && abseta <1.1)
@@ -77,6 +78,7 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
             else
                 factor = 0.288;
         } else if(m_jervar==e_Up) {
+	  cout <<"in JER Up"<<endl;
             if(abseta < 0.5)
                 factor = 0.115;
             else if(abseta >= 0.5 && abseta <1.1)
@@ -88,6 +90,7 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
             else if(abseta >= 2.3)
                 factor = 0.488;
         } else if(m_jervar==e_Down) {
+	   cout <<"in JER Down"<<endl;
             if(abseta < 0.5)
                 factor = -0.01;
             else if(abseta >= 0.5 && abseta <1.1)

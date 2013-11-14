@@ -23,23 +23,146 @@
 <!ENTITY RSG3000 SYSTEM "RSG_3000.xml">
 <!ENTITY RSG3500 SYSTEM "RSG_3500.xml">
 <!ENTITY RSG4000 SYSTEM "RSG_4000.xml">
+<!ENTITY LQ200 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M200.xml">
+<!ENTITY LQ250 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M250.xml">
+<!ENTITY LQ300 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M300.xml">
+<!ENTITY LQ350 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M350.xml">
+<!ENTITY LQ400 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M400.xml">
+<!ENTITY LQ450 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M450.xml">
+<!ENTITY LQ500 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M500.xml">
+<!ENTITY LQ550 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M550.xml">
+<!ENTITY LQ600 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M600.xml">
+<!ENTITY LQ650 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M650.xml">
+<!ENTITY LQ700 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M700.xml">
+<!ENTITY LQ750 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M750.xml">
+<!ENTITY LQ800 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M800.xml">
+<!ENTITY LQ850 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M850.xml">
+<!ENTITY LQ900 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M900.xml">
+<!ENTITY LQ950 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M950.xml">
+<!ENTITY LQ1000 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M1000.xml">
 ]>
 
 <JobConfiguration JobName="PDFWeightsCycleJob" OutputLevel="DEBUG">
 	<Library Name="libfastjet" />
 	<Library Name="libfastjettools" />
 	<Library Name="libSFrameTools" />
+        <Library Name="libJetMETObjects" />
+
 	<Library Name="libAnalysis" />
-	<Library Name="libSFramePlugIns" />
+        <Library Name="libNtuple" />
+
 
 	<Package Name="SFrameCore.par" />
 	<Package Name="SFramePlugIns.par" />
 	<Package Name="SFrameTools.par" />
 	<Package Name="Analysis.par" />
 
-	<Cycle Name="PDFWeightsCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/peiffer/Analysis53X/PDFWeightFiles/" PostFix="" TargetLumi="1" > 
+	<Cycle Name="PDFWeightsCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/mameyer/PDFWeightFiles/" PostFix="" TargetLumi="1" > 
 
-	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZP500w5" Cacheable="True">
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ200" Cacheable="False">
+		        &LQ200;
+		        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData> 
+		 
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ250" Cacheable="False">
+		        &LQ250;
+		        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData> 
+		
+ 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ300" Cacheable="False">
+	                &LQ300;
+		        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData> 
+		
+ 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ350" Cacheable="False">
+	                &LQ350;
+		        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData> 
+                 
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ400" Cacheable="False">
+	                &LQ400;
+			<InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData> 
+		
+ 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ450" Cacheable="False">
+		        &LQ450; 
+                        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData> 
+                
+ 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ500" Cacheable="False">
+		        &LQ500;
+                        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData>  
+                
+ 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ550" Cacheable="False">
+		        &LQ550;
+                        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData>     	 
+                
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ600" Cacheable="False">
+	                &LQ600;
+                        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
+                
+         	<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ650" Cacheable="False">
+	                &LQ650;
+                        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData> 
+                
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ700" Cacheable="False">
+	                &LQ700;
+                        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData>  
+                
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ750" Cacheable="False">
+	                &LQ750;
+                        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData>  
+                
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ800" Cacheable="False">
+	                &LQ800;
+                        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData> 
+                
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ850" Cacheable="False">
+	                &LQ850;
+                        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData> 
+                
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ900" Cacheable="False">
+	                &LQ900;
+                        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData> 
+                
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ950" Cacheable="False">
+	                &LQ950;
+                        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData> 
+                
+		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ1000" Cacheable="False">
+	                &LQ1000;
+                        <InputTree Name="AnalysisTree" />
+			<OutputTree Name="AnalysisTree" />
+		</InputData>
+
+
+	 <!--       <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZP500w5" Cacheable="True">
                         &ZP500w5;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
@@ -102,10 +225,10 @@
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZP4000w400" Cacheable="True">
                         &ZP4000w400;
 			<InputTree Name="AnalysisTree" /> 
-		</InputData> 
-<!--
+		</InputData> -->
 
-		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ150" Cacheable="False">
+
+<!--		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ150" Cacheable="False">
 		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ150/Ntuple_1_1_HSR.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
@@ -209,7 +332,7 @@
 -->
 
 		<UserConfig>
-
+		<Item Name="addGenInfo" Value="True" />
 		<Item Name="PDFName" Value="cteq66" /> 		
 
 		</UserConfig>

@@ -89,6 +89,7 @@ class Cleaner{
 
   void ElectronCleaner(double ptmin=0, double etamax=9999, double relisomax=0.1, bool reverseID = false, bool reverseIso = false);
   void MuonCleaner(double ptmin=0, double etamax=9999, double relisomax=0.125);
+  void MuonCleanerHalil(double ptmin=0, double etamax=9999, double relisomax=0.125);
   void ElectronCleaner_noIso(double ptmin=0, double etamax=9999, bool reverseID = false);
   void MuonCleaner_noIso(double ptmin=0, double etamax=9999);
   void MuonCleaner_Loose(double ptmin=0, double etamax=9999);
@@ -96,6 +97,7 @@ class Cleaner{
   void MuonCleaner_noID_noIso(double ptmin=0, double etamax=9999);
   void TauCleaner_noIso(double ptmin=0, double etamax=9999);
   void TauCleaner(double ptmin=0, double etamax=9999);
+  void TauCleanerHalil(double ptmin=0, double etamax=9999);
   void TauCleanerDecayModeFinding(double ptmin=0, double etamax=9999);
   void JetCleaner(double ptmin=0, double etamax=9999, bool doPFID=true);
   void TopJetCleaner(double ptmin=0, double etamax=9999, bool doPFID=true);

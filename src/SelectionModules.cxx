@@ -1,6 +1,276 @@
 #include "include/SelectionModules.h"
 #include "TLorentzVector.h"
 
+NAntiMuonTopJetsSelection::NAntiMuonTopJetsSelection(int min_ntops, int max_ntops, double ptmin, double etamax )
+{
+  m_min_ntops=min_ntops;
+  m_max_ntops=max_ntops;
+  m_ptmin=ptmin;
+  m_etamax=etamax;
+}
+
+bool NAntiMuonTopJetsSelection::pass(BaseCycleContainer *bcc)
+{
+    int ntops=0;
+
+    //Assumes to have only one muon
+    if(bcc->muons->size() != 1){
+      std::cout << "ATTENTION!!! muon size " << bcc->muons->size() << std::endl;
+    }
+    
+    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
+
+      double deltaphi=bcc->topjets->at(i).deltaPhi(bcc->muons->at(0));
+      
+      if((deltaphi>(2*PI/3))&&(bcc->topjets->at(i).pt()>m_ptmin)&&(fabs(bcc->topjets->at(i).eta())<m_etamax)){
+	
+	ntops++;
+	
+      }
+      
+    }
+    
+    if(ntops<m_min_ntops) return false;
+    if(ntops>m_max_ntops) return false;
+    return true;
+}
+
+std::string NAntiMuonTopJetsSelection::description()
+{
+    char s[100];
+    sprintf(s, "%d <= number of top-jets in the muon anti-hemisphere <= %d",m_min_ntops,m_max_ntops);
+    return s;
+}
+
+NAntiMuonHEPBTagSelection::NAntiMuonHEPBTagSelection(int min_nbtag, int max_nbtag, E_BtagType type, double ptmin, double etamax )
+{
+  m_min_nbtag=min_nbtag;
+  m_max_nbtag=max_nbtag;
+  m_type=type;
+  m_ptmin=ptmin;
+  m_etamax=etamax;
+}
+
+bool NAntiMuonHEPBTagSelection::pass(BaseCycleContainer *bcc)
+{
+    int nbtag=0;
+
+    //Assumes to have only one muon
+
+    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
+
+      if(!(HepTopTag(bcc->topjets->at(i)))) continue;
+
+      int jettagged=0;
+
+      std::vector<Particle> subjets_top;
+      std::vector<float> btagsub_combinedSecondaryVertex_top;
+      subjets_top=bcc->topjets->at(i).subjets();
+      btagsub_combinedSecondaryVertex_top=bcc->topjets->at(i).btagsub_combinedSecondaryVertex();
+
+      float test=btagsub_combinedSecondaryVertex_top[2];
+      
+      if(m_type==e_CSVL && test>0.244) jettagged=1;
+      if(m_type==e_CSVM && test>0.679) jettagged=1;
+      if(m_type==e_CSVT && test>0.898) jettagged=1;
+      
+      test=btagsub_combinedSecondaryVertex_top[0];
+      
+      if(m_type==e_CSVL && test>0.244) jettagged=1;
+      if(m_type==e_CSVM && test>0.679) jettagged=1;
+      if(m_type==e_CSVT && test>0.898) jettagged=1;
+
+      test=btagsub_combinedSecondaryVertex_top[1];
+      
+      if(m_type==e_CSVL && test>0.244) jettagged=1;
+      if(m_type==e_CSVM && test>0.679) jettagged=1;
+      if(m_type==e_CSVT && test>0.898) jettagged=1;
+
+      if(bcc->muons->size() != 1){
+	std::cout << "ATTENTION!!! muon size " << bcc->muons->size() << std::endl;
+      }
+
+      double deltaphi=bcc->topjets->at(i).deltaPhi(bcc->muons->at(0));
+      
+      if(jettagged&&(deltaphi>(2*PI/3))&&(bcc->topjets->at(i).pt()>m_ptmin)&&(fabs(bcc->topjets->at(i).eta())<m_etamax)){
+
+	nbtag++;
+
+      }
+
+    }
+
+    if(nbtag<m_min_nbtag) return false;
+    if(nbtag>m_max_nbtag) return false;
+    return true;
+}
+
+std::string NAntiMuonHEPBTagSelection::description()
+{
+    char s[100];
+    sprintf(s, "%d <= number of hep-top-tagged jets with b-tagged b-hep-subjet in the muon anti-hemisphere <= %d",m_min_nbtag,m_max_nbtag);
+    return s;
+}
+
+NAntiMuonHEPTopSelection::NAntiMuonHEPTopSelection(int min_nbtag, int max_nbtag, double ptmin, double etamax )
+{
+    m_min_nbtag=min_nbtag;
+    m_max_nbtag=max_nbtag;
+    m_ptmin=ptmin;
+    m_etamax=etamax;
+}
+
+bool NAntiMuonHEPTopSelection::pass(BaseCycleContainer *bcc)
+{
+    int nbtag=0;
+
+    //Assumes to have only one muon
+
+    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
+      int jettagged=0;
+
+      if(HepTopTag(bcc->topjets->at(i))) jettagged=1;
+
+      if(bcc->muons->size() != 1){
+	std::cout << "ATTENTION!!! muon size " << bcc->muons->size() << std::endl;
+      }
+
+      double deltaphi=bcc->topjets->at(i).deltaPhi(bcc->muons->at(0));
+      
+      if(jettagged&&(deltaphi>(2*PI/3))&&(bcc->topjets->at(i).pt()>m_ptmin)&&(fabs(bcc->topjets->at(i).eta())<m_etamax)){
+
+	nbtag++;
+
+      }
+
+    }
+
+    if(nbtag<m_min_nbtag) return false;
+    if(nbtag>m_max_nbtag) return false;
+    return true;
+}
+
+std::string NAntiMuonHEPTopSelection::description()
+{
+    char s[100];
+    sprintf(s, "%d <= number of hep-top-tagged jets in the muon anti-hemisphere <= %d",m_min_nbtag,m_max_nbtag);
+    return s;
+}
+
+NAntiMuonSubBTagSelection::NAntiMuonSubBTagSelection(int min_nbtag, int max_nbtag, E_BtagType type, double ptmin, double etamax , TString filename)
+{
+    m_min_nbtag=min_nbtag;
+    m_max_nbtag=max_nbtag;
+    m_type=type;
+    m_ptmin=ptmin;
+    m_etamax=etamax;
+    m_filename=filename;
+}
+
+bool NAntiMuonSubBTagSelection::pass(BaseCycleContainer *bcc)
+{
+    int nbtag=0;
+
+    //Assumes to have only one muon
+
+    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
+      int jettagged=0;
+
+      std::vector<Particle> subjets_top;
+      std::vector<float> btagsub_combinedSecondaryVertex_top;
+      subjets_top=bcc->topjets->at(i).subjets();
+      btagsub_combinedSecondaryVertex_top=bcc->topjets->at(i).btagsub_combinedSecondaryVertex();
+
+      for(unsigned int j=0; j < btagsub_combinedSecondaryVertex_top.size(); ++j){
+
+	float test=btagsub_combinedSecondaryVertex_top[j];
+
+	if(m_type==e_CSVL && test>0.244) jettagged=1;
+	if(m_type==e_CSVM && test>0.679) jettagged=1;
+	if(m_type==e_CSVT && test>0.898) jettagged=1;
+	
+	if(m_filename!=""){
+
+	  jettagged=0;
+	  
+	  if(subJetBTagOne(bcc->topjets->at(i),m_type, "mean", m_filename, j)) jettagged=1;
+	}
+
+      }
+
+      if(bcc->muons->size() != 1){
+	std::cout << "ATTENTION!!! muon size " << bcc->muons->size() << std::endl;
+      }
+
+      double deltaphi=bcc->topjets->at(i).deltaPhi(bcc->muons->at(0));
+      
+      if(jettagged&&(deltaphi>(2*PI/3))&&(bcc->topjets->at(i).pt()>m_ptmin)&&(fabs(bcc->topjets->at(i).eta())<m_etamax)){
+
+	nbtag++;
+
+      }
+
+    }
+
+    if(nbtag<m_min_nbtag) return false;
+    if(nbtag>m_max_nbtag) return false;
+    return true;
+}
+
+std::string NAntiMuonSubBTagSelection::description()
+{
+    char s[100];
+    sprintf(s, "%d <= number of sub-b-tagged top jets in the muon anti-hemisphere <= %d",m_min_nbtag,m_max_nbtag);
+    return s;
+}
+
+NMuonBTagSelection::NMuonBTagSelection(int min_nbtag, int max_nbtag, E_BtagType type, double ptmin, double etamax )
+{
+    m_min_nbtag=min_nbtag;
+    m_max_nbtag=max_nbtag;
+    m_type=type;
+    m_ptmin=ptmin;
+    m_etamax=etamax;
+}
+
+bool NMuonBTagSelection::pass(BaseCycleContainer *bcc)
+{
+    int nbtag=0;
+
+    //Assumes to have only one muon
+
+    for(unsigned int i=0; i<bcc->jets->size(); ++i) {
+      int jettagged=0;
+      if(m_type==e_CSVL && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.244) jettagged=1;
+      if(m_type==e_CSVM && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.679) jettagged=1;
+      if(m_type==e_CSVT && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.898) jettagged=1;
+
+      if(bcc->muons->size() != 1){
+	std::cout << "ATTENTION!!! muon size " << bcc->muons->size() << std::endl;
+      }
+
+      double deltaphi=bcc->jets->at(i).deltaPhi(bcc->muons->at(0));
+      
+      if(jettagged&&(deltaphi<(2*PI/3))&&(bcc->jets->at(i).pt()>m_ptmin)&&(fabs(bcc->jets->at(i).eta())<m_etamax)){
+
+	nbtag++;
+
+      }
+
+    }
+
+    if(nbtag<m_min_nbtag) return false;
+    if(nbtag>m_max_nbtag) return false;
+    return true;
+}
+
+std::string NMuonBTagSelection::description()
+{
+    char s[100];
+    sprintf(s, "%d <= number of b-tags in the muon hemisphere <= %d",m_min_nbtag,m_max_nbtag);
+    return s;
+}
+
 TriggerSelection::TriggerSelection(std::string triggername)
 {
   m_name=triggername;
@@ -674,6 +944,29 @@ std::string HTCut::description(){
 }
 
 
+HThadCut::HThadCut(double ptmin_jet, double etamax_jet, double min_ht, double max_ht){
+  m_ptmin_jet = ptmin_jet;
+  m_etamax_jet = etamax_jet;
+  m_min_ht = min_ht;
+  m_max_ht = max_ht;
+}
+
+bool HThadCut::pass(BaseCycleContainer *bcc){
+  EventCalc* calc = EventCalc::Instance();
+  double hthad = calc->GetHThad(m_ptmin_jet, m_etamax_jet);
+  if( hthad < m_min_ht) return false;
+  if( hthad > m_max_ht) return false;
+  return true;
+
+}
+
+std::string HThadCut::description(){
+  char s[100];
+  sprintf(s, "%.1f GeV < HThad < %.1f GeV for jets with pt > %.1f GeV, abs(eta) < %.1f",m_min_ht,m_max_ht,m_ptmin_jet, m_etamax_jet);
+  return s;
+}
+
+
 NWTagSelection::NWTagSelection(int min_nwtag, int max_nwtag)
 {
     m_min_nwtag=min_nwtag;
@@ -1247,33 +1540,13 @@ bool SameSignCut::pass(BaseCycleContainer *bcc)
 {
   for(unsigned int i=0; i< bcc->muons->size(); ++i)
     {
-      Muon muon1 = bcc->muons->at(i);
-      for(unsigned int j=0; j< bcc->muons->size(); ++j)
-	{
-	  if (i!=j)
-	    {
-	      Muon muon2 = bcc->muons->at(j); 
-	      if (muon1.charge() == muon2.charge()) return true;
-	    }
-	}
+      Muon muon = bcc->muons->at(i);
       for(unsigned int j=0; j< bcc->taus->size(); ++j)
 	{
 	  Tau tau = bcc->taus->at(j);
-	  if (muon1.charge() == tau.charge()) return true;
+	  if (muon.charge() == tau.charge()) return true;
 	}
       
-    }
-  for(unsigned int i=0; i< bcc->taus->size(); ++i)
-    {
-      Tau tau1 = bcc->taus->at(i);
-      for(unsigned int j=0; j< bcc->taus->size(); ++j)
-	{
-	  if (i!=j)
-	    {
-	      Tau tau2 = bcc->taus->at(j); 
-	      if (tau1.charge() == tau2.charge()) return true;
-	    }
-	}
     }
   return false;
 }
@@ -1343,6 +1616,23 @@ std::string GenTauSelection::description()
   return s;
 }
 
+NoSelection::NoSelection(bool no_sel)
+{
+  m_no_sel=no_sel;
+}
+
+bool NoSelection::pass(EventCalc &)
+{
+  if (m_no_sel) return true;
+  return false;
+}
+
+std::string NoSelection::description()
+{
+  char s[100];
+  sprintf(s, "all");
+  return s;
+}
 
 FakeTauSelectionElectron::FakeTauSelectionElectron()
 { 
@@ -1386,5 +1676,24 @@ std::string OneProngTauSelection::description()
 {
   char s[500];
   sprintf(s, "found a one prong tau decay");
+  return s;
+}
+
+
+HadronicEventSelection::HadronicEventSelection()
+{
+}
+
+bool HadronicEventSelection::pass(BaseCycleContainer* bcc)
+{
+   if( bcc->electrons->size() == 0 && bcc->muons->size() == 0 ) return true;
+
+   return false;
+}
+
+std::string HadronicEventSelection::description()
+{
+  char s[500];
+  sprintf(s, "veto events with isolated electrons and muons");
   return s;
 }

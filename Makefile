@@ -1,5 +1,3 @@
-# test compiler version and complain if not recent enough:
-
 # Package information
 LIBRARY = Analysis
 OBJDIR  = obj
@@ -13,17 +11,10 @@ INCDIR  = include
 #INCLUDES += -I$(FASTJETDIR)/include
 INCLUDES += -I$(FASTJETDIR)/../include
 
-#INCLUDES += -I$(SFRAME_DIR)/SFrameTools
-#INCLUDES += -I$(SFRAME_DIR)/core
-#INCLUDES += -I$(SFRAME_DIR)/core/include
-#INCLUDES += -I$(SFRAME_DIR)/include
-#INCLUDES += -I$(SFRAME_DIR)/NtupleWriter
-#INCLUDES += -I$(SFRAME_DIR)/NtupleWriter/include
-
-USERCXXFLAGS := -g -std=c++0x
+USERCXXFLAGS := -g
 
 #INCLUDES += -I$(LHAPDFDIR)/include
-INCLUDES += -I/afs/naf.desy.de/user/m/mameyer/lhapdf/include/
+INCLUDES += -I/afs/naf.desy.de/user/m/mameyer/lhapdf/include
 
 # Include the generic compilation rules
 include $(SFRAME_DIR)/Makefile.common

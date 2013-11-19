@@ -125,7 +125,6 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
     resetEventCalc();
 }
 
-
 void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
 {
 
@@ -179,10 +178,10 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
                 }
             }
         }
-        if(ele_energy<=jet_v4_raw.E())
-            bcc->jets->at(i).set_chargedEmEnergyFraction(ele_energy/jet_v4_raw.E());
-        if(mu_energy<=jet_v4_raw.E())
-            bcc->jets->at(i).set_muonEnergyFraction(mu_energy/jet_v4_raw.E());
+        // if(ele_energy<=jet_v4_raw.E())
+        //     bcc->jets->at(i).set_chargedEmEnergyFraction(ele_energy/jet_v4_raw.E());
+        // if(mu_energy<=jet_v4_raw.E())
+        //     bcc->jets->at(i).set_muonEnergyFraction(mu_energy/jet_v4_raw.E());
 
         //apply jet energy corrections to modified raw momentum
         corrector->setJetPt(jet_v4_raw.Pt());
@@ -556,6 +555,48 @@ void Cleaner::MuonCleaner_Loose(double ptmin, double etamax)
     resetEventCalc();
 }
 
+void Cleaner::MuonCleanerHalil(double ptmin, double etamax, double relisomax)
+{
+  std::vector<Muon> good_mus;
+  for(unsigned int i=0; i<bcc->muons->size(); ++i) {
+    Muon mu = bcc->muons->at(i);
+    if(mu.pt()>ptmin) {
+      if(fabs(mu.eta())<etamax){
+        if(mu.isGlobalMuon()) {
+	  if(mu.isPFMuon()) {
+	    if(mu.globalTrack_chi2()/mu.globalTrack_ndof()<10) {
+	      if(mu.globalTrack_numberOfValidMuonHits()>0) {
+		if(mu.innerTrack_trackerLayersWithMeasurement()>5) {
+		  if(mu.dB()<0.2) { 
+		    if(fabs(mu.vertex_z()-bcc->pvs->at(0).z())<0.5) {
+		      if(mu.innerTrack_numberOfValidPixelHits()>0) {
+			if(mu.numberOfMatchedStations()>1) {
+			  if(mu.relIso()<relisomax){
+			    good_mus.push_back(mu);
+			  }
+			}
+		      }
+		    }
+		  }
+		}
+	      }
+	    }
+	  }
+        }
+      }
+    }
+  }
+    bcc->muons->clear();
+
+    for(unsigned int i=0; i<good_mus.size(); ++i) {
+        bcc->muons->push_back(good_mus[i]);
+    }
+    sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
+    resetEventCalc();
+}
+
+
+
 void Cleaner::TauCleaner_noIso(double ptmin, double etamax)
 {
   std::vector<Tau> good_taus;
@@ -615,6 +656,35 @@ void Cleaner::TauCleaner(double ptmin, double etamax)
   resetEventCalc();
 }
 
+void Cleaner::TauCleanerHalil(double ptmin, double etamax)
+{
+  std::vector<Tau> good_taus;
+  for(unsigned int i=0; i<bcc->taus->size(); ++i) {
+    Tau tau = bcc->taus->at(i);
+    if(tau.pt()>ptmin) {
+      if(fabs(tau.eta())<etamax) {
+	if(bcc->taus->at(i).decayModeFinding()) {
+	  if(bcc->taus->at(i).againstElectronTightMVA3()) {
+	    if(bcc->taus->at(i).againstMuonTight2()) {
+	      if (bcc->taus->at(i).byTightCombinedIsolationDeltaBetaCorr3Hits())
+		{
+		  good_taus.push_back(tau);
+		}
+	    }
+	  }
+	}
+      }
+    }
+  }
+  
+  bcc->taus->clear();
+  
+  for(unsigned int i=0; i<good_taus.size(); ++i) {
+    bcc->taus->push_back(good_taus[i]);
+  }
+  sort(bcc->taus->begin(), bcc->taus->end(), HigherPt());
+  resetEventCalc();
+}
 
 void Cleaner::JetCleaner(double ptmin, double etamax, bool doPFID)
 {

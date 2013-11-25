@@ -1,5 +1,4 @@
-
-ZprimeAnalysis
+SFrameAnalysis
 ==============
 
 SFrameAnalysis is a library for sframe that defines the cycle/output types needed for an analysis. In order to utilize

@@ -447,8 +447,8 @@ HEPTopAndSubBTagPlusOtherHiggsTag::HEPTopAndSubBTagPlusOtherHiggsTag(E_BtagType 
    m_type1 = type1; //to be used in top-tag
    m_type2 = type2; //to be used in higgs-tag
    m_type3 = type3; //to be used in higgs-tag
- m_mode = mode;
-  m_filename = filename;
+   m_mode = mode;
+   m_filename = filename;
 }
 
 bool HEPTopAndSubBTagPlusOtherHiggsTag::pass(BaseCycleContainer *bcc){

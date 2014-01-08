@@ -29,6 +29,7 @@ AnalysisCycle::AnalysisCycle()
     m_hepsf = NULL;
     m_newrun = false;
     m_lsf = NULL;
+    m_jsf =  NULL;
     m_pdfweights=NULL;
     m_pdf_index=0;
     m_corrector = NULL;
@@ -223,7 +224,8 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     }
 
     //toppag pt re-weighting
-    if((m_toppagptweight.size()>0)&&(strcasecmp( inputData.GetVersion(), "ttbar" )>=0)&&(m_addGenInfo==true)){
+    TString InputSampleName(inputData.GetVersion());
+    if((m_toppagptweight.size()>0)&&(InputSampleName.Contains("ttbar",TString::kIgnoreCase))&&(m_addGenInfo==true)){
       m_logger << INFO << "Top PAG pt re-weighting will be performed" << SLogger::endmsg;
       m_tpr = new TopPtReweight();
     }
@@ -277,6 +279,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_sys_unc = e_PDF;
 	isok = true;
       }
+      
 
       if (m_sys_unc != e_None){
 	if (GetSysShiftName()=="UP" || GetSysShiftName()=="up" || GetSysShiftName()=="Up") m_sys_var = e_Up; 
@@ -344,7 +347,9 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 
     
     m_lsf = new LeptonScaleFactors(m_leptonweights);	
+    m_jsf = new JetpTReweightingInWJets();
 
+    
     if (m_sys_unc == e_MuonSF){
       if(m_sys_var == e_Up){
 	cout << "apply muon up var" << endl;
@@ -637,8 +642,9 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     delete m_correctorhiggstag;
     delete m_jes_unc;
 
-    return;
+    m_tpr = NULL;
 
+    return;
 
 }
 
@@ -751,6 +757,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 	if(m_tpr){
 	  double tpr_weight=m_tpr->GetScaleWeight();
 	  if(m_toppagptweight=="mean"||m_toppagptweight=="Mean"||m_toppagptweight=="MEAN"){
+	    cout <<" wird angewandt" << endl;
 	    calc -> ProduceWeight(tpr_weight);
 	  }
 	  else if(m_toppagptweight=="up"||m_toppagptweight=="Up"||m_toppagptweight=="UP"){

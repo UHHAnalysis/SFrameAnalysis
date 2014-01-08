@@ -638,6 +638,9 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     delete m_correctorhiggstag;
     delete m_jes_unc;
 
+    m_tpr = NULL;
+    m_hepsf = NULL;
+
     return;
 
 

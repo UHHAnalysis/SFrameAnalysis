@@ -223,7 +223,8 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     }
 
     //toppag pt re-weighting
-    if((m_toppagptweight.size()>0)&&(strcasecmp( inputData.GetVersion(), "ttbar" )>=0)&&(m_addGenInfo==true)){
+    TString InputSampleName(inputData.GetVersion());
+    if((m_toppagptweight.size()>0)&&(InputSampleName.Contains("ttbar",TString::kIgnoreCase))&&(m_addGenInfo==true)){
       m_logger << INFO << "Top PAG pt re-weighting will be performed" << SLogger::endmsg;
       m_tpr = new TopPtReweight();
     }
@@ -637,6 +638,8 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     delete m_correctorhiggstag;
     delete m_jes_unc;
 
+    m_tpr = NULL;
+    
     return;
 
 

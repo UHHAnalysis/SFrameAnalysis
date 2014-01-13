@@ -373,7 +373,7 @@ bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
         if(bcc->pvs->size()>0) {
             if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02) {
                 if(ele.passconversionveto()) {
-                    if(ele.mvaTrigV0()>0.9) {
+                    if(ele.mvaTrigV0()>0.5) {
                         if (ele.gsfTrack_trackerExpectedHitsInner_numberOfLostHits() <= 0) {
                             return true;
                         }

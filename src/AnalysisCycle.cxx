@@ -231,7 +231,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     }
 
     //top-tagging sf re-weighting
-    if((m_TopTaggingSFMode.size()>0)&&((strcasecmp( inputData.GetVersion(), "ttbar" )>=0)||(strcasecmp( inputData.GetVersion(), "TP")>=0))&&(m_addGenInfo==true)){
+    if((m_TopTaggingSFMode.size()>0)&&((InputSampleName.Contains("ttbar",TString::kIgnoreCase))||(InputSampleName.Contains("tp",TString::kIgnoreCase)))&&(m_addGenInfo==true)){
       m_logger << INFO << "HepTopTagger scale factors re-weighting will be performed" << SLogger::endmsg;
       m_hepsf = new HEPTopTaggerReweightTPrime();
     }
@@ -643,8 +643,10 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     delete m_jes_unc;
 
     m_tpr = NULL;
+    m_hepsf = NULL;
 
     return;
+
 
 }
 

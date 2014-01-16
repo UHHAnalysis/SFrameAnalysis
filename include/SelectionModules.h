@@ -321,7 +321,7 @@ class NHEPTopAndSubBTagSelection: public SelectionModule{
 
 class HEPTopAndSubBTagPlusOtherHiggsTag: public SelectionModule{
  public:
-  HEPTopAndSubBTagPlusOtherHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode="default", TString filename="");
+  HEPTopAndSubBTagPlusOtherHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode="default", TString filename="", double HiggsMassCut=0.);
   ~HEPTopAndSubBTagPlusOtherHiggsTag(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -333,12 +333,13 @@ class HEPTopAndSubBTagPlusOtherHiggsTag: public SelectionModule{
   E_BtagType m_type3;
  TString m_mode;
   TString m_filename;
+  double m_HiggsMassCut;
 };
 
 
 class InvertedTopTagRegularBTagRegularHiggsTag: public SelectionModule{
  public:
-  InvertedTopTagRegularBTagRegularHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode="default", TString filename="");
+  InvertedTopTagRegularBTagRegularHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode="default", TString filename="", double HiggsMassCut=0.);
   ~InvertedTopTagRegularBTagRegularHiggsTag(){};
 
   virtual bool pass(BaseCycleContainer*);
@@ -352,6 +353,7 @@ class InvertedTopTagRegularBTagRegularHiggsTag: public SelectionModule{
 /*   bool m_doHiggsTag; */
  TString m_mode;
   TString m_filename;
+double m_HiggsMassCut;
 };
 
 

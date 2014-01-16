@@ -713,12 +713,67 @@ std::string NHEPTopAndSubBTagSelection::description(){
 
 
 //selects events with one jet with a heptoptag and a b-tagged sub-jet and another jet that is higgs-tagged
-HEPTopAndSubBTagPlusOtherHiggsTag::HEPTopAndSubBTagPlusOtherHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3,  TString mode, TString filename){
+// HEPTopAndSubBTagPlusOtherHiggsTag::HEPTopAndSubBTagPlusOtherHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3,  TString mode, TString filename){
+//    m_type1 = type1; //to be used in top-tag
+//    m_type2 = type2; //to be used in higgs-tag
+//    m_type3 = type3; //to be used in higgs-tag
+//    m_mode = mode;
+//    m_filename = filename;
+// }
+
+// bool HEPTopAndSubBTagPlusOtherHiggsTag::pass(BaseCycleContainer *bcc){
+//   int nheptoptag=0;
+//   int nhiggstag=0;
+//   std::vector<int> topTaggedJets;
+//   std::vector<int> HiggsTaggedJets;
+//   double ptcut=150;
+//   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
+//     if(bcc->topjets->at(i).pt()<ptcut) continue;
+//     TopJet topjet =  bcc->topjets->at(i);
+//     if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, m_type1, m_mode, m_filename)>=1){
+//       nheptoptag++;
+//       topTaggedJets.push_back(i);
+//     }
+//     if (HiggsTag(topjet, m_type2, m_type3, m_mode, m_filename)){
+//       nhiggstag++;
+//       HiggsTaggedJets.push_back(i);
+//     }
+//   }
+
+// if (nheptoptag ==0) return false;
+// if (nhiggstag == 0) return false; 
+// if(nheptoptag == 1 && nhiggstag == 1 && topTaggedJets[0] == HiggsTaggedJets[0]) return false;
+// return true;
+
+// }
+
+// std::string HEPTopAndSubBTagPlusOtherHiggsTag::description(){
+//   char s[100];
+//   sprintf(s, "1 toptag with b-tagged sub jet and 1 higgs tag");
+//   return s;
+// }
+
+
+
+// //
+
+
+// std::string NHEPTopAndSubBTagSelection::description(){
+//   char s[100];
+//    cout << m_type << " step4" << endl;
+//   sprintf(s, "%d <= N(top-tags) <= %d",m_min_nheptoptag,m_max_nheptoptag);
+//   return s;
+// }
+
+
+//selects events with one jet with a heptoptag and a b-tagged sub-jet and another jet that is higgs-tagged
+HEPTopAndSubBTagPlusOtherHiggsTag::HEPTopAndSubBTagPlusOtherHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3,  TString mode, TString filename, double HiggsMassCut){
    m_type1 = type1; //to be used in top-tag
    m_type2 = type2; //to be used in higgs-tag
    m_type3 = type3; //to be used in higgs-tag
    m_mode = mode;
    m_filename = filename;
+   m_HiggsMassCut = HiggsMassCut;
 }
 
 bool HEPTopAndSubBTagPlusOtherHiggsTag::pass(BaseCycleContainer *bcc){
@@ -735,8 +790,11 @@ bool HEPTopAndSubBTagPlusOtherHiggsTag::pass(BaseCycleContainer *bcc){
       topTaggedJets.push_back(i);
     }
     if (HiggsTag(topjet, m_type2, m_type3, m_mode, m_filename)){
-      nhiggstag++;
-      HiggsTaggedJets.push_back(i);
+      double HiggsMass = HiggsMassFromBTaggedSubjets(topjet, m_type2, m_mode, m_filename);
+      if (HiggsMass > m_HiggsMassCut){
+	nhiggstag++;
+	HiggsTaggedJets.push_back(i);
+      }
     }
   }
 
@@ -753,14 +811,20 @@ std::string HEPTopAndSubBTagPlusOtherHiggsTag::description(){
   return s;
 }
 
+
+
+
+
+
 //Inverted top-tag selection for QCD estimation from data in TPrime analysis (Region C)
 
-InvertedTopTagRegularBTagRegularHiggsTag::InvertedTopTagRegularBTagRegularHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode, TString filename){
+InvertedTopTagRegularBTagRegularHiggsTag::InvertedTopTagRegularBTagRegularHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode, TString filename, double HiggsMassCut){
    m_type1 = type1; //to be used in b-tag
    m_type2 = type2; //to be used in higgs-tag
    m_type3 = type3; //to be used in higgs-tag
    m_mode = mode;
    m_filename = filename;
+   m_HiggsMassCut = HiggsMassCut;
 }
 
 bool InvertedTopTagRegularBTagRegularHiggsTag::pass(BaseCycleContainer *bcc){
@@ -782,11 +846,13 @@ bool InvertedTopTagRegularBTagRegularHiggsTag::pass(BaseCycleContainer *bcc){
 	nheptoptagInvertedPlusBTag++;
     }
     if (HiggsTag(topjet, m_type2, m_type3, m_mode, m_filename)){
-      nhiggstag++;
-      HiggsTaggedJets.push_back(i);
+      double HiggsMass = HiggsMassFromBTaggedSubjets(topjet, m_type2, m_mode, m_filename);
+      if (HiggsMass > m_HiggsMassCut){
+	nhiggstag++;
+	HiggsTaggedJets.push_back(i);
+      }
     }
   }
-
   if (nheptoptag != 0) return false;
   if (nheptoptagInvertedPlusBTag == 0) return false;
   if (nhiggstag == 0) return false;
@@ -931,9 +997,9 @@ HTCut::HTCut(double min_ht, double max_ht){
 bool HTCut::pass(BaseCycleContainer *bcc){
   //double htlep = HTlep(bcc);
   EventCalc* calc = EventCalc::Instance();
-  double htlep = calc->GetHTlep();
+  //double htlep = calc->GetHTlep();
   double htall = calc->GetHT();
-  double ht = htall-htlep;
+  double ht = htall;//-htlep;
   if( ht < m_min_ht) return false;
   if( ht > m_max_ht) return false;
   return true;

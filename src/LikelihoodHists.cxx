@@ -133,13 +133,13 @@ void LikelihoodHists::Fill()
 	indexHiggsCandidate = HiggsTaggedJets[0];
       }     
     }
-    }
+  }
 
 
 
 
 
-  TopJet higgsCandidateJet=bcc->topjets->at(0);
+  TopJet higgsCandidateJet=bcc->topjets->at(indexHiggsCandidate);
 
   double higgsmass=HiggsMassFromBTaggedSubjets(higgsCandidateJet, e_CSVM, m_BTaggingMode, m_BTagEffiFilenameMC);
   
@@ -172,8 +172,8 @@ void LikelihoodHists::Fill()
   double L_single = (LHT_sig_single / LHT_back_single ) * (LMH_sig_single / LMH_back_single);
   double L_multi = (LHT_sig_multi / LHT_back_multi ) * (LMH_sig_multi / LMH_back_multi); 
 
-  Hist("hL_single")->Fill(L_single,weight);
-  Hist("hL_multi")->Fill(L_multi,weight);
+  if(nhiggstag==1) Hist("hL_single")->Fill(L_single,weight);
+  if(nhiggstag>1) Hist("hL_multi")->Fill(L_multi,weight);
  
  //  cout  << "Likelihhod single " << L_single << endl;
 //   cout << "Likelihood multi " << L_multi << endl;

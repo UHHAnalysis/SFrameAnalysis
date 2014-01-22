@@ -1013,6 +1013,39 @@ std::string HTCut::description(){
 }
 
 
+
+//for T' analysis
+HTSubJetsCut::HTSubJetsCut(double min_ht, double max_ht){
+  m_min_ht = min_ht;
+  m_max_ht = max_ht;
+}
+
+bool HTSubJetsCut::pass(BaseCycleContainer *bcc){
+  double ht = 0;//-htlep;
+  std::vector<Particle> subjets_top;
+
+  for(unsigned int i=0; i< bcc->topjets->size(); ++i){
+    TopJet topjet =  bcc->topjets->at(i);
+    subjets_top=topjet.subjets();
+    for (unsigned int subj = 0; subj < subjets_top.size(); subj++){
+      ht += subjets_top.at(subj).pt();
+    }
+  }
+  if( ht < m_min_ht) return false;
+  if( ht > m_max_ht) return false;
+  return true;
+
+}
+
+std::string HTSubJetsCut::description(){
+  char s[100];
+  sprintf(s, "%.1f GeV < HTSubJets < %.1f GeV",m_min_ht,m_max_ht);
+  return s;
+}
+
+
+
+
 HThadCut::HThadCut(double ptmin_jet, double etamax_jet, double min_ht, double max_ht){
   m_ptmin_jet = ptmin_jet;
   m_etamax_jet = etamax_jet;

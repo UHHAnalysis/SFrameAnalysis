@@ -35,4 +35,5 @@
 #pragma link C++ class PDFWeightsCycle+;
 #pragma link C++ class TopPtReweight+;
 #pragma link C++ class HEPTopTaggerReweightTPrime+;
+#pragma link C++ class LikelihoodHists+;
 #endif // __CINT__

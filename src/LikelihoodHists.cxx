@@ -15,11 +15,27 @@ LikelihoodHists::LikelihoodHists(const char* name, TString filename, TString Hyp
 
   //cout << "Opeinig file " << m_filename << endl;
 
+  //cout << "Test " <<  HTttbarmulti->Integral() << endl;
+
+}
+
+void LikelihoodHists::Init()
+{
+  // book all histograms here
+  Book( TH1F( "hL_single", "hL_single", 100, 0, 100));
+  Book( TH1F( "hL_multi", "hL_multi", 100, 0, 100));
+ 
+}
+
+
+void LikelihoodHists::Fill()
+{
+
   file_mc = new TFile(m_filename);
-  HTSignalsingle=(TH1F*) file_mc->Get("HTSubJetsSingleHiggsTagBin__TPTHTH"+HypoMass);
-  mHSignalsingle=(TH1F*) file_mc->Get("mHiggsSingleHiggsTagBin__TPTHTH"+HypoMass);
-  HTSignalmulti=(TH1F*) file_mc->Get("HTSubJetsMultiHiggsTagBin__TPTHTH"+HypoMass);
-  mHSignalmulti=(TH1F*) file_mc->Get("mHiggsMultiHiggsTagBin__TPTHTH"+HypoMass);
+  HTSignalsingle=(TH1F*) file_mc->Get("HTSubJetsSingleHiggsTagBin__TPTHTH"+m_HypoMass);
+  mHSignalsingle=(TH1F*) file_mc->Get("mHiggsSingleHiggsTagBin__TPTHTH"+m_HypoMass);
+  HTSignalmulti=(TH1F*) file_mc->Get("HTSubJetsMultiHiggsTagBin__TPTHTH"+m_HypoMass);
+  mHSignalmulti=(TH1F*) file_mc->Get("mHiggsMultiHiggsTagBin__TPTHTH"+m_HypoMass);
   HTQCDmulti=(TH1F*) file_mc->Get("HTSubJetsMultiHiggsTagBin__QCD");
   mHQCDmulti=(TH1F*) file_mc->Get("mHiggsMultiHiggsTagBin__QCD");
   HTttbarmulti=(TH1F*) file_mc->Get("HTSubJetsMultiHiggsTagBin__TTbar");
@@ -45,21 +61,6 @@ LikelihoodHists::LikelihoodHists(const char* name, TString filename, TString Hyp
   HTSignalmulti->Scale((1./(HTSignalmulti->Integral())));
   mHSignalmulti->Scale((1./(mHSignalmulti->Integral())));
 
-  //cout << "Test " <<  HTttbarmulti->Integral() << endl;
-
-}
-
-void LikelihoodHists::Init()
-{
-  // book all histograms here
-  Book( TH1F( "hL_single", "hL_single", 100, 0, 100));
-  Book( TH1F( "hL_multi", "hL_multi", 100, 0, 100));
- 
-}
-
-
-void LikelihoodHists::Fill()
-{
    // important: get the event weight
   EventCalc* calc = EventCalc::Instance();
   double weight = calc -> GetWeight();
@@ -136,7 +137,8 @@ void LikelihoodHists::Fill()
   }
 
 
-
+  // std::vector<int>().swap(topTaggedJets);
+  // std::vector<int>().swap(HiggsTaggedJets);
 
 
   TopJet higgsCandidateJet=bcc->topjets->at(indexHiggsCandidate);
@@ -177,5 +179,24 @@ void LikelihoodHists::Fill()
  
  //  cout  << "Likelihhod single " << L_single << endl;
 //   cout << "Likelihood multi " << L_multi << endl;
+
+  delete HTSignalsingle;
+     delete HTSignalmulti;
+     delete mHSignalsingle;
+     delete mHSignalmulti;
+     delete HTQCDsingle;
+     delete HTQCDmulti;
+     delete HTttbarsingle;
+     delete HTttbarmulti;
+     delete mHQCDsingle;
+     delete mHQCDmulti;
+     delete mHttbarsingle;
+     delete mHttbarmulti;
+     delete HTbacksingle;
+     delete HTbackmulti;
+     delete mHbacksingle;
+     delete mHbackmulti;
+     file_mc->Close();
+     delete file_mc;
  
 }

@@ -36,8 +36,8 @@ public:
      delete HTbackmulti;
      delete mHbacksingle;
      delete mHbackmulti;
-     file_mc->Close();
-     delete file_mc;
+     file_mclike->Close();
+     delete file_mclike;
    };
 
    void Init();
@@ -47,8 +47,8 @@ public:
    private:
 
    TString m_HypoMass;
-   TString m_filename;
-   TFile *file_mc;
+   TString m_filenamelike;
+   TFile *file_mclike;
    TH1F * HTSignalsingle;
    TH1F * HTSignalmulti;
    TH1F * mHSignalsingle;

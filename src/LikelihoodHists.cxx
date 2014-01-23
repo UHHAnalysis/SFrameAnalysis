@@ -8,10 +8,40 @@ LikelihoodHists::LikelihoodHists(const char* name, TString filename, TString Hyp
 {
   // named default constructor
   m_HypoMass=HypoMass;
-  m_filename=filename;
+  m_filenamelike=filename;
 
   m_BTaggingMode = mode;
   m_BTagEffiFilenameMC=btagfilename;
+
+  file_mclike = new TFile(m_filenamelike);
+  HTSignalsingle=(TH1F*) file_mclike->Get("HTSubJetsSingleHiggsTagBin__TPTHTH"+m_HypoMass);
+  mHSignalsingle=(TH1F*) file_mclike->Get("mHiggsSingleHiggsTagBin__TPTHTH"+m_HypoMass);
+  HTSignalmulti=(TH1F*) file_mclike->Get("HTSubJetsMultiHiggsTagBin__TPTHTH"+m_HypoMass);
+  mHSignalmulti=(TH1F*) file_mclike->Get("mHiggsMultiHiggsTagBin__TPTHTH"+m_HypoMass);
+  HTQCDmulti=(TH1F*) file_mclike->Get("HTSubJetsMultiHiggsTagBin__QCD");
+  mHQCDmulti=(TH1F*) file_mclike->Get("mHiggsMultiHiggsTagBin__QCD");
+  HTttbarmulti=(TH1F*) file_mclike->Get("HTSubJetsMultiHiggsTagBin__TTbar");
+  mHttbarmulti=(TH1F*) file_mclike->Get("mHiggsMultiHiggsTagBin__TTbar");
+  HTQCDsingle=(TH1F*) file_mclike->Get("HTSubJetsSingleHiggsTagBin__QCD");
+  mHQCDsingle=(TH1F*) file_mclike->Get("mHiggsSingleHiggsTagBin__QCD");
+  HTttbarsingle=(TH1F*) file_mclike->Get("HTSubJetsSingleHiggsTagBin__TTbar");
+  mHttbarsingle=(TH1F*) file_mclike->Get("mHiggsSingleHiggsTagBin__TTbar");
+  HTbacksingle=(TH1F*)HTQCDsingle->Clone();
+  HTbacksingle->Add(HTttbarsingle);
+  mHbacksingle=(TH1F*)mHQCDsingle->Clone();
+  mHbacksingle->Add(mHttbarsingle);
+  HTbackmulti=(TH1F*)HTQCDmulti->Clone();
+  HTbackmulti->Add(HTttbarmulti);
+  mHbackmulti=(TH1F*)mHQCDmulti->Clone();
+  mHbackmulti->Add(mHttbarmulti);
+  HTbacksingle->Scale((1./(HTbacksingle->Integral())));
+  mHbacksingle->Scale((1./(mHbacksingle->Integral())));
+  HTbackmulti->Scale((1./(HTbackmulti->Integral())));
+  mHbackmulti->Scale((1./(mHbackmulti->Integral())));
+  HTSignalsingle->Scale((1./(HTSignalsingle->Integral())));
+  mHSignalsingle->Scale((1./(mHSignalsingle->Integral())));
+  HTSignalmulti->Scale((1./(HTSignalmulti->Integral())));
+  mHSignalmulti->Scale((1./(mHSignalmulti->Integral())));
 
   //cout << "Opeinig file " << m_filename << endl;
 
@@ -30,36 +60,6 @@ void LikelihoodHists::Init()
 
 void LikelihoodHists::Fill()
 {
-
-  file_mc = new TFile(m_filename);
-  HTSignalsingle=(TH1F*) file_mc->Get("HTSubJetsSingleHiggsTagBin__TPTHTH"+m_HypoMass);
-  mHSignalsingle=(TH1F*) file_mc->Get("mHiggsSingleHiggsTagBin__TPTHTH"+m_HypoMass);
-  HTSignalmulti=(TH1F*) file_mc->Get("HTSubJetsMultiHiggsTagBin__TPTHTH"+m_HypoMass);
-  mHSignalmulti=(TH1F*) file_mc->Get("mHiggsMultiHiggsTagBin__TPTHTH"+m_HypoMass);
-  HTQCDmulti=(TH1F*) file_mc->Get("HTSubJetsMultiHiggsTagBin__QCD");
-  mHQCDmulti=(TH1F*) file_mc->Get("mHiggsMultiHiggsTagBin__QCD");
-  HTttbarmulti=(TH1F*) file_mc->Get("HTSubJetsMultiHiggsTagBin__TTbar");
-  mHttbarmulti=(TH1F*) file_mc->Get("mHiggsMultiHiggsTagBin__TTbar");
-  HTQCDsingle=(TH1F*) file_mc->Get("HTSubJetsSingleHiggsTagBin__QCD");
-  mHQCDsingle=(TH1F*) file_mc->Get("mHiggsSingleHiggsTagBin__QCD");
-  HTttbarsingle=(TH1F*) file_mc->Get("HTSubJetsSingleHiggsTagBin__TTbar");
-  mHttbarsingle=(TH1F*) file_mc->Get("mHiggsSingleHiggsTagBin__TTbar");
-  HTbacksingle=(TH1F*)HTQCDsingle->Clone();
-  HTbacksingle->Add(HTttbarsingle);
-  mHbacksingle=(TH1F*)mHQCDsingle->Clone();
-  mHbacksingle->Add(mHttbarsingle);
-  HTbackmulti=(TH1F*)HTQCDmulti->Clone();
-  HTbackmulti->Add(HTttbarmulti);
-  mHbackmulti=(TH1F*)mHQCDmulti->Clone();
-  mHbackmulti->Add(mHttbarmulti);
-  HTbacksingle->Scale((1./(HTbacksingle->Integral())));
-  mHbacksingle->Scale((1./(mHbacksingle->Integral())));
-  HTbackmulti->Scale((1./(HTbackmulti->Integral())));
-  mHbackmulti->Scale((1./(mHbackmulti->Integral())));
-  HTSignalsingle->Scale((1./(HTSignalsingle->Integral())));
-  mHSignalsingle->Scale((1./(mHSignalsingle->Integral())));
-  HTSignalmulti->Scale((1./(HTSignalmulti->Integral())));
-  mHSignalmulti->Scale((1./(mHSignalmulti->Integral())));
 
    // important: get the event weight
   EventCalc* calc = EventCalc::Instance();
@@ -180,7 +180,7 @@ void LikelihoodHists::Fill()
  //  cout  << "Likelihhod single " << L_single << endl;
 //   cout << "Likelihood multi " << L_multi << endl;
 
-  delete HTSignalsingle;
+  /* delete HTSignalsingle;
      delete HTSignalmulti;
      delete mHSignalsingle;
      delete mHSignalmulti;
@@ -196,7 +196,7 @@ void LikelihoodHists::Fill()
      delete HTbackmulti;
      delete mHbacksingle;
      delete mHbackmulti;
-     file_mc->Close();
-     delete file_mc;
+     file_mclike->Close();
+     delete file_mclike;*/
  
 }

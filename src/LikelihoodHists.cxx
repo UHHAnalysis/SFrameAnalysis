@@ -13,6 +13,10 @@ LikelihoodHists::LikelihoodHists(const char* name, TString filename, TString Hyp
   m_BTaggingMode = mode;
   m_BTagEffiFilenameMC=btagfilename;
 
+  //cout << "Opeinig file " << m_filename << endl;
+
+  //cout << "Test " <<  HTttbarmulti->Integral() << endl;
+
   file_mclike = new TFile(m_filenamelike);
   HTSignalsingle=(TH1F*) file_mclike->Get("HTSubJetsSingleHiggsTagBin__TPTHTH"+m_HypoMass);
   mHSignalsingle=(TH1F*) file_mclike->Get("mHiggsSingleHiggsTagBin__TPTHTH"+m_HypoMass);
@@ -43,23 +47,44 @@ LikelihoodHists::LikelihoodHists(const char* name, TString filename, TString Hyp
   HTSignalmulti->Scale((1./(HTSignalmulti->Integral())));
   mHSignalmulti->Scale((1./(mHSignalmulti->Integral())));
 
-  //cout << "Opeinig file " << m_filename << endl;
-
-  //cout << "Test " <<  HTttbarmulti->Integral() << endl;
-
 }
+
+LikelihoodHists::~LikelihoodHists(){
+  // default destructor, does nothing
+  delete HTSignalsingle;
+     delete HTSignalmulti;
+     delete mHSignalsingle;
+     delete mHSignalmulti;
+     delete HTQCDsingle;
+     delete HTQCDmulti;
+     delete HTttbarsingle;
+     delete HTttbarmulti;
+     delete mHQCDsingle;
+     delete mHQCDmulti;
+     delete mHttbarsingle;
+     delete mHttbarmulti;
+     delete HTbacksingle;
+     delete HTbackmulti;
+     delete mHbacksingle;
+     delete mHbackmulti;
+     file_mclike->Close();
+     delete file_mclike;
+}
+
 
 void LikelihoodHists::Init()
 {
   // book all histograms here
   Book( TH1F( "hL_single", "hL_single", 100, 0, 100));
   Book( TH1F( "hL_multi", "hL_multi", 100, 0, 100));
- 
+
 }
 
 
 void LikelihoodHists::Fill()
 {
+
+  
 
    // important: get the event weight
   EventCalc* calc = EventCalc::Instance();
@@ -88,16 +113,19 @@ void LikelihoodHists::Fill()
   int nhiggstag=0;
   int nhiggstagWithCut=0;
 
+  //cout << "Calling btagging mode " << m_BTaggingMode << " " << m_BTagEffiFilenameMC << endl;
+
+
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
     TopJet topjet =  bcc->topjets->at(i);
 
-    if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, e_CSVM, m_BTaggingMode, m_BTagEffiFilenameMC)>=1){
+    if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, e_CSVM)){//, m_BTaggingMode, m_BTagEffiFilenameMC)>=1){
       nheptoptag++;
       topTaggedJets.push_back(i);
     }
-    if (HiggsTag(topjet, e_CSVM, e_CSVM, m_BTaggingMode, m_BTagEffiFilenameMC)){
+    if (HiggsTag(topjet, e_CSVM, e_CSVM)){//{, m_BTaggingMode, m_BTagEffiFilenameMC)){
       nhiggstag++;
-      if (HiggsMassFromBTaggedSubjets(topjet, e_CSVM, m_BTaggingMode, m_BTagEffiFilenameMC)>60.){
+      if (HiggsMassFromBTaggedSubjets(topjet, e_CSVM)){//, m_BTaggingMode, m_BTagEffiFilenameMC)>60.){
 	nhiggstagWithCut ++;
 	HiggsTaggedJets.push_back(i);
       }
@@ -137,13 +165,12 @@ void LikelihoodHists::Fill()
   }
 
 
-  // std::vector<int>().swap(topTaggedJets);
-  // std::vector<int>().swap(HiggsTaggedJets);
+
 
 
   TopJet higgsCandidateJet=bcc->topjets->at(indexHiggsCandidate);
 
-  double higgsmass=HiggsMassFromBTaggedSubjets(higgsCandidateJet, e_CSVM, m_BTaggingMode, m_BTagEffiFilenameMC);
+  double higgsmass=HiggsMassFromBTaggedSubjets(higgsCandidateJet, e_CSVM);//, m_BTaggingMode, m_BTagEffiFilenameMC);
   
   int iBin_HTsig_single =  HTSignalsingle->FindFixBin(HTSubjets);
   int iBin_HTback_single =  HTbacksingle->FindFixBin(HTSubjets);

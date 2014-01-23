@@ -19,27 +19,7 @@ public:
   LikelihoodHists(const char* name,  TString filename="", TString HypoMass="", TString mode="default", TString btagfilename="");
 
    /// Default destructor
-   ~LikelihoodHists() {
-     delete HTSignalsingle;
-     delete HTSignalmulti;
-     delete mHSignalsingle;
-     delete mHSignalmulti;
-     delete HTQCDsingle;
-     delete HTQCDmulti;
-     delete HTttbarsingle;
-     delete HTttbarmulti;
-     delete mHQCDsingle;
-     delete mHQCDmulti;
-     delete mHttbarsingle;
-     delete mHttbarmulti;
-     delete HTbacksingle;
-     delete HTbackmulti;
-     delete mHbacksingle;
-     delete mHbackmulti;
-     file_mclike->Close();
-     delete file_mclike;
-   };
-
+  ~LikelihoodHists();
    void Init();
 
    void Fill();
@@ -66,8 +46,8 @@ public:
    TH1F * mHbacksingle;
    TH1F * mHbackmulti;
 
-   TString m_BTagEffiFilenameMC;
-   TString m_BTaggingMode;
+   std::string m_BTagEffiFilenameMC;
+   std::string m_BTaggingMode;
 
 }; // class LikelihoodHists
 

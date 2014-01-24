@@ -131,6 +131,9 @@ protected:
   //MC-data correction weights
   LeptonScaleFactors* m_lsf;
 
+  JetpTReweightingInWJets* m_jsf;
+
+
   // information on systematic uncertainty
   E_SystShift m_sys_var;
   E_SysUnc m_sys_unc;

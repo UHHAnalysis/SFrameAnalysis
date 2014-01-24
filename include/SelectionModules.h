@@ -609,6 +609,19 @@ private:
 };
 
 
+class MuonInvMassCut: public SelectionModule{
+ public:
+  MuonInvMassCut(double min_InvMass, double max_InvMass);
+  ~MuonInvMassCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  double m_min_InvMass;
+  double m_max_InvMass;
+};
+
 class TauMuonInvMassCut: public SelectionModule{
  public:
   TauMuonInvMassCut(double min_InvMass, double max_InvMass);

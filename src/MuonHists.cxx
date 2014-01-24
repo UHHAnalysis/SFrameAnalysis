@@ -74,8 +74,10 @@ void MuonHists::Init()
   Book( TH1F( "ptrel_2_ly", "p_{T}^{rel}(2nd #mu,jet)", 40, 0, 200.) );
   Book( TH1F( "deltaRmin_2_ly", "#Delta R_{min}(2nd #mu,jet)", 40, 0, 2.0) );
   Book( TH2F( "deltaRmin_vs_ptrel_2", "#Delta R_{min}(2nd #mu,jet) vs p_{T}^{rel}(2nd #mu,jet)", 40, 0, 2.0, 40, 0, 200.) );
-  Book( TH1F( "InvMass", "maximum M(#mu #mu)", 100, 0, 500) );
-  Book( TH1F( "InvMass_ly", "maximun M(#mu #mu)", 100, 0, 500) );
+  Book( TH1F( "MaxInvMass", "maximum M(#mu #mu)", 100, 0, 500) );
+  Book( TH1F( "MaxInvMass_ly", "maximun M(#mu #mu)", 100, 0, 500) );
+  Book( TH1F( "InvMass", "M(#mu #mu)", 100, 0, 500) );
+  Book( TH1F( "InvMass_ly", "M(#mu #mu)", 100, 0, 500) );
   Book( TH1F( "InvMassMuJet1", "M(#mu first jet)", 100, 0, 500) );
   Book( TH1F( "InvMassMuJet1_ly", "M(#mu first jet)", 100, 0, 500) );
   Book( TH1F( "InvMassMuJet2", "M(#mu second jet)", 100, 0, 500) );
@@ -184,10 +186,32 @@ if (bcc->muons->size() > 1)
 		}
 	    }
 	}
-      Hist("InvMass")->Fill(max_InvMass, weight);
-      Hist("InvMass_ly")->Fill(max_InvMass, weight);
+      Hist("MaxInvMass")->Fill(max_InvMass, weight);
+      Hist("MaxInvMass_ly")->Fill(max_InvMass, weight);
     }
 
+if (bcc->muons->size() > 1)
+    {
+      for(unsigned int i=0; i< bcc->muons->size(); ++i)
+	{
+	  Muon muon1 = bcc->muons->at(i);
+	  TLorentzVector Mu1;
+	  Mu1.SetPtEtaPhiE(muon1.pt() ,muon1.eta() ,muon1.phi() ,muon1.energy() );
+	  for(unsigned int j=0; j< bcc->muons->size(); ++j)
+	    {
+	      if (i!=j)
+		{
+		  Muon muon2 = bcc->muons->at(j);
+		  TLorentzVector Mu2;
+		  Mu2.SetPtEtaPhiE(muon2.pt() ,muon2.eta() ,muon2.phi() ,muon2.energy() );
+		  TLorentzVector DiLepton = Mu1 +Mu2;
+		  double InvMass = DiLepton.M();
+		  Hist("InvMass")->Fill(InvMass, weight);
+		  Hist("InvMass_ly")->Fill(InvMass, weight);
+		}
+	    }
+	}
+    }
 
 for(unsigned int i=0; i< bcc->muons->size(); ++i)
     {

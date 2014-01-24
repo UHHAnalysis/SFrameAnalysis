@@ -1531,6 +1531,38 @@ std::string TauMuonInvMassCut::description()
   return s;
 }
 
+MuonInvMassCut::MuonInvMassCut(double min_InvMass, double max_InvMass){
+ m_min_InvMass = min_InvMass;
+ m_max_InvMass = max_InvMass;
+}
+
+bool MuonInvMassCut::pass(BaseCycleContainer *bcc)
+{
+  for(unsigned int i=0; i<bcc->muons->size(); ++i) 
+    {
+      Muon muon1 = bcc->muons->at(i);
+      TLorentzVector Mu1;
+      Mu1.SetPtEtaPhiE(muon1.pt() ,muon1.eta() ,muon1.phi() ,muon1.energy() );
+      for(unsigned int j=0; j<bcc->muons->size(); ++j) 
+	{
+	  Muon muon2 = bcc->muons->at(j);
+	  TLorentzVector Mu2;
+	  Mu2.SetPtEtaPhiE(muon2.pt() ,muon2.eta() ,muon2.phi() ,muon2.energy() );
+   	  TLorentzVector Vec =  Mu1+Mu2;
+	  double InvMass = Vec.M();    
+          if (InvMass > m_min_InvMass && InvMass < m_max_InvMass) return true;
+	}
+      return false;
+    }
+  return false;
+}
+
+std::string MuonInvMassCut::description()
+{
+  char s[100];
+  sprintf(s, "%.1f < invariant mass muons  < %.1f",m_min_InvMass, m_max_InvMass);
+  return s;
+}
 
 
 SameSignCut::SameSignCut(){ 

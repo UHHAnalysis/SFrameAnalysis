@@ -14,7 +14,7 @@ INCLUDES += -I$(FASTJETDIR)/../include
 USERCXXFLAGS := -g
 
 #INCLUDES += -I$(LHAPDFDIR)/include
-INCLUDES += -I/afs/naf.desy.de/user/m/mameyer/lhapdf/include
+INCLUDES += -I/afs/desy.de/user/m/mameyer/xxl-af-cms/lhapdf/include
 
 # Include the generic compilation rules
 include $(SFRAME_DIR)/Makefile.common

@@ -438,7 +438,7 @@ void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax, boo
     std::vector<Electron> good_eles;
     for(unsigned int i=0; i<bcc->electrons->size(); ++i) {
         Electron ele = bcc->electrons->at(i);
-        if(!reverseIso && ele.relIsodb()<relisomax)
+        if(!reverseIso && ele.relIsorho(bcc->rho)<relisomax)
             good_eles.push_back(ele);
         else if (reverseIso && ele.relIsorho(bcc->rho)>=relisomax)
             good_eles.push_back(ele);

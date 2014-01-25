@@ -861,7 +861,12 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 	if (m_sys_var==e_Down) cleanertop.ApplyJECVariationDown();
       }
       
-      cleanertop.JetRecorrector(m_correctortop,true,true,false,false,false,atof(m_extra_topJEC.c_str()));
+      if(m_toppagptweight.size()>0){
+	cleanertop.JetRecorrector(m_correctortop,true,true,false,false,false,atof(m_extra_topJEC.c_str()));
+      }
+      else{
+	cleanertop.JetRecorrector(m_correctortop,true,true,false,false,false,1.0);
+      }
     }
 
     //apply toptag jet energy corrections

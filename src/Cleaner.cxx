@@ -285,10 +285,16 @@ void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool
 	  double unc = 0.;	  
 	  if (m_jecvar == e_Up){
 	    unc = m_jec_unc->getUncertainty(1);
-	    correctionfactor *= (1 + fabs(unc))*extratopjec;
+	    if(extratopjec>1.0){
+	      unc = sqrt(unc*unc+(extratopjec-1.0)*(extratopjec-1.0));
+	    }
+	    correctionfactor *= (1 + fabs(unc));
 	  } else if (m_jecvar == e_Down){
 	    unc = m_jec_unc->getUncertainty(-1);
-	    correctionfactor *= (1 - fabs(unc))*extratopjec;
+	    if(extratopjec>1.0){
+	      unc = sqrt(unc*unc+(extratopjec-1.0)*(extratopjec-1.0));
+	    }
+	    correctionfactor *= (1 - fabs(unc));
 	  }
 	  jet_v4_corrected = jet_v4_raw * correctionfactor;
 	}

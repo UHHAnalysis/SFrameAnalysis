@@ -861,7 +861,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 	if (m_sys_var==e_Down) cleanertop.ApplyJECVariationDown();
       }
       
-      if(m_toppagptweight.size()>0){
+      if(m_extra_topJEC.size()>0&&(m_sys_unc==e_JEC)){
 	cleanertop.JetRecorrector(m_correctortop,true,true,false,false,false,atof(m_extra_topJEC.c_str()));
       }
       else{

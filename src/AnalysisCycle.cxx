@@ -37,6 +37,7 @@ AnalysisCycle::AnalysisCycle()
     m_correctortoptag = NULL;
     m_correctorhiggstag = NULL;
     m_jes_unc = NULL;
+    m_jes_unc_top = NULL;
 
     m_sys_unc = e_None;
     m_sys_var = e_Default;
@@ -81,6 +82,7 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "JECTopJetCollection" , m_JECTopJetCollection);
     DeclareProperty( "JECTopTagJetCollection" , m_JECTopTagJetCollection);
     DeclareProperty( "JECHiggsTagJetCollection" , m_JECHiggsTagJetCollection);
+    DeclareProperty( "ExtraTopJEC" , m_extra_topJEC);
 
     //top pag pt reweighting mode
     DeclareProperty( "toppagptweight", m_toppagptweight);
@@ -462,6 +464,10 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 
       m_correctortop = new FactorizedJetCorrector(toppars);
 
+      // jec uncertainty
+      TString unc_file_top = m_JECFileLocation + "/" + m_JECDataGlobalTag + "_Uncertainty_" + m_JECTopJetCollection + ".txt";
+      m_jes_unc_top = new JetCorrectionUncertainty(unc_file_top.Data());
+
     }
 
     // ------------- toptag jet energy correction ----------------
@@ -651,6 +657,7 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     delete m_correctortoptag;
     delete m_correctorhiggstag;
     delete m_jes_unc;
+    delete m_jes_unc_top;
 
     m_tpr = NULL;
     m_hepsf = NULL;
@@ -845,7 +852,16 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     //apply top jet energy corrections
     if(m_TopJetCollection.size()>0 && m_correctortop){
       Cleaner cleanertop;
-      cleanertop.JetRecorrector(m_correctortop,true,true);
+
+      cleanertop.SetJECUncertainty(m_jes_unc_top);
+
+      // settings for jet correction uncertainties
+      if (m_sys_unc==e_JEC){
+	if (m_sys_var==e_Up) cleanertop.ApplyJECVariationUp();
+	if (m_sys_var==e_Down) cleanertop.ApplyJECVariationDown();
+      }
+      
+      cleanertop.JetRecorrector(m_correctortop,true,true,false,false,false,atof(m_extra_topJEC.c_str()));
     }
 
     //apply toptag jet energy corrections

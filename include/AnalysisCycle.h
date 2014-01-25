@@ -160,6 +160,7 @@ protected:
   FactorizedJetCorrector* m_correctortoptag;
   FactorizedJetCorrector* m_correctorhiggstag;
   JetCorrectionUncertainty* m_jes_unc;
+  JetCorrectionUncertainty* m_jes_unc_top;
 
   //toppagptreweighting
   TopPtReweight * m_tpr;
@@ -182,6 +183,9 @@ private:
   // systematic uncertainties
   std::string m_sys_unc_name;
   std::string m_sys_var_name;
+
+  //extra jec uncertainty for topjets
+  std::string m_extra_topJEC;
 
   // properties of the NTuples
   std::string m_JetCollection;

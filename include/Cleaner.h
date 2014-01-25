@@ -50,7 +50,7 @@ class Cleaner{
    *  \param propagate_to_met if \c true, propagate the the new correction to MET (this that you have type-I corrected MET). This is
    *    ignored (effectively always \c false) if \c useTopJets is \c true.
    */
-  void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true, bool useTopJets=false, bool propagate_to_met = true, bool useTopTagJets=false, bool useHiggsTagJets=false);
+  void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true, bool useTopJets=false, bool propagate_to_met = true, bool useTopTagJets=false, bool useHiggsTagJets=false, double extratopjec=1.0);
 
   /**
    * Function to pass a jet energy uncertainty object to the cleaner.

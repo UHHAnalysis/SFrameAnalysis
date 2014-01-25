@@ -229,7 +229,7 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
     resetEventCalc();
 }
 
-void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool useTopJets, bool propagate_to_met, bool useTopTagJets, bool useHiggsTagJets)
+void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool useTopJets, bool propagate_to_met, bool useTopTagJets, bool useHiggsTagJets, double extratopjec)
 {
     
   if(useTopJets) propagate_to_met = false;
@@ -285,10 +285,10 @@ void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool
 	  double unc = 0.;	  
 	  if (m_jecvar == e_Up){
 	    unc = m_jec_unc->getUncertainty(1);
-	    correctionfactor *= (1 + fabs(unc));
+	    correctionfactor *= (1 + fabs(unc))*extratopjec;
 	  } else if (m_jecvar == e_Down){
 	    unc = m_jec_unc->getUncertainty(-1);
-	    correctionfactor *= (1 - fabs(unc));
+	    correctionfactor *= (1 - fabs(unc))*extratopjec;
 	  }
 	  jet_v4_corrected = jet_v4_raw * correctionfactor;
 	}

@@ -812,7 +812,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 	if(m_tpr){
 	  double tpr_weight=m_tpr->GetScaleWeight();
 	  if(m_toppagptweight=="mean"||m_toppagptweight=="Mean"||m_toppagptweight=="MEAN"){
-	    cout <<" wird angewandt" << endl;
+	    //cout <<" wird angewandt" << endl;
 	    calc -> ProduceWeight(tpr_weight);
 	  }
 	  else if(m_toppagptweight=="up"||m_toppagptweight=="Up"||m_toppagptweight=="UP"){

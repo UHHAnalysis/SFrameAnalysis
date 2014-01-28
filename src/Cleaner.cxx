@@ -832,3 +832,93 @@ void Cleaner::METPhiCorrector()
   
   resetEventCalc();
 }
+
+void Cleaner::SubjetRecorrector(FactorizedJetCorrector *corrector, double extracorr)
+{
+   
+  //For topjets collection
+  //Expects UNcorrected subjets in input
+  
+  std::vector<Particle> subjets_top;
+  std::vector<int> subjets_flav;
+  std::vector<float> subjets_area;
+  std::vector<float> subjets_JECraw;
+
+  Particle subjet;
+
+  for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
+    TopJet topjet = bcc->topjets->at(i);
+    subjets_top=topjet.subjets();
+    subjets_flav=topjet.flavorsub();
+    subjets_area=topjet.subArea();
+    subjets_JECraw=topjet.subJEC_raw();
+
+    bcc->topjets->at(i).rm_subjets();
+    bcc->topjets->at(i).rm_JEC();
+
+    std::vector<float> newcorrections;
+
+    for (unsigned int subj = 0; subj < subjets_top.size(); subj++){
+      
+      subjet = subjets_top.at(subj);
+
+      LorentzVector jet_v4_raw = subjet.v4();//switch this on in case corrected subjets in input: *subjets_JECraw[subj];
+      corrector->setJetPt(subjet.pt());
+      corrector->setJetEta(subjet.eta());
+      corrector->setJetE(subjet.energy());
+      corrector->setJetA(subjets_area[subj]);
+      corrector->setRho(bcc->rho);
+      corrector->setNPV(bcc->pvs->size());
+    
+      float correctionfactor = corrector->getCorrection();
+      
+      LorentzVector jet_v4_corrected = jet_v4_raw*correctionfactor;
+
+      if (m_jecvar != e_Default){
+	if (m_jec_unc==NULL){
+	  std::cerr << "Subjet JEC variation should be applied, but JEC uncertainty object is NULL! Abort." << std::endl;
+	  exit(EXIT_FAILURE);
+	}
+	m_jec_unc->setJetEta(jet_v4_corrected.Eta());
+	m_jec_unc->setJetPt(jet_v4_corrected.Pt());
+	double unc = 0.;	  
+	if (m_jecvar == e_Up){
+	  unc = m_jec_unc->getUncertainty(1);
+	  if(extracorr>1.0){
+	    unc = sqrt(unc*unc+(extracorr-1.0)*(extracorr-1.0));
+	  }
+	  correctionfactor *= (1 + fabs(unc));
+	} else if (m_jecvar == e_Down){
+	  unc = m_jec_unc->getUncertainty(-1);
+	  if(extracorr>1.0){
+	    unc = sqrt(unc*unc+(extracorr-1.0)*(extracorr-1.0));
+	  }
+	  correctionfactor *= (1 - fabs(unc));
+	}
+	jet_v4_corrected = jet_v4_raw * correctionfactor;
+      }
+
+      Particle newsubjet;
+
+      newsubjet.set_pt(jet_v4_corrected.Pt());
+      newsubjet.set_eta(jet_v4_corrected.Eta());
+      newsubjet.set_phi(jet_v4_corrected.Phi());
+      newsubjet.set_energy(jet_v4_corrected.E());
+
+      newcorrections.push_back(1./correctionfactor);
+
+      bcc->topjets->at(i).add_subjet(newsubjet);
+
+    }//loop over subjets closed
+ 
+    TopJet * topjetref = &bcc->topjets->at(i);
+
+    for (unsigned int subj = 0; subj < subjets_top.size(); subj++){
+      topjetref->add_subJEC_raw(newcorrections[subj]);
+    }
+
+  }//loop over topjets closed
+  
+  resetEventCalc();
+  
+}

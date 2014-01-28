@@ -36,8 +36,10 @@ AnalysisCycle::AnalysisCycle()
     m_correctortop = NULL;
     m_correctortoptag = NULL;
     m_correctorhiggstag = NULL;
+    m_correctorsubjet = NULL;
     m_jes_unc = NULL;
     m_jes_unc_top = NULL;
+    m_jes_unc_sub = NULL;
 
     m_sys_unc = e_None;
     m_sys_var = e_Default;
@@ -82,7 +84,9 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "JECTopJetCollection" , m_JECTopJetCollection);
     DeclareProperty( "JECTopTagJetCollection" , m_JECTopTagJetCollection);
     DeclareProperty( "JECHiggsTagJetCollection" , m_JECHiggsTagJetCollection);
+    DeclareProperty( "JECSubJetCollection" , m_JECSubJetCollection);
     DeclareProperty( "ExtraTopJEC" , m_extra_topJEC);
+    DeclareProperty( "ExtraSubjetJEC" , m_extra_subjetJEC);
 
     //top pag pt reweighting mode
     DeclareProperty( "toppagptweight", m_toppagptweight);
@@ -247,6 +251,10 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       }
       if (m_sys_unc_name=="JEC" || m_sys_unc_name=="jec"){
 	m_sys_unc = e_JEC;
+	isok = true;
+      }
+      if (m_sys_unc_name=="SUBJEC" || m_sys_unc_name=="subjec"){
+	m_sys_unc = e_subJEC;
 	isok = true;
       }
       if (m_sys_unc_name=="JER" || m_sys_unc_name=="jer"){
@@ -441,6 +449,32 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       // jec uncertainty
       TString unc_file = m_JECFileLocation + "/" + m_JECDataGlobalTag + "_Uncertainty_" + m_JECJetCollection + ".txt";
       m_jes_unc = new JetCorrectionUncertainty(unc_file.Data());
+    }
+
+    // ------------- subjetjet energy correction ----------------
+
+    if(m_JECFileLocation.size()>0 && m_JECSubJetCollection.size()>0 )
+    {
+
+      std::vector<JetCorrectorParameters> subpars;
+      
+      //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
+      if(!addGenInfo()) {
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECSubJetCollection + ".txt"));
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECSubJetCollection + ".txt"));
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECSubJetCollection + ".txt"));
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECSubJetCollection + ".txt"));
+      } else {
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECSubJetCollection + ".txt"));
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECSubJetCollection + ".txt"));
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECSubJetCollection + ".txt"));
+      }
+
+      m_correctorsubjet = new FactorizedJetCorrector(subpars);
+
+      // jec uncertainty
+      TString unc_file_sub = m_JECFileLocation + "/" + m_JECDataGlobalTag + "_Uncertainty_" + m_JECSubJetCollection + ".txt";
+      m_jes_unc_sub = new JetCorrectionUncertainty(unc_file_sub.Data());
     }
 
     // ------------- top jet energy correction ----------------
@@ -656,8 +690,10 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     delete m_correctortop;
     delete m_correctortoptag;
     delete m_correctorhiggstag;
+    delete m_correctorsubjet; 
     delete m_jes_unc;
     delete m_jes_unc_top;
+    delete m_jes_unc_sub;
 
     m_tpr = NULL;
     m_hepsf = NULL;
@@ -847,6 +883,26 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 	if (m_sys_var==e_Down) cleaner.ApplyJECVariationDown();
       }
       cleaner.JetRecorrector(m_corrector);
+    }
+
+    //apply subjet energy corrections to topjet subjets
+    if(m_TopJetCollection.size()>0 && m_correctorsubjet){
+      Cleaner cleanersub;
+
+      cleanersub.SetJECUncertainty(m_jes_unc_sub);
+
+      // settings for jet correction uncertainties
+      if (m_sys_unc==e_subJEC){
+	if (m_sys_var==e_Up) cleanersub.ApplyJECVariationUp();
+	if (m_sys_var==e_Down) cleanersub.ApplyJECVariationDown();
+      }
+      
+      if(m_extra_subjetJEC.size()>0&&(m_sys_unc==e_subJEC)){
+	cleanersub.SubjetRecorrector(m_correctorsubjet,atof(m_extra_subjetJEC.c_str()));
+      }
+      else{
+	cleanersub.SubjetRecorrector(m_correctorsubjet,1.0);
+      }
     }
 
     //apply top jet energy corrections

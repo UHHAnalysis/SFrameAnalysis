@@ -114,6 +114,7 @@ protected:
   std::string m_JECTopJetCollection;
   std::string m_JECTopTagJetCollection;
   std::string m_JECHiggsTagJetCollection;
+  std::string m_JECSubJetCollection;
 
   //top pag pt reweighting mode
   std::string m_toppagptweight;
@@ -132,7 +133,6 @@ protected:
   LeptonScaleFactors* m_lsf;
 
   JetpTReweightingInWJets* m_jsf;
-
 
   // information on systematic uncertainty
   E_SystShift m_sys_var;
@@ -159,8 +159,10 @@ protected:
   FactorizedJetCorrector* m_correctortop;
   FactorizedJetCorrector* m_correctortoptag;
   FactorizedJetCorrector* m_correctorhiggstag;
+  FactorizedJetCorrector* m_correctorsubjet;
   JetCorrectionUncertainty* m_jes_unc;
   JetCorrectionUncertainty* m_jes_unc_top;
+  JetCorrectionUncertainty* m_jes_unc_sub;
 
   //toppagptreweighting
   TopPtReweight * m_tpr;
@@ -186,6 +188,7 @@ private:
 
   //extra jec uncertainty for topjets
   std::string m_extra_topJEC;
+  std::string m_extra_subjetJEC;
 
   // properties of the NTuples
   std::string m_JetCollection;

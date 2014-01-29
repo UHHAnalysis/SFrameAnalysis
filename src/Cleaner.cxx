@@ -870,12 +870,19 @@ void Cleaner::SubjetRecorrector(FactorizedJetCorrector *corrector, double extrac
       corrector->setRho(bcc->rho);
       corrector->setNPV(bcc->pvs->size());
     
+      //cout << subjet.pt() << " " << subjet.eta() << " " << subjet.energy() << " " << subjets_area[subj] << " " << bcc->rho << " " << bcc->pvs->size() << endl;
+
       float correctionfactor = corrector->getCorrection();
       
-      if(onlyunc) correctionfactor=1.;
+      if(onlyunc){
+	//cout << "No correction applied" << endl;
+	correctionfactor=1.;
+      }
 
       LorentzVector jet_v4_corrected = jet_v4_raw*correctionfactor;
 
+      //Control against infrared configurations
+      if(subjet.pt()>0){
       if (m_jecvar != e_Default){
 	if (m_jec_unc==NULL){
 	  std::cerr << "Subjet JEC variation should be applied, but JEC uncertainty object is NULL! Abort." << std::endl;
@@ -885,7 +892,9 @@ void Cleaner::SubjetRecorrector(FactorizedJetCorrector *corrector, double extrac
 	m_jec_unc->setJetPt(jet_v4_corrected.Pt());
 	double unc = 0.;	  
 	if (m_jecvar == e_Up){
+	  //cout << "before up" << endl;
 	  unc = m_jec_unc->getUncertainty(1);
+	  //cout << unc << endl;
 	  if(extracorr>1.0){
 	    unc = sqrt(unc*unc+(extracorr-1.0)*(extracorr-1.0));
 	  }
@@ -899,6 +908,9 @@ void Cleaner::SubjetRecorrector(FactorizedJetCorrector *corrector, double extrac
 	}
 	jet_v4_corrected = jet_v4_raw * correctionfactor;
       }
+      }//infrared
+
+      //cout << "Onyl unc corr " << correctionfactor << endl;
 
       Particle newsubjet;
 

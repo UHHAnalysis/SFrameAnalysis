@@ -833,7 +833,7 @@ void Cleaner::METPhiCorrector()
   resetEventCalc();
 }
 
-void Cleaner::SubjetRecorrector(FactorizedJetCorrector *corrector, double extracorr)
+void Cleaner::SubjetRecorrector(FactorizedJetCorrector *corrector, double extracorr, int onlyunc)
 {
    
   //For topjets collection
@@ -872,6 +872,8 @@ void Cleaner::SubjetRecorrector(FactorizedJetCorrector *corrector, double extrac
     
       float correctionfactor = corrector->getCorrection();
       
+      if(onlyunc) correctionfactor=1.;
+
       LorentzVector jet_v4_corrected = jet_v4_raw*correctionfactor;
 
       if (m_jecvar != e_Default){

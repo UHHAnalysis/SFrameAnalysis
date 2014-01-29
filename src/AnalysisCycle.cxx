@@ -87,6 +87,7 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "JECSubJetCollection" , m_JECSubJetCollection);
     DeclareProperty( "ExtraTopJEC" , m_extra_topJEC);
     DeclareProperty( "ExtraSubjetJEC" , m_extra_subjetJEC);
+    DeclareProperty( "OnlyUNCSubjetJEC" , m_onlyUNC_subjetJEC);
 
     //top pag pt reweighting mode
     DeclareProperty( "toppagptweight", m_toppagptweight);
@@ -898,10 +899,10 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
       }
       
       if(m_extra_subjetJEC.size()>0&&(m_sys_unc==e_subJEC)){
-	cleanersub.SubjetRecorrector(m_correctorsubjet,atof(m_extra_subjetJEC.c_str()));
+	cleanersub.SubjetRecorrector(m_correctorsubjet,atof(m_extra_subjetJEC.c_str()),atoi(m_onlyUNC_subjetJEC.c_str()));
       }
       else{
-	cleanersub.SubjetRecorrector(m_correctorsubjet,1.0);
+	cleanersub.SubjetRecorrector(m_correctorsubjet,1.0,atoi(m_onlyUNC_subjetJEC.c_str()));
       }
     }
 

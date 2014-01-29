@@ -189,6 +189,7 @@ private:
   //extra jec uncertainty for topjets
   std::string m_extra_topJEC;
   std::string m_extra_subjetJEC;
+  std::string m_onlyUNC_subjetJEC;
 
   // properties of the NTuples
   std::string m_JetCollection;

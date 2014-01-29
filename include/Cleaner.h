@@ -52,7 +52,7 @@ class Cleaner{
    */
   void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true, bool useTopJets=false, bool propagate_to_met = true, bool useTopTagJets=false, bool useHiggsTagJets=false, double extratopjec=1.0);
 
-  void SubjetRecorrector(FactorizedJetCorrector *corrector, double extracorr=1.0);
+  void SubjetRecorrector(FactorizedJetCorrector *corrector, double extracorr=1.0, int onlyunc=0);
 
   /**
    * Function to pass a jet energy uncertainty object to the cleaner.

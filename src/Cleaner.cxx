@@ -328,54 +328,10 @@ void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool
     resetEventCalc();
 }
 
-// Old electron id
-/*
-bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
-{
-    Electron ele = bcc->electrons->at(index);
-    if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
-        if(bcc->pvs->size()>0) {
-            if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02) {
-                if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1) {
-                    if(ele.passconversionveto()) {
-                        if(ele.mvaTrigV0()>0.0) {
-                            if(ele.eleID(Electron::e_Tight)) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }   
-    return false;
-}*/
-
-// Base on the new top simple cut recomendation for 53x
- /*
-bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
-{
-    Electron ele = bcc->electrons->at(index);
-    if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
-        if(bcc->pvs->size()>0) {
-            if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02) {
-                if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1) {
-		  if(ele.passconversionveto()) {
-		      if(ele.eleID(Electron::e_Tight)) {
-			return true;
-		      }
-		  }
-                }
-            }
-        }
-    }
-    return false;
-}
- */
-// Base on the new top mva recomendation for 53x 
 
 
-bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
+// Based on the new top mva recomendation for 53x 
+ bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
 {
     Electron ele = bcc->electrons->at(index);
     if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
@@ -393,6 +349,53 @@ bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
     }
     return false;
 }
+
+// Based on the new EGM POG recomendation for 53x 
+bool Cleaner::passElectronId_EGM(BaseCycleContainer * bcc, unsigned int index)
+{
+    Electron ele = bcc->electrons->at(index);
+    if(ele.passconversionveto()) {
+        if(ele.gsfTrack_trackerExpectedHitsInner_numberOfLostHits() <= 0) {
+	  
+	  double eeta = fabs(ele.eta());
+	  
+	  if(ele.pt() >= 20.0) {
+
+	    if((0.0 <= eeta) && (eeta <= 0.8)) {
+	      if(ele.mvaTrigV0() > 0.94) {
+		return true;
+	      }
+	    } else if((0.8 < eeta) && (eeta <= 1.479)) {
+	      if(ele.mvaTrigV0() > 0.85) {
+		return true;
+	      }
+	    } else if((1.479 < eeta) && (eeta <= 2.5) ) {
+	      if(ele.mvaTrigV0() > 0.62) {
+		return true;
+	      }
+	    }
+	  
+	  } else if(ele.pt() > 10.0) {
+	    if((0.0 <= eeta) && (eeta <= 0.8)) {
+	      if(ele.mvaTrigV0() > 0.00) {
+		return true;
+	      }
+	    } else if((0.8 < eeta) && (eeta <= 1.479)) {
+	      if(ele.mvaTrigV0() > 0.10) {
+		return true;
+	      }
+	    } else if((1.479 < eeta) && (eeta <= 2.5) ) {
+	      if(ele.mvaTrigV0() > 0.62) {
+		return true;
+	      }
+	    } 
+	  }
+	
+	}
+    }
+    return false;
+}
+
 
 
 void Cleaner::ElectronCleaner_noID_noIso(double ptmin, double etamax)
@@ -416,31 +419,34 @@ void Cleaner::ElectronCleaner_noID_noIso(double ptmin, double etamax)
     resetEventCalc();
 }
 
-void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax, bool reverseID)
+void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax, bool reverseID, bool egmId)
 {
     ElectronCleaner_noID_noIso(ptmin, etamax);
     std::vector<Electron> good_eles;
     for(unsigned int i=0; i<bcc->electrons->size(); ++i) {
         Electron ele = bcc->electrons->at(i);
-        if(!reverseID && passElectronId(bcc, i))
-            good_eles.push_back(ele);
-        else if (reverseID && !passElectronId(bcc, i))
-            good_eles.push_back(ele);
+	bool pass_ele_id = false;
+	if (egmId) pass_ele_id = passElectronId_EGM(bcc,i);
+	else pass_ele_id = passElectronId(bcc,i);
+
+        if(!reverseID && pass_ele_id)
+	  good_eles.push_back(ele);
+        else if (reverseID && !pass_ele_id)
+	  good_eles.push_back(ele);
     }
     bcc->electrons->clear();
 
-    for(unsigned int i=0; i<good_eles.size(); ++i) {
-
-        bcc->electrons->push_back(good_eles[i]);
+    for(unsigned int i=0; i<good_eles.size(); ++i) {      
+      bcc->electrons->push_back(good_eles[i]);
     }
     sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
     resetEventCalc();
 }
 
 
-void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax, bool reverseID, bool reverseIso)
+void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax, bool reverseID, bool reverseIso, bool egmId)
 {
-    ElectronCleaner_noIso(ptmin, etamax, reverseID);
+    ElectronCleaner_noIso(ptmin, etamax, reverseID, egmId);
     std::vector<Electron> good_eles;
     for(unsigned int i=0; i<bcc->electrons->size(); ++i) {
         Electron ele = bcc->electrons->at(i);

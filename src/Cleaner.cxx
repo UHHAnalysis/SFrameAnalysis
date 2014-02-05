@@ -357,8 +357,8 @@ bool Cleaner::passElectronId_EGM(BaseCycleContainer * bcc, unsigned int index)
     if(ele.passconversionveto()) {
         if(ele.gsfTrack_trackerExpectedHitsInner_numberOfLostHits() <= 0) {
 	  
-	  double eeta = fabs(ele.eta());
-	  
+	  double eeta = fabs(ele.supercluster_eta());
+
 	  if(ele.pt() >= 20.0) {
 
 	    if((0.0 <= eeta) && (eeta <= 0.8)) {

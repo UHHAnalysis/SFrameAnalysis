@@ -25,6 +25,7 @@ AnalysisCycle::AnalysisCycle()
     SetLogName( GetName() );
 
     m_puwp = NULL;
+    m_trig = NULL;
     m_tpr = NULL;
     m_hepsf = NULL;
     m_newrun = false;
@@ -54,6 +55,10 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "LumiFilePath" , m_lumifile_path);
     DeclareProperty( "LumiFileName" , m_lumifile_name);
     DeclareProperty( "LumiTrigger" ,  m_lumi_trigger);
+
+    //trigger
+    DeclareProperty( "TriggerMode" , m_triggermode);
+    DeclareProperty( "TriggerDir" , m_triggerdir);
 
     // steerable properties of the Ntuple files
     DeclareProperty( "JetCollection", m_JetCollection );
@@ -229,6 +234,20 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     } else {
         m_puwp = NULL;
     }
+
+    //trigger reweighting
+    if(m_triggermode.size()>0 && m_triggerdir.size()>0 && m_addGenInfo) {
+        m_triggerdir += ".";
+        m_triggerdir += inputData.GetType();
+        m_triggerdir += ".";
+        m_triggerdir += inputData.GetVersion();
+        m_triggerdir += ".root";
+        m_logger << INFO << "Trigger Reweighting will be performed. File = " << m_triggerdir << SLogger::endmsg;
+        m_trig = new TriggerWeight(m_triggerdir, m_triggermode);
+    } else {
+        m_trig = NULL;
+    }
+    
 
     //toppag pt re-weighting
     TString InputSampleName(inputData.GetVersion());
@@ -685,6 +704,7 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     delete m_lsf;
     delete m_pdfweights;
     delete m_puwp;
+    delete m_trig;
     delete m_tpr;
     delete m_hepsf;
     delete m_corrector;
@@ -808,6 +828,11 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
             double pu_weight = m_puwp->produceWeight(m_bcc.genInfo);
             // set the weight in the eventcalc
             calc -> ProduceWeight(pu_weight);
+        }
+	if(m_trig) {
+            double trig_weight = m_trig->produceWeight(&m_bcc);
+            // set the weight in the eventcalc
+            calc -> ProduceWeight(trig_weight);
         }
 
 	if(m_tpr){

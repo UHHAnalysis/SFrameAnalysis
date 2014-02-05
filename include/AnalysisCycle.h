@@ -7,6 +7,7 @@
 
 #include "SFrameTools/include/Selection.h"
 #include "SFrameTools/include/PUWeightProducer.h"
+#include "SFrameTools/include/TriggerWeight.h"
 #include "SFrameTools/include/LuminosityHandler.h"
 #include "SFrameTools/include/BaseHists.h"
 #include "SFrameTools/include/MCDataScaleFactors.h"
@@ -106,6 +107,10 @@ public:
 
 protected:
 
+  //Trigger Weight
+  std::string m_triggermode;
+  std::string m_triggerdir;
+
   // JEC information
   std::string m_JECFileLocation;
   std::string m_JECDataGlobalTag;
@@ -153,6 +158,9 @@ protected:
 
   // PU-reweighting
   PUWeightProducer* m_puwp;
+
+  // Trigger-reweighting
+  TriggerWeight* m_trig;
 
   //jet energy corrections  
   FactorizedJetCorrector* m_corrector;

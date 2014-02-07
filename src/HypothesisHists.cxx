@@ -55,6 +55,8 @@ void HypothesisHists::Init()
   Book( TH1F("Discriminator_2", name , 50, 0,10) );
   Book( TH1F("Discriminator_3", name , 300, 0,30) );  
 
+
+
   Book( TH2F("Discriminator_vs_M_ttbar", name+" vs M_{t#bar{t}}^{rec}" , 50, min,max, 100,0,5000) );
 
   Book( TH2F("M_ttbar_rec_vs_M_ttbar_gen","M_{t#bar{t}}^{rec} [GeV/c^{2}] vs M_{t#bar{t}}^{gen} [GeV/c^{2}]",100,0,5000,100,0,5000));
@@ -78,19 +80,18 @@ void HypothesisHists::Init()
   Book( TH2F("eta_lepton_rec_vs_eta_lepton_gen","#eta^{lepton,rec} [GeV/c] vs #eta^{lepton,gen} [GeV/c]",100,-5,5,100,-5,5));
   Book( TH2F("eta_blep_rec_vs_eta_blep_gen","#eta^{blep,rec} [GeV/c] vs #eta^{blep,gen} [GeV/c]",100,-5,5,100,-5,5 ));  
   Book( TH2F("eta_neutrino_rec_vs_eta_neutrino_gen","#eta^{#nu,rec} [GeV/c] vs #eta^{#nu,gen} [GeV/c]",100,-5,5,100,-5,5 )); 
+
+
 }
 
 void HypothesisHists::Fill()
 {
   // fill the histograms
-
   EventCalc* calc = EventCalc::Instance();
-
   // important: get the event weight
   double weight = calc->GetWeight();
-
   ReconstructionHypothesis* hyp = m_discr->GetBestHypothesis();
-  
+
   double mttbar_rec = 0;
   if( (hyp->top_v4()+hyp->antitop_v4()).isTimelike() ) 
     mttbar_rec = (hyp->top_v4()+hyp->antitop_v4()).M();
@@ -204,6 +205,19 @@ void HypothesisHists::Fill()
     }
 
   }
+
+
+
+
+//    int NSubBTags = bjets.size();
+//    Hist("NSubBTags")-> Fill(NSubBTags,weight);
+//    int NAntiktBTags = bjets.size();
+//    Hist("NAntiktBTags")-> Fill(NAntiktBTags,weight);
+//    int NSumBTags = bjets.size();
+//    Hist("NSumBTags")-> Fill(NSumBTags,weight);
+
+
+
 
 
   /*

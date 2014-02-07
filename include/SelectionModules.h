@@ -1,3 +1,4 @@
+//--sframe new--
 #ifndef SelectionModules_H
 #define SelectionModules_H
 
@@ -215,6 +216,58 @@ class NHEPTopTagSelection: public SelectionModule{
   int m_max_nheptoptag;
 };
 
+class NBTagAntiktJetSelection: public SelectionModule{
+public:
+  NBTagAntiktJetSelection(int min_nbtag,int max_nbtag, E_BtagType type=e_CSVT, double delR_Jet_TopTag=1.3 );
+  ~NBTagAntiktJetSelection(){}
+  
+   virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+  
+private:
+ int m_min_nbtag;
+ int m_max_nbtag;
+ E_BtagType m_type;
+ double m_delR_Jet_TopTag;
+};
+
+class NSumBTagsSelection: public SelectionModule{
+public:
+  NSumBTagsSelection(int min_nsumbtags, int max_nsumbtags, E_BtagType type=e_CSVL);
+~NSumBTagsSelection(){}
+
+virtual bool pass(BaseCycleContainer*);
+virtual std::string description();
+
+private:
+int m_min_nsumbtags;
+int m_max_nsumbtags;
+E_BtagType m_type;
+};
+
+
+
+
+//-- Selects events with b-tagged subjet in the CMSTopTagged jets
+class NCMSSubBTagSelection: public SelectionModule{
+ public:
+  NCMSSubBTagSelection(int min_ntoptag, int max_ntoptag, int min_nbtag=0, int max_nbtag=int_infinity(), E_BtagType type=e_CSVM, double nsubjettiness=0.7);
+  ~NCMSSubBTagSelection(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  int m_min_ntoptag;
+  int m_max_ntoptag;
+  int m_min_nsubjetbtag;
+  int m_max_nsubjetbtag;
+  E_BtagType m_type;
+  double m_nsubjettiness;
+  
+};
+
+
 // Selects events with b-tagged subjet in the HEPTopTagged jets
 class NHEPTopAndSubBTagSelection: public SelectionModule{
  public:
@@ -409,6 +462,23 @@ private:
     double m_min_met;
     double m_max_met;
 };
+
+class IsoConeSelection: public SelectionModule {
+public:
+	IsoConeSelection(TString type="mu", double a=29.1356, double b=164.383, double c=0.023111, double iso_num=0.2);
+	~IsoConeSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+TString m_type;
+double m_a;
+double m_b;
+double m_c;
+double m_iso;
+};
+
 
 class TwoDCut: public SelectionModule {
 public:

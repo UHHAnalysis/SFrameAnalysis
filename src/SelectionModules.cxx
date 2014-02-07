@@ -2,8 +2,6 @@
 #include "include/SelectionModules.h"
 #include "TLorentzVector.h"
 
-<<<<<<< HEAD
-=======
 NAntiMuonTopJetsSelection::NAntiMuonTopJetsSelection(int min_ntops, int max_ntops, double ptmin, double etamax )
 {
   m_min_ntops=min_ntops;
@@ -273,8 +271,6 @@ std::string NMuonBTagSelection::description()
     sprintf(s, "%d <= number of b-tags in the muon hemisphere <= %d",m_min_nbtag,m_max_nbtag);
     return s;
 }
->>>>>>> master
-
 TriggerSelection::TriggerSelection(std::string triggername)
 {
   m_name=triggername;
@@ -763,13 +759,8 @@ std::string NHEPTopTagSelection::description(){
   return s;
 }
 
-<<<<<<< HEAD
-
-
-NHEPTopAndSubBTagSelection::NHEPTopAndSubBTagSelection(int min_nheptoptag, int max_nheptoptag, E_BtagType type){
-=======
 NHEPTopAndSubBTagSelection::NHEPTopAndSubBTagSelection(int min_nheptoptag, int max_nheptoptag, E_BtagType type,  TString mode, TString filename){
->>>>>>> master
+
   m_min_nheptoptag = min_nheptoptag;
   m_max_nheptoptag = max_nheptoptag; 
   m_type = type;

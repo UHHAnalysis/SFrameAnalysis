@@ -1013,6 +1013,39 @@ std::string HTCut::description(){
 }
 
 
+
+//for T' analysis
+HTSubJetsCut::HTSubJetsCut(double min_ht, double max_ht){
+  m_min_ht = min_ht;
+  m_max_ht = max_ht;
+}
+
+bool HTSubJetsCut::pass(BaseCycleContainer *bcc){
+  double ht = 0;//-htlep;
+  std::vector<Particle> subjets_top;
+
+  for(unsigned int i=0; i< bcc->topjets->size(); ++i){
+    TopJet topjet =  bcc->topjets->at(i);
+    subjets_top=topjet.subjets();
+    for (unsigned int subj = 0; subj < subjets_top.size(); subj++){
+      ht += subjets_top.at(subj).pt();
+    }
+  }
+  if( ht < m_min_ht) return false;
+  if( ht > m_max_ht) return false;
+  return true;
+
+}
+
+std::string HTSubJetsCut::description(){
+  char s[100];
+  sprintf(s, "%.1f GeV < HTSubJets < %.1f GeV",m_min_ht,m_max_ht);
+  return s;
+}
+
+
+
+
 HThadCut::HThadCut(double ptmin_jet, double etamax_jet, double min_ht, double max_ht){
   m_ptmin_jet = ptmin_jet;
   m_etamax_jet = etamax_jet;
@@ -1600,6 +1633,38 @@ std::string TauMuonInvMassCut::description()
   return s;
 }
 
+MuonInvMassCut::MuonInvMassCut(double min_InvMass, double max_InvMass){
+ m_min_InvMass = min_InvMass;
+ m_max_InvMass = max_InvMass;
+}
+
+bool MuonInvMassCut::pass(BaseCycleContainer *bcc)
+{
+  for(unsigned int i=0; i<bcc->muons->size(); ++i) 
+    {
+      Muon muon1 = bcc->muons->at(i);
+      TLorentzVector Mu1;
+      Mu1.SetPtEtaPhiE(muon1.pt() ,muon1.eta() ,muon1.phi() ,muon1.energy() );
+      for(unsigned int j=0; j<bcc->muons->size(); ++j) 
+	{
+	  Muon muon2 = bcc->muons->at(j);
+	  TLorentzVector Mu2;
+	  Mu2.SetPtEtaPhiE(muon2.pt() ,muon2.eta() ,muon2.phi() ,muon2.energy() );
+   	  TLorentzVector Vec =  Mu1+Mu2;
+	  double InvMass = Vec.M();    
+          if (InvMass > m_min_InvMass && InvMass < m_max_InvMass) return true;
+	}
+      return false;
+    }
+  return false;
+}
+
+std::string MuonInvMassCut::description()
+{
+  char s[100];
+  sprintf(s, "%.1f < invariant mass muons  < %.1f",m_min_InvMass, m_max_InvMass);
+  return s;
+}
 
 
 SameSignCut::SameSignCut(){ 
@@ -1609,33 +1674,13 @@ bool SameSignCut::pass(BaseCycleContainer *bcc)
 {
   for(unsigned int i=0; i< bcc->muons->size(); ++i)
     {
-      Muon muon1 = bcc->muons->at(i);
-      for(unsigned int j=0; j< bcc->muons->size(); ++j)
-	{
-	  if (i!=j)
-	    {
-	      Muon muon2 = bcc->muons->at(j); 
-	      if (muon1.charge() == muon2.charge()) return true;
-	    }
-	}
+      Muon muon = bcc->muons->at(i);
       for(unsigned int j=0; j< bcc->taus->size(); ++j)
 	{
 	  Tau tau = bcc->taus->at(j);
-	  if (muon1.charge() == tau.charge()) return true;
+	  if (muon.charge() == tau.charge()) return true;
 	}
       
-    }
-  for(unsigned int i=0; i< bcc->taus->size(); ++i)
-    {
-      Tau tau1 = bcc->taus->at(i);
-      for(unsigned int j=0; j< bcc->taus->size(); ++j)
-	{
-	  if (i!=j)
-	    {
-	      Tau tau2 = bcc->taus->at(j); 
-	      if (tau1.charge() == tau2.charge()) return true;
-	    }
-	}
     }
   return false;
 }

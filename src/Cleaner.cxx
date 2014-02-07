@@ -35,7 +35,7 @@ void Cleaner::resetEventCalc()
 
 void Cleaner::JetEnergyResolutionShifter(bool sort)
 {
-
+  //cout <<"in Jet energy resolution shifter"<<endl;
     LorentzVector met(0,0,0,0);
     if(bcc->met) {
         met = bcc->met->v4();
@@ -48,10 +48,10 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
         float genpt = bcc->jets->at(i).genjet_pt();
         //ignore unmatched jets (which have zero vector) or jets with very low pt:
         if(genpt < 15.0) {
-            // std::cout << "1.0 | " <<  bcc->jets->at(i).pt()  << " | " << bcc->jets->at(i).eta() << " | " << genpt << std::endl;
+	  //   std::cout << "1.0 | " <<  bcc->jets->at(i).pt()  << " | " << bcc->jets->at(i).eta() << " | " << genpt << std::endl;
             continue;
         }
-
+	//cout <<"after genjet matching"<<endl;
         LorentzVector jet_v4 =  bcc->jets->at(i).v4();
 
         LorentzVector jet_v4_raw = jet_v4*bcc->jets->at(i).JEC_factor_raw();
@@ -64,6 +64,7 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
 
         //numbers taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
         if(m_jervar==e_Default) {
+	  //cout <<"in Default"<<endl;
             if(abseta < 0.5)
                 factor = 0.052;
             else if(abseta >= 0.5 && abseta <1.1)
@@ -77,6 +78,7 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
             else
                 factor = 0.288;
         } else if(m_jervar==e_Up) {
+	  // cout <<"in JER Up"<<endl;
             if(abseta < 0.5)
                 factor = 0.115;
             else if(abseta >= 0.5 && abseta <1.1)
@@ -88,6 +90,7 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
             else if(abseta >= 2.3)
                 factor = 0.488;
         } else if(m_jervar==e_Down) {
+	  //  cout <<"in JER Down"<<endl;
             if(abseta < 0.5)
                 factor = -0.01;
             else if(abseta >= 0.5 && abseta <1.1)
@@ -226,7 +229,7 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
     resetEventCalc();
 }
 
-void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool useTopJets, bool propagate_to_met, bool useTopTagJets, bool useHiggsTagJets)
+void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool useTopJets, bool propagate_to_met, bool useTopTagJets, bool useHiggsTagJets, double extratopjec)
 {
     
   if(useTopJets) propagate_to_met = false;
@@ -282,9 +285,15 @@ void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool
 	  double unc = 0.;	  
 	  if (m_jecvar == e_Up){
 	    unc = m_jec_unc->getUncertainty(1);
+	    if(extratopjec>1.0){
+	      unc = sqrt(unc*unc+(extratopjec-1.0)*(extratopjec-1.0));
+	    }
 	    correctionfactor *= (1 + fabs(unc));
 	  } else if (m_jecvar == e_Down){
 	    unc = m_jec_unc->getUncertainty(-1);
+	    if(extratopjec>1.0){
+	      unc = sqrt(unc*unc+(extratopjec-1.0)*(extratopjec-1.0));
+	    }
 	    correctionfactor *= (1 - fabs(unc));
 	  }
 	  jet_v4_corrected = jet_v4_raw * correctionfactor;
@@ -319,54 +328,10 @@ void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool
     resetEventCalc();
 }
 
-// Old electron id
-/*
-bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
-{
-    Electron ele = bcc->electrons->at(index);
-    if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
-        if(bcc->pvs->size()>0) {
-            if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02) {
-                if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1) {
-                    if(ele.passconversionveto()) {
-                        if(ele.mvaTrigV0()>0.0) {
-                            if(ele.eleID(Electron::e_Tight)) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }   
-    return false;
-}*/
-
-// Base on the new top simple cut recomendation for 53x
- /*
-bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
-{
-    Electron ele = bcc->electrons->at(index);
-    if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
-        if(bcc->pvs->size()>0) {
-            if(fabs(ele.gsfTrack_dxy_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y()))<0.02) {
-                if(fabs(ele.gsfTrack_dz_vertex(bcc->pvs->at(0).x(), bcc->pvs->at(0).y(), bcc->pvs->at(0).z()))<0.1) {
-		  if(ele.passconversionveto()) {
-		      if(ele.eleID(Electron::e_Tight)) {
-			return true;
-		      }
-		  }
-                }
-            }
-        }
-    }
-    return false;
-}
- */
-// Base on the new top mva recomendation for 53x 
 
 
-bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
+// Based on the new top mva recomendation for 53x 
+ bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
 {
     Electron ele = bcc->electrons->at(index);
     if(fabs(ele.supercluster_eta())<1.4442 || fabs(ele.supercluster_eta())>1.5660) {
@@ -384,6 +349,53 @@ bool Cleaner::passElectronId(BaseCycleContainer * bcc, unsigned int index)
     }
     return false;
 }
+
+// Based on the new EGM POG recomendation for 53x 
+bool Cleaner::passElectronId_EGM(BaseCycleContainer * bcc, unsigned int index)
+{
+    Electron ele = bcc->electrons->at(index);
+    if(ele.passconversionveto()) {
+        if(ele.gsfTrack_trackerExpectedHitsInner_numberOfLostHits() <= 0) {
+	  
+	  double eeta = fabs(ele.supercluster_eta());
+
+	  if(ele.pt() >= 20.0) {
+
+	    if((0.0 <= eeta) && (eeta <= 0.8)) {
+	      if(ele.mvaTrigV0() > 0.94) {
+		return true;
+	      }
+	    } else if((0.8 < eeta) && (eeta <= 1.479)) {
+	      if(ele.mvaTrigV0() > 0.85) {
+		return true;
+	      }
+	    } else if((1.479 < eeta) && (eeta <= 2.5) ) {
+	      if(ele.mvaTrigV0() > 0.62) {
+		return true;
+	      }
+	    }
+	  
+	  } else if(ele.pt() > 10.0) {
+	    if((0.0 <= eeta) && (eeta <= 0.8)) {
+	      if(ele.mvaTrigV0() > 0.00) {
+		return true;
+	      }
+	    } else if((0.8 < eeta) && (eeta <= 1.479)) {
+	      if(ele.mvaTrigV0() > 0.10) {
+		return true;
+	      }
+	    } else if((1.479 < eeta) && (eeta <= 2.5) ) {
+	      if(ele.mvaTrigV0() > 0.62) {
+		return true;
+	      }
+	    } 
+	  }
+	
+	}
+    }
+    return false;
+}
+
 
 
 void Cleaner::ElectronCleaner_noID_noIso(double ptmin, double etamax)
@@ -407,31 +419,34 @@ void Cleaner::ElectronCleaner_noID_noIso(double ptmin, double etamax)
     resetEventCalc();
 }
 
-void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax, bool reverseID)
+void Cleaner::ElectronCleaner_noIso(double ptmin, double etamax, bool reverseID, bool egmId)
 {
     ElectronCleaner_noID_noIso(ptmin, etamax);
     std::vector<Electron> good_eles;
     for(unsigned int i=0; i<bcc->electrons->size(); ++i) {
         Electron ele = bcc->electrons->at(i);
-        if(!reverseID && passElectronId(bcc, i))
-            good_eles.push_back(ele);
-        else if (reverseID && !passElectronId(bcc, i))
-            good_eles.push_back(ele);
+	bool pass_ele_id = false;
+	if (egmId) pass_ele_id = passElectronId_EGM(bcc,i);
+	else pass_ele_id = passElectronId(bcc,i);
+
+        if(!reverseID && pass_ele_id)
+	  good_eles.push_back(ele);
+        else if (reverseID && !pass_ele_id)
+	  good_eles.push_back(ele);
     }
     bcc->electrons->clear();
 
-    for(unsigned int i=0; i<good_eles.size(); ++i) {
-
-        bcc->electrons->push_back(good_eles[i]);
+    for(unsigned int i=0; i<good_eles.size(); ++i) {      
+      bcc->electrons->push_back(good_eles[i]);
     }
     sort(bcc->electrons->begin(), bcc->electrons->end(), HigherPt());
     resetEventCalc();
 }
 
 
-void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax, bool reverseID, bool reverseIso)
+void Cleaner::ElectronCleaner(double ptmin, double etamax, double relisomax, bool reverseID, bool reverseIso, bool egmId)
 {
-    ElectronCleaner_noIso(ptmin, etamax, reverseID);
+    ElectronCleaner_noIso(ptmin, etamax, reverseID, egmId);
     std::vector<Electron> good_eles;
     for(unsigned int i=0; i<bcc->electrons->size(); ++i) {
         Electron ele = bcc->electrons->at(i);
@@ -552,6 +567,48 @@ void Cleaner::MuonCleaner_Loose(double ptmin, double etamax)
     resetEventCalc();
 }
 
+void Cleaner::MuonCleanerHalil(double ptmin, double etamax, double relisomax)
+{
+  std::vector<Muon> good_mus;
+  for(unsigned int i=0; i<bcc->muons->size(); ++i) {
+    Muon mu = bcc->muons->at(i);
+    if(mu.pt()>ptmin) {
+      if(fabs(mu.eta())<etamax){
+        if(mu.isGlobalMuon()) {
+	  if(mu.isPFMuon()) {
+	    if(mu.globalTrack_chi2()/mu.globalTrack_ndof()<10) {
+	      if(mu.globalTrack_numberOfValidMuonHits()>0) {
+		if(mu.innerTrack_trackerLayersWithMeasurement()>5) {
+		  if(mu.dB()<0.2) { 
+		    if(fabs(mu.vertex_z()-bcc->pvs->at(0).z())<0.5) {
+		      if(mu.innerTrack_numberOfValidPixelHits()>0) {
+			if(mu.numberOfMatchedStations()>1) {
+			  if(mu.relIso()<relisomax){
+			    good_mus.push_back(mu);
+			  }
+			}
+		      }
+		    }
+		  }
+		}
+	      }
+	    }
+	  }
+        }
+      }
+    }
+  }
+    bcc->muons->clear();
+
+    for(unsigned int i=0; i<good_mus.size(); ++i) {
+        bcc->muons->push_back(good_mus[i]);
+    }
+    sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
+    resetEventCalc();
+}
+
+
+
 void Cleaner::TauCleaner_noIso(double ptmin, double etamax)
 {
   std::vector<Tau> good_taus;
@@ -611,6 +668,35 @@ void Cleaner::TauCleaner(double ptmin, double etamax)
   resetEventCalc();
 }
 
+void Cleaner::TauCleanerHalil(double ptmin, double etamax)
+{
+  std::vector<Tau> good_taus;
+  for(unsigned int i=0; i<bcc->taus->size(); ++i) {
+    Tau tau = bcc->taus->at(i);
+    if(tau.pt()>ptmin) {
+      if(fabs(tau.eta())<etamax) {
+	if(bcc->taus->at(i).decayModeFinding()) {
+	  if(bcc->taus->at(i).againstElectronTightMVA3()) {
+	    if(bcc->taus->at(i).againstMuonTight2()) {
+	      if (bcc->taus->at(i).byTightCombinedIsolationDeltaBetaCorr3Hits())
+		{
+		  good_taus.push_back(tau);
+		}
+	    }
+	  }
+	}
+      }
+    }
+  }
+  
+  bcc->taus->clear();
+  
+  for(unsigned int i=0; i<good_taus.size(); ++i) {
+    bcc->taus->push_back(good_taus[i]);
+  }
+  sort(bcc->taus->begin(), bcc->taus->end(), HigherPt());
+  resetEventCalc();
+}
 
 void Cleaner::JetCleaner(double ptmin, double etamax, bool doPFID)
 {
@@ -751,4 +837,108 @@ void Cleaner::METPhiCorrector()
   bcc->met->set_pt(met);
   
   resetEventCalc();
+}
+
+void Cleaner::SubjetRecorrector(FactorizedJetCorrector *corrector, double extracorr, int onlyunc)
+{
+   
+  //For topjets collection
+  //Expects UNcorrected subjets in input
+  
+  std::vector<Particle> subjets_top;
+  std::vector<int> subjets_flav;
+  std::vector<float> subjets_area;
+  std::vector<float> subjets_JECraw;
+
+  Particle subjet;
+
+  for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
+    TopJet topjet = bcc->topjets->at(i);
+    subjets_top=topjet.subjets();
+    subjets_flav=topjet.flavorsub();
+    subjets_area=topjet.subArea();
+    subjets_JECraw=topjet.subJEC_raw();
+
+    bcc->topjets->at(i).rm_subjets();
+    bcc->topjets->at(i).rm_JEC();
+
+    std::vector<float> newcorrections;
+
+    for (unsigned int subj = 0; subj < subjets_top.size(); subj++){
+      
+      subjet = subjets_top.at(subj);
+
+      LorentzVector jet_v4_raw = subjet.v4();//switch this on in case corrected subjets in input: *subjets_JECraw[subj];
+      corrector->setJetPt(subjet.pt());
+      corrector->setJetEta(subjet.eta());
+      corrector->setJetE(subjet.energy());
+      corrector->setJetA(subjets_area[subj]);
+      corrector->setRho(bcc->rho);
+      corrector->setNPV(bcc->pvs->size());
+    
+      //cout << subjet.pt() << " " << subjet.eta() << " " << subjet.energy() << " " << subjets_area[subj] << " " << bcc->rho << " " << bcc->pvs->size() << endl;
+
+      float correctionfactor = corrector->getCorrection();
+      
+      if(onlyunc){
+	//cout << "No correction applied" << endl;
+	correctionfactor=1.;
+      }
+
+      LorentzVector jet_v4_corrected = jet_v4_raw*correctionfactor;
+
+      //Control against infrared configurations
+      if(subjet.pt()>0){
+      if (m_jecvar != e_Default){
+	if (m_jec_unc==NULL){
+	  std::cerr << "Subjet JEC variation should be applied, but JEC uncertainty object is NULL! Abort." << std::endl;
+	  exit(EXIT_FAILURE);
+	}
+	m_jec_unc->setJetEta(jet_v4_corrected.Eta());
+	m_jec_unc->setJetPt(jet_v4_corrected.Pt());
+	double unc = 0.;	  
+	if (m_jecvar == e_Up){
+	  //cout << "before up" << endl;
+	  unc = m_jec_unc->getUncertainty(1);
+	  //cout << unc << endl;
+	  if(extracorr>1.0){
+	    unc = sqrt(unc*unc+(extracorr-1.0)*(extracorr-1.0));
+	  }
+	  correctionfactor *= (1 + fabs(unc));
+	} else if (m_jecvar == e_Down){
+	  unc = m_jec_unc->getUncertainty(-1);
+	  if(extracorr>1.0){
+	    unc = sqrt(unc*unc+(extracorr-1.0)*(extracorr-1.0));
+	  }
+	  correctionfactor *= (1 - fabs(unc));
+	}
+	jet_v4_corrected = jet_v4_raw * correctionfactor;
+      }
+      }//infrared
+
+      //cout << "Onyl unc corr " << correctionfactor << endl;
+
+      Particle newsubjet;
+
+      newsubjet.set_pt(jet_v4_corrected.Pt());
+      newsubjet.set_eta(jet_v4_corrected.Eta());
+      newsubjet.set_phi(jet_v4_corrected.Phi());
+      newsubjet.set_energy(jet_v4_corrected.E());
+
+      newcorrections.push_back(1./correctionfactor);
+
+      bcc->topjets->at(i).add_subjet(newsubjet);
+
+    }//loop over subjets closed
+ 
+    TopJet * topjetref = &bcc->topjets->at(i);
+
+    for (unsigned int subj = 0; subj < subjets_top.size(); subj++){
+      topjetref->add_subJEC_raw(newcorrections[subj]);
+    }
+
+  }//loop over topjets closed
+  
+  resetEventCalc();
+  
 }

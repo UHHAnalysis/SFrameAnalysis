@@ -417,6 +417,20 @@ class HTCut: public SelectionModule{
   double m_max_ht;
 };
 
+
+class HTSubJetsCut: public SelectionModule{
+ public:
+  HTSubJetsCut(double min_ht, double max_ht=double_infinity());
+  ~HTSubJetsCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  double m_min_ht;
+  double m_max_ht;
+};
+
 class HThadCut: public SelectionModule{
  public:
    HThadCut(double ptmin_jet,double etamax_jet, double min_ht, double max_ht=double_infinity());
@@ -613,6 +627,19 @@ private:
 
 };
 
+
+class MuonInvMassCut: public SelectionModule{
+ public:
+  MuonInvMassCut(double min_InvMass, double max_InvMass);
+  ~MuonInvMassCut(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  double m_min_InvMass;
+  double m_max_InvMass;
+};
 
 class TauMuonInvMassCut: public SelectionModule{
  public:

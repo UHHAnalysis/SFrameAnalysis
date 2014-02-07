@@ -50,7 +50,9 @@ class Cleaner{
    *  \param propagate_to_met if \c true, propagate the the new correction to MET (this that you have type-I corrected MET). This is
    *    ignored (effectively always \c false) if \c useTopJets is \c true.
    */
-  void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true, bool useTopJets=false, bool propagate_to_met = true, bool useTopTagJets=false, bool useHiggsTagJets=false);
+  void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true, bool useTopJets=false, bool propagate_to_met = true, bool useTopTagJets=false, bool useHiggsTagJets=false, double extratopjec=1.0);
+
+  void SubjetRecorrector(FactorizedJetCorrector *corrector, double extracorr=1.0, int onlyunc=0);
 
   /**
    * Function to pass a jet energy uncertainty object to the cleaner.
@@ -87,15 +89,17 @@ class Cleaner{
 
   E_SystShift GetJECVariation(){return m_jecvar;}
 
-  void ElectronCleaner(double ptmin=0, double etamax=9999, double relisomax=0.1, bool reverseID = false, bool reverseIso = false);
+  void ElectronCleaner(double ptmin=0, double etamax=9999, double relisomax=0.1, bool reverseID = false, bool reverseIso = false, bool egmId = false);
   void MuonCleaner(double ptmin=0, double etamax=9999, double relisomax=0.125);
-  void ElectronCleaner_noIso(double ptmin=0, double etamax=9999, bool reverseID = false);
+  void MuonCleanerHalil(double ptmin=0, double etamax=9999, double relisomax=0.125);
+  void ElectronCleaner_noIso(double ptmin=0, double etamax=9999, bool reverseID = false, bool egmId = false);
   void MuonCleaner_noIso(double ptmin=0, double etamax=9999);
   void MuonCleaner_Loose(double ptmin=0, double etamax=9999);
   void ElectronCleaner_noID_noIso(double ptmin=0, double etamax=9999);
   void MuonCleaner_noID_noIso(double ptmin=0, double etamax=9999);
   void TauCleaner_noIso(double ptmin=0, double etamax=9999);
   void TauCleaner(double ptmin=0, double etamax=9999);
+  void TauCleanerHalil(double ptmin=0, double etamax=9999);
   void TauCleanerDecayModeFinding(double ptmin=0, double etamax=9999);
   void JetCleaner(double ptmin=0, double etamax=9999, bool doPFID=true);
   void TopJetCleaner(double ptmin=0, double etamax=9999, bool doPFID=true);
@@ -118,6 +122,7 @@ class Cleaner{
 
   // helper function to define electron id criteria.
   bool passElectronId(BaseCycleContainer*, unsigned int);
+  bool passElectronId_EGM(BaseCycleContainer*, unsigned int);
 
   /// call this routine at the end of each cleaner to force re-calculation of basic variables in EventCalc
   void resetEventCalc();

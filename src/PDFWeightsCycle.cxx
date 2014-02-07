@@ -7,11 +7,12 @@ ClassImp( PDFWeightsCycle );
 
 
 PDFWeightsCycle::PDFWeightsCycle()
-   : SCycleBase() {
+   : AnalysisCycle() {
 
-   SetLogName( GetName() );
+  //SetLogName( GetName() );
+  SetIntLumiPerBin(500.); 
 
-   DeclareProperty( "PDFName", m_pdfname );
+  //DeclareProperty( "PDFName", m_pdfname );
 }
 
 PDFWeightsCycle::~PDFWeightsCycle() {
@@ -19,20 +20,20 @@ PDFWeightsCycle::~PDFWeightsCycle() {
 }
 
 void PDFWeightsCycle::BeginCycle() throw( SError ) {
-
+  AnalysisCycle::BeginCycle();
   return;
 
 }
 
 void PDFWeightsCycle::EndCycle() throw( SError ) {
-
+  AnalysisCycle::EndCycle();
    return;
 
 }
 
-void PDFWeightsCycle::BeginInputData( const SInputData& ) throw( SError ) {
+void PDFWeightsCycle::BeginInputData( const SInputData& id ) throw( SError ) {
   
-
+  AnalysisCycle::BeginInputData(id);
   //
   // Declare the output histograms:
   //
@@ -54,6 +55,7 @@ void PDFWeightsCycle::BeginInputData( const SInputData& ) throw( SError ) {
 }
 
 void PDFWeightsCycle::EndInputData( const SInputData& inputData ) throw( SError ) {
+  AnalysisCycle::EndInputData(inputData);
 
   TString outfilename = GetConfig().GetOutputDirectory();
   outfilename += "/";
@@ -73,23 +75,28 @@ void PDFWeightsCycle::EndInputData( const SInputData& inputData ) throw( SError 
 
 }
 
-void PDFWeightsCycle::BeginInputFile( const SInputData& ) throw( SError ) {
+void PDFWeightsCycle::BeginInputFile( const SInputData& sd) throw( SError ) {
+  AnalysisCycle::BeginInputFile(sd);
+//   bcc.reset();
+//   ConnectVariable( "AnalysisTree", "genInfo" , bcc.genInfo);
 
-  ConnectVariable( "AnalysisTree", "genInfo" , bcc.genInfo);
-
-  EventCalc* calc = EventCalc::Instance();
-  calc->SetBaseCycleContainer(&bcc);
-  LuminosityHandler *lumiHandler = new LuminosityHandler();
-  calc->SetLumiHandler( lumiHandler );
-  return;
+//   EventCalc* calc = EventCalc::Instance();
+//   calc->SetBaseCycleContainer(&bcc);
+//   LuminosityHandler *lumiHandler = new LuminosityHandler();
+//   calc->SetLumiHandler( lumiHandler );
+//   return;
 
 }
 
-void PDFWeightsCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError ) {
+void PDFWeightsCycle::ExecuteEvent( const SInputData& sd, Double_t weight) throw( SError ) {
  
+  AnalysisCycle::ExecuteEvent(sd, weight);
   EventCalc* calc = EventCalc::Instance();
   calc->Reset();
-  
+
+  int id1 = calc->GetGenInfo()->pdf_id1();
+  int id2 = calc->GetGenInfo()->pdf_id2();
+
   m_Ntotal++;
 
   std::vector<double> weights = m_pdfweights->GetWeightList();

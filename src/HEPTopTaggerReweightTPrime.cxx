@@ -80,5 +80,7 @@ double HEPTopTaggerReweightTPrime::GetScaleWeight(int scale)
     if(scale_factor>1.||scale_factor<1.)
     localweight -= scale_factor;
 
+    //cout << "Returning " << localweight << endl;
+
     return localweight;
 }

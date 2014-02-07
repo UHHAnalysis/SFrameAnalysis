@@ -7,13 +7,14 @@
 #include <fstream>
 
 // SFrame include(s):
-#include "core/include/SCycleBase.h"
+//#include "core/include/SCycleBase.h"
 
-#include "SFrameTools/include/Objects.h"
+//#include "SFrameTools/include/Objects.h"
 #include "SFrameTools/include/BaseCycleContainer.h"
 #include "SFrameTools/include/EventCalc.h"
 #include "SFrameTools/include/PDFWeights.h"
 
+#include "AnalysisCycle.h"
 /**
  *   @short PDFWeights cycle
  *
@@ -23,7 +24,7 @@
  */
 
 
-class PDFWeightsCycle : public SCycleBase {
+class PDFWeightsCycle : public AnalysisCycle {
 
 public:
    /// Default constructor
@@ -51,9 +52,9 @@ private:
    //
    // Put all your private variables here
    //
-  BaseCycleContainer bcc;
+  //BaseCycleContainer bcc;
 
-  std::string m_pdfname;
+  //std::string m_pdfname;
 
   PDFWeights* m_pdfweights;
 

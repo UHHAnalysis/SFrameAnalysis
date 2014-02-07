@@ -150,6 +150,8 @@ void TauHists::Init()
   Book( TH1F( "max_InvMassTau_binned_lx", "maximum M(#tau #tau)", 4, bins2) );
   Book( TH1F( "max_InvMassTau_binned_ly", "maximum M(#tau #tau)", 4, bins2) );
   Book( TH1F( "tau_mass", "mass tau", 100, 0, 10) );
+  Book( TH1F( "InvMass", "M(#mu #tau)", 50, 0, 250) );
+  Book( TH1F( "InvMass_ly", "M(#mu #tau)", 50, 0, 250) );
   Book( TH1F( "InvMassMuTau", "M(#mu #tau) if N_{#mu} = 1 & N_{#tau} = 1", 100, 0, 500) );
   Book( TH1F( "InvMassMuTau_ly", "M(#mu #tau) if N_{#mu} = 1 & N_{#tau} = 1", 100, 0, 500) );
   Book( TH1F( "InvMassMuTau_binned", "M(#mu #tau) if N_{#mu} = 1 & N_{#tau} = 1", 4, bins2) );
@@ -462,6 +464,25 @@ void TauHists::Fill()
       Hist("InvMassMuTau_binned_lx")->Fill(InvMass, weight);
       Hist("InvMassMuTau_binned_ly")->Fill(InvMass, weight);
     }
+
+  for (unsigned int i = 0; i<bcc->muons->size(); ++i)
+    {
+      Muon muon = bcc->muons->at(i);
+      TLorentzVector Mu;
+      Mu.SetPtEtaPhiE(muon.pt() ,muon.eta() ,muon.phi() ,muon.energy() );
+      for (unsigned int j = 0; j<bcc->taus->size(); ++j)
+	{
+	  Tau tau = bcc->taus->at(j);
+	  TLorentzVector Tau;
+	  Tau.SetPtEtaPhiE(tau.pt() ,tau.eta() ,tau.phi() ,tau.energy() );
+	  TLorentzVector DiLepton = Tau +Mu;
+	  double InvMass = DiLepton.M();
+	  
+	  Hist("InvMass")->Fill(InvMass, weight);
+	  Hist("InvMass_ly")->Fill(InvMass, weight);
+	}
+    }
+
   
   if (bcc->taus->size() > 0 && bcc->jets->size() > 0)
     {

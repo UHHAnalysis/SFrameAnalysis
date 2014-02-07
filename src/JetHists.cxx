@@ -45,16 +45,19 @@ void JetHists::Init()
 
   Book( TH1F( "eta","#eta all jets", 50,-3,3));
   Book( TH1F( "phi","#phi all jets", 50, -M_PI, M_PI));
-  
-  Book( TH1F( "pt_jet1", "p_{T}^{jet 1} [GeV/c]", 50, 0,1000 ) );
+
+  Double_t bins[5] = {20, 60, 120, 200, 800};
+  Book( TH1F( "pt_binned", "p_{T} all jets [GeV/c]",4,bins ) );
+
+  Book( TH1F( "pt_jet1", "p_{T}^{jet 1} [GeV/c]", 50, 0,2000 ) );
   Book( TH1F( "pt_jet1_lx", "p_{T}^{jet 1} [GeV/c]", 50, logPtjet1_bins ) );
   Book( TH1F( "pt_jet1_lxy", "p_{T}^{jet 1} [GeV/c]", 50, logPtjet1_bins ) );
   Book( TH1F( "pt_jet1_ly", "p_{T}^{jet 1} [GeV/c]", 50, logPtjet1_bins ) );
-  Book( TH1F( "pt_jet2", "p_{T}^{jet 2} [GeV/c]", 50, 0,1000 ) );
+  Book( TH1F( "pt_jet2", "p_{T}^{jet 2} [GeV/c]", 50, 0,2000 ) );
   Book( TH1F( "pt_jet2_lx", "p_{T}^{jet 2} [GeV/c]", 50, logPtjet2_bins ) );
   Book( TH1F( "pt_jet2_ly", "p_{T}^{jet 2} [GeV/c]", 50, logPtjet2_bins ) );
   Book( TH1F( "pt_jet2_lxy", "p_{T}^{jet 2} [GeV/c]", 50, logPtjet2_bins ) );
-  Book( TH1F( "pt_jet3", "p_{T}^{jet 3} [GeV/c]", 50, 0,1000 ) );
+  Book( TH1F( "pt_jet3", "p_{T}^{jet 3} [GeV/c]", 50, 0,2000 ) );
   Book( TH1F( "pt_jet3_lx", "p_{T}^{jet 3} [GeV/c]", 50, logPtjet3_bins ) );
   Book( TH1F( "pt_jet3_ly", "p_{T}^{jet 3} [GeV/c]", 50, logPtjet3_bins ) );
   Book( TH1F( "pt_jet3_lxy", "p_{T}^{jet 3} [GeV/c]", 50, logPtjet3_bins ) );
@@ -139,6 +142,7 @@ void JetHists::Fill()
     for (unsigned int i =0; i<bcc->jets->size(); ++i) {
         Jet jet =  bcc->jets->at(i);
         Hist("pt_lx") -> Fill(jet.pt(),weight );
+	Hist("pt_binned") -> Fill(jet.pt(),weight );
         Hist("pt_lxy") -> Fill(jet.pt(),weight);
         Hist("eta") -> Fill(jet.eta(),weight);
         Hist("phi") -> Fill(jet.phi(),weight);

@@ -45,6 +45,22 @@ private:
     double m_etamax;
 };
 
+class NAntiMuonHEPTopSelectionMatch: public SelectionModule {
+public:
+
+  NAntiMuonHEPTopSelectionMatch(int min_nbtag, int max_nbtag=int_infinity(), double ptmin=0., double etamax=double_infinity() );
+    ~NAntiMuonHEPTopSelectionMatch() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    int m_min_nbtag;
+    int m_max_nbtag;
+    double m_ptmin;
+    double m_etamax;
+};
+
 class NAntiMuonSubBTagSelection: public SelectionModule {
 public:
 
@@ -63,6 +79,23 @@ private:
     std::string m_filename;
 };
 
+class NAntiMuonSubBTagSelectionOne: public SelectionModule {
+public:
+
+  NAntiMuonSubBTagSelectionOne(int min_nbtag, int max_nbtag=int_infinity(), E_BtagType type=e_CSVM, double ptmin=0., double etamax=double_infinity() , TString filename="");
+    ~NAntiMuonSubBTagSelectionOne() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    int m_min_nbtag;
+    int m_max_nbtag;
+    E_BtagType m_type;
+    double m_ptmin;
+    double m_etamax;
+    std::string m_filename;
+};
 
 class NAntiMuonHEPBTagSelection: public SelectionModule {
 public:

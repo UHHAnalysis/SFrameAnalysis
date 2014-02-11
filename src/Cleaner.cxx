@@ -8,6 +8,7 @@ Cleaner::Cleaner( BaseCycleContainer* input)
     m_jec_unc = NULL;
     m_jecvar = e_Default;
     m_jervar = e_Default;
+    m_subjervar = e_Default;
 
 }
 
@@ -19,6 +20,7 @@ Cleaner::Cleaner()
     m_jec_unc = NULL;
     m_jecvar = e_Default;
     m_jervar = e_Default;
+    m_subjervar = e_Default;
 
 }
 
@@ -123,6 +125,146 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
 
     if(sort) std::sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
     resetEventCalc();
+}
+
+void Cleaner::JetEnergyResolutionShifterSubjets(bool sort)
+{
+ 
+  std::vector<Particle> subjets_top;
+  std::vector<Particle> subjets_gentop;
+
+  for(unsigned int j=0; j<bcc->topjets->size(); ++j) {
+    
+    TopJet topjet = bcc->topjets->at(j);
+    
+    double deltarmin = double_infinity();
+    
+    GenTopJet nextjet;
+
+    for(unsigned int igj=0; igj<bcc->topjetsgen->size();++igj){
+      
+      GenTopJet checkgen=bcc->topjetsgen->at(igj);
+      
+      if(checkgen.deltaR(topjet) < deltarmin){
+	deltarmin = checkgen.deltaR(topjet);
+	nextjet = checkgen;
+      }
+      
+    }//loop over genjets
+
+    if(deltarmin>0.8){
+      continue;
+    }
+    
+    subjets_top=topjet.subjets();
+
+    bcc->topjets->at(j).rm_subjets();
+
+    for (unsigned int i = 0; i < subjets_top.size(); i++){
+
+      subjets_gentop=nextjet.subjets();
+      
+      double deltarmins = double_infinity();
+      
+      Particle nextsubjet;
+
+      for (unsigned int is = 0; is < subjets_gentop.size(); is++){
+	
+	Particle checksub=subjets_gentop[is];
+
+	if(checksub.deltaR(subjets_top[i]) < deltarmins){
+	  deltarmins = checksub.deltaR(subjets_top[i]);
+	  nextsubjet = checksub;
+	}
+	
+      }//loop over gen subjets
+      
+      if(deltarmins>0.3){
+	Particle newsubjet;
+	
+	newsubjet.set_pt(subjets_top[i].pt());
+	newsubjet.set_eta(subjets_top[i].eta());
+	newsubjet.set_phi(subjets_top[i].phi());
+	newsubjet.set_energy(subjets_top[i].energy());
+	
+	bcc->topjets->at(j).add_subjet(newsubjet);
+	continue;
+      }
+     
+      float genpt = nextsubjet.pt();
+      //ignore unmatched jets (which have zero vector) or jets with very low pt:
+      if(genpt < 15.0) {
+	//   std::cout << "1.0 | " <<  bcc->jets->at(i).pt()  << " | " << bcc->jets->at(i).eta() << " | " << genpt << std::endl;
+	continue;
+      }
+      //cout <<"after genjet matching"<<endl;
+      LorentzVector jet_v4 =  subjets_top[i].v4();
+      
+      LorentzVector jet_v4_raw =  subjets_top[i].v4(); //currently subjets in ntuples are uncorrected anyway needed to propagate to MET, not done for subjets!
+      
+      double recopt = jet_v4.pt();
+      double factor = 0.0;
+      double uperr = 0.0;
+      double downerr = 0.0;
+      double abseta = fabs(jet_v4.eta());
+      
+      //numbers taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
+      if(m_subjervar==e_Default) {
+	//cout <<"in Default"<<endl;
+	if(abseta < 0.5)
+	  factor = 0.052;
+	else if(abseta >= 0.5 && abseta <1.1)
+	  factor = 0.057;
+	else if(abseta >= 1.1 && abseta <1.7)
+	  factor = 0.096;
+	else if(abseta >= 1.7 && abseta <2.3)
+	  factor = 0.134;
+	else if(abseta >= 2.3)
+	  factor = 0.288;
+	else
+	  factor = 0.288;
+      } else if(m_subjervar==e_Up) {
+	// cout <<"in JER Up"<<endl;
+	if(abseta < 0.5)
+	  factor = 0.115;
+	else if(abseta >= 0.5 && abseta <1.1)
+	  factor = 0.114;
+	else if(abseta >= 1.1 && abseta <1.7)
+	  factor = 0.161;
+	else if(abseta >= 1.7 && abseta <2.3)
+	  factor = 0.228;
+	else if(abseta >= 2.3)
+	  factor = 0.488;
+      } else if(m_subjervar==e_Down) {
+	//  cout <<"in JER Down"<<endl;
+	if(abseta < 0.5)
+	  factor = -0.01;
+	else if(abseta >= 0.5 && abseta <1.1)
+	  factor = 0.00;
+	else if(abseta >= 1.1 && abseta <1.7)
+	  factor = 0.032;
+	else if(abseta >= 1.7 && abseta <2.3)
+	  factor = 0.042;
+	else if(abseta >= 2.3)
+	  factor = 0.089;
+      }
+      
+      double ptscale = std::max(0.0, 1 + factor * (recopt - genpt) / recopt);
+      
+      jet_v4*=ptscale;
+      
+      Particle newsubjet;
+      
+      newsubjet.set_pt(jet_v4.Pt());
+      newsubjet.set_eta(jet_v4.Eta());
+      newsubjet.set_phi(jet_v4.Phi());
+      newsubjet.set_energy(jet_v4.E());
+      
+      bcc->topjets->at(j).add_subjet(newsubjet);
+
+    }//loop over subjets
+  }//loop over fat jets
+  
 }
 
 void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)

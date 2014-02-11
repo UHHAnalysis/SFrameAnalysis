@@ -157,6 +157,51 @@ std::string NAntiMuonHEPTopSelection::description()
     return s;
 }
 
+NAntiMuonHEPTopSelectionMatch::NAntiMuonHEPTopSelectionMatch(int min_nbtag, int max_nbtag, double ptmin, double etamax )
+{
+    m_min_nbtag=min_nbtag;
+    m_max_nbtag=max_nbtag;
+    m_ptmin=ptmin;
+    m_etamax=etamax;
+}
+
+bool NAntiMuonHEPTopSelectionMatch::pass(BaseCycleContainer *bcc)
+{
+    int nbtag=0;
+
+    //Assumes to have only one muon
+
+    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
+      int jettagged=0;
+
+      if(HepTopTagMatch(bcc->topjets->at(i))) jettagged=1;
+
+      if(bcc->muons->size() != 1){
+	std::cout << "ATTENTION!!! muon size " << bcc->muons->size() << std::endl;
+      }
+
+      double deltaphi=bcc->topjets->at(i).deltaPhi(bcc->muons->at(0));
+      
+      if(jettagged&&(deltaphi>(2*PI/3))&&(bcc->topjets->at(i).pt()>m_ptmin)&&(fabs(bcc->topjets->at(i).eta())<m_etamax)){
+
+	nbtag++;
+
+      }
+
+    }
+
+    if(nbtag<m_min_nbtag) return false;
+    if(nbtag>m_max_nbtag) return false;
+    return true;
+}
+
+std::string NAntiMuonHEPTopSelectionMatch::description()
+{
+    char s[100];
+    sprintf(s, "%d <= number of hep-top-tagged jets with matching in the muon anti-hemisphere <= %d",m_min_nbtag,m_max_nbtag);
+    return s;
+}
+
 NAntiMuonSubBTagSelection::NAntiMuonSubBTagSelection(int min_nbtag, int max_nbtag, E_BtagType type, double ptmin, double etamax , TString filename)
 {
     m_min_nbtag=min_nbtag;
@@ -218,6 +263,75 @@ bool NAntiMuonSubBTagSelection::pass(BaseCycleContainer *bcc)
 }
 
 std::string NAntiMuonSubBTagSelection::description()
+{
+    char s[100];
+    sprintf(s, "%d <= number of sub-b-tagged top jets in the muon anti-hemisphere <= %d",m_min_nbtag,m_max_nbtag);
+    return s;
+}
+
+NAntiMuonSubBTagSelectionOne::NAntiMuonSubBTagSelectionOne(int min_nbtag, int max_nbtag, E_BtagType type, double ptmin, double etamax , TString filename)
+{
+    m_min_nbtag=min_nbtag;
+    m_max_nbtag=max_nbtag;
+    m_type=type;
+    m_ptmin=ptmin;
+    m_etamax=etamax;
+    m_filename=filename;
+}
+
+bool NAntiMuonSubBTagSelectionOne::pass(BaseCycleContainer *bcc)
+{
+    int nbtag=0;
+
+    //Assumes to have only one muon
+
+    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
+      int jettagged=0;
+
+      std::vector<Particle> subjets_top;
+      std::vector<float> btagsub_combinedSecondaryVertex_top;
+      subjets_top=bcc->topjets->at(i).subjets();
+      btagsub_combinedSecondaryVertex_top=bcc->topjets->at(i).btagsub_combinedSecondaryVertex();
+
+      for(unsigned int j=0; j < btagsub_combinedSecondaryVertex_top.size(); ++j){
+
+	float test=btagsub_combinedSecondaryVertex_top[j];
+	
+	if(m_filename!=""){
+	  
+	  if(subJetBTagOne(bcc->topjets->at(i),m_type, "mean", m_filename, j)){
+	    jettagged+=1;
+	  }
+
+	}
+	else{
+	  if(m_type==e_CSVL && test>0.244) jettagged+=1;
+	  if(m_type==e_CSVM && test>0.679) jettagged+=1;
+	  if(m_type==e_CSVT && test>0.898) jettagged+=1;
+	}
+
+      }
+
+      if(bcc->muons->size() != 1){
+	std::cout << "ATTENTION!!! muon size " << bcc->muons->size() << std::endl;
+      }
+
+      double deltaphi=bcc->topjets->at(i).deltaPhi(bcc->muons->at(0));
+      
+      if((jettagged==1)&&(deltaphi>(2*PI/3))&&(bcc->topjets->at(i).pt()>m_ptmin)&&(fabs(bcc->topjets->at(i).eta())<m_etamax)){
+
+	nbtag++;
+
+      }
+
+    }
+
+    if(nbtag<m_min_nbtag) return false;
+    if(nbtag>m_max_nbtag) return false;
+    return true;
+}
+
+std::string NAntiMuonSubBTagSelectionOne::description()
 {
     char s[100];
     sprintf(s, "%d <= number of sub-b-tagged top jets in the muon anti-hemisphere <= %d",m_min_nbtag,m_max_nbtag);

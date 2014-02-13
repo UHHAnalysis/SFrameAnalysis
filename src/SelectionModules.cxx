@@ -423,9 +423,13 @@ bool TopTagOverlapSelection::pass(BaseCycleContainer* bcc)
   int nsubjets = 0;
   double mmin = 0;
 
+  //find primary charged lepton
+  EventCalc* calc = EventCalc::Instance();
+  Particle* lepton = calc->GetPrimaryLepton();
+  
   for(unsigned int i = 0; i< bcc->topjets->size();++i){
     TopJet topjet = bcc->topjets->at(i);
-    if(TopTag(topjet,mjet,nsubjets,mmin) &&  m_delR_Lep_TopTag < topjet.deltaR(bcc->muons->at(0))){
+    if(TopTag(topjet,mjet,nsubjets,mmin) &&  m_delR_Lep_TopTag < topjet.deltaR(*lepton)){
       for(unsigned int m =0; m< bcc->jets->size(); ++m){
 	if(topjet.deltaR(bcc->jets->at(m))>m_delR_Jet_TopTag)return true;
       }
@@ -439,7 +443,7 @@ bool TopTagOverlapSelection::pass(BaseCycleContainer* bcc)
 std::string TopTagOverlapSelection::description()
 {
     char s[100];
-    sprintf(s, "delR(Muon,TopTag)> %.1f  &&at least one Jet with  delR(Jet,TopTag) > %.1f ",m_delR_Lep_TopTag,m_delR_Jet_TopTag);
+    sprintf(s, "delR(Lepton,TopTag) > %.1f  and at least one ak5-jet with delR(Jet,TopTag) > %.1f ",m_delR_Lep_TopTag,m_delR_Jet_TopTag);
 
     return s;
 }
@@ -795,8 +799,9 @@ NSumBTagsSelection::NSumBTagsSelection(int min_nsumbtags, int max_nsumbtags=int_
   m_type=type;
 }
 
-bool NSumBTagsSelection::pass(BaseCycleContainer *bcc){
-EventCalc* calc = EventCalc::Instance();
+bool NSumBTagsSelection::pass(BaseCycleContainer *bcc)
+{
+  EventCalc* calc = EventCalc::Instance();
   double nsumbtags = calc->GetNSumBTags();
   if(nsumbtags  < m_min_nsumbtags) return false;
   if(nsumbtags  > m_max_nsumbtags) return false;

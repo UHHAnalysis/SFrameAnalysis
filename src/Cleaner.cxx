@@ -512,7 +512,7 @@ bool Cleaner::passElectronId_EGM(BaseCycleContainer * bcc, unsigned int index)
 		return true;
 	      }
 	    } else if((1.479 < eeta) && (eeta <= 2.5) ) {
-	      if(ele.mvaTrigV0() > 0.62) {
+	      if(ele.mvaTrigV0() > 0.92) {
 		return true;
 	      }
 	    }

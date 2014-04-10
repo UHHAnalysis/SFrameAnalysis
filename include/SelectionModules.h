@@ -654,9 +654,21 @@ class TauMuonInvMassCut: public SelectionModule{
   double m_max_InvMass;
 };
 
+class SameSignCutHalil: public SelectionModule{
+ public:
+   SameSignCutHalil();
+  ~SameSignCutHalil(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+ 
+};
+
 class SameSignCut: public SelectionModule{
  public:
-  SameSignCut();
+   SameSignCut();
   ~SameSignCut(){};
 
   virtual bool pass(BaseCycleContainer*);

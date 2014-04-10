@@ -1607,30 +1607,30 @@ TauMuonInvMassCut::TauMuonInvMassCut(double min_InvMass, double max_InvMass){
 
 bool TauMuonInvMassCut::pass(BaseCycleContainer *bcc)
 {
-  if (bcc->muons->size() == 1)
-    {
-      Muon muon = bcc->muons->at(0);
-      TLorentzVector Mu;
-      Mu.SetPtEtaPhiE(muon.pt() ,muon.eta() ,muon.phi() ,muon.energy() );
-      for(unsigned int i=0; i<bcc->taus->size(); ++i) 
-	{
-	  Tau tau = bcc->taus->at(i);
-	  TLorentzVector Tau;
-	  Tau.SetPtEtaPhiE(tau.pt() ,tau.eta() ,tau.phi() ,tau.energy() );
-   	  TLorentzVector MuTau = Tau +Mu;
-	  double InvMass = MuTau.M();    
-          if (InvMass > m_min_InvMass && InvMass < m_max_InvMass) return false;
-	}
-      return true;
-    }
-  else return true;
+   if (bcc->muons->size() == 1)
+      {
+         Muon muon = bcc->muons->at(0);
+         TLorentzVector Mu;
+         Mu.SetPtEtaPhiE(muon.pt() ,muon.eta() ,muon.phi() ,muon.energy() );
+         for(unsigned int i=0; i<bcc->taus->size(); ++i) 
+            {
+               Tau tau = bcc->taus->at(i);
+               TLorentzVector Tau;
+               Tau.SetPtEtaPhiE(tau.pt() ,tau.eta() ,tau.phi() ,tau.energy() );
+               TLorentzVector MuTau = Tau +Mu;
+               double InvMass = MuTau.M();    
+               if (InvMass > m_min_InvMass && InvMass < m_max_InvMass) return false;
+            }
+         return true;
+      }
+   else return true;
 }
 
 std::string TauMuonInvMassCut::description()
 {
-  char s[100];
-  sprintf(s, "%.1f < invariant mass leading muon and leading tau  < %.1f",m_min_InvMass, m_max_InvMass);
-  return s;
+   char s[100];
+   sprintf(s, "%.1f < invariant mass leading muon and leading tau  < %.1f",m_min_InvMass, m_max_InvMass);
+   return s;
 }
 
 MuonInvMassCut::MuonInvMassCut(double min_InvMass, double max_InvMass){
@@ -1667,22 +1667,45 @@ std::string MuonInvMassCut::description()
 }
 
 
+SameSignCutHalil::SameSignCutHalil(){ 
+}
+
+ bool SameSignCutHalil::pass(BaseCycleContainer *bcc)
+ {
+    for(unsigned int i=0; i< bcc->muons->size(); ++i)
+       {
+          Muon muon = bcc->muons->at(i);
+          for(unsigned int j=0; j< bcc->taus->size(); ++j)
+             {
+                Tau tau = bcc->taus->at(j);
+                if (muon.charge() == tau.charge()) return true;
+             }
+       
+       }
+    return false;
+ }
+
+  std::string SameSignCutHalil::description(){
+    char s[100];
+    sprintf(s, "same-sign lepton pair requirement");
+    return s;
+  }
+
+
+
 SameSignCut::SameSignCut(){ 
 }
 
+
 bool SameSignCut::pass(BaseCycleContainer *bcc)
 {
-  for(unsigned int i=0; i< bcc->muons->size(); ++i)
-    {
-      Muon muon = bcc->muons->at(i);
-      for(unsigned int j=0; j< bcc->taus->size(); ++j)
-	{
-	  Tau tau = bcc->taus->at(j);
-	  if (muon.charge() == tau.charge()) return true;
-	}
-      
-    }
-  return false;
+   if (bcc->muons->size()>0 && bcc->taus->size()>0)
+      {
+         Muon muon = bcc->muons->at(0);
+         Tau tau = bcc->taus->at(0);
+         if (muon.charge() == tau.charge()) return true;
+      }
+   return false;
 }
 
  std::string SameSignCut::description(){
@@ -1690,6 +1713,7 @@ bool SameSignCut::pass(BaseCycleContainer *bcc)
    sprintf(s, "same-sign lepton pair requirement");
    return s;
  }
+
 
 
 bool TauMuonMassCut::pass(BaseCycleContainer *bcc)

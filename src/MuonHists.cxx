@@ -165,6 +165,16 @@ void MuonHists::Fill()
         }
     }
 
+
+     for (unsigned int i =0; i<bcc->muons->size(); ++i) { 
+       if (calc-> GetRunNum()== 196218 && calc-> GetEventNum()== 667413927 &&  calc-> GetLumiBlock()== 445 )  cout <<"event number: "<< calc-> GetEventNum()<<"pt muon: "<<i<<" "<<bcc->muons->at(i).pt()<<endl;
+       if (calc-> GetRunNum()== 196218 && calc-> GetEventNum()== 667413927 &&  calc-> GetLumiBlock()== 445 )  cout <<"event number: "<< calc-> GetEventNum()<<"eta muon: "<<i<<" "<<bcc->muons->at(i).eta()<<endl;
+       
+       if (calc-> GetRunNum()== 203894 && calc-> GetEventNum()== 1243757983 &&  calc-> GetLumiBlock()== 1209 ) cout <<"event number: "<< calc-> GetEventNum()<<"pt muon: "<<i<<" "<<bcc->muons->at(i).pt()<<endl;
+       if (calc-> GetRunNum()== 203894 && calc-> GetEventNum()== 1243757983 &&  calc-> GetLumiBlock()== 1209 ) cout <<"event number: "<< calc-> GetEventNum()<<"eta muon: "<<i<<" "<<bcc->muons->at(i).eta()<<endl;
+    }
+
+
 if (bcc->muons->size() > 1)
     {
       double max_InvMass =0;

@@ -8,6 +8,7 @@ Cleaner::Cleaner( BaseCycleContainer* input)
     m_jec_unc = NULL;
     m_jecvar = e_Default;
     m_jervar = e_Default;
+    //m_TER_unc=NULL;
 
 }
 
@@ -19,6 +20,7 @@ Cleaner::Cleaner()
     m_jec_unc = NULL;
     m_jecvar = e_Default;
     m_jervar = e_Default;
+    m_TERvar= e_Default;
 
 }
 
@@ -294,20 +296,6 @@ void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool
 	}
 	
 	
-	// see https://twiki.cern.ch/twiki/bin/view/CMS/METType1Type2Formulae : we add the old corrected jet and 
-        // subtract the new corrected (smeared) jet v4 from/to MET, if the corrected pt is > 10GeV.
-        // Note that this implementation does not do exactly the same as re-applying typeI corrections of the new corrected jets to raw met as it does not
-        // consider the cases in which the new corrections makes some jets flip-flop over the pt = 10GeV threshold used in the typeI-met correction.
-        // To consider that, we would need the pure L1 corrected jet here as well ...
-	if(propagate_to_met){
-            if(jets.at(i)->v4().Pt() > 10){
-                LorentzVector metv4 = bcc->met->v4();
-                metv4 += jets.at(i)->v4();
-                metv4 -= jet_v4_corrected;
-                bcc->met->set_pt(metv4.Pt());
-                bcc->met->set_phi(metv4.Phi());
-            }
-        }
 
         jets.at(i)->set_v4(jet_v4_corrected);
         jets.at(i)->set_JEC_factor_raw(1./correctionfactor);
@@ -321,6 +309,61 @@ void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool
     }
     resetEventCalc();
 }
+
+ void Cleaner::TauEnergyResolutionShifter()
+ {
+    double factor = 0.0;
+    if (m_TERvar==e_Default) 
+       {
+          factor = 0.0;
+          // cout<<"in default"<<endl;
+       }
+       else 
+      {
+        if (m_TERvar==e_Down) 
+           {
+              factor = -0.1;
+              // cout <<"in down"<<endl;
+           }
+        if (m_TERvar==e_Up) 
+           {
+              factor = +0.1;
+              //   cout <<"in up"<<endl;
+           }
+      }
+    for(unsigned int i=0; i<bcc->taus->size(); ++i) {
+         Tau tau = bcc->taus->at(i);
+         double genpt = 0;
+         double recopt = 0;
+         bool RealTau = false;
+          for(unsigned int j=0; j<bcc->genparticles->size(); ++j)
+             {
+                GenParticle genp = bcc->genparticles->at(j);
+                double deltaR = genp.deltaR(tau);
+                if (deltaR < 0.5 && abs(genp.pdgId())==15)  
+                   {
+                      //cout <<"found a real tau "<<genp.pt()<<" "<<tau.pt()<<endl;
+                      genpt = genp.pt();
+                      recopt = tau.pt();
+                      RealTau = true;
+                      break;
+                   }
+             }
+          if (RealTau)
+             {
+                // cout<<"in real tau"<<endl;
+                LorentzVector tau_v4 =  bcc->taus->at(i).v4();
+                double ptscale = std::max(0.0, 1 + factor * (recopt - genpt) / recopt);
+                //cout <<"ptscale= "<<ptscale<<endl;
+                tau_v4*=ptscale;
+                bcc->taus->at(i).set_v4(tau_v4);
+             }
+          std::sort(bcc->taus->begin(), bcc->taus->end(), HigherPt());
+      }
+ }
+
+
+
 
 // Old electron id
 /*

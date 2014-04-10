@@ -219,9 +219,19 @@ void TauHists::Fill()
       Hist("againstMuonTight2") -> Fill(tau.againstMuonTight2(), weight);
       
     }
+
+     for (unsigned int i =0; i<bcc->taus->size(); ++i) { 
+       if (calc-> GetRunNum()== 196218 && calc-> GetEventNum()== 667413927 &&  calc-> GetLumiBlock()== 445 )  cout <<"event number: "<< calc-> GetEventNum()<<"pt tau: "<<i<<" "<<bcc->taus->at(i).pt()<<endl;
+       if (calc-> GetRunNum()== 196218 && calc-> GetEventNum()== 667413927 &&  calc-> GetLumiBlock()== 445 )  cout <<"event number: "<< calc-> GetEventNum()<<"eta tau: "<<i<<" "<<bcc->taus->at(i).eta()<<endl;
+       
+       if (calc-> GetRunNum()== 203894 && calc-> GetEventNum()== 1243757983 &&  calc-> GetLumiBlock()== 1209 ) cout <<"event number: "<< calc-> GetEventNum()<<"pt tau: "<<i<<" "<<bcc->taus->at(i).pt()<<endl;
+       if (calc-> GetRunNum()== 203894 && calc-> GetEventNum()== 1243757983 &&  calc-> GetLumiBlock()== 1209 ) cout <<"event number: "<< calc-> GetEventNum()<<"eta tau: "<<i<<" "<<bcc->taus->at(i).eta()<<endl;
+    }
+
     if (bcc->taus->size() > 0)
     {
       Tau tau = bcc->taus->at(0);
+
       Hist("pT_1") -> Fill(tau.pt(), weight);
       Hist("pT_1_ly") -> Fill(tau.pt(), weight);
       Hist("pT_1_binned") -> Fill(tau.pt(), weight);

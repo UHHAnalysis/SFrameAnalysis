@@ -154,19 +154,22 @@ protected:
   // PU-reweighting
   PUWeightProducer* m_puwp;
 
-  //jet energy corrections  
-  FactorizedJetCorrector* m_corrector;
-  FactorizedJetCorrector* m_correctortop;
-  FactorizedJetCorrector* m_correctortoptag;
-  FactorizedJetCorrector* m_correctorhiggstag;
-  JetCorrectionUncertainty* m_jes_unc;
+   //jet energy corrections  
+   FactorizedJetCorrector* m_corrector;
+   FactorizedJetCorrector* m_correctortop;
+   FactorizedJetCorrector* m_correctortoptag;
+   FactorizedJetCorrector* m_correctorhiggstag;
+   JetCorrectionUncertainty* m_jes_unc;
+   
+   //toppagptreweighting
+   TopPtReweight * m_tpr;
+   
+   //toptagsfreweighting
+   HEPTopTaggerReweightTPrime * m_hepsf;
+   
+   std::string m_channel;
 
-  //toppagptreweighting
-  TopPtReweight * m_tpr;
-
-  //toptagsfreweighting
-  HEPTopTaggerReweightTPrime * m_hepsf;
-
+  
 private:
 
   // lumi file properties
@@ -205,6 +208,8 @@ private:
 
   //steering for MC-data correction weights
   std::vector<std::string> m_leptonweights;
+   
+   std::string m_LQChannel;
 
   //output variables
   std::vector< Electron > m_output_electrons;  

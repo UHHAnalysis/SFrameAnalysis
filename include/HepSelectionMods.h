@@ -16,7 +16,7 @@
 #include <memory>
 
 
-namespace HepSelectionMods{
+
 
 
 class NAntiMuonHEPTopSelection: public SelectionModule {
@@ -65,7 +65,7 @@ class NHEPTopTagSelection: public SelectionModule{
 };
 
 
-}
+
 
 
 #endif // HepSelectionMods_H

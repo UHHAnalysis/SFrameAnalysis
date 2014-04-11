@@ -2,302 +2,6 @@
 #include "include/SelectionModules.h"
 #include "TLorentzVector.h"
 
-
-
-
-NAntiMuonTopJetsSelection::NAntiMuonTopJetsSelection(int min_ntops, int max_ntops, double ptmin, double etamax )
-{
-  m_min_ntops=min_ntops;
-  m_max_ntops=max_ntops;
-  m_ptmin=ptmin;
-  m_etamax=etamax;
-}
-
-bool NAntiMuonTopJetsSelection::pass(BaseCycleContainer *bcc)
-{
-    int ntops=0;
-
-    //Assumes to have only one muon
-    if(bcc->muons->size() != 1){
-      std::cout << "ATTENTION!!! muon size " << bcc->muons->size() << std::endl;
-    }
-    
-    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
-
-      double deltaphi=bcc->topjets->at(i).deltaPhi(bcc->muons->at(0));
-      
-      if((deltaphi>(2*PI/3))&&(bcc->topjets->at(i).pt()>m_ptmin)&&(fabs(bcc->topjets->at(i).eta())<m_etamax)){
-	
-	ntops++;
-	
-      }
-      
-    }
-    
-    if(ntops<m_min_ntops) return false;
-    if(ntops>m_max_ntops) return false;
-    return true;
-}
-
-std::string NAntiMuonTopJetsSelection::description()
-{
-    char s[100];
-    sprintf(s, "%d <= number of top-jets in the muon anti-hemisphere <= %d",m_min_ntops,m_max_ntops);
-    return s;
-}
-
-NAntiMuonHEPBTagSelection::NAntiMuonHEPBTagSelection(int min_nbtag, int max_nbtag, E_BtagType type, double ptmin, double etamax )
-{
-  m_min_nbtag=min_nbtag;
-  m_max_nbtag=max_nbtag;
-  m_type=type;
-  m_ptmin=ptmin;
-  m_etamax=etamax;
-}
-
-bool NAntiMuonHEPBTagSelection::pass(BaseCycleContainer *bcc)
-{
-    int nbtag=0;
-
-    //Assumes to have only one muon
-
-    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
-
-      if(!(HepTopTag(bcc->topjets->at(i)))) continue;
-
-      int jettagged=0;
-
-      std::vector<Particle> subjets_top;
-      std::vector<float> btagsub_combinedSecondaryVertex_top;
-      subjets_top=bcc->topjets->at(i).subjets();
-      btagsub_combinedSecondaryVertex_top=bcc->topjets->at(i).btagsub_combinedSecondaryVertex();
-
-      float test=btagsub_combinedSecondaryVertex_top[2];
-      
-      if(m_type==e_CSVL && test>0.244) jettagged=1;
-      if(m_type==e_CSVM && test>0.679) jettagged=1;
-      if(m_type==e_CSVT && test>0.898) jettagged=1;
-      
-      test=btagsub_combinedSecondaryVertex_top[0];
-      
-      if(m_type==e_CSVL && test>0.244) jettagged=1;
-      if(m_type==e_CSVM && test>0.679) jettagged=1;
-      if(m_type==e_CSVT && test>0.898) jettagged=1;
-
-      test=btagsub_combinedSecondaryVertex_top[1];
-      
-      if(m_type==e_CSVL && test>0.244) jettagged=1;
-      if(m_type==e_CSVM && test>0.679) jettagged=1;
-      if(m_type==e_CSVT && test>0.898) jettagged=1;
-
-      if(bcc->muons->size() != 1){
-	std::cout << "ATTENTION!!! muon size " << bcc->muons->size() << std::endl;
-      }
-
-      double deltaphi=bcc->topjets->at(i).deltaPhi(bcc->muons->at(0));
-      
-      if(jettagged&&(deltaphi>(2*PI/3))&&(bcc->topjets->at(i).pt()>m_ptmin)&&(fabs(bcc->topjets->at(i).eta())<m_etamax)){
-
-	nbtag++;
-
-      }
-
-    }
-
-    if(nbtag<m_min_nbtag) return false;
-    if(nbtag>m_max_nbtag) return false;
-    return true;
-}
-
-std::string NAntiMuonHEPBTagSelection::description()
-{
-    char s[100];
-    sprintf(s, "%d <= number of hep-top-tagged jets with b-tagged b-hep-subjet in the muon anti-hemisphere <= %d",m_min_nbtag,m_max_nbtag);
-    return s;
-}
-
-NAntiMuonSubBTagSelection::NAntiMuonSubBTagSelection(int min_nbtag, int max_nbtag, E_BtagType type, double ptmin, double etamax , TString filename)
-{
-    m_min_nbtag=min_nbtag;
-    m_max_nbtag=max_nbtag;
-    m_type=type;
-    m_ptmin=ptmin;
-    m_etamax=etamax;
-    m_filename=filename;
-}
-
-bool NAntiMuonSubBTagSelection::pass(BaseCycleContainer *bcc)
-{
-    int nbtag=0;
-
-    //Assumes to have only one muon
-
-    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
-      int jettagged=0;
-
-      std::vector<Particle> subjets_top;
-      std::vector<float> btagsub_combinedSecondaryVertex_top;
-      subjets_top=bcc->topjets->at(i).subjets();
-      btagsub_combinedSecondaryVertex_top=bcc->topjets->at(i).btagsub_combinedSecondaryVertex();
-
-      for(unsigned int j=0; j < btagsub_combinedSecondaryVertex_top.size(); ++j){
-
-	float test=btagsub_combinedSecondaryVertex_top[j];
-
-	if(m_type==e_CSVL && test>0.244) jettagged=1;
-	if(m_type==e_CSVM && test>0.679) jettagged=1;
-	if(m_type==e_CSVT && test>0.898) jettagged=1;
-	
-	if(m_filename!=""){
-
-	  jettagged=0;
-	  
-	  if(subJetBTagOne(bcc->topjets->at(i),m_type, "mean", m_filename, j)) jettagged=1;
-	}
-
-      }
-
-      if(bcc->muons->size() != 1){
-	std::cout << "ATTENTION!!! muon size " << bcc->muons->size() << std::endl;
-      }
-
-      double deltaphi=bcc->topjets->at(i).deltaPhi(bcc->muons->at(0));
-      
-      if(jettagged&&(deltaphi>(2*PI/3))&&(bcc->topjets->at(i).pt()>m_ptmin)&&(fabs(bcc->topjets->at(i).eta())<m_etamax)){
-
-	nbtag++;
-
-      }
-
-    }
-
-    if(nbtag<m_min_nbtag) return false;
-    if(nbtag>m_max_nbtag) return false;
-    return true;
-}
-
-std::string NAntiMuonSubBTagSelection::description()
-{
-    char s[100];
-    sprintf(s, "%d <= number of sub-b-tagged top jets in the muon anti-hemisphere <= %d",m_min_nbtag,m_max_nbtag);
-    return s;
-}
-
-NAntiMuonSubBTagSelectionOne::NAntiMuonSubBTagSelectionOne(int min_nbtag, int max_nbtag, E_BtagType type, double ptmin, double etamax , TString filename)
-{
-    m_min_nbtag=min_nbtag;
-    m_max_nbtag=max_nbtag;
-    m_type=type;
-    m_ptmin=ptmin;
-    m_etamax=etamax;
-    m_filename=filename;
-}
-
-bool NAntiMuonSubBTagSelectionOne::pass(BaseCycleContainer *bcc)
-{
-    int nbtag=0;
-
-    //Assumes to have only one muon
-
-    for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
-      int jettagged=0;
-
-      std::vector<Particle> subjets_top;
-      std::vector<float> btagsub_combinedSecondaryVertex_top;
-      subjets_top=bcc->topjets->at(i).subjets();
-      btagsub_combinedSecondaryVertex_top=bcc->topjets->at(i).btagsub_combinedSecondaryVertex();
-
-      for(unsigned int j=0; j < btagsub_combinedSecondaryVertex_top.size(); ++j){
-
-	float test=btagsub_combinedSecondaryVertex_top[j];
-	
-	if(m_filename!=""){
-	  
-	  if(subJetBTagOne(bcc->topjets->at(i),m_type, "mean", m_filename, j)){
-	    jettagged+=1;
-	  }
-
-	}
-	else{
-	  if(m_type==e_CSVL && test>0.244) jettagged+=1;
-	  if(m_type==e_CSVM && test>0.679) jettagged+=1;
-	  if(m_type==e_CSVT && test>0.898) jettagged+=1;
-	}
-
-      }
-
-      if(bcc->muons->size() != 1){
-	std::cout << "ATTENTION!!! muon size " << bcc->muons->size() << std::endl;
-      }
-
-      double deltaphi=bcc->topjets->at(i).deltaPhi(bcc->muons->at(0));
-      
-      if((jettagged==1)&&(deltaphi>(2*PI/3))&&(bcc->topjets->at(i).pt()>m_ptmin)&&(fabs(bcc->topjets->at(i).eta())<m_etamax)){
-
-	nbtag++;
-
-      }
-
-    }
-
-    if(nbtag<m_min_nbtag) return false;
-    if(nbtag>m_max_nbtag) return false;
-    return true;
-}
-
-std::string NAntiMuonSubBTagSelectionOne::description()
-{
-    char s[100];
-    sprintf(s, "%d <= number of sub-b-tagged top jets in the muon anti-hemisphere <= %d",m_min_nbtag,m_max_nbtag);
-    return s;
-}
-
-NMuonBTagSelection::NMuonBTagSelection(int min_nbtag, int max_nbtag, E_BtagType type, double ptmin, double etamax )
-{
-    m_min_nbtag=min_nbtag;
-    m_max_nbtag=max_nbtag;
-    m_type=type;
-    m_ptmin=ptmin;
-    m_etamax=etamax;
-}
-
-bool NMuonBTagSelection::pass(BaseCycleContainer *bcc)
-{
-    int nbtag=0;
-
-    //Assumes to have only one muon
-
-    for(unsigned int i=0; i<bcc->jets->size(); ++i) {
-      int jettagged=0;
-      if(m_type==e_CSVL && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.244) jettagged=1;
-      if(m_type==e_CSVM && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.679) jettagged=1;
-      if(m_type==e_CSVT && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.898) jettagged=1;
-
-      if(bcc->muons->size() != 1){
-	std::cout << "ATTENTION!!! muon size " << bcc->muons->size() << std::endl;
-      }
-
-      double deltaphi=bcc->jets->at(i).deltaPhi(bcc->muons->at(0));
-      
-      if(jettagged&&(deltaphi<(2*PI/3))&&(bcc->jets->at(i).pt()>m_ptmin)&&(fabs(bcc->jets->at(i).eta())<m_etamax)){
-
-	nbtag++;
-
-      }
-
-    }
-
-    if(nbtag<m_min_nbtag) return false;
-    if(nbtag>m_max_nbtag) return false;
-    return true;
-}
-
-std::string NMuonBTagSelection::description()
-{
-    char s[100];
-    sprintf(s, "%d <= number of b-tags in the muon hemisphere <= %d",m_min_nbtag,m_max_nbtag);
-    return s;
-}
 TriggerSelection::TriggerSelection(std::string triggername)
 {
   m_name=triggername;
@@ -360,8 +64,6 @@ std::string TopTagOverlapSelection::description()
 
     return s;
 }
-
-
 
 RazorSelection::RazorSelection(HypothesisDiscriminator *discr, double mrazor, double mrazorT)
 {
@@ -537,7 +239,6 @@ std::string NPrunedJetSelection::description()
 }
 
 
-
 NTopTagSelection::NTopTagSelection(int min_ntoptag, int max_ntoptag)
 {
     m_min_ntoptag=min_ntoptag;
@@ -570,89 +271,6 @@ std::string NTopTagSelection::description()
     sprintf(s, "%d <= N(top-tags) <= %d",m_min_ntoptag,m_max_ntoptag);
     return s;
 }
-
-NBTagAntiktJetSelection::NBTagAntiktJetSelection(int min_nbtag, int max_nbtag=int_infinity(), E_BtagType type, double delR_Jet_TopTag){
-  m_min_nbtag=min_nbtag; 
-  m_max_nbtag=max_nbtag;  
-  m_type=type;
-  m_delR_Jet_TopTag=delR_Jet_TopTag;
-}
-
-bool NBTagAntiktJetSelection::pass(BaseCycleContainer *bcc){
-
-  int nbtag=0;
-    for(unsigned int m = 0; m< bcc->topjets->size();++m){
-      TopJet topjet =  bcc->topjets->at(m);
-	
-      for(unsigned int i=0; i<bcc->jets->size(); ++i) {
- 	if(m_type==e_CSVL && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.244 && topjet.deltaR(bcc->jets->at(i))>m_delR_Jet_TopTag) nbtag++;
-        if(m_type==e_CSVM && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.679 && topjet.deltaR(bcc->jets->at(i))>m_delR_Jet_TopTag) nbtag++;
-        if(m_type==e_CSVT && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.898 && topjet.deltaR(bcc->jets->at(i))>m_delR_Jet_TopTag) nbtag++;
-    } 
-    }
-
-  if(nbtag<m_min_nbtag) return false;
-  if(nbtag>m_max_nbtag) return false;
-  return true;
-}
-
-std::string NBTagAntiktJetSelection::description()
-{
-    char s[100];
-       sprintf(s, "%d <= number of b-tags <= %d, with  deltaR >= %.1f",m_min_nbtag,m_max_nbtag,m_delR_Jet_TopTag);
-    return s;
-}  
-
-NSumBTagsSelection::NSumBTagsSelection(int min_nsumbtags, int max_nsumbtags=int_infinity(), E_BtagType type){
-  m_min_nsumbtags=min_nsumbtags;
-  m_max_nsumbtags=max_nsumbtags;
-  m_type=type;
-}
-
-bool NSumBTagsSelection::pass(BaseCycleContainer *bcc)
-{
-  EventCalc* calc = EventCalc::Instance();
-  double nsumbtags = calc->GetNSumBTags();
-  if(nsumbtags  < m_min_nsumbtags) return false;
-  if(nsumbtags  > m_max_nsumbtags) return false;
-  return true;
-}
-std::string NSumBTagsSelection::description(){
-char s[100];
-sprintf(s, "%d <= N(Sum B-Tags) <= %d", m_min_nsumbtags, m_max_nsumbtags);
-return s;
-}
-
-NCMSSubBTagSelection::NCMSSubBTagSelection(int min_ntoptag, int max_ntoptag=int_infinity(), int min_nbtag, int max_nbtag, E_BtagType type, double nsubjettiness){
-  m_min_ntoptag=min_ntoptag;
-  m_max_ntoptag=max_ntoptag;
-  m_min_nsubjetbtag = min_nbtag;
-  m_max_nsubjetbtag = max_nbtag;
-  m_type = type;
-  m_nsubjettiness = nsubjettiness;
-}
-
-bool NCMSSubBTagSelection::pass(BaseCycleContainer *bcc){
-
-  int nsubjetbtag=0; 
-  double mmin=0;
-  double mjet=0;
-  int nsubjets=0;
-  for(unsigned int i=0; i< bcc->topjets->size(); ++i){
-    TopJet topjet =  bcc->topjets->at(i);
-    if(TopTag(topjet,mjet,nsubjets,mmin) && subJetBTag(topjet, m_type)>=1 && topjet.tau3()/topjet.tau2()<= m_nsubjettiness) nsubjetbtag++;  
-  }
-  if(nsubjetbtag<m_min_nsubjetbtag) return false;
-  if(nsubjetbtag>m_max_nsubjetbtag) return false;
-  return true;
-}
-
-std::string NCMSSubBTagSelection::description(){
-  char s[100];
-  sprintf(s, "%d <= N(top-tags) <= %d, with %d <= N(subjetBtags) <= %d", m_min_ntoptag, m_max_ntoptag, m_min_nsubjetbtag, m_max_nsubjetbtag);
-  return s;
-}
-
 
 
 NHEPTopAndSubBTagSelection::NHEPTopAndSubBTagSelection(int min_nheptoptag, int max_nheptoptag, E_BtagType type,  TString mode, TString filename){
@@ -785,11 +403,6 @@ std::string HEPTopAndSubBTagPlusOtherHiggsTag::description(){
   return s;
 }
 
-
-
-
-
-
 //Inverted top-tag selection for QCD estimation from data in TPrime analysis (Region C)
 
 InvertedTopTagRegularBTagRegularHiggsTag::InvertedTopTagRegularBTagRegularHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode, TString filename, double HiggsMassCut){
@@ -840,8 +453,6 @@ std::string InvertedTopTagRegularBTagRegularHiggsTag::description(){
   sprintf(s, "1 toptag with b-tagged sub jet and 1 higgs tag");
   return s;
 }
-
-
 
 //Inverted Higgs-tag selection for QCD estimation from data in TPrime analysis (Region B)
 RegularTopTagRegularBTagFullyInvertedHiggsTag::RegularTopTagRegularBTagFullyInvertedHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode, TString filename){
@@ -939,110 +550,6 @@ std::string InvertedTopTagRegularBTagFullyInvertedHiggsTag::description(){
 }
 
 
-
-
-
-STCut::STCut(double min_st, double max_st){
-  m_min_st = min_st;
-  m_max_st = max_st;
-}
-
-bool STCut::pass(BaseCycleContainer *bcc){
-  
-  EventCalc* calc = EventCalc::Instance();
-  double st = calc->GetHT();
-  if( st < m_min_st) return false;
-  if( st > m_max_st) return false;
-  return true;
-
-}
-
-std::string STCut::description(){
-  char s[100];
-  sprintf(s, "%.1f GeV < ST < %.1f GeV",m_min_st,m_max_st);
-  return s;
-}
-
-HTCut::HTCut(double min_ht, double max_ht){
- m_min_ht = min_ht;
-  m_max_ht = max_ht;
-}
-
-bool HTCut::pass(BaseCycleContainer *bcc){
-  //double htlep = HTlep(bcc);
-  EventCalc* calc = EventCalc::Instance();
-  //double htlep = calc->GetHTlep();
-  double htall = calc->GetHT();
-  double ht = htall;//-htlep;
-  if( ht < m_min_ht) return false;
-  if( ht > m_max_ht) return false;
-  return true;
-
-}
-
-std::string HTCut::description(){
-  char s[100];
-  sprintf(s, "%.1f GeV < HT < %.1f GeV",m_min_ht,m_max_ht);
-  return s;
-}
-
-
-
-//for T' analysis
-HTSubJetsCut::HTSubJetsCut(double min_ht, double max_ht){
-  m_min_ht = min_ht;
-  m_max_ht = max_ht;
-}
-
-bool HTSubJetsCut::pass(BaseCycleContainer *bcc){
-  double ht = 0;//-htlep;
-  std::vector<Particle> subjets_top;
-
-  for(unsigned int i=0; i< bcc->topjets->size(); ++i){
-    TopJet topjet =  bcc->topjets->at(i);
-    subjets_top=topjet.subjets();
-    for (unsigned int subj = 0; subj < subjets_top.size(); subj++){
-      ht += subjets_top.at(subj).pt();
-    }
-  }
-  if( ht < m_min_ht) return false;
-  if( ht > m_max_ht) return false;
-  return true;
-
-}
-
-std::string HTSubJetsCut::description(){
-  char s[100];
-  sprintf(s, "%.1f GeV < HTSubJets < %.1f GeV",m_min_ht,m_max_ht);
-  return s;
-}
-
-
-
-
-HThadCut::HThadCut(double ptmin_jet, double etamax_jet, double min_ht, double max_ht){
-  m_ptmin_jet = ptmin_jet;
-  m_etamax_jet = etamax_jet;
-  m_min_ht = min_ht;
-  m_max_ht = max_ht;
-}
-
-bool HThadCut::pass(BaseCycleContainer *bcc){
-  EventCalc* calc = EventCalc::Instance();
-  double hthad = calc->GetHThad(m_ptmin_jet, m_etamax_jet);
-  if( hthad < m_min_ht) return false;
-  if( hthad > m_max_ht) return false;
-  return true;
-
-}
-
-std::string HThadCut::description(){
-  char s[100];
-  sprintf(s, "%.1f GeV < HThad < %.1f GeV for jets with pt > %.1f GeV, abs(eta) < %.1f",m_min_ht,m_max_ht,m_ptmin_jet, m_etamax_jet);
-  return s;
-}
-
-
 NWTagSelection::NWTagSelection(int min_nwtag, int max_nwtag)
 {
     m_min_nwtag=min_nwtag;
@@ -1074,40 +581,6 @@ std::string NWTagSelection::description()
     return s;
 }
 
-
-NBTagSelection::NBTagSelection(int min_nbtag, int max_nbtag, E_BtagType type)
-{
-    m_min_nbtag=min_nbtag;
-    m_max_nbtag=max_nbtag;
-    m_type=type;
-}
-
-bool NBTagSelection::pass(BaseCycleContainer *bcc)
-{
-    int nbtag=0;
-    for(unsigned int i=0; i<bcc->jets->size(); ++i) {
-        if(m_type==e_CSVL && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.244) nbtag++;
-        if(m_type==e_CSVM && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.679) nbtag++;
-        if(m_type==e_CSVT && bcc->jets->at(i).btag_combinedSecondaryVertex()>0.898) nbtag++;
-        if(m_type==e_JPL && bcc->jets->at(i).btag_jetProbability()>0.275) nbtag++;
-        if(m_type==e_JPM && bcc->jets->at(i).btag_jetProbability()>0.545) nbtag++;
-        if(m_type==e_JPT && bcc->jets->at(i).btag_jetProbability()>0.790) nbtag++;
-    }
-
-    if(nbtag<m_min_nbtag) return false;
-    if(nbtag>m_max_nbtag) return false;
-    return true;
-}
-
-std::string NBTagSelection::description()
-{
-    char s[100];
-    sprintf(s, "%d <= number of b-tags <= %d",m_min_nbtag,m_max_nbtag);
-    return s;
-}
-
-
-
 NPrimaryVertexSelection::NPrimaryVertexSelection(int min_npv, int max_npv)
 {
     m_min_npv=min_npv;
@@ -1131,63 +604,6 @@ std::string NPrimaryVertexSelection::description()
     sprintf(s, "%d <= number of primary vertices <= %d",m_min_npv,m_max_npv);
     return s;
 }
-
-
-
-HTlepCut::HTlepCut(double min_htlep, double max_htlep)
-{
-    m_min_htlep = min_htlep;
-    m_max_htlep = max_htlep;
-}
-
-bool HTlepCut::pass(BaseCycleContainer *bcc)
-{
-    //double htlep = HTlep(bcc);
-    EventCalc* calc = EventCalc::Instance();
-    double htlep = calc->GetHTlep();
-    if( htlep < m_min_htlep) return false;
-    if( htlep > m_max_htlep) return false;
-    return true;
-
-}
-
-std::string HTlepCut::description()
-{
-    char s[100];
-    sprintf(s, "%.1f GeV < HTlep < %.1f GeV",m_min_htlep,m_max_htlep);
-    return s;
-}
-
-HTmuonCut::HTmuonCut(double min_htmuon, double max_htmuon)
-{
-    m_min_htmuon = min_htmuon;
-    m_max_htmuon = max_htmuon;
-}
-
-bool HTmuonCut::pass(BaseCycleContainer *bcc)
-{
-    //double htmuon = HTmuon(bcc);
-    EventCalc* calc = EventCalc::Instance();
-    double htmuon = 0;
-
-    for(unsigned int i=0; i<calc->GetMuons()->size(); ++i){
-      htmuon += calc->GetMuons()->at(i).pt();
-    }
-    if(bcc->met) htmuon += bcc->met->pt(); 
-
-    if( htmuon < m_min_htmuon) return false;
-    if( htmuon > m_max_htmuon) return false;
-    return true;
-
-}
-
-std::string HTmuonCut::description()
-{
-    char s[100];
-    sprintf(s, "%.1f GeV < HTmuon < %.1f GeV",m_min_htmuon,m_max_htmuon);
-    return s;
-}
-
 
 
 METCut::METCut(double min_met, double max_met)
@@ -1295,48 +711,6 @@ std::string TwoDCutMuon::description()
     sprintf(s, "2D cut");
     return s;
 }
-
-bool MuonElectronOSCut::pass(BaseCycleContainer *bcc)
-{
-
-    // make sure that you have cleaned the electron and muon collections: bcc should contain at least one muon and one electron
-    // this cut looks only at the leading muon and leading electron
-    if ( bcc->electrons->size()==0) return false;
-    if ( bcc->muons->size()==0) return false;
-    
-    if (bcc->electrons->at(0).charge() == bcc->muons->at(0).charge()) return false;
-
-    return true;
-}
-
-std::string MuonElectronOSCut::description()
-{
-    char s[100];
-    sprintf(s, "Opposite sign of leading muon and leading electron");
-    return s;
-}
-
-bool MuonTauOSCut::pass(BaseCycleContainer *bcc)
-{
-
-    // make sure that you have cleaned the tau and muon collections: bcc should contain at least one tau and one muon
-    // this cut looks only at the leading muon and leading tau
-    if ( bcc->taus->size()==0) return false;
-    if ( bcc->muons->size()==0) return false;
-    
-    if (bcc->taus->at(0).charge() == bcc->muons->at(0).charge()) return false;
-
-    return true;
-}
-
-std::string MuonTauOSCut::description()
-{
-    char s[100];
-    sprintf(s, "Opposite sign of leading muon and leading tau");
-    return s;
-}
-
-
 
 bool TriangularCut::pass(BaseCycleContainer *bcc)
 {
@@ -1607,71 +981,6 @@ std::string EventFilterSelection::description()
 }
 
 
-TauMuonInvMassCut::TauMuonInvMassCut(double min_InvMass, double max_InvMass){
- m_min_InvMass = min_InvMass;
- m_max_InvMass = max_InvMass;
-}
-
-bool TauMuonInvMassCut::pass(BaseCycleContainer *bcc)
-{
-  if (bcc->muons->size() == 1)
-    {
-      Muon muon = bcc->muons->at(0);
-      TLorentzVector Mu;
-      Mu.SetPtEtaPhiE(muon.pt() ,muon.eta() ,muon.phi() ,muon.energy() );
-      for(unsigned int i=0; i<bcc->taus->size(); ++i) 
-	{
-	  Tau tau = bcc->taus->at(i);
-	  TLorentzVector Tau;
-	  Tau.SetPtEtaPhiE(tau.pt() ,tau.eta() ,tau.phi() ,tau.energy() );
-   	  TLorentzVector MuTau = Tau +Mu;
-	  double InvMass = MuTau.M();    
-          if (InvMass > m_min_InvMass && InvMass < m_max_InvMass) return false;
-	}
-      return true;
-    }
-  else return true;
-}
-
-std::string TauMuonInvMassCut::description()
-{
-  char s[100];
-  sprintf(s, "%.1f < invariant mass leading muon and leading tau  < %.1f",m_min_InvMass, m_max_InvMass);
-  return s;
-}
-
-MuonInvMassCut::MuonInvMassCut(double min_InvMass, double max_InvMass){
- m_min_InvMass = min_InvMass;
- m_max_InvMass = max_InvMass;
-}
-
-bool MuonInvMassCut::pass(BaseCycleContainer *bcc)
-{
-  for(unsigned int i=0; i<bcc->muons->size(); ++i) 
-    {
-      Muon muon1 = bcc->muons->at(i);
-      TLorentzVector Mu1;
-      Mu1.SetPtEtaPhiE(muon1.pt() ,muon1.eta() ,muon1.phi() ,muon1.energy() );
-      for(unsigned int j=0; j<bcc->muons->size(); ++j) 
-	{
-	  Muon muon2 = bcc->muons->at(j);
-	  TLorentzVector Mu2;
-	  Mu2.SetPtEtaPhiE(muon2.pt() ,muon2.eta() ,muon2.phi() ,muon2.energy() );
-   	  TLorentzVector Vec =  Mu1+Mu2;
-	  double InvMass = Vec.M();    
-          if (InvMass > m_min_InvMass && InvMass < m_max_InvMass) return true;
-	}
-      return false;
-    }
-  return false;
-}
-
-std::string MuonInvMassCut::description()
-{
-  char s[100];
-  sprintf(s, "%.1f < invariant mass muons  < %.1f",m_min_InvMass, m_max_InvMass);
-  return s;
-}
 
 
 SameSignCut::SameSignCut(){ 
@@ -1699,63 +1008,7 @@ bool SameSignCut::pass(BaseCycleContainer *bcc)
  }
 
 
-bool TauMuonMassCut::pass(BaseCycleContainer *bcc)
-{ 
-  if (bcc->muons->size() > 0 && bcc->taus->size() > 0)
-    {
-      double max_InvMass =0;
-      for(unsigned int i=0; i< bcc->muons->size(); ++i)
-	{
-	  Muon muon = bcc->muons->at(i);
-	  TLorentzVector Mu;
-	  Mu.SetPtEtaPhiE(muon.pt() ,muon.eta() ,muon.phi() ,muon.energy() );
-	  for(unsigned int j=0; j< bcc->taus->size(); ++j)
-	    {
-	      Tau tau = bcc->taus->at(j);
-	      TLorentzVector Tau;
-	      Tau.SetPtEtaPhiE(tau.pt() ,tau.eta() ,tau.phi() ,tau.energy() );
-	      TLorentzVector DiLepton = Tau +Mu;
-	      double InvMass = DiLepton.M();
-	      if (InvMass > max_InvMass)  max_InvMass = InvMass;
-	    }
-	}
-      if (max_InvMass > m_massmin && max_InvMass < m_massmax) return true;
-    }
-  return false;
-}
 
-std::string TauMuonMassCut::description()
-{
-  char s[100];
-  sprintf(s, "%.1f < invariant mass muons and taus  < %.1f",m_massmin, m_massmax);
-  return s;
-}
-
-GenTauSelection::GenTauSelection()
-{ 
-}
-
-bool GenTauSelection::pass(BaseCycleContainer* bcc)
-{
-  for (unsigned int i=0; i<bcc->taus->size(); ++i) 
-    {
-      Tau tau = bcc->taus->at(i);
-      for(unsigned int j=0; j<bcc->genparticles->size(); ++j)
-	{
-	  GenParticle genp = bcc->genparticles->at(j);
-	  double deltaR = genp.deltaR(tau);
-	  if (deltaR < 0.5 && abs(genp.pdgId())==15) return true;
-	}
-    }
-  return false;
-}
-
-std::string GenTauSelection::description()
-{
-  char s[500];
-  sprintf(s, "found a real tau");
-  return s;
-}
 
 NoSelection::NoSelection(bool no_sel)
 {
@@ -1772,51 +1025,6 @@ std::string NoSelection::description()
 {
   char s[100];
   sprintf(s, "all");
-  return s;
-}
-
-FakeTauSelectionElectron::FakeTauSelectionElectron()
-{ 
-}
-
-bool FakeTauSelectionElectron::pass(BaseCycleContainer* bcc)
-{
-  for(unsigned int i=0; i<bcc->taus->size(); ++i)
-    {
-      Tau tau = bcc->taus->at(i);
-      for(unsigned int j=0; j<bcc->genparticles->size(); ++j)
-	{
-	  GenParticle genp = bcc->genparticles->at(j);
-	  double deltaR = genp.deltaR(tau);
-	  if (deltaR < 0.5 && abs(genp.pdgId())== 11 && genp.status()==3) return true;
-	}
-    }
-  return false;
-}
-
-std::string FakeTauSelectionElectron::description()
-{
-  char s[500];
-  sprintf(s, "found an electron faking a tau");
-  return s;
-}
-
-
-OneProngTauSelection::OneProngTauSelection()
-{ 
-}
-
-bool OneProngTauSelection::pass(BaseCycleContainer* bcc)
-{
-  Tau tau = bcc->taus->at(0);
-  if (tau.decayMode() == 0 || tau.decayMode() == 1 || tau.decayMode() == 2 || tau.decayMode() == 3 || tau.decayMode() == 4 ) return true;
-  else return false;
-}
-
-std::string OneProngTauSelection::description()
-{
-  char s[500];
-  sprintf(s, "found a one prong tau decay");
   return s;
 }
 

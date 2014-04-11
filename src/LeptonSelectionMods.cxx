@@ -1,7 +1,7 @@
 //---sframe new---- 
 #include "include/LeptonSelectionMods.h"
 
-namespace LeptonSelectionMods{
+
 
 NMuonSelection::NMuonSelection(int min_nparticle, int max_nparticle, double ptmin, double etamax)
 {
@@ -82,4 +82,4 @@ std::string NTauSelection::description()
 }
 
 
-}
+

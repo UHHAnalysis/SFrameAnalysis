@@ -2,7 +2,7 @@
 #include "include/HepSelectionMods.h"
 
 
-namespace HepSelectionMods{
+
 
 
 
@@ -130,4 +130,4 @@ std::string NHEPTopTagSelection::description(){
 }
 
 
-}
+

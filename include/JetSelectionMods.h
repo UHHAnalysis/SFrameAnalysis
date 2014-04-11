@@ -15,7 +15,7 @@
 #include <algorithm>
 #include <memory>
 
-namespace JetSelectionMods{
+
 
 class NJetSelection: public SelectionModule {
 public:
@@ -35,5 +35,5 @@ private:
 
 
 
-}
+
 #endif // JetSelectionMods_H 

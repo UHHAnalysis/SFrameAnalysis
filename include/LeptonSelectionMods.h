@@ -15,9 +15,6 @@
 #include <memory>
 
 
-namespace LeptonSelectionMods{
-
-
 class NMuonSelection: public SelectionModule {
 public:
     NMuonSelection(int min_nparticle, int max_nparticle=int_infinity(), double ptmin=0., double etamax=double_infinity() );
@@ -68,14 +65,6 @@ private:
 };
 
 
-
-
-
-
-
-
-
-}
 
 
 #endif // LeptonSelectionMods_H

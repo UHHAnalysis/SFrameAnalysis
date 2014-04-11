@@ -1,7 +1,7 @@
 #include "include/JetSelectionMods.h"
 
 
-namespace JetSelectionMods{
+
 
 NJetSelection::NJetSelection(int min_nparticle, int max_nparticle, double ptmin, double etamax)
 {
@@ -35,4 +35,4 @@ std::string NJetSelection::description()
 
 
 
-}
+

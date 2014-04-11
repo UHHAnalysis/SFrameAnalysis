@@ -8,7 +8,9 @@
 #include "SFrameTools/include/Selection.h"
 #include "SFrameTools/include/EventCalc.h"
 #include "SFrameTools/include/HypothesisDiscriminator.h"
+
 #include "SFrameAnalysis/include/EventFilterFromListStandAlone.h"
+
 
 #include <algorithm>
 #include <memory>
@@ -44,7 +46,7 @@ private:
     int m_max_nbtag;
     double m_ptmin;
     double m_etamax;
-};
+}__attribute__ ((deprecated));//moved to HepSelectionMods.h
 
 class NAntiMuonHEPTopSelectionMatch: public SelectionModule {
 public:
@@ -60,7 +62,7 @@ private:
     int m_max_nbtag;
     double m_ptmin;
     double m_etamax;
-};
+}__attribute__ ((deprecated)); //moved to HepSelectionMods.h
 
 class NAntiMuonSubBTagSelection: public SelectionModule {
 public:
@@ -158,7 +160,7 @@ class TopTagOverlapSelection: public SelectionModule {
  private:
   double m_delR_Lep_TopTag;
   double m_delR_Jet_TopTag;
-};
+}__attribute__ ((deprecated)); // moved to CMSTopTagSelectionMods.h and renamed 
 
 
 
@@ -193,7 +195,7 @@ private:
     int m_max_nparticle;
     double m_ptmin;
     double m_etamax;
-};
+}__attribute__ ((deprecated)); //moved to LeptonSelectionMods.h
 
 
 class NElectronSelection: public SelectionModule {
@@ -212,7 +214,7 @@ private:
     int m_max_nparticle;
     double m_ptmin;
     double m_etamax;
-};
+}__attribute__ ((deprecated)); // moved to LeptonSelectionMods.h
 
 class NTauSelection: public SelectionModule {
 public:
@@ -227,7 +229,7 @@ private:
     int m_max_nparticle;
     double m_ptmin;
     double m_etamax;
-};
+}__attribute__ ((deprecated));
 
 
 class NJetSelection: public SelectionModule {
@@ -243,7 +245,7 @@ private:
     int m_max_nparticle;
     double m_ptmin;
     double m_etamax;
-};
+}__attribute__ ((deprecated)); // moved to LeptonSelectionMods.h
 
 class NTopJetSelection: public SelectionModule {
 public:
@@ -266,7 +268,7 @@ public:
     NPrunedJetSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());
     ~NPrunedJetSelection() {};
 
-    virtual bool pass(BaseCycleContainer*);
+     virtual bool pass(BaseCycleContainer*);
     virtual std::string description();
 
 private:
@@ -306,7 +308,7 @@ class TopTagAntiktJetSelection : public SelectionModule{
   unsigned int m_min_Jets;		   
   unsigned int m_max_Jets;   
   double m_min_distance;           
-};
+}__attribute__ ((deprecated)); //moved to CMSTopTagSelectionMods.h and renamed 
 
 
 class NTopTagSelection: public SelectionModule {
@@ -321,7 +323,7 @@ public:
 private:
     int m_min_ntoptag;
     int m_max_ntoptag;
-};
+}__attribute__ ((deprecated)); //moved to CMSTopTagSelectionMods.h and renamed 
 
 class NHEPTopTagSelection: public SelectionModule{
  public:
@@ -334,7 +336,7 @@ class NHEPTopTagSelection: public SelectionModule{
  private:
   int m_min_nheptoptag;
   int m_max_nheptoptag;
-};
+}__attribute__ ((deprecated)); // moved to HepSelectionMods.h
 
 class NBTagAntiktJetSelection: public SelectionModule{
 public:

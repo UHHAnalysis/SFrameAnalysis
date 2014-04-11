@@ -2,6 +2,9 @@
 #include "include/SelectionModules.h"
 #include "TLorentzVector.h"
 
+
+
+
 NAntiMuonTopJetsSelection::NAntiMuonTopJetsSelection(int min_ntops, int max_ntops, double ptmin, double etamax )
 {
   m_min_ntops=min_ntops;
@@ -742,11 +745,13 @@ bool NTopTagSelection::pass(BaseCycleContainer *bcc)
     int ntoptag=0;
 
     for(unsigned int i=0; i< bcc->topjets->size(); ++i) {
-        TopJet topjet =  bcc->topjets->at(i);
+        TopJet & topjet =  bcc->topjets->at(i);
         double mmin=0;
         double mjet=0;
         int nsubjets=0;
         if(TopTag(topjet,mjet,nsubjets,mmin)) ntoptag++;
+	//if(CMSTopTag.Tag(topjet))ntoptag++;
+
     }
     if(ntoptag<m_min_ntoptag) return false;
     if(ntoptag>m_max_ntoptag) return false;

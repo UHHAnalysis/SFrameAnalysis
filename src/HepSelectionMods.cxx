@@ -131,3 +131,147 @@ std::string NHEPTopTagSelection::description(){
 
 
 
+//Inverted top-tag selection for QCD estimation from data in TPrime analysis (Region C)
+
+InvertedHEPTopTagRegularBTagRegularHiggsTag::InvertedHEPTopTagRegularBTagRegularHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode, TString filename, double HiggsMassCut){
+   m_type1 = type1; //to be used in b-tag
+   m_type2 = type2; //to be used in higgs-tag
+   m_type3 = type3; //to be used in higgs-tag
+   m_mode = mode;
+   m_filename = filename;
+   m_HiggsMassCut = HiggsMassCut;
+}
+
+bool InvertedHEPTopTagRegularBTagRegularHiggsTag::pass(BaseCycleContainer *bcc){
+  int nheptoptag = 0;
+  int nheptoptagInverted = 0;
+  int nheptoptagInvertedPlusBTag = 0;
+  int nhiggstag = 0;
+  std::vector<int> topTaggedJetsInverted;
+  std::vector<int> HiggsTaggedJets;
+  double ptcut=150;
+  for(unsigned int i=0; i< bcc->topjets->size(); ++i){
+    if(bcc->topjets->at(i).pt()<ptcut) continue;
+    TopJet topjet =  bcc->topjets->at(i);
+    if(HepTopTagWithMatch(topjet)){
+	nheptoptag++;
+    }
+    if (HepTopTagInverted(topjet) && subJetBTagTop(topjet, m_type1, m_mode, m_filename)>=1){
+	topTaggedJetsInverted.push_back(i);
+	nheptoptagInvertedPlusBTag++;
+    }
+    if (HiggsTag(topjet, m_type2, m_type3, m_mode, m_filename)){
+      double HiggsMass = HiggsMassFromBTaggedSubjets(topjet, m_type2, m_mode, m_filename);
+      if (HiggsMass > m_HiggsMassCut){
+	nhiggstag++;
+	HiggsTaggedJets.push_back(i);
+      }
+    }
+  }
+  if (nheptoptag != 0) return false;
+  if (nheptoptagInvertedPlusBTag == 0) return false;
+  if (nhiggstag == 0) return false;
+  if (nheptoptagInvertedPlusBTag ==1 && nhiggstag == 1 && topTaggedJetsInverted[0] == HiggsTaggedJets[0]) return false;
+
+return true;
+}
+
+std::string InvertedHEPTopTagRegularBTagRegularHiggsTag::description(){
+  char s[100];
+  sprintf(s, "1 toptag with b-tagged sub jet and 1 higgs tag");
+  return s;
+}
+
+
+RegularHEPTopTagRegularBTagFullyInvertedHiggsTag::RegularHEPTopTagRegularBTagFullyInvertedHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode, TString filename){
+   m_type1 = type1; //to be used in top-tag
+   m_type2 = type2; //to be used in higgs-tag
+   m_type3 = type3; //to be used in higgs-tag
+ m_mode = mode;
+  m_filename = filename;
+}
+
+bool RegularHEPTopTagRegularBTagFullyInvertedHiggsTag::pass(BaseCycleContainer *bcc){
+  int nheptoptag=0;
+  int nhiggstag=0;
+  std::vector<int> topTaggedJets;
+  std::vector<int> HiggsTaggedJets;
+  double ptcut=150;
+  for(unsigned int i=0; i< bcc->topjets->size(); ++i){
+    if(bcc->topjets->at(i).pt()<ptcut) continue;
+    TopJet topjet =  bcc->topjets->at(i);
+    if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, m_type1, m_mode, m_filename)>=1){
+      nheptoptag++;
+      topTaggedJets.push_back(i);
+    }
+    if (HiggsTag(topjet, m_type2, m_type3, m_mode, m_filename)){
+      nhiggstag++;
+      HiggsTaggedJets.push_back(i);
+    }
+  }
+
+
+  if(nhiggstag == 1){
+    if(nheptoptag == 1 && topTaggedJets[0] == HiggsTaggedJets[0]) return true;// there is only one top-tagged jet and this jet can also be higgs-tagged, which is ok
+    else return false;
+  }
+if (nhiggstag > 1) return false;
+if (nheptoptag == 0) return false;
+return true;
+
+}
+
+std::string RegularHEPTopTagRegularBTagFullyInvertedHiggsTag::description(){
+  char s[100];
+  sprintf(s, "1 toptag with b-tagged sub jet and 1 inverted higgs tag");
+  return s;
+}
+
+
+//Inverted Higgs- and top-tag selection for QCD estimation from data in TPrime analysis(Region A)
+
+InvertedHEPTopTagRegularBTagFullyInvertedHiggsTag::InvertedHEPTopTagRegularBTagFullyInvertedHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode, TString filename){
+   m_type1 = type1; //to be used in top-tag
+   m_type2 = type2; //to be used in higgs-tag
+   m_type3 = type3; //to be used in higgs-tag
+   m_mode = mode;
+  m_filename = filename;
+}
+
+bool InvertedHEPTopTagRegularBTagFullyInvertedHiggsTag::pass(BaseCycleContainer *bcc){
+  int nheptoptag=0;
+  int nhiggstag=0;
+  std::vector<int> topTaggedJets;
+  std::vector<int> HiggsTaggedJets;
+  double ptcut=150;
+  for(unsigned int i=0; i< bcc->topjets->size(); ++i){
+    if(bcc->topjets->at(i).pt()<ptcut) continue;
+    TopJet topjet =  bcc->topjets->at(i);
+    if(HepTopTagInverted(topjet) && subJetBTagTop(topjet, m_type1, m_mode, m_filename)>=1){
+      nheptoptag++;
+      topTaggedJets.push_back(i);
+    }
+    if (HiggsTag(topjet, m_type2, m_type3, m_mode, m_filename)){
+      nhiggstag++;
+      HiggsTaggedJets.push_back(i);
+    }
+  }
+
+
+
+ if(nhiggstag == 1){
+   if(nheptoptag == 1 && topTaggedJets[0] == HiggsTaggedJets[0]) return true;// there is only one top-tagged jet and this jet can also be higgs-tagged, which is ok
+    else return false;
+  }
+ 
+if (nhiggstag > 1) return false;
+if (nheptoptag == 0) return false;
+return true;
+
+}
+
+std::string InvertedHEPTopTagRegularBTagFullyInvertedHiggsTag::description(){
+  char s[100];
+  sprintf(s, "1 toptag with b-tagged sub jet and 1 inverted higgs tag");
+  return s;
+}

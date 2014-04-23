@@ -30,9 +30,6 @@
 //-----------------------------------------
 
 
-
-
-
 class TriggerSelection: public SelectionModule {
 public:
     TriggerSelection(std::string);
@@ -205,7 +202,7 @@ class InvertedTopTagRegularBTagRegularHiggsTag: public SelectionModule{
  TString m_mode;
   TString m_filename;
 double m_HiggsMassCut;
-};
+}__attribute__ ((deprecated)); //moved to HepSelectionMods.h and renamed ;
 
 
 
@@ -223,7 +220,7 @@ class RegularTopTagRegularBTagFullyInvertedHiggsTag: public SelectionModule{
   E_BtagType m_type3;
  TString m_mode;
   TString m_filename;
-};
+}__attribute__ ((deprecated)); //moved to HepSelectionMods.h and renamed;
 
 
 class InvertedTopTagRegularBTagFullyInvertedHiggsTag: public SelectionModule{
@@ -240,7 +237,7 @@ class InvertedTopTagRegularBTagFullyInvertedHiggsTag: public SelectionModule{
   E_BtagType m_type3;
  TString m_mode;
   TString m_filename;
-};
+}__attribute__ ((deprecated)); //moved to HepSelectionMods.h and renamed;
 
 
 class NWTagSelection: public SelectionModule {

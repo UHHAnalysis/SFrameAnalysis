@@ -441,7 +441,20 @@ void Cleaner::JetRecorrector( FactorizedJetCorrector *corrector, bool sort, bool
 	  jet_v4_corrected = jet_v4_raw * correctionfactor;
 	}
 	
-	
+        // subtract the new corrected (smeared) jet v4 from/to MET, if the corrected pt is > 10GeV.
+        // Note that this implementation does not do exactly the same as re-applying typeI corrections of the new corrected jets to raw met as it does not
+        // consider the cases in which the new corrections makes some jets flip-flop over the pt = 10GeV threshold used in the typeI-met correction.
+        // To consider that, we would need the pure L1 corrected jet here as well ...
+
+	if(propagate_to_met){
+            if(jets.at(i)->v4().Pt() > 10){
+                LorentzVector metv4 = bcc->met->v4();
+                metv4 += jets.at(i)->v4();
+                metv4 -= jet_v4_corrected;
+                bcc->met->set_pt(metv4.Pt());
+                bcc->met->set_phi(metv4.Phi());
+            }
+        }
 
         jets.at(i)->set_v4(jet_v4_corrected);
         jets.at(i)->set_JEC_factor_raw(1./correctionfactor);

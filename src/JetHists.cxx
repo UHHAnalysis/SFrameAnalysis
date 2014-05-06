@@ -2,6 +2,7 @@
 #include "include/SelectionModules.h"
 #include <iostream>
 
+
 using namespace std;
 
 JetHists::JetHists(const char* name) : BaseHists(name)
@@ -111,6 +112,16 @@ void JetHists::Init()
 
   Book( TH1F( "InvMassJet1Jet2", "M(first jet second jet)", 100, 0, 500) );
   Book( TH1F( "InvMassJet1Jet2_ly", "M(first jet second jet)", 100, 0, 500) );
+
+// 21/1/2014 b-Tags
+  Book( TH1F("NSubBTags", "NSubBTags", 10, -0.5, 9.5 ));
+  Book( TH1F("NAntiktBTags", "NAntiktBTags", 10, -0.5, 9.5 ));
+  Book( TH1F("NSumBTags", "NSumBTags", 10, -0.5, 9.5 ));
+
+  Book( TH1F("NSubBTags_ly", "NSubBTags_ly", 10, -0.5, 9.5 ));
+  Book( TH1F("NAntiktBTags_ly", "NAntiktBTags_ly", 10, -0.5, 9.5 ));
+  Book( TH1F("NSumBTags_ly", "NSumBTags_ly", 10, -0.5, 9.5 ));
+
 }
 
 void JetHists::Fill()
@@ -234,6 +245,16 @@ void JetHists::Fill()
       Hist("InvMassJet1Jet2_ly")->Fill(InvMass, weight);
     }
 
+
+
+double nsumbtags = calc->GetNSumBTags();
+double NSumBTags = nsumbtags;
+//Hist("NAntiktBTags")-> Fill(NAntiktBTags,weight);	
+//Hist("NAntiktBTags_ly")-> Fill(NAntiktBTags,weight);
+//Hist("NSubBTags")->Fill(NSubBTags,weight);
+//Hist("NSubBTags_ly")->Fill(NSubBTags,weight);
+Hist("NSumBTags")-> Fill(NSumBTags, weight);
+Hist("NSumBTags_ly")-> Fill(NSumBTags, weight);
 }
 
 

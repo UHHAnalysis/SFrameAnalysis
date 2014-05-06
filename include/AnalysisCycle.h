@@ -7,6 +7,7 @@
 
 #include "SFrameTools/include/Selection.h"
 #include "SFrameTools/include/PUWeightProducer.h"
+#include "SFrameTools/include/TriggerWeight.h"
 #include "SFrameTools/include/LuminosityHandler.h"
 #include "SFrameTools/include/BaseHists.h"
 #include "SFrameTools/include/MCDataScaleFactors.h"
@@ -106,6 +107,10 @@ public:
 
 protected:
 
+  //Trigger Weight
+  std::string m_triggermode;
+  std::string m_triggerdir;
+
   // JEC information
   std::string m_JECFileLocation;
   std::string m_JECDataGlobalTag;
@@ -114,6 +119,7 @@ protected:
   std::string m_JECTopJetCollection;
   std::string m_JECTopTagJetCollection;
   std::string m_JECHiggsTagJetCollection;
+  std::string m_JECSubJetCollection;
 
   //top pag pt reweighting mode
   std::string m_toppagptweight;
@@ -132,7 +138,6 @@ protected:
   LeptonScaleFactors* m_lsf;
 
   JetpTReweightingInWJets* m_jsf;
-
 
   // information on systematic uncertainty
   E_SystShift m_sys_var;
@@ -154,20 +159,28 @@ protected:
   // PU-reweighting
   PUWeightProducer* m_puwp;
 
-   //jet energy corrections  
-   FactorizedJetCorrector* m_corrector;
-   FactorizedJetCorrector* m_correctortop;
-   FactorizedJetCorrector* m_correctortoptag;
-   FactorizedJetCorrector* m_correctorhiggstag;
-   JetCorrectionUncertainty* m_jes_unc;
-   
-   //toppagptreweighting
-   TopPtReweight * m_tpr;
-   
-   //toptagsfreweighting
+
+  // Trigger-reweighting
+  TriggerWeight* m_trig;
+
+  //jet energy corrections  
+  FactorizedJetCorrector* m_corrector;
+  FactorizedJetCorrector* m_correctortop;
+  FactorizedJetCorrector* m_correctortoptag;
+  FactorizedJetCorrector* m_correctorhiggstag;
+  FactorizedJetCorrector* m_correctorsubjet;
+  JetCorrectionUncertainty* m_jes_unc;
+  JetCorrectionUncertainty* m_jes_unc_top;
+  JetCorrectionUncertainty* m_jes_unc_sub;
+
+  //toppagptreweighting
+  TopPtReweight * m_tpr;
+
+  //toptagsfreweighting
    HEPTopTaggerReweightTPrime * m_hepsf;
-   
    std::string m_channel;
+   
+
 
   
 private:
@@ -185,6 +198,11 @@ private:
   // systematic uncertainties
   std::string m_sys_unc_name;
   std::string m_sys_var_name;
+
+  //extra jec uncertainty for topjets
+  std::string m_extra_topJEC;
+  std::string m_extra_subjetJEC;
+  std::string m_onlyUNC_subjetJEC;
 
   // properties of the NTuples
   std::string m_JetCollection;

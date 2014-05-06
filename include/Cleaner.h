@@ -35,6 +35,7 @@ class Cleaner{
    * Use sort=true if you want to re-order the jets according to corrected pt after the applied shifts.
   */
   void JetEnergyResolutionShifter(bool sort=true);
+  void JetEnergyResolutionShifterSubjets(bool sort=true);
   /**
    * Function to subtract lepton momenta from jets if the distance between jet and lepton axis is less than 0.5 in the eta-phi plane.
    * All jets and leptons in the actual BaseCycleContainer are considered.
@@ -52,7 +53,9 @@ class Cleaner{
    *  \param propagate_to_met if \c true, propagate the the new correction to MET (this that you have type-I corrected MET). This is
    *    ignored (effectively always \c false) if \c useTopJets is \c true.
    */
-  void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true, bool useTopJets=false, bool propagate_to_met = true, bool useTopTagJets=false, bool useHiggsTagJets=false);
+  void JetRecorrector(FactorizedJetCorrector *corrector, bool sort=true, bool useTopJets=false, bool propagate_to_met = true, bool useTopTagJets=false, bool useHiggsTagJets=false, double extratopjec=1.0);
+
+  void SubjetRecorrector(FactorizedJetCorrector *corrector, double extracorr=1.0, int onlyunc=0);
 
   /**
    * Function to pass a jet energy uncertainty object to the cleaner.
@@ -91,12 +94,22 @@ class Cleaner{
    void ApplyTERVariationDown(){m_TERvar=e_Down;}
    void NoTERVariation(){m_TERvar=e_Default;}
 
+  void ApplysubJERVariationUp(){m_subjervar=e_Up;}
+  /**
+   * Apply a down variation of the jet energy resolution uncertainty.
+  */
+  void ApplysubJERVariationDown(){m_subjervar=e_Down;}
+  /**
+   * Do not apply jet energy resolution variation.
+   */
+  void NosubJERVariation(){m_subjervar=e_Default;}
+
   E_SystShift GetJECVariation(){return m_jecvar;}
 
-  void ElectronCleaner(double ptmin=0, double etamax=9999, double relisomax=0.1, bool reverseID = false, bool reverseIso = false);
+  void ElectronCleaner(double ptmin=0, double etamax=9999, double relisomax=0.1, bool reverseID = false, bool reverseIso = false, bool egmId = false);
   void MuonCleaner(double ptmin=0, double etamax=9999, double relisomax=0.125);
   void MuonCleanerHalil(double ptmin=0, double etamax=9999, double relisomax=0.125);
-  void ElectronCleaner_noIso(double ptmin=0, double etamax=9999, bool reverseID = false);
+  void ElectronCleaner_noIso(double ptmin=0, double etamax=9999, bool reverseID = false, bool egmId = false);
   void MuonCleaner_noIso(double ptmin=0, double etamax=9999);
   void MuonCleaner_Loose(double ptmin=0, double etamax=9999);
   void ElectronCleaner_noID_noIso(double ptmin=0, double etamax=9999);
@@ -128,8 +141,11 @@ class Cleaner{
   E_SystShift m_TERvar; 
    
 
+  E_SystShift m_subjervar;
+
   // helper function to define electron id criteria.
   bool passElectronId(BaseCycleContainer*, unsigned int);
+  bool passElectronId_EGM(BaseCycleContainer*, unsigned int);
 
   /// call this routine at the end of each cleaner to force re-calculation of basic variables in EventCalc
   void resetEventCalc();

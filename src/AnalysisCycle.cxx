@@ -25,6 +25,7 @@ AnalysisCycle::AnalysisCycle()
     SetLogName( GetName() );
 
     m_puwp = NULL;
+    m_trig = NULL;
     m_tpr = NULL;
     m_hepsf = NULL;
     m_newrun = false;
@@ -36,8 +37,10 @@ AnalysisCycle::AnalysisCycle()
     m_correctortop = NULL;
     m_correctortoptag = NULL;
     m_correctorhiggstag = NULL;
+    m_correctorsubjet = NULL;
     m_jes_unc = NULL;
- 
+    m_jes_unc_top = NULL;
+    m_jes_unc_sub = NULL;
 
     m_sys_unc = e_None;
     m_sys_var = e_Default;
@@ -53,6 +56,10 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "LumiFilePath" , m_lumifile_path);
     DeclareProperty( "LumiFileName" , m_lumifile_name);
     DeclareProperty( "LumiTrigger" ,  m_lumi_trigger);
+
+    //trigger
+    DeclareProperty( "TriggerMode" , m_triggermode);
+    DeclareProperty( "TriggerDir" , m_triggerdir);
 
     // steerable properties of the Ntuple files
     DeclareProperty( "JetCollection", m_JetCollection );
@@ -83,6 +90,10 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "JECTopJetCollection" , m_JECTopJetCollection);
     DeclareProperty( "JECTopTagJetCollection" , m_JECTopTagJetCollection);
     DeclareProperty( "JECHiggsTagJetCollection" , m_JECHiggsTagJetCollection);
+    DeclareProperty( "JECSubJetCollection" , m_JECSubJetCollection);
+    DeclareProperty( "ExtraTopJEC" , m_extra_topJEC);
+    DeclareProperty( "ExtraSubjetJEC" , m_extra_subjetJEC);
+    DeclareProperty( "OnlyUNCSubjetJEC" , m_onlyUNC_subjetJEC);
 
     //top pag pt reweighting mode
     DeclareProperty( "toppagptweight", m_toppagptweight);
@@ -227,6 +238,20 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         m_puwp = NULL;
     }
 
+    //trigger reweighting
+    if(m_triggermode.size()>0 && m_triggerdir.size()>0 && m_addGenInfo) {
+        m_triggerdir += ".";
+        m_triggerdir += inputData.GetType();
+        m_triggerdir += ".";
+        m_triggerdir += inputData.GetVersion();
+        m_triggerdir += ".root";
+        m_logger << INFO << "Trigger Reweighting will be performed. File = " << m_triggerdir << SLogger::endmsg;
+        m_trig = new TriggerWeight(m_triggerdir, m_triggermode);
+    } else {
+        m_trig = NULL;
+    }
+    
+
     //toppag pt re-weighting
     TString InputSampleName(inputData.GetVersion());
     if((m_toppagptweight.size()>0)&&(InputSampleName.Contains("ttbar",TString::kIgnoreCase))&&(m_addGenInfo==true)){
@@ -251,6 +276,10 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_sys_unc = e_JEC;
 	isok = true;
       }
+      if (m_sys_unc_name=="SUBJEC" || m_sys_unc_name=="subjec"){
+	m_sys_unc = e_subJEC;
+	isok = true;
+      }
       if (m_sys_unc_name=="JER" || m_sys_unc_name=="jer"){
 	m_sys_unc = e_JER; 
 	isok = true;
@@ -259,8 +288,12 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_sys_unc = e_TER; 
 	isok = true;
       }
-       if (m_sys_unc_name=="MuonSF"){
-	m_sys_unc = e_MuonSF;
+       if (m_sys_unc_name=="SUBJER" || m_sys_unc_name=="subjer"){
+	m_sys_unc = e_subJER; 
+	isok = true;
+       }
+       if (m_sys_unc_name=="MuonSF"){       
+          m_sys_unc = e_MuonSF;
 	isok = true;
       }
       if (m_sys_unc_name=="EleSF"){
@@ -449,6 +482,32 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       m_jes_unc = new JetCorrectionUncertainty(unc_file.Data());
     }
 
+    // ------------- subjetjet energy correction ----------------
+
+    if(m_JECFileLocation.size()>0 && m_JECSubJetCollection.size()>0 )
+    {
+
+      std::vector<JetCorrectorParameters> subpars;
+      
+      //see https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections#GetTxtFiles how to get the txt files with jet energy corrections from the database
+      if(!addGenInfo()) {
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L1FastJet_" + m_JECSubJetCollection + ".txt"));
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2Relative_" + m_JECSubJetCollection + ".txt"));
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L3Absolute_" + m_JECSubJetCollection + ".txt"));
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECDataGlobalTag + "_L2L3Residual_" + m_JECSubJetCollection + ".txt"));
+      } else {
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L1FastJet_" + m_JECSubJetCollection + ".txt"));
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L2Relative_" + m_JECSubJetCollection + ".txt"));
+        subpars.push_back(JetCorrectorParameters(m_JECFileLocation + "/" + m_JECMCGlobalTag + "_L3Absolute_" + m_JECSubJetCollection + ".txt"));
+      }
+
+      m_correctorsubjet = new FactorizedJetCorrector(subpars);
+
+      // jec uncertainty
+      TString unc_file_sub = m_JECFileLocation + "/" + m_JECDataGlobalTag + "_Uncertainty_" + m_JECSubJetCollection + ".txt";
+      m_jes_unc_sub = new JetCorrectionUncertainty(unc_file_sub.Data());
+    }
+
     // ------------- top jet energy correction ----------------
 
     if(m_JECFileLocation.size()>0 && m_JECTopJetCollection.size()>0 )
@@ -469,6 +528,10 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       }
 
       m_correctortop = new FactorizedJetCorrector(toppars);
+
+      // jec uncertainty
+      TString unc_file_top = m_JECFileLocation + "/" + m_JECDataGlobalTag + "_Uncertainty_" + m_JECTopJetCollection + ".txt";
+      m_jes_unc_top = new JetCorrectionUncertainty(unc_file_top.Data());
 
     }
 
@@ -653,14 +716,17 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     delete m_lsf;
     delete m_pdfweights;
     delete m_puwp;
+    delete m_trig;
     delete m_tpr;
     delete m_hepsf;
     delete m_corrector;
     delete m_correctortop;
     delete m_correctortoptag;
     delete m_correctorhiggstag;
+    delete m_correctorsubjet; 
     delete m_jes_unc;
-  
+    delete m_jes_unc_top;
+    delete m_jes_unc_sub;
 
     m_tpr = NULL;
     m_hepsf = NULL;
@@ -775,11 +841,16 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
             // set the weight in the eventcalc
             calc -> ProduceWeight(pu_weight);
         }
+	if(m_trig) {
+            double trig_weight = m_trig->produceWeight(&m_bcc);
+            // set the weight in the eventcalc
+            calc -> ProduceWeight(trig_weight);
+        }
 
 	if(m_tpr){
 	  double tpr_weight=m_tpr->GetScaleWeight();
 	  if(m_toppagptweight=="mean"||m_toppagptweight=="Mean"||m_toppagptweight=="MEAN"){
-	    cout <<" wird angewandt" << endl;
+	    //cout <<" wird angewandt" << endl;
 	    calc -> ProduceWeight(tpr_weight);
 	  }
 	  else if(m_toppagptweight=="up"||m_toppagptweight=="Up"||m_toppagptweight=="UP"){
@@ -851,11 +922,46 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
       }
       cleaner.JetRecorrector(m_corrector);
     }
-  
+
+    //apply subjet energy corrections to topjet subjets
+    if(m_TopJetCollection.size()>0 && m_correctorsubjet){
+      Cleaner cleanersub;
+
+      cleanersub.SetJECUncertainty(m_jes_unc_sub);
+
+      // settings for jet correction uncertainties
+      if (m_sys_unc==e_subJEC){
+	if (m_sys_var==e_Up) cleanersub.ApplyJECVariationUp();
+	if (m_sys_var==e_Down) cleanersub.ApplyJECVariationDown();
+      }
+      
+      if(m_extra_subjetJEC.size()>0&&(m_sys_unc==e_subJEC)){
+	cleanersub.SubjetRecorrector(m_correctorsubjet,atof(m_extra_subjetJEC.c_str()),atoi(m_onlyUNC_subjetJEC.c_str()));
+      }
+      else{
+	cleanersub.SubjetRecorrector(m_correctorsubjet,1.0,atoi(m_onlyUNC_subjetJEC.c_str()));
+      }
+    }
+
+
     //apply top jet energy corrections
     if(m_TopJetCollection.size()>0 && m_correctortop){
       Cleaner cleanertop;
-      cleanertop.JetRecorrector(m_correctortop,true,true);
+
+      cleanertop.SetJECUncertainty(m_jes_unc_top);
+
+      // settings for jet correction uncertainties
+      if (m_sys_unc==e_JEC){
+	if (m_sys_var==e_Up) cleanertop.ApplyJECVariationUp();
+	if (m_sys_var==e_Down) cleanertop.ApplyJECVariationDown();
+      }
+      
+      if(m_extra_topJEC.size()>0&&(m_sys_unc==e_JEC)){
+	cleanertop.JetRecorrector(m_correctortop,true,true,false,false,false,atof(m_extra_topJEC.c_str()));
+      }
+      else{
+	cleanertop.JetRecorrector(m_correctortop,true,true,false,false,false,1.0);
+      }
     }
 
     //apply toptag jet energy corrections

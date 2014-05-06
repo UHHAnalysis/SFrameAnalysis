@@ -75,8 +75,8 @@ LikelihoodHists::~LikelihoodHists(){
 void LikelihoodHists::Init()
 {
   // book all histograms here
-  Book( TH1F( "hL_single", "hL_single", 100, 0, 100));
-  Book( TH1F( "hL_multi", "hL_multi", 100, 0, 100));
+  Book( TH1F( "hL_single", "hL_single", 100, 0, 5));
+  Book( TH1F( "hL_multi", "hL_multi", 100, 0, 5));
 
 }
 
@@ -90,7 +90,14 @@ void LikelihoodHists::Fill()
   EventCalc* calc = EventCalc::Instance();
   double weight = calc -> GetWeight();
 
+ 
+
   BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
+bool IsRealData = calc->IsRealData();
+
+if(!IsRealData){
+    weight=weight*HiggsBRweight();
+  }
 
   double HTSubjets = 0.;
   std::vector<Particle> subjets_top;
@@ -119,13 +126,13 @@ void LikelihoodHists::Fill()
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
     TopJet topjet =  bcc->topjets->at(i);
 
-    if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, e_CSVM)){//, m_BTaggingMode, m_BTagEffiFilenameMC)>=1){
+    if(HepTopTagWithMatch(topjet) && subJetBTagTop(topjet, e_CSVM, m_BTaggingMode, m_BTagEffiFilenameMC)>=1){
       nheptoptag++;
       topTaggedJets.push_back(i);
     }
-    if (HiggsTag(topjet, e_CSVM, e_CSVM)){//{, m_BTaggingMode, m_BTagEffiFilenameMC)){
+    if (HiggsTag(topjet, e_CSVM, e_CSVM, m_BTaggingMode, m_BTagEffiFilenameMC)){
       nhiggstag++;
-      if (HiggsMassFromBTaggedSubjets(topjet, e_CSVM)){//, m_BTaggingMode, m_BTagEffiFilenameMC)>60.){
+      if (HiggsMassFromBTaggedSubjets(topjet, e_CSVM, m_BTaggingMode, m_BTagEffiFilenameMC)>60.){
 	nhiggstagWithCut ++;
 	HiggsTaggedJets.push_back(i);
       }
@@ -167,10 +174,10 @@ void LikelihoodHists::Fill()
 
 
 
-
+ if (indexHiggsCandidate != -99){
   TopJet higgsCandidateJet=bcc->topjets->at(indexHiggsCandidate);
 
-  double higgsmass=HiggsMassFromBTaggedSubjets(higgsCandidateJet, e_CSVM);//, m_BTaggingMode, m_BTagEffiFilenameMC);
+  double higgsmass=HiggsMassFromBTaggedSubjets(higgsCandidateJet, e_CSVM, m_BTaggingMode, m_BTagEffiFilenameMC);
   
   int iBin_HTsig_single =  HTSignalsingle->FindFixBin(HTSubjets);
   int iBin_HTback_single =  HTbacksingle->FindFixBin(HTSubjets);
@@ -197,12 +204,17 @@ void LikelihoodHists::Fill()
 //   cout << "HT signal multi " << LHT_sig_multi << endl;
 //   cout << "mH signal single " << LMH_sig_multi << endl;
 //   cout << "mH signal multi " << LMH_sig_multi << endl;
-
+  if (LHT_back_single == 0) cout << "LHT_back_single == 0" << endl;
+  if (LMH_back_single == 0) cout << "LMH_back_single == 0" << endl;
+if (LHT_back_multi == 0) cout << "LHT_back_multi == 0" << endl;
+  if (LMH_back_multi == 0) cout << "LMH_back_multi == 0" << endl;
   double L_single = (LHT_sig_single / LHT_back_single ) * (LMH_sig_single / LMH_back_single);
-  double L_multi = (LHT_sig_multi / LHT_back_multi ) * (LMH_sig_multi / LMH_back_multi); 
+  double L_multi = (LHT_sig_multi / LHT_back_multi ) * (LMH_sig_multi / LMH_back_multi);
+  double L_single_log = log10(L_single+1);
+  double L_multi_log = log10(L_multi+1);
 
-  if(nhiggstag==1) Hist("hL_single")->Fill(L_single,weight);
-  if(nhiggstag>1) Hist("hL_multi")->Fill(L_multi,weight);
+  if(nhiggstag==1) Hist("hL_single")->Fill(L_single_log,weight);
+  if(nhiggstag>1) Hist("hL_multi")->Fill(L_multi_log,weight);
  
  //  cout  << "Likelihhod single " << L_single << endl;
 //   cout << "Likelihood multi " << L_multi << endl;
@@ -225,5 +237,6 @@ void LikelihoodHists::Fill()
      delete mHbackmulti;
      file_mclike->Close();
      delete file_mclike;*/
+ }
  
 }

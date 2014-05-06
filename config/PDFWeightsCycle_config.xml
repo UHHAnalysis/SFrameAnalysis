@@ -40,7 +40,6 @@
 <!ENTITY LQ900 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M900.xml">
 <!ENTITY LQ950 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M950.xml">
 <!ENTITY LQ1000 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M1000.xml">
-<!ENTITY WW SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/WW.xml">
 ]>
 
 <JobConfiguration JobName="PDFWeightsCycleJob" OutputLevel="DEBUG">
@@ -58,12 +57,6 @@
 
 	<Cycle Name="PDFWeightsCycle"  OutputDirectory="/nfs/dust/cms/user/mameyer/PDFWeightFiles/" PostFix="_MSTW2008nlo68cl" TargetLumi="1" > 
 
-
-		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="WW" Cacheable="True">
-                        &WW;
-			<InputTree Name="AnalysisTree" /> 
-			<OutputTree Name="AnalysisTree" />  
-		</InputData> 	 
 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ200" Cacheable="False">
 		        &LQ200;

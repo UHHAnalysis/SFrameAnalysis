@@ -193,7 +193,6 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         m_logger << FATAL << "Luminosity Handler not properly added to Configuration!" << SLogger::endmsg;
         exit(-1);
     }
-    std::cout << "Hallo2" << std::endl;
     //determine whether running on MC or data
     m_addGenInfo=true;
     if(inputData.GetType()=="DATA" || inputData.GetType()=="Data" || inputData.GetType()=="data") m_addGenInfo=false;

@@ -189,13 +189,7 @@ void JetHists::Fill()
             }
         }
     }
-    for (unsigned int i =0; i<bcc->jets->size(); ++i) { 
-       if (calc-> GetRunNum()== 196218 && calc-> GetEventNum()== 667413927 &&  calc-> GetLumiBlock()== 445 )  cout <<"event number: "<< calc-> GetEventNum()<<"pt jet: "<<i<<" "<<bcc->jets->at(i).pt()<<endl;
-       if (calc-> GetRunNum()== 196218 && calc-> GetEventNum()== 667413927 &&  calc-> GetLumiBlock()== 445 )  cout <<"event number: "<< calc-> GetEventNum()<<"eta jet: "<<i<<" "<<bcc->jets->at(i).eta()<<endl;
-       
-       if (calc-> GetRunNum()== 203894 && calc-> GetEventNum()== 1243757983 &&  calc-> GetLumiBlock()== 1209 ) cout <<"event number: "<< calc-> GetEventNum()<<"pt jet: "<<i<<" "<<bcc->jets->at(i).pt()<<endl;
-       if (calc-> GetRunNum()== 203894 && calc-> GetEventNum()== 1243757983 &&  calc-> GetLumiBlock()== 1209 ) cout <<"event number: "<< calc-> GetEventNum()<<"eta jet: "<<i<<" "<<bcc->jets->at(i).eta()<<endl;
-    }
+   
     if (bcc->jets->size()> 1)
      {
       Jet jet1 =  bcc->jets->at(0);  

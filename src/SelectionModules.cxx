@@ -981,35 +981,6 @@ std::string EventFilterSelection::description()
 }
 
 
-
-
-SameSignCut::SameSignCut(){ 
-}
-
-bool SameSignCut::pass(BaseCycleContainer *bcc)
-{
-  for(unsigned int i=0; i< bcc->muons->size(); ++i)
-    {
-      Muon muon = bcc->muons->at(i);
-      for(unsigned int j=0; j< bcc->taus->size(); ++j)
-	{
-	  Tau tau = bcc->taus->at(j);
-	  if (muon.charge() == tau.charge()) return true;
-	}
-      
-    }
-  return false;
-}
-
- std::string SameSignCut::description(){
-   char s[100];
-   sprintf(s, "same-sign lepton pair requirement");
-   return s;
- }
-
-
-
-
 NoSelection::NoSelection(bool no_sel)
 {
   m_no_sel=no_sel;

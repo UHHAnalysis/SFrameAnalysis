@@ -43,21 +43,20 @@
 ]>
 
 <JobConfiguration JobName="PDFWeightsCycleJob" OutputLevel="DEBUG">
-	<Library Name="libfastjet" />
-	<Library Name="libfastjettools" />
+        <Library Name="libfastjet" />
+        <Library Name="libfastjettools" />
+	<Library Name="libJetMETObjects" />
 	<Library Name="libSFrameTools" />
-        <Library Name="libJetMETObjects" />
-
 	<Library Name="libAnalysis" />
-        <Library Name="libNtuple" />
 
-
+<!--	<Library Name="libSFramePlugIns" /> -->
+	<Library Name="libNtuple" />
 	<Package Name="SFrameCore.par" />
-	<Package Name="SFramePlugIns.par" />
-	<Package Name="SFrameTools.par" />
-	<Package Name="Analysis.par" />
 
-	<Cycle Name="PDFWeightsCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/mameyer/PDFWeightFiles/" PostFix="" TargetLumi="1" > 
+
+
+	<Cycle Name="PDFWeightsCycle"  OutputDirectory="/nfs/dust/cms/user/mameyer/PDFWeightFiles/" PostFix="_MSTW2008nlo68cl" TargetLumi="1" > 
+
 
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ200" Cacheable="False">
 		        &LQ200;
@@ -333,8 +332,7 @@
 
 		<UserConfig>
 		<Item Name="addGenInfo" Value="True" />
-		<Item Name="PDFName" Value="cteq66" /> 		
-
+		<Item Name="PDFName" Value="MSTW2008nlo68cl" /> 	
 		</UserConfig>
 	</Cycle>
 </JobConfiguration>

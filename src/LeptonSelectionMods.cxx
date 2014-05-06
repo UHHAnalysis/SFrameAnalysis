@@ -587,3 +587,54 @@ std::string FakeTauSelectionElectron::description()
   return s;
 }
 
+SameSignCutHalil::SameSignCutHalil(){ 
+}
+
+ bool SameSignCutHalil::pass(BaseCycleContainer *bcc)
+ {
+    for(unsigned int i=0; i< bcc->muons->size(); ++i)
+       {
+          Muon muon = bcc->muons->at(i);
+          for(unsigned int j=0; j< bcc->taus->size(); ++j)
+             {
+                Tau tau = bcc->taus->at(j);
+                if (muon.charge() == tau.charge()) return true;
+             }
+       
+       }
+    return false;
+ }
+
+  std::string SameSignCutHalil::description(){
+    char s[100];
+    sprintf(s, "same-sign lepton pair requirement");
+    return s;
+  }
+
+
+
+SameSignCut::SameSignCut(){ 
+}
+
+
+bool SameSignCut::pass(BaseCycleContainer *bcc)
+{
+   if (bcc->muons->size()>0 && bcc->taus->size()>0)
+      {
+         Muon muon = bcc->muons->at(0);
+         Tau tau = bcc->taus->at(0);
+         if (muon.charge() == tau.charge()) return true;
+      }
+   return false;
+}
+
+ std::string SameSignCut::description(){
+   char s[100];
+   sprintf(s, "same-sign lepton pair requirement");
+   return s;
+ }
+
+
+
+
+

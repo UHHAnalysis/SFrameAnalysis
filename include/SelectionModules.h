@@ -376,6 +376,7 @@ private:
 };
 
 
+
 class MttbarGenCut: public SelectionModule {
 public:
     MttbarGenCut(double mttbar_min=0, double mttbar_max=double_infinity());

@@ -253,6 +253,20 @@ class SameSignCut: public SelectionModule{
  
 };
 
+class SameSignCutHalil: public SelectionModule{
+ public:
+   SameSignCutHalil();
+  ~SameSignCutHalil(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+ 
+};
+
+
+
 class FakeTauSelectionElectron: public SelectionModule {
 
 public:

@@ -320,11 +320,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_sys_unc = e_PDF;
 	isok = true;
       }
-      if (m_sys_unc_name=="JetSF" ){
-         m_sys_unc = e_JetSF;
-         isok = true;
-      }
-
+ 
       if (m_sys_unc != e_None){
 	if (GetSysShiftName()=="UP" || GetSysShiftName()=="up" || GetSysShiftName()=="Up") m_sys_var = e_Up; 
 	if (GetSysShiftName()=="DOWN" || GetSysShiftName()=="down" || GetSysShiftName()=="Down") m_sys_var = e_Down; 
@@ -432,14 +428,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       } 
     }
 
-    if (m_sys_unc == e_JetSF){
-      if(m_sys_var == e_Up){
-	m_jsf->DoUpVarJetSF();
-      } else {
-	m_jsf->DoDownVarJetSF();
-      } 
-    }
-
+ 
     if(m_sys_unc == e_PDF){
 
       TString dirname = m_pdfdir;

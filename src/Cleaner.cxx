@@ -194,6 +194,15 @@ void Cleaner::JetEnergyResolutionShifterSubjets(bool sort)
       float genpt = nextsubjet.pt();
       //ignore unmatched jets (which have zero vector) or jets with very low pt:
       if(genpt < 15.0) {
+	Particle newsubjet;
+
+        newsubjet.set_pt(subjets_top[i].pt());
+        newsubjet.set_eta(subjets_top[i].eta());
+        newsubjet.set_phi(subjets_top[i].phi());
+        newsubjet.set_energy(subjets_top[i].energy());
+
+        bcc->topjets->at(j).add_subjet(newsubjet);
+
 	//   std::cout << "1.0 | " <<  bcc->jets->at(i).pt()  << " | " << bcc->jets->at(i).eta() << " | " << genpt << std::endl;
 	continue;
       }

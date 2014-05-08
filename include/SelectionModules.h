@@ -74,26 +74,7 @@ class RazorSelection: public SelectionModule {
 };
 
 
-//<<<<<<< Updated upstream
-//=======
 
-/*
-class NleadingJetSelection: public SelectionModule {
-public:
-    NleadingJetSelection(double ptmin=0.);
-    ~NleadingJetSelection() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:
-    double m_ptmin;
-};
-*/
-
-
-
-//>>>>>>> Stashed changes
 class NTopJetSelection: public SelectionModule {
 public:
     NTopJetSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());

@@ -113,40 +113,7 @@ std::string RazorSelection::description()
 }
 
 
-/*<<<<<<< Updated upstream
-  =======*/
 
-/*
-NleadingJetSelection::NleadingJetSelection(double ptmin)
-{
- 
- 
-    m_ptmin=ptmin;
- 
-}
-
-bool NleadingJetSelection::pass(BaseCycleContainer *bcc)
-{
-    int nparticle=0;
-    sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
-    Jet jet = bcc->jets->at(0);
-    return jet.pt()>m_ptmin;
-}
-
-std::string NleadingJetSelection::description()
-{
-    char s[100];
-    sprintf(s, "leading jet with pt>%.1f GeV",m_ptmin);
-
-    return s;
-}
-*/
-//own selection
-
-//---------------------------------
-
-
-//>>>>>>> Stashed changes
 NTopJetSelection::NTopJetSelection(int min_nparticle, int max_nparticle, double ptmin, double etamax)
 {
     m_min_nparticle=min_nparticle;

@@ -74,6 +74,7 @@ class RazorSelection: public SelectionModule {
 };
 
 
+
 class NTopJetSelection: public SelectionModule {
 public:
     NTopJetSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());

@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd" [
-<!ENTITY ZP500w5 SYSTEM "ZP500w5.xml">
-<!ENTITY ZP500w50 SYSTEM "ZP500w50.xml">
-<!ENTITY ZP750w7p5 SYSTEM "ZP750w7p5.xml">
-<!ENTITY ZP750w75 SYSTEM "ZP750w75.xml">
-<!ENTITY ZP1000w10 SYSTEM "ZP1000w10.xml">
-<!ENTITY ZP1000w100 SYSTEM "ZP1000w100.xml">
-<!ENTITY ZP1250w12p5 SYSTEM "ZP1250w12p5.xml">
-<!ENTITY ZP1250w125 SYSTEM "ZP1250w125.xml">
-<!ENTITY ZP1500w15 SYSTEM "ZP1500w15.xml">
-<!ENTITY ZP1500w150 SYSTEM "ZP1500w150.xml">
-<!ENTITY ZP2000w20 SYSTEM "ZP2000w20.xml">
-<!ENTITY ZP2000w200 SYSTEM "ZP2000w200.xml">
-<!ENTITY ZP3000w30 SYSTEM "ZP3000w30.xml">
-<!ENTITY ZP3000w300 SYSTEM "ZP3000w300.xml">
-<!ENTITY ZP4000w40 SYSTEM "ZP4000w40.xml">
-<!ENTITY ZP4000w400 SYSTEM "ZP4000w400.xml">
-<!ENTITY RSG1000 SYSTEM "RSG_1000.xml">
-<!ENTITY RSG1500 SYSTEM "RSG_1500.xml">
-<!ENTITY RSG2000 SYSTEM "RSG_2000.xml">
-<!ENTITY RSG2500 SYSTEM "RSG_2500.xml">
-<!ENTITY RSG3000 SYSTEM "RSG_3000.xml">
-<!ENTITY RSG3500 SYSTEM "RSG_3500.xml">
-<!ENTITY RSG4000 SYSTEM "RSG_4000.xml">
+<!ENTITY ZP500w5 SYSTEM "Samples_TTBSM53/ZP500W5.xml">
+<!ENTITY ZP500w50 SYSTEM "Samples_TTBSM53/ZP500W50.xml">
+<!ENTITY ZP750w7p5 SYSTEM "Samples_TTBSM53/ZP750W7p5.xml">
+<!ENTITY ZP750w75 SYSTEM "Samples_TTBSM53/ZP750W75.xml">
+<!ENTITY ZP1000w10 SYSTEM "Samples_TTBSM53/ZP1000W10.xml">
+<!ENTITY ZP1000w100 SYSTEM "Samples_TTBSM53/ZP1000W100.xml">
+<!ENTITY ZP1250w12p5 SYSTEM "Samples_TTBSM53/ZP1250W12p5.xml">
+<!ENTITY ZP1250w125 SYSTEM "Samples_TTBSM53/ZP1250W125.xml">
+<!ENTITY ZP1500w15 SYSTEM "Samples_TTBSM53/ZP1500W15.xml">
+<!ENTITY ZP1500w150 SYSTEM "Samples_TTBSM53/ZP1500W150.xml">
+<!ENTITY ZP2000w20 SYSTEM "Samples_TTBSM53/ZP2000W20.xml">
+<!ENTITY ZP2000w200 SYSTEM "Samples_TTBSM53/ZP2000W200.xml">
+<!ENTITY ZP3000w30 SYSTEM "Samples_TTBSM53/ZP3000W30.xml">
+<!ENTITY ZP3000w300 SYSTEM "Samples_TTBSM53/ZP3000W300.xml">
+<!ENTITY ZP4000w40 SYSTEM "Samples_TTBSM53/ZP4000W40.xml">
+<!ENTITY ZP4000w400 SYSTEM "Samples_TTBSM53/ZP4000W400.xml">
+<!ENTITY RSG700 SYSTEM "Samples_TTBSM53/RSG700.xml">
+<!ENTITY RSG1000 SYSTEM "Samples_TTBSM53/RSG1000.xml">
+<!ENTITY RSG1200 SYSTEM "Samples_TTBSM53/RSG1200.xml">
+<!ENTITY RSG1400 SYSTEM "Samples_TTBSM53/RSG1400.xml">
+<!ENTITY RSG1500 SYSTEM "Samples_TTBSM53/RSG1500.xml">
+<!ENTITY RSG1600 SYSTEM "Samples_TTBSM53/RSG1600.xml">
+<!ENTITY RSG1800 SYSTEM "Samples_TTBSM53/RSG1800.xml">
+<!ENTITY RSG2000 SYSTEM "Samples_TTBSM53/RSG2000.xml">
+<!ENTITY RSG2500 SYSTEM "Samples_TTBSM53/RSG2500.xml">
+<!ENTITY RSG3000 SYSTEM "Samples_TTBSM53/RSG3000.xml">
+<!ENTITY RSG3500 SYSTEM "Samples_TTBSM53/RSG3500.xml">
+<!ENTITY RSG4000 SYSTEM "Samples_TTBSM53/RSG4000.xml">
 <!ENTITY LQ200 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M200.xml">
 <!ENTITY LQ250 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M250.xml">
 <!ENTITY LQ300 SYSTEM "../../SFrameAnalysis/config/Samples_TTBSM53/LQToTTau_M300.xml">
@@ -57,8 +62,15 @@
 	<Package Name="SFrameTools.par" />
 	<Package Name="Analysis.par" />
 
-	<Cycle Name="PDFWeightsCycle"  OutputDirectory="/scratch/hh/dust/naf/cms/user/mameyer/PDFWeightFiles/" PostFix="" TargetLumi="1" > 
+	<Cycle Name="PDFWeightsCycle"  OutputDirectory="/nfs/dust/cms/user/peiffer/PDFWeightFiles/" PostFix="" TargetLumi="1" > 
 
+                <InputData Lumi="1" NEventsMax="10" Type="MC" Version="ZP1000w10" Cacheable="False">
+                        <In FileName="/nfs/dust/cms/user/gonvaq/Analysis53X_v3/PreSelectionMuon/ZprimePreSelectionCycle.MC.ZP1000w10.root" Lumi="0.0"/> 
+                        <InputTree Name="AnalysisTree" /> 
+                        <OutputTree Name="AnalysisTree" />  
+                </InputData>
+
+<!--
 		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ200" Cacheable="False">
 		        &LQ200;
 		        <InputTree Name="AnalysisTree" />
@@ -160,9 +172,9 @@
                         <InputTree Name="AnalysisTree" />
 			<OutputTree Name="AnalysisTree" />
 		</InputData>
+-->
 
-
-	 <!--       <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZP500w5" Cacheable="True">
+	       <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZP500w5" Cacheable="True">
                         &ZP500w5;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
@@ -225,7 +237,7 @@
 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="ZP4000w400" Cacheable="True">
                         &ZP4000w400;
 			<InputTree Name="AnalysisTree" /> 
-		</InputData> -->
+		</InputData> 
 
 
 <!--		<InputData Lumi="1" NEventsMax="-1" Type="MC" Version="LQ150" Cacheable="False">
@@ -300,13 +312,33 @@
 		<In FileName="dcap://dcache-cms-dcap.desy.de//pnfs/desy.de/cms/tier2/store/user/peiffer/SFrame_Ntuples_v53X/LQ1000/Ntuple_1_1_ceB.root" Lumi="0.0"/> 
 			<InputTree Name="AnalysisTree" /> 
 		</InputData> 
-
+-->
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG700" Cacheable="True">
+                        &RSG700;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
  	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1000" Cacheable="True">
                         &RSG1000;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1200" Cacheable="True">
+                        &RSG1200;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1400" Cacheable="True">
+                        &RSG1400;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
  	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1500" Cacheable="True">
                         &RSG1500;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1600" Cacheable="True">
+                        &RSG1600;
+			<InputTree Name="AnalysisTree" /> 
+		</InputData>
+ 	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG1800" Cacheable="True">
+                        &RSG1800;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
  	        <InputData Lumi="1" NEventsMax="-1" Type="MC" Version="RSG2000" Cacheable="True">
@@ -329,7 +361,7 @@
                         &RSG4000;
 			<InputTree Name="AnalysisTree" /> 
 		</InputData>
--->
+
 
 		<UserConfig>
 		<Item Name="addGenInfo" Value="True" />

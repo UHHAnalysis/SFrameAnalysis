@@ -220,6 +220,7 @@ std::string NJetSelection::description()
     return s;
 }
 */
+/*
 NleadingJetSelection::NleadingJetSelection(double ptmin)
 {
  
@@ -243,84 +244,9 @@ std::string NleadingJetSelection::description()
 
     return s;
 }
-
+*/
 //own selection
 
-NJetdeltaySelection::NJetdeltaySelection(double deltay)
-{
- 
- 
-    m_ptmin=deltay;
- 
-}
-
-bool NJetdeltaySelection::pass(BaseCycleContainer *bcc)
-{
-    int nparticle=0;
-    sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
-    Jet jet = bcc->jets->at(0);
-    Jet jet2 = bcc->jets->at(1);
-    return abs(jet.v4().Rapidity()-jet2.v4().Rapidity())<m_ptmin;
-}
-
-std::string NJetdeltaySelection::description()
-{
-    char s[100];
-    sprintf(s, "delta rapidity leading jets <%.1f ",m_ptmin);
-
-    return s;
-}
-
-
-NJetdeltaphiSelection::NJetdeltaphiSelection(double deltaphi)
-{
- 
- 
-    m_ptmin=deltaphi;
- 
-}
-
-bool NJetdeltaphiSelection::pass(BaseCycleContainer *bcc)
-{
-    int nparticle=0;
-    sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
-    Jet jet = bcc->jets->at(0);
-    Jet jet2 = bcc->jets->at(1);
-    return abs(jet.v4().Phi()-jet2.v4().Phi())>m_ptmin;
-}
-
-std::string NJetdeltaphiSelection::description()
-{
-    char s[100];
-    sprintf(s, "delta phi leading jets >%.1f ",m_ptmin);
-
-    return s;
-}
-
-NTopJetdeltaphiSelection::NTopJetdeltaphiSelection(double deltaphi)
-{
- 
- 
-    m_ptmin=deltaphi;
- 
-}
-
-bool NTopJetdeltaphiSelection::pass(BaseCycleContainer *bcc)
-{
-    int nparticle=0;
-    sort(bcc->topjets->begin(), bcc->topjets->end(), HigherPt());
-    TopJet topjet = bcc->topjets->at(0);
-    TopJet topjet2 = bcc->topjets->at(1);
-    return abs(topjet.v4().Phi()-topjet2.v4().Phi())>m_ptmin;
-}
-
-std::string NTopJetdeltaphiSelection::description()
-{
-    char s[100];
-    sprintf(s, "delta phi leading topjets >%.1f ",m_ptmin);
-
-    return s;
-}
 //---------------------------------
 
 

@@ -435,11 +435,12 @@ void TMVATreeFiller::FillTopJetProperties(TopJet topjet, GenParticle topquark)
   m_genpy = topquark.v4().py();
   m_genpz = topquark.v4().pz();
   //TL
+  /*
   m_dR1=distance_quark(topjet,1,0.8);
   m_dR2=distance_quark(topjet,2,0.8);
   m_dR3=distance_quark(topjet,3,0.8);
   if(m_dR1<0.8 && m_dR2<0.8 && m_dR3<0.8 && m_dR1>0 && m_dR2>0 &&m_dR3>0) m_pt_selection=topjet.pt();
-  m_pt=topjet.pt();
+  m_pt=topjet.pt();*/
   //----
   Hist("MatchedJet_pt")-> Fill(topquark.v4().pt(),weight);
   if (topquark.v4().pt()>250){

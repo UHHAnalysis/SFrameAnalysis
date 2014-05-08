@@ -142,6 +142,7 @@ private:
     double m_etamax;
 };
 */
+/*
 class NleadingJetSelection: public SelectionModule {
 public:
     NleadingJetSelection(double ptmin=0.);
@@ -153,44 +154,7 @@ public:
 private:
     double m_ptmin;
 };
-
-
-class NJetdeltaySelection: public SelectionModule {
-public:
-    NJetdeltaySelection(double ptmin=0.);
-    ~NJetdeltaySelection() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:
-    double m_ptmin;
-};
-
-
-class NJetdeltaphiSelection: public SelectionModule {
-public:
-    NJetdeltaphiSelection(double ptmin=0.);
-    ~NJetdeltaphiSelection() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:
-    double m_ptmin;
-};
-
-class NTopJetdeltaphiSelection: public SelectionModule {
-public:
-    NTopJetdeltaphiSelection(double ptmin=0.);
-    ~NTopJetdeltaphiSelection() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:
-    double m_ptmin;
-};
+*/
 
 
 

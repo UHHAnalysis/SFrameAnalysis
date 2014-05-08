@@ -219,9 +219,12 @@ void TauHists::Fill()
       Hist("againstMuonTight2") -> Fill(tau.againstMuonTight2(), weight);
       
     }
+
+ 
     if (bcc->taus->size() > 0)
     {
       Tau tau = bcc->taus->at(0);
+
       Hist("pT_1") -> Fill(tau.pt(), weight);
       Hist("pT_1_ly") -> Fill(tau.pt(), weight);
       Hist("pT_1_binned") -> Fill(tau.pt(), weight);

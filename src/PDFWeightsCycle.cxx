@@ -32,15 +32,12 @@ void PDFWeightsCycle::EndCycle() throw( SError ) {
 }
 
 void PDFWeightsCycle::BeginInputData( const SInputData& id ) throw( SError ) {
-  
   AnalysisCycle::BeginInputData(id);
   //
   // Declare the output histograms:
   //
-
   //systeamtic shift e_Up not relevant here
   m_pdfweights = new PDFWeights(e_Up,m_pdfname);
-
 
   //set all counters to 0
   m_Ntotal=0;

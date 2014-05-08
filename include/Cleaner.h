@@ -41,6 +41,8 @@ class Cleaner{
    * All jets and leptons in the actual BaseCycleContainer are considered.
    * Use sort=false or sort=true if you want to re-order the jets according to corrected pt after the applied shifts.
   */
+   void TauEnergyResolutionShifter();
+   
   void JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort=true);
 
   /**
@@ -86,7 +88,11 @@ class Cleaner{
   /**
    * Do not apply jet energy resolution variation.
    */
-  void NoJERVariation(){m_jervar=e_Default;}
+   void NoJERVariation(){m_jervar=e_Default;}
+   
+   void ApplyTERVariationUp(){m_TERvar=e_Up;}
+   void ApplyTERVariationDown(){m_TERvar=e_Down;}
+   void NoTERVariation(){m_TERvar=e_Default;}
 
   void ApplysubJERVariationUp(){m_subjervar=e_Up;}
   /**
@@ -116,7 +122,8 @@ class Cleaner{
   void TopJetCleaner(double ptmin=0, double etamax=9999, bool doPFID=true);
   void JetLeptonOverlapRemoval();
   void PrimaryVertexCleaner(int ndofmax=4, double zmax=24.0, double rhomax=2.0);
-  
+   // void DoUpVarTER(bool f=true){m_TER_unc=true; m_syst_shift=e_Up;}
+   //void DoDownVarTER(bool f=true){m_TER_unc=true; m_syst_shift=e_Down;}
   /**
    * Function to correct phi modulation of MET in data
   */
@@ -130,6 +137,9 @@ class Cleaner{
 
   E_SystShift m_jecvar;  
   E_SystShift m_jervar;
+  E_SystShift m_syst_shift;
+  E_SystShift m_TERvar; 
+   
 
   E_SystShift m_subjervar;
 

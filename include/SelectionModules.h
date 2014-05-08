@@ -16,100 +16,19 @@
 #include "SFrameAnalysis/include/JetSelectionMods.h"
 #include "SFrameAnalysis/include/LeptonSelectionMods.h"
 #include "SFrameAnalysis/include/HepSelectionMods.h"
-
-
-
+#include "SFrameAnalysis/include/BTagSelectionMods.h"
+#include "SFrameAnalysis/include/HTSelectionMods.h"
 
 #include <algorithm>
 #include <memory>
 
-class NAntiMuonTopJetsSelection: public SelectionModule {
-public:
 
-  NAntiMuonTopJetsSelection(int min_ntops, int max_ntops=int_infinity(), double ptmin=0., double etamax=double_infinity());
-    ~NAntiMuonTopJetsSelection() {};
+//------------------------------------
+// The first part of the name of the selection decides in which file it is stored eg:
+// MuonBTagSelection --> LeptonSelectionMods
+// HEPMuonSelection  --> HepSelectionMods
+//-----------------------------------------
 
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:
-    int m_min_ntops;
-    int m_max_ntops;
-    double m_ptmin;
-    double m_etamax;
-
-};
-
-class NAntiMuonSubBTagSelection: public SelectionModule {
-public:
-
-  NAntiMuonSubBTagSelection(int min_nbtag, int max_nbtag=int_infinity(), E_BtagType type=e_CSVM, double ptmin=0., double etamax=double_infinity() , TString filename="");
-    ~NAntiMuonSubBTagSelection() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:
-    int m_min_nbtag;
-    int m_max_nbtag;
-    E_BtagType m_type;
-    double m_ptmin;
-    double m_etamax;
-    std::string m_filename;
-};
-
-class NAntiMuonSubBTagSelectionOne: public SelectionModule {
-public:
-
-  NAntiMuonSubBTagSelectionOne(int min_nbtag, int max_nbtag=int_infinity(), E_BtagType type=e_CSVM, double ptmin=0., double etamax=double_infinity() , TString filename="");
-    ~NAntiMuonSubBTagSelectionOne() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:
-    int m_min_nbtag;
-    int m_max_nbtag;
-    E_BtagType m_type;
-    double m_ptmin;
-    double m_etamax;
-    std::string m_filename;
-};
-
-class NAntiMuonHEPBTagSelection: public SelectionModule {
-public:
-
-  NAntiMuonHEPBTagSelection(int min_nbtag, int max_nbtag=int_infinity(), E_BtagType type=e_CSVM, double ptmin=0., double etamax=double_infinity() );
-    ~NAntiMuonHEPBTagSelection() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:
-    int m_min_nbtag;
-    int m_max_nbtag;
-    E_BtagType m_type;
-    double m_ptmin;
-    double m_etamax;
-};
-
-
-class NMuonBTagSelection: public SelectionModule {
-public:
-
-  NMuonBTagSelection(int min_nbtag, int max_nbtag=int_infinity(), E_BtagType type=e_CSVM, double ptmin=0., double etamax=double_infinity() );
-    ~NMuonBTagSelection() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:
-    int m_min_nbtag;
-    int m_max_nbtag;
-    E_BtagType m_type;
-    double m_ptmin;
-    double m_etamax;
-};
 
 class TriggerSelection: public SelectionModule {
 public:
@@ -170,7 +89,6 @@ private:
     double m_etamax;
 };
 
-
 class NPrunedJetSelection: public SelectionModule {
 public:
     NPrunedJetSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());
@@ -185,8 +103,6 @@ private:
     double m_ptmin;
     double m_etamax;
 };
-
-
 
 class CAAntiktJetSelection : public SelectionModule{
  public:
@@ -232,56 +148,6 @@ private:
     int m_min_ntoptag;
     int m_max_ntoptag;
 }__attribute__ ((deprecated)); //moved to CMSTopTagSelectionMods.h and renamed 
-
-
-class NBTagAntiktJetSelection: public SelectionModule{
-public:
-  NBTagAntiktJetSelection(int min_nbtag,int max_nbtag, E_BtagType type=e_CSVT, double delR_Jet_TopTag=1.3 );
-  ~NBTagAntiktJetSelection(){}
-  
-   virtual bool pass(BaseCycleContainer*);
-  virtual std::string description();
-  
-private:
- int m_min_nbtag;
- int m_max_nbtag;
- E_BtagType m_type;
- double m_delR_Jet_TopTag;
-};
-
-class NSumBTagsSelection: public SelectionModule{
-public:
-  NSumBTagsSelection(int min_nsumbtags, int max_nsumbtags, E_BtagType type=e_CSVL);
-~NSumBTagsSelection(){}
-
-virtual bool pass(BaseCycleContainer*);
-virtual std::string description();
-
-private:
-int m_min_nsumbtags;
-int m_max_nsumbtags;
-E_BtagType m_type;
-};
-
-
-//-- Selects events with b-tagged subjet in the CMSTopTagged jets
-class NCMSSubBTagSelection: public SelectionModule{
- public:
-  NCMSSubBTagSelection(int min_ntoptag, int max_ntoptag, int min_nbtag=0, int max_nbtag=int_infinity(), E_BtagType type=e_CSVM, double nsubjettiness=0.7);
-  ~NCMSSubBTagSelection(){};
-
-  virtual bool pass(BaseCycleContainer*);
-  virtual std::string description();
-
- private:
-  int m_min_ntoptag;
-  int m_max_ntoptag;
-  int m_min_nsubjetbtag;
-  int m_max_nsubjetbtag;
-  E_BtagType m_type;
-  double m_nsubjettiness;
-  
-};
 
 
 // Selects events with b-tagged subjet in the HEPTopTagged jets
@@ -336,7 +202,7 @@ class InvertedTopTagRegularBTagRegularHiggsTag: public SelectionModule{
  TString m_mode;
   TString m_filename;
 double m_HiggsMassCut;
-};
+}__attribute__ ((deprecated)); //moved to HepSelectionMods.h and renamed ;
 
 
 
@@ -354,7 +220,7 @@ class RegularTopTagRegularBTagFullyInvertedHiggsTag: public SelectionModule{
   E_BtagType m_type3;
  TString m_mode;
   TString m_filename;
-};
+}__attribute__ ((deprecated)); //moved to HepSelectionMods.h and renamed;
 
 
 class InvertedTopTagRegularBTagFullyInvertedHiggsTag: public SelectionModule{
@@ -371,62 +237,8 @@ class InvertedTopTagRegularBTagFullyInvertedHiggsTag: public SelectionModule{
   E_BtagType m_type3;
  TString m_mode;
   TString m_filename;
-};
+}__attribute__ ((deprecated)); //moved to HepSelectionMods.h and renamed;
 
-class STCut: public SelectionModule{
- public:
-  STCut(double min_st, double max_st=double_infinity());
-  ~STCut(){};
-
-  virtual bool pass(BaseCycleContainer*);
-  virtual std::string description();
-
- private:
-  double m_min_st;
-  double m_max_st;
-};
-
-class HTCut: public SelectionModule{
- public:
-  HTCut(double min_ht, double max_ht=double_infinity());
-  ~HTCut(){};
-
-  virtual bool pass(BaseCycleContainer*);
-  virtual std::string description();
-
- private:
-  double m_min_ht;
-  double m_max_ht;
-};
-
-
-class HTSubJetsCut: public SelectionModule{
- public:
-  HTSubJetsCut(double min_ht, double max_ht=double_infinity());
-  ~HTSubJetsCut(){};
-
-  virtual bool pass(BaseCycleContainer*);
-  virtual std::string description();
-
- private:
-  double m_min_ht;
-  double m_max_ht;
-};
-
-class HThadCut: public SelectionModule{
- public:
-   HThadCut(double ptmin_jet,double etamax_jet, double min_ht, double max_ht=double_infinity());
-  ~HThadCut(){};
-
-  virtual bool pass(BaseCycleContainer*);
-  virtual std::string description();
-
- private:
-   double m_ptmin_jet;
-   double m_etamax_jet;
-   double m_min_ht;
-   double m_max_ht;
-};
 
 class NWTagSelection: public SelectionModule {
 public:
@@ -439,22 +251,6 @@ public:
 private:
     int m_min_nwtag;
     int m_max_nwtag;
-};
-
-
-class NBTagSelection: public SelectionModule {
-public:
-
-    NBTagSelection(int min_nbtag, int max_nbtag=int_infinity(), E_BtagType type=e_CSVT);
-    ~NBTagSelection() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:
-    int m_min_nbtag;
-    int m_max_nbtag;
-    E_BtagType m_type;
 };
 
 
@@ -471,34 +267,6 @@ private:
     int m_min_npv;
     int m_max_npv;
 };
-
-
-class HTlepCut: public SelectionModule {
-public:
-    HTlepCut(double min_htlep, double max_htlep=double_infinity());
-    ~HTlepCut() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:
-    double m_min_htlep;
-    double m_max_htlep;
-};
-
-class HTmuonCut: public SelectionModule {
-public:
-    HTmuonCut(double min_htmuon, double max_htmuon=double_infinity());
-    ~HTmuonCut() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:
-    double m_min_htmuon;
-    double m_max_htmuon;
-};
-
 
 class METCut: public SelectionModule {
 public:
@@ -554,26 +322,7 @@ private:
 
 };
 
-class MuonElectronOSCut: public SelectionModule {
-public:
-    MuonElectronOSCut() {};
-    ~MuonElectronOSCut() {};
 
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-};
-
-
-class MuonTauOSCut: public SelectionModule {
-public:
-    MuonTauOSCut() {};
-    ~MuonTauOSCut() {};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-};
 
 class TriangularCut: public SelectionModule {
 public:
@@ -627,43 +376,6 @@ private:
 };
 
 
-class MuonInvMassCut: public SelectionModule{
- public:
-  MuonInvMassCut(double min_InvMass, double max_InvMass);
-  ~MuonInvMassCut(){};
-
-  virtual bool pass(BaseCycleContainer*);
-  virtual std::string description();
-
- private:
-  double m_min_InvMass;
-  double m_max_InvMass;
-};
-
-class TauMuonInvMassCut: public SelectionModule{
- public:
-  TauMuonInvMassCut(double min_InvMass, double max_InvMass);
-  ~TauMuonInvMassCut(){};
-
-  virtual bool pass(BaseCycleContainer*);
-  virtual std::string description();
-
- private:
-  double m_min_InvMass;
-  double m_max_InvMass;
-};
-
-class SameSignCut: public SelectionModule{
- public:
-  SameSignCut();
-  ~SameSignCut(){};
-
-  virtual bool pass(BaseCycleContainer*);
-  virtual std::string description();
-
- private:
- 
-};
 
 class MttbarGenCut: public SelectionModule {
 public:
@@ -693,20 +405,6 @@ private:
 };
 
 
-class TauMuonMassCut: public SelectionModule{
- public:
-  explicit TauMuonMassCut(double massmin =0, double massmax = double_infinity());
-  ~TauMuonMassCut(){};
-
-  virtual bool pass(BaseCycleContainer*);
-  virtual std::string description();
-
- private:
-  double m_massmin;
-  double m_massmax;
-
-};
-
 
 class EventFlavorSelection: public SelectionModule {
 public:
@@ -734,17 +432,6 @@ private:
     std::auto_ptr<EventFilterFromListStandAlone> m_evfilter;
 };
 
-class GenTauSelection: public SelectionModule {
-public:
-    GenTauSelection();
-    ~GenTauSelection(){};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:   
-
-};
 
 class NoSelection: public SelectionModule {
  public:
@@ -756,29 +443,6 @@ class NoSelection: public SelectionModule {
 
  private:
   bool m_no_sel;
-
-};
-class FakeTauSelectionElectron: public SelectionModule {
-
-public:
-    FakeTauSelectionElectron();
-    ~FakeTauSelectionElectron(){};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:   
-
-};
-class OneProngTauSelection: public SelectionModule {
-public:
-    OneProngTauSelection();
-    ~OneProngTauSelection(){};
-
-    virtual bool pass(BaseCycleContainer*);
-    virtual std::string description();
-
-private:   
 
 };
 

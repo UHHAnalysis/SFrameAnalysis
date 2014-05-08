@@ -159,6 +159,7 @@ protected:
   // PU-reweighting
   PUWeightProducer* m_puwp;
 
+
   // Trigger-reweighting
   TriggerWeight* m_trig;
 
@@ -176,8 +177,12 @@ protected:
   TopPtReweight * m_tpr;
 
   //toptagsfreweighting
-  HEPTopTaggerReweightTPrime * m_hepsf;
+   HEPTopTaggerReweightTPrime * m_hepsf;
+   std::string m_channel;
+   
 
+
+  
 private:
 
   // lumi file properties
@@ -221,6 +226,8 @@ private:
 
   //steering for MC-data correction weights
   std::vector<std::string> m_leptonweights;
+   
+   std::string m_LQChannel;
 
   //output variables
   std::vector< Electron > m_output_electrons;  

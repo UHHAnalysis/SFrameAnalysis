@@ -2,3 +2,4 @@ obj/
 src/Analysis_Dict.cxx
 src/Analysis_Dict.h
 *~
+*.root

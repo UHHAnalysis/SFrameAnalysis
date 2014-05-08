@@ -64,8 +64,56 @@ class NHEPTopTagSelection: public SelectionModule{
   int m_max_nheptoptag;
 };
 
+class InvertedHEPTopTagRegularBTagRegularHiggsTag: public SelectionModule{
+ public:
+  InvertedHEPTopTagRegularBTagRegularHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode="default", TString filename="", double HiggsMassCut=0.);
+  ~InvertedHEPTopTagRegularBTagRegularHiggsTag(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  E_BtagType m_type1;
+  E_BtagType m_type2;
+  E_BtagType m_type3;
+  /* bool m_doBTag; */
+/*   bool m_doHiggsTag; */
+ TString m_mode;
+  TString m_filename;
+double m_HiggsMassCut;
+};
 
 
+class RegularHEPTopTagRegularBTagFullyInvertedHiggsTag: public SelectionModule{
+ public:
+  RegularHEPTopTagRegularBTagFullyInvertedHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode="default", TString filename="");
+  ~RegularHEPTopTagRegularBTagFullyInvertedHiggsTag(){};
 
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  E_BtagType m_type1;
+  E_BtagType m_type2;
+  E_BtagType m_type3;
+ TString m_mode;
+  TString m_filename;
+};
+
+class InvertedHEPTopTagRegularBTagFullyInvertedHiggsTag: public SelectionModule{
+ public:
+  InvertedHEPTopTagRegularBTagFullyInvertedHiggsTag(E_BtagType type1, E_BtagType type2, E_BtagType type3, TString mode="default", TString filename="");
+  ~InvertedHEPTopTagRegularBTagFullyInvertedHiggsTag(){};
+
+  virtual bool pass(BaseCycleContainer*);
+  virtual std::string description();
+
+ private:
+  E_BtagType m_type1;
+  E_BtagType m_type2;
+  E_BtagType m_type3;
+ TString m_mode;
+  TString m_filename;
+};
 
 #endif // HepSelectionMods_H

@@ -189,8 +189,8 @@ void JetHists::Fill()
             }
         }
     }
-
-  if (bcc->jets->size()> 1)
+   
+    if (bcc->jets->size()> 1)
      {
       Jet jet1 =  bcc->jets->at(0);  
       Jet jet2 =  bcc->jets->at(1);

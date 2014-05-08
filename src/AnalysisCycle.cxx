@@ -50,6 +50,7 @@ AnalysisCycle::AnalysisCycle()
     m_readTTbarReco = false;
     m_writeTTbarReco = false;
     m_readCommonInfo = true;
+    m_channel = "inclusive_LQ";
 
     // declare variables for lumi file
     DeclareProperty( "LumiFilePath" , m_lumifile_path);
@@ -118,6 +119,8 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "PDFWeightFilesDirectory", m_pdfdir );
     DeclareProperty( "PDFIndex", m_pdf_index);
 
+    //find out the LQ channel
+    DeclareProperty( "LQChannel", m_channel);
 }
 
 AnalysisCycle::~AnalysisCycle()
@@ -190,7 +193,6 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         m_logger << FATAL << "Luminosity Handler not properly added to Configuration!" << SLogger::endmsg;
         exit(-1);
     }
-
     //determine whether running on MC or data
     m_addGenInfo=true;
     if(inputData.GetType()=="DATA" || inputData.GetType()=="Data" || inputData.GetType()=="data") m_addGenInfo=false;
@@ -281,12 +283,16 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_sys_unc = e_JER; 
 	isok = true;
       }
-      if (m_sys_unc_name=="SUBJER" || m_sys_unc_name=="subjer"){
-	m_sys_unc = e_subJER; 
+       if (m_sys_unc_name=="TER" || m_sys_unc_name=="ter"){
+	m_sys_unc = e_TER; 
 	isok = true;
       }
-      if (m_sys_unc_name=="MuonSF"){
-	m_sys_unc = e_MuonSF;
+       if (m_sys_unc_name=="SUBJER" || m_sys_unc_name=="subjer"){
+	m_sys_unc = e_subJER; 
+	isok = true;
+       }
+       if (m_sys_unc_name=="MuonSF"){       
+          m_sys_unc = e_MuonSF;
 	isok = true;
       }
       if (m_sys_unc_name=="EleSF"){
@@ -313,11 +319,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_sys_unc = e_PDF;
 	isok = true;
       }
-      if (m_sys_unc_name=="JetSF" ){
-         m_sys_unc = e_JetSF;
-         isok = true;
-      }
-
+ 
       if (m_sys_unc != e_None){
 	if (GetSysShiftName()=="UP" || GetSysShiftName()=="up" || GetSysShiftName()=="Up") m_sys_var = e_Up; 
 	if (GetSysShiftName()=="DOWN" || GetSysShiftName()=="down" || GetSysShiftName()=="Down") m_sys_var = e_Down; 
@@ -348,7 +350,9 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       }
       
     }
-
+    
+    // if (m_LQannel_OS == "True" || m_LQChannel_OS == "true" ||m_LQChannel_OS == "TRUE") m_channel_OS = true; 
+    
     // output Ntuple
     if (inputData.GetTrees(STreeType::OutputSimpleTree)) {
         m_logger << INFO << "adding output tree" << SLogger::endmsg;
@@ -382,11 +386,9 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
         DeclareVariable(m_output_triggerResults, "triggerResults");
     }
 
-    
-    m_lsf = new LeptonScaleFactors(m_leptonweights);	
+    m_lsf = new LeptonScaleFactors(m_leptonweights, m_channel);	
     m_jsf = new JetpTReweightingInWJets();
-
-    
+        
     if (m_sys_unc == e_MuonSF){
       if(m_sys_var == e_Up){
 	cout << "apply muon up var" << endl;
@@ -425,14 +427,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
       } 
     }
 
-    if (m_sys_unc == e_JetSF){
-      if(m_sys_var == e_Up){
-	m_jsf->DoUpVarJetSF();
-      } else {
-	m_jsf->DoDownVarJetSF();
-      } 
-    }
-
+ 
     if(m_sys_unc == e_PDF){
 
       TString dirname = m_pdfdir;
@@ -575,6 +570,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     }
 
     // -- nprocessed consistency check --
+    
     nprocessed = Book(TH1D("nprocessed", "nprocessed", 1, 0, 1));
 }
 
@@ -730,7 +726,7 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
 
 void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
 {
-    // Connect all variables from the Ntuple file with the ones needed for the analysis.
+   // Connect all variables from the Ntuple file with the ones needed for the analysis.
     // The different collections that should be loaded are steerable through the XML file.
     // The variables are commonly stored in the BaseCycleContaincer and can be
     // accessed afterwards through EventCalc
@@ -784,7 +780,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
     // This method performs basic consistency checks, resets the event calculator,
     // calculates the pile-up weight and performs the good-run selection.
     // It should always be the first thing to be called in each user analysis.
-    nprocessed->Fill(0.5);
+   nprocessed->Fill(0.5);
 
     // first thing to do: call reset of event calc
     EventCalc* calc = EventCalc::Instance();
@@ -934,6 +930,7 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 	cleanersub.SubjetRecorrector(m_correctorsubjet,1.0,atoi(m_onlyUNC_subjetJEC.c_str()));
       }
     }
+
 
     //apply top jet energy corrections
     if(m_TopJetCollection.size()>0 && m_correctortop){

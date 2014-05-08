@@ -74,6 +74,127 @@ class RazorSelection: public SelectionModule {
 };
 
 
+//<<<<<<< Updated upstream
+//=======
+/*
+class NMuonSelection: public SelectionModule {
+public:
+    NMuonSelection(int min_nparticle, int max_nparticle=int_infinity(), double ptmin=0., double etamax=double_infinity() );
+    ~NMuonSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    int m_min_nparticle;
+    int m_max_nparticle;
+    double m_ptmin;
+    double m_etamax;
+};
+
+
+class NElectronSelection: public SelectionModule {
+public:
+    NElectronSelection(
+        int min_nparticle, int max_nparticle=int_infinity(),
+        double ptmin=0., double etamax=double_infinity() 
+    );
+    ~NElectronSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    int m_min_nparticle;
+    int m_max_nparticle;
+    double m_ptmin;
+    double m_etamax;
+};
+
+class NTauSelection: public SelectionModule {
+public:
+    NTauSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());
+    ~NTauSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    int m_min_nparticle;
+    int m_max_nparticle;
+    double m_ptmin;
+    double m_etamax;
+};
+
+
+class NJetSelection: public SelectionModule {
+public:
+    NJetSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());
+    ~NJetSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    int m_min_nparticle;
+    int m_max_nparticle;
+    double m_ptmin;
+    double m_etamax;
+};
+*/
+class NleadingJetSelection: public SelectionModule {
+public:
+    NleadingJetSelection(double ptmin=0.);
+    ~NleadingJetSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    double m_ptmin;
+};
+
+
+class NJetdeltaySelection: public SelectionModule {
+public:
+    NJetdeltaySelection(double ptmin=0.);
+    ~NJetdeltaySelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    double m_ptmin;
+};
+
+
+class NJetdeltaphiSelection: public SelectionModule {
+public:
+    NJetdeltaphiSelection(double ptmin=0.);
+    ~NJetdeltaphiSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    double m_ptmin;
+};
+
+class NTopJetdeltaphiSelection: public SelectionModule {
+public:
+    NTopJetdeltaphiSelection(double ptmin=0.);
+    ~NTopJetdeltaphiSelection() {};
+
+    virtual bool pass(BaseCycleContainer*);
+    virtual std::string description();
+
+private:
+    double m_ptmin;
+};
+
+
+
+//>>>>>>> Stashed changes
 class NTopJetSelection: public SelectionModule {
 public:
     NTopJetSelection(int min_nparticle, int max_nparticle=int_infinity(),  double ptmin=0., double etamax=double_infinity());

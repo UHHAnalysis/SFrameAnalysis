@@ -35,6 +35,7 @@ class Cleaner{
    * Use sort=true if you want to re-order the jets according to corrected pt after the applied shifts.
   */
   void JetEnergyResolutionShifter(bool sort=true);
+ void JetEnergyResolutionShifterFat(bool sort=true);
   void JetEnergyResolutionShifterSubjets(bool sort=true);
   /**
    * Function to subtract lepton momenta from jets if the distance between jet and lepton axis is less than 0.5 in the eta-phi plane.
@@ -104,6 +105,16 @@ class Cleaner{
    */
   void NosubJERVariation(){m_subjervar=e_Default;}
 
+  void ApplyfatJERVariationUp(){m_fatjervar=e_Up;}
+  /**
+   * Apply a down variation of the jet energy resolution uncertainty.
+  */
+  void ApplyfatJERVariationDown(){m_fatjervar=e_Down;}
+  /**
+   * Do not apply jet energy resolution variation.
+   */
+  void NofatJERVariation(){m_fatjervar=e_Default;}
+
   E_SystShift GetJECVariation(){return m_jecvar;}
 
   void ElectronCleaner(double ptmin=0, double etamax=9999, double relisomax=0.1, bool reverseID = false, bool reverseIso = false, bool egmId = false);
@@ -142,6 +153,7 @@ class Cleaner{
    
 
   E_SystShift m_subjervar;
+  E_SystShift m_fatjervar;
 
   // helper function to define electron id criteria.
   bool passElectronId(BaseCycleContainer*, unsigned int);

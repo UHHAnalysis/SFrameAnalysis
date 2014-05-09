@@ -291,6 +291,10 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	m_sys_unc = e_subJER; 
 	isok = true;
        }
+       if (m_sys_unc_name=="FATJER" || m_sys_unc_name=="fatjer"){
+	m_sys_unc = e_fatJER; 
+	isok = true;
+       }
        if (m_sys_unc_name=="MuonSF"){       
           m_sys_unc = e_MuonSF;
 	isok = true;

@@ -127,6 +127,103 @@ void Cleaner::JetEnergyResolutionShifter(bool sort)
     resetEventCalc();
 }
 
+void Cleaner::JetEnergyResolutionShifterFat(bool sort)
+{
+  
+  //cout <<"in Jet energy resolution shifter"<<endl;
+  
+  for(unsigned int i=0; i<bcc->topjets->size(); ++i) {
+    
+    TopJet topjet = bcc->topjets->at(i);
+    
+    double deltarmin = double_infinity();
+    
+    GenTopJet nextjet;
+    
+    for(unsigned int igj=0; igj<bcc->topjetsgen->size();++igj){
+      
+      GenTopJet checkgen=bcc->topjetsgen->at(igj);
+      
+      if(checkgen.deltaR(topjet) < deltarmin){
+	deltarmin = checkgen.deltaR(topjet);
+	nextjet = checkgen;
+      }
+      
+    }//loop over genjets
+    
+    if(deltarmin>0.8){
+      continue;
+    }
+    
+    if(nextjet.pt()<15.0){
+      continue;
+    }
+    
+    float genpt = nextjet.pt();
+
+    LorentzVector jet_v4 =  bcc->topjets->at(i).v4();
+
+    LorentzVector jet_v4_raw = jet_v4*bcc->topjets->at(i).JEC_factor_raw();
+
+    double recopt = jet_v4.pt();
+    double factor = 0.0;
+    double uperr = 0.0;
+    double downerr = 0.0;
+    double abseta = fabs(jet_v4.eta());
+    
+    //numbers taken from https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
+    if(m_fatjervar==e_Default) {
+      //cout <<"in Default"<<endl;
+      if(abseta < 0.5)
+	factor = 0.052;
+      else if(abseta >= 0.5 && abseta <1.1)
+	factor = 0.057;
+      else if(abseta >= 1.1 && abseta <1.7)
+	factor = 0.096;
+      else if(abseta >= 1.7 && abseta <2.3)
+	factor = 0.134;
+      else if(abseta >= 2.3)
+	factor = 0.288;
+      else
+	factor = 0.288;
+    } else if(m_fatjervar==e_Up) {
+      // cout <<"in JER Up"<<endl;
+      if(abseta < 0.5)
+	factor = 0.115;
+      else if(abseta >= 0.5 && abseta <1.1)
+	factor = 0.114;
+      else if(abseta >= 1.1 && abseta <1.7)
+	factor = 0.161;
+      else if(abseta >= 1.7 && abseta <2.3)
+	factor = 0.228;
+      else if(abseta >= 2.3)
+	factor = 0.488;
+    } else if(m_fatjervar==e_Down) {
+      //  cout <<"in JER Down"<<endl;
+      if(abseta < 0.5)
+	factor = -0.01;
+      else if(abseta >= 0.5 && abseta <1.1)
+	factor = 0.00;
+      else if(abseta >= 1.1 && abseta <1.7)
+	factor = 0.032;
+      else if(abseta >= 1.7 && abseta <2.3)
+	factor = 0.042;
+      else if(abseta >= 2.3)
+	factor = 0.089;
+    }
+    
+    double ptscale = std::max(0.0, 1 + factor * (recopt - genpt) / recopt);
+    
+    jet_v4*=ptscale;
+    
+    bcc->topjets->at(i).set_v4(jet_v4);
+    
+  }
+  
+  if(sort) std::sort(bcc->topjets->begin(), bcc->topjets->end(), HigherPt());
+  resetEventCalc();
+}
+
 void Cleaner::JetEnergyResolutionShifterSubjets(bool sort)
 {
  

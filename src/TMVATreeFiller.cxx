@@ -2,6 +2,9 @@
 
 #include "SFrameTools/include/EventCalc.h"
 #include "NtupleWriter/include/JetProps.h"
+#include "UHHAnalysis/NtupleWriter/interface/Nsubjettiness.h"
+#include "UHHAnalysis/NtupleWriter/interface/QjetsPlugin.h"
+#include "fastjet/tools/Pruner.hh"
 
 #include <iostream>
 
@@ -22,6 +25,8 @@ void TMVATreeFiller::Init()
   m_tree->Branch("TopJet_px", &m_px, "TopJet_px/D");
   m_tree->Branch("TopJet_py", &m_py, "TopJet_py/D");
   m_tree->Branch("TopJet_pz", &m_pz, "TopJet_pz/D");
+  m_tree->Branch("TopJet_pt", &m_pt, "TopJet_pt/D");
+  m_tree->Branch("TopJet_pt_selection", &m_pt_selection, "TopJet_pt_selection/D");
   m_tree->Branch("TopJet_mass", &m_mass, "TopJet_mass/D");
 
   m_tree->Branch("TopQuark_px", &m_genpx, "TopQuark_px/D");
@@ -79,16 +84,19 @@ void TMVATreeFiller::Init()
   m_tree->Branch("Subjet1_px", &m_sub1_px, "Subjet1_px/D");
   m_tree->Branch("Subjet1_py", &m_sub1_py, "Subjet1_py/D");
   m_tree->Branch("Subjet1_pz", &m_sub1_pz, "Subjet1_pz/D");
+  m_tree->Branch("Subjet1_pt", &m_subjet1pt, "Subjet1_pt/D");
   m_tree->Branch("Subjet1_mass", &m_sub1_mass, "Subjet1_mass/D");
 
   m_tree->Branch("Subjet2_px", &m_sub2_px, "Subjet2_px/D");
   m_tree->Branch("Subjet2_py", &m_sub2_py, "Subjet2_py/D");
   m_tree->Branch("Subjet2_pz", &m_sub2_pz, "Subjet2_pz/D");
+  m_tree->Branch("Subjet2_pt", &m_subjet2pt, "Subjet2_pt/D");
   m_tree->Branch("Subjet2_mass", &m_sub2_mass, "Subjet2_mass/D");
 
   m_tree->Branch("Subjet3_px", &m_sub3_px, "Subjet3_px/D");
   m_tree->Branch("Subjet3_py", &m_sub3_py, "Subjet3_py/D");
   m_tree->Branch("Subjet3_pz", &m_sub3_pz, "Subjet3_pz/D");
+  m_tree->Branch("Subjet3_pt", &m_subjet3pt, "Subjet3_pt/D");
   m_tree->Branch("Subjet3_mass", &m_sub3_mass, "Subjet3_mass/D");
 
   m_tree->Branch("Subjet4_px", &m_sub4_px, "Subjet4_px/D");
@@ -104,9 +112,17 @@ void TMVATreeFiller::Init()
   m_tree->Branch("Subjets12_pruned_mass", &m_pruned_m12, "Subjet_pruned_mass12/D");
   m_tree->Branch("Subjets13_pruned_mass", &m_pruned_m13, "Subjet_pruned_mass13/D");
   m_tree->Branch("Subjets23_pruned_mass", &m_pruned_m23, "Subjet_pruned_mass23/D");
+
+  m_tree->Branch("HelAng12", &m_HelAng12, "HelAng12/D");
+  m_tree->Branch("HelAng13", &m_HelAng13, "HelAng13/D");
+  m_tree->Branch("HelAng23", &m_HelAng23, "HelAng23/D");
   
   m_tree->Branch("TopJet_HEPTopTag", &m_HEPTopTag, "HEPTopTag/O");
   m_tree->Branch("TopJet_CMSTopTag", &m_CMSTopTag, "CMSTopTag/O");
+
+   m_tree->Branch("dR1", &m_dR1, "dR1/D");
+  m_tree->Branch("dR2", &m_dR2, "dR2/D");
+  m_tree->Branch("dR3", &m_dR3, "dR3/D");
 
   Book( TH1F( "DR_top","#DeltaR_{jet,top}",100,0,3.5));  
   Book( TH1F( "DR_atop","#DeltaR_{jet,anti-top}",100,0,3.5));
@@ -211,7 +227,6 @@ void TMVATreeFiller::Fill()
 	djb = CalcDR(bquark, topquark);
 	djq1 = CalcDR(Wdecay1, topquark);
 	djq2 = CalcDR(Wdecay2, topquark);
-
 	LorentzVector v = bquark.v4() + Wdecay1.v4() + Wdecay2.v4();
 	if (v.isTimelike()){
 	  Hist("mass_decayproducts")->Fill(v.mass(), weight);
@@ -392,6 +407,16 @@ void TMVATreeFiller::ClearVariables()
   m_weighted_jet_charge_08 = 0; 
   m_first_jet_moment = 0;
   m_second_jet_moment = 0;
+  m_dR1=0;
+  m_dR2=0;
+  m_dR3=0;
+  m_pt=0;
+  m_HelAng12=0;
+  m_HelAng13=0;
+  m_HelAng23=0;
+  m_subjet1pt=0;
+  m_subjet2pt=0;
+  m_subjet3pt=0;
 }
 
 
@@ -401,7 +426,7 @@ void TMVATreeFiller::FillTopJetProperties(TopJet topjet, GenParticle topquark)
   EventCalc* calc = EventCalc::Instance();
   m_npv = calc->GetPrimaryVertices()->size();
   double weight = calc->GetWeight();
-
+  
   m_px = topjet.v4().px();
   m_py = topjet.v4().py();
   m_pz = topjet.v4().pz();
@@ -409,7 +434,14 @@ void TMVATreeFiller::FillTopJetProperties(TopJet topjet, GenParticle topquark)
   m_genpx = topquark.v4().px();
   m_genpy = topquark.v4().py();
   m_genpz = topquark.v4().pz();
-
+  //TL
+  /*
+  m_dR1=distance_quark(topjet,1,0.8);
+  m_dR2=distance_quark(topjet,2,0.8);
+  m_dR3=distance_quark(topjet,3,0.8);
+  if(m_dR1<0.8 && m_dR2<0.8 && m_dR3<0.8 && m_dR1>0 && m_dR2>0 &&m_dR3>0) m_pt_selection=topjet.pt();
+  m_pt=topjet.pt();*/
+  //----
   Hist("MatchedJet_pt")-> Fill(topquark.v4().pt(),weight);
   if (topquark.v4().pt()>250){
     Hist("MatchedJet_eta")-> Fill(topquark.v4().eta(),weight);
@@ -563,6 +595,29 @@ void TMVATreeFiller::FillTopJetProperties(TopJet topjet, GenParticle topquark)
         m_pruned_m23 = (prunedsubjets[1]+prunedsubjets[2]).m();
     }
   }
+
+  //helicity angle , subjet pt
+ 
+  if(m_nsubs>0) m_subjet1pt=sqrt(pow(subjets[0].v4().Px(),2)+pow(subjets[0].v4().Py(),2));
+  if(m_nsubs>1){
+    TLorentzVector subjet1(subjets[0].v4().Px(),subjets[0].v4().Py(),subjets[0].v4().Pz(),subjets[0].v4().E());
+    TLorentzVector subjet2(subjets[1].v4().Px(),subjets[1].v4().Py(),subjets[1].v4().Pz(),subjets[1].v4().E());
+    m_subjet1pt=sqrt(pow(subjets[0].v4().Px(),2)+pow(subjets[0].v4().Py(),2));
+    m_subjet2pt=sqrt(pow(subjets[1].v4().Px(),2)+pow(subjets[1].v4().Py(),2));
+    m_HelAng12= HelicityAngle(subjet1,subjet2);
+  }
+  if(m_nsubs>2){
+    TLorentzVector subjet1(subjets[0].v4().Px(),subjets[0].v4().Py(),subjets[0].v4().Pz(),subjets[0].v4().E());
+    TLorentzVector subjet2(subjets[1].v4().Px(),subjets[1].v4().Py(),subjets[1].v4().Pz(),subjets[1].v4().E());
+    TLorentzVector subjet3(subjets[2].v4().Px(),subjets[2].v4().Py(),subjets[2].v4().Pz(),subjets[2].v4().E());
+    m_subjet1pt=sqrt(pow(subjets[0].v4().Px(),2)+pow(subjets[0].v4().Py(),2));
+    m_subjet2pt=sqrt(pow(subjets[1].v4().Px(),2)+pow(subjets[1].v4().Py(),2));
+    m_subjet3pt=sqrt(pow(subjets[2].v4().Px(),2)+pow(subjets[2].v4().Py(),2));
+    m_HelAng12= HelicityAngle(subjet1,subjet2);
+    m_HelAng13= HelicityAngle(subjet1,subjet3);
+    m_HelAng23= HelicityAngle(subjet2,subjet3);
+    }
+ 
 }
 
 

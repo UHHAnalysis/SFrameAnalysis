@@ -50,6 +50,8 @@ private:
    Double_t m_px;       // px of the CA-fat jet	 
    Double_t m_py;       // py of the CA-fat jet	 
    Double_t m_pz;       // pz of the CA-fat jet	 
+    Double_t m_pt; //pt ot the CA-fat jet
+    Double_t m_pt_selection;
    Double_t m_mass;     // mass of the CA-fat jet
 
    Double_t m_genpx;    // px of the top quark (gen)
@@ -119,7 +121,9 @@ private:
    Double_t m_psi_02;       // jet shape with rmax=0.2
    Double_t m_psi_04;       // jet shape with rmax=0.4
    Double_t m_psi_06;       // jet shape with rmax=0.6
-
+   Double_t m_dR1; //distance between ca-jet and quark
+   Double_t m_dR2; //distance between ca-jet and quark
+   Double_t m_dR3; //distance between ca-jet and quark
    Int_t m_number_of_constituents;
    Int_t m_number_of_charged_constituents;
    Double_t m_jet_charge;
@@ -129,7 +133,14 @@ private:
    Double_t m_weighted_jet_charge_06;
    Double_t m_weighted_jet_charge_08;
    Double_t m_first_jet_moment;
-   Double_t m_second_jet_moment;  
+   Double_t m_second_jet_moment; 
+
+  Double_t m_subjet1pt;
+  Double_t m_subjet2pt;
+  Double_t m_subjet3pt;
+  Double_t m_HelAng12;
+  Double_t m_HelAng13;
+  Double_t m_HelAng23;
 
 }; // class TMVATreeFiller
 

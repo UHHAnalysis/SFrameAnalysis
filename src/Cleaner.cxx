@@ -397,10 +397,11 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
         double mu_energy = bcc->jets->at(i).muonEnergyFraction()*jet_v4_raw.E();
 
         if(bcc->electrons) {
-            for(unsigned int j=0; j<bcc->electrons->size(); ++j) {
-                if(bcc->jets->at(i).deltaR(bcc->electrons->at(j))<0.5) {
+          for(unsigned int j=0; j<bcc->electrons->size(); ++j) {
+            if(bcc->jets->at(i).deltaR(bcc->electrons->at(j))<0.5) {
+              if(bcc->electrons->at(j).relIso()>0.2){
 //       if(jet_v4_raw.pt() >= bcc->electrons->at(j).pt()){
-                    jet_v4_raw -= bcc->electrons->at(j).v4();
+                jet_v4_raw -= bcc->electrons->at(j).v4();
 //  	  bcc->jets->at(i).set_electronMultiplicity(bcc->jets->at(i).electronMultiplicity()-1);
 //  	  ele_energy -= bcc->electrons->at(j).energy();
                     //}
@@ -408,14 +409,17 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
                     //std::cout  << bcc->jets->at(i).pt()<< " -ele pt:"<< bcc->electrons->at(j).pt() << std::endl;
                     //jet_v4_raw -= jet_v4_raw;
                     //}
-                }
+              }
             }
+          }
         }
         if(bcc->muons) {
-            for(unsigned int j=0; j<bcc->muons->size(); ++j) {
-                if(bcc->jets->at(i).deltaR(bcc->muons->at(j))<0.5) {
-                    //if(jet_v4_raw.pt()>= bcc->muons->at(j).pt()){
-                    jet_v4_raw -= bcc->muons->at(j).v4();
+          for(unsigned int j=0; j<bcc->muons->size(); ++j) {
+            if(bcc->jets->at(i).deltaR(bcc->muons->at(j))<0.5) {
+              double muon_reliso((bcc->muons->at(j).chargedHadronIso() + bcc->muons->at(j).neutralHadronIso() + bcc->muons->at(j).photonIso()) / bcc->muons->at(j).pt());
+              if(muon_reliso>0.15){
+              //if(jet_v4_raw.pt()>= bcc->muons->at(j).pt()){
+                  jet_v4_raw -= bcc->muons->at(j).v4();
 //  	  bcc->jets->at(i).set_muonMultiplicity(bcc->jets->at(i).muonMultiplicity()-1);
 //  	  mu_energy -= bcc->muons->at(j).energy();
                     //}
@@ -423,8 +427,9 @@ void Cleaner::JetLeptonSubtractor(FactorizedJetCorrector *corrector, bool sort)
                     //std::cout << bcc->jets->at(i).pt() << " -mu pt:"<< bcc->muons->at(j).pt()  << std::endl;
                     //jet_v4_raw -= jet_v4_raw;
                     //}
-                }
+              }
             }
+          }
         }
         // if(ele_energy<=jet_v4_raw.E())
         //     bcc->jets->at(i).set_chargedEmEnergyFraction(ele_energy/jet_v4_raw.E());

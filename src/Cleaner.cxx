@@ -9,6 +9,7 @@ Cleaner::Cleaner( BaseCycleContainer* input)
     m_jecvar = e_Default;
     m_jervar = e_Default;
     //m_TER_unc=NULL;
+    m_fatjervar = e_Default;
     m_subjervar = e_Default;
 }
 
@@ -21,6 +22,7 @@ Cleaner::Cleaner()
     m_jecvar = e_Default;
     m_jervar = e_Default;
     m_TERvar= e_Default;
+    m_fatjervar = e_Default;
     m_subjervar = e_Default;
 }
 
@@ -211,11 +213,11 @@ void Cleaner::JetEnergyResolutionShifterFat(bool sort)
       else if(abseta >= 2.3)
 	factor = 0.089;
     }
-    
+
     double ptscale = std::max(0.0, 1 + factor * (recopt - genpt) / recopt);
     
     jet_v4*=ptscale;
-    
+
     bcc->topjets->at(i).set_v4(jet_v4);
     
   }

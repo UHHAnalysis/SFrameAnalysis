@@ -7,7 +7,7 @@ using namespace std;
 TopJetHists::TopJetHists(const char* name) : BaseHists(name)
 {
   // named default constructor
-  
+
 }
 
 TopJetHists::~TopJetHists()
@@ -78,8 +78,8 @@ void TopJetHists::Init()
   Book( TH1F( "NSubjets_2_ly", "number of subjets 2nd topjet", 6,-0.5,5.5 ) );
   Book( TH1F( "NSubjets_3", "number of subjets 3rd topjet", 6,-0.5,5.5 ) );
   Book( TH1F( "NSubjets_3_ly", "number of subjets 3rd topjet", 6,-0.5,5.5 ) );
-  Book( TH1F( "NSubjets_4", "number of subjets 4th topjet", 6,-0.5,5.5 ) ); 
-  Book( TH1F( "NSubjets_4_ly", "number of subjets 4th topjet", 6,-0.5,5.5 ) ); 
+  Book( TH1F( "NSubjets_4", "number of subjets 4th topjet", 6,-0.5,5.5 ) );
+  Book( TH1F( "NSubjets_4_ly", "number of subjets 4th topjet", 6,-0.5,5.5 ) );
 
   Book( TH1F( "QjetsVol_1", "Qjets volatility leading topjet", 50, 0.0, 2.0) );
   Book( TH1F( "QjetsVol_1_ly", "Qjets volatility leading topjet", 50, 0.0, 2.0 ) );
@@ -89,7 +89,7 @@ void TopJetHists::Init()
 
   Book( TH1F( "Nsubjettiness2_1", "#tau_{2} leading topjet", 50, 0.0, 1.0) );
   Book( TH1F( "Nsubjettiness2_1_ly", "#tau_{2} leading topjet", 50, 0.0, 1.0 ) );
-  
+
   Book( TH1F( "Nsubjettiness3_1", "#tau_{3} leading topjet", 50, 0.0, 1.0) );
   Book( TH1F( "Nsubjettiness3_1_ly", "#tau_{3} leading topjet", 50, 0.0, 1.0 ) );
 
@@ -99,6 +99,81 @@ void TopJetHists::Init()
 
 }
 
+void TopJetHists::Scale(double scale)
+{
+    Hist("NTopJets")->Scale(scale);
+    Hist("NTopJets_ly")->Scale(scale);
+    Hist("pT")->Scale(scale);
+    Hist("pT_ly")->Scale(scale);
+    Hist("eta")->Scale(scale);
+    Hist("eta_ly")->Scale(scale);
+    Hist("phi")->Scale(scale);
+    Hist("phi_ly")->Scale(scale);
+    Hist("MJet")->Scale(scale);
+    Hist("MJet_ly")->Scale(scale);
+    Hist("Mmin")->Scale(scale);
+    Hist("Mmin_ly")->Scale(scale);
+    Hist("NSubjets")->Scale(scale);
+    Hist("NSubjets_ly")->Scale(scale);
+    Hist("pT_1")->Scale(scale);
+    Hist("pT_1_ly")->Scale(scale);
+    Hist("pT_2")->Scale(scale);
+    Hist("pT_2_ly")->Scale(scale);
+    Hist("pT_3")->Scale(scale);
+    Hist("pT_3_ly")->Scale(scale);
+    Hist("pT_4")->Scale(scale);
+    Hist("pT_4_ly")->Scale(scale);
+    Hist("eta_1")->Scale(scale);
+    Hist("eta_1_ly")->Scale(scale);
+    Hist("eta_2")->Scale(scale);
+    Hist("eta_2_ly")->Scale(scale);
+    Hist("eta_3")->Scale(scale);
+    Hist("eta_3_ly")->Scale(scale);
+    Hist("eta_4")->Scale(scale);
+    Hist("eta_4_ly")->Scale(scale);
+    Hist("phi_1")->Scale(scale);
+    Hist("phi_1_ly")->Scale(scale);
+    Hist("phi_2")->Scale(scale);
+    Hist("phi_2_ly")->Scale(scale);
+    Hist("phi_3")->Scale(scale);
+    Hist("phi_3_ly")->Scale(scale);
+    Hist("phi_4")->Scale(scale);
+    Hist("phi_4_ly")->Scale(scale);
+    Hist("MJet_1")->Scale(scale);
+    Hist("MJet_1_ly")->Scale(scale);
+    Hist("MJet_2")->Scale(scale);
+    Hist("MJet_2_ly")->Scale(scale);
+    Hist("MJet_3")->Scale(scale);
+    Hist("MJet_3_ly")->Scale(scale);
+    Hist("MJet_4")->Scale(scale);
+    Hist("MJet_4_ly")->Scale(scale);
+    Hist("Mmin_1")->Scale(scale);
+    Hist("Mmin_1_ly")->Scale(scale);
+    Hist("Mmin_2")->Scale(scale);
+    Hist("Mmin_2_ly")->Scale(scale);
+    Hist("Mmin_3")->Scale(scale);
+    Hist("Mmin_3_ly")->Scale(scale);
+    Hist("Mmin_4")->Scale(scale);
+    Hist("Mmin_4_ly")->Scale(scale);
+    Hist("NSubjets_1")->Scale(scale);
+    Hist("NSubjets_1_ly")->Scale(scale);
+    Hist("NSubjets_2")->Scale(scale);
+    Hist("NSubjets_2_ly")->Scale(scale);
+    Hist("NSubjets_3")->Scale(scale);
+    Hist("NSubjets_3_ly")->Scale(scale);
+    Hist("NSubjets_4")->Scale(scale);
+    Hist("NSubjets_4_ly")->Scale(scale);
+    Hist("QjetsVol_1")->Scale(scale);
+    Hist("QjetsVol_1_ly")->Scale(scale);
+    Hist("Nsubjettiness1_1")->Scale(scale);
+    Hist("Nsubjettiness1_1_ly")->Scale(scale);
+    Hist("Nsubjettiness2_1")->Scale(scale);
+    Hist("Nsubjettiness2_1_ly")->Scale(scale);
+    Hist("Nsubjettiness3_1")->Scale(scale);
+    Hist("Nsubjettiness3_1_ly")->Scale(scale);
+    Hist("Nsubjettiness3_2_1")->Scale(scale);
+    Hist("Nsubjettiness3_2_1_ly")->Scale(scale);
+}
 
 void TopJetHists::Fill()
 {
@@ -107,44 +182,44 @@ void TopJetHists::Fill()
   double weight = calc -> GetWeight();
 
   BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
-  
+
   int NTopJets = bcc-> topjets -> size();
   Hist("NTopJets")->Fill(NTopJets, weight);
   Hist("NTopJets_ly")->Fill(NTopJets, weight);
-  
+
   for (unsigned int i =0; i<bcc->topjets->size(); ++i)
     {
       TopJet topjet =  bcc->topjets->at(i);
-      
+
       Hist("pT") -> Fill(topjet.pt(), weight);
       Hist("pT_ly") -> Fill(topjet.pt(), weight);
-     
+
       Hist("eta") -> Fill(topjet.eta(), weight);
       Hist("eta_ly") -> Fill(topjet.eta(), weight);
       Hist("phi") -> Fill(topjet.phi(), weight);
       Hist("phi_ly") -> Fill(topjet.phi(), weight);
-      
+
       double mmin=0;
       double mjet=0;
       int nsubjets=0;
       TopTag(topjet,mjet,nsubjets,mmin);
-     
+
       Hist( "MJet" )->Fill( mjet, weight );
       Hist( "MJet_ly" )->Fill( mjet, weight );
-      
-      if(nsubjets>=3) 
+
+      if(nsubjets>=3)
 	{
 	  Hist( "Mmin" )->Fill( mmin, weight );
 	  Hist( "Mmin_ly" )->Fill( mmin, weight );
-	  
+
 	}
-      Hist( "NSubjets" )->Fill( nsubjets, weight ); 
-      Hist( "NSubjets_ly" )->Fill( nsubjets, weight ); 
-      
-     
+      Hist( "NSubjets" )->Fill( nsubjets, weight );
+      Hist( "NSubjets_ly" )->Fill( nsubjets, weight );
+
+
     }
-  
-  
+
+
 
 
   sort(bcc->topjets->begin(), bcc->topjets->end(), HigherPt());
@@ -152,8 +227,8 @@ void TopJetHists::Fill()
     {
       if (bcc->topjets->size()> i)
 	{
-	  
-	  TopJet topjet =  bcc->topjets->at(i); 
+
+	  TopJet topjet =  bcc->topjets->at(i);
 	  TString hname = TString::Format("pT_%d", i+1);
 	  Hist(hname)->Fill(topjet.pt(),weight);
 	  TString hname_ly = TString::Format("pT_%d_ly", i+1);
@@ -166,7 +241,7 @@ void TopJetHists::Fill()
 	  Hist(hname_phi)->Fill(topjet.phi(),weight);
 	  TString hname_phi_ly = TString::Format("phi_%d_ly", i+1);
 	  Hist(hname_phi_ly)->Fill(topjet.phi(),weight);
-	  
+
 	  double mmin=0;
 	  double mjet=0;
 	  int nsubjets=0;
@@ -175,7 +250,7 @@ void TopJetHists::Fill()
 	  Hist(hname_MJet )->Fill( mjet, weight );
 	  TString hname_MJet_ly = TString::Format("MJet_%d_ly", i+1);
 	  Hist(hname_MJet_ly )->Fill( mjet, weight );
-	  if(nsubjets>=3) 
+	  if(nsubjets>=3)
 	    {
 	      TString hname_Mmin = TString::Format("Mmin_%d", i+1);
 	      Hist(hname_Mmin  )->Fill( mmin, weight );
@@ -183,13 +258,13 @@ void TopJetHists::Fill()
 	      Hist( hname_Mmin_ly )->Fill( mmin, weight );
 	    }
 	  TString hname_NSubjets = TString::Format("NSubjets_%d", i+1);
-	  Hist( hname_NSubjets )->Fill( nsubjets, weight ); 
+	  Hist( hname_NSubjets )->Fill( nsubjets, weight );
 	  TString hname_NSubjets_ly = TString::Format("NSubjets_%d_ly", i+1);
-	  Hist( hname_NSubjets_ly )->Fill( nsubjets, weight ); 
+	  Hist( hname_NSubjets_ly )->Fill( nsubjets, weight );
 
 
 	  if (i==0){
-	    
+
 	    Hist("QjetsVol_1")->Fill(topjet.qjets_volatility(), weight);
 	    Hist("QjetsVol_1_ly")->Fill(topjet.qjets_volatility(), weight);
 
@@ -205,13 +280,13 @@ void TopJetHists::Fill()
 	    if (topjet.tau2()>0){
 	      Hist( "Nsubjettiness3_2_1")->Fill(topjet.tau3()/topjet.tau2(), weight);
 	      Hist( "Nsubjettiness3_2_1_ly")->Fill(topjet.tau3()/topjet.tau2(), weight);
-	    }	  
+	    }
 	  }
 
-	  
+
 	}
-      
+
     }
 
 }
- 
+

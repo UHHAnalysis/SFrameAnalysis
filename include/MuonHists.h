@@ -7,7 +7,7 @@
 /**
  *   Class for booking and filling muon histograms
  *
- *   
+ *
  *   @version $Revision: 1.1 $
  */
 
@@ -21,7 +21,9 @@ public:
    ~MuonHists();
 
    void Init();
-   
+
+   void Scale(double scale);
+
    void Fill();
 
 }; // class MuonHists

@@ -23,6 +23,8 @@ public:
 
    void Init();
 
+   void Scale(double scale);
+
    void Fill();
 
 private:

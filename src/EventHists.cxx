@@ -8,7 +8,7 @@ using namespace std;
 EventHists::EventHists(const char* name) : BaseHists(name)
 {
   // named default constructor
-  
+
 }
 
 EventHists::~EventHists()
@@ -36,12 +36,31 @@ void EventHists::Init()
   Book( TH1F( "ChargeSign_ly", "",3,-1.5,1.5 ) );
 }
 
+void EventHists::Scale(double scale)
+{
+    Hist("N_PrimVertices")->Scale(scale);
+    Hist("N_PrimVertices_ly")->Scale(scale);
+    Hist("Weights")->Scale(scale);
+    Hist("Weights_ly")->Scale(scale);
+    Hist("N_events_perlumibin")->Scale(scale);
+    Hist("HT")->Scale(scale);
+    Hist("HT_ly")->Scale(scale);
+    Hist("HTLep")->Scale(scale);
+    Hist("HTLep_ly")->Scale(scale);
+    Hist("HT_Jets")->Scale(scale);
+    Hist("HT_Jets_ly")->Scale(scale);
+    Hist("MET")->Scale(scale);
+    Hist("MET_ly")->Scale(scale);
+    Hist("ChargeSign")->Scale(scale);
+    Hist("ChargeSign_ly")->Scale(scale);
+}
+
 void EventHists::Fill()
 {
    // important: get the event weight
   EventCalc* calc = EventCalc::Instance();
   double weight = calc -> GetWeight();
-  
+
   LuminosityHandler* lumih = calc->GetLumiHandler();
   BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
 
@@ -51,28 +70,28 @@ void EventHists::Fill()
 
   int run = calc->GetRunNum();
   int lumiblock = calc->GetLumiBlock();
-  if(calc->IsRealData()){ 
+  if(calc->IsRealData()){
     Hist( "N_events_perlumibin")->Fill( lumih->GetLumiBin(run, lumiblock)*0.5, weight);
   }
 
   Hist("Weights")-> Fill(weight);
-  Hist("Weights_ly")-> Fill(weight); 
+  Hist("Weights_ly")-> Fill(weight);
 
   double HT =0;
   double HT_MET = 0;
   double HT_Jets =0;
-  
+
   HT = calc->GetHT();
   double HTlep = calc->GetHTlep();
 
   const unsigned int njets = bcc->jets ? bcc->jets->size() : 0;
   for(unsigned int i=0; i< njets; ++i){
      const Jet & jet =  bcc->jets->at(i);
-     HT_Jets= HT_Jets + jet.pt();      
+     HT_Jets= HT_Jets + jet.pt();
   }
   double met = bcc->met ? bcc->met->pt() : -1.0;
-  
-  
+
+
   Hist("HT")->Fill(HT, weight);
   Hist("HT_ly")->Fill(HT, weight);
   Hist("HTLep")->Fill(HTlep, weight);
@@ -81,9 +100,9 @@ void EventHists::Fill()
   Hist("HT_Jets_ly")->Fill(HT_Jets, weight);
   Hist("MET")->Fill(met, weight);
   Hist("MET_ly")->Fill(met, weight);
- 
+
   double charge = -1; // -1 means "not available" ...
-  
+
   if(bcc->muons && bcc->taus){
     charge = 1;
     if (bcc->muons->size() == 1 && bcc->taus->size() == 1){
@@ -98,7 +117,7 @@ void EventHists::Fill()
     }
     if (bcc->taus->size() == 0 && bcc->muons->size() == 1) charge = 0;
   }
-  
+
   Hist("ChargeSign")->Fill(charge, weight);
   Hist("ChargeSign_ly")->Fill(charge, weight);
 }

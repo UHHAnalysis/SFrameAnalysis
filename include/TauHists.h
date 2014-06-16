@@ -6,7 +6,7 @@
 /**
  *   Class for booking and filling Top Tagging efficiency histograms
  *
- *   
+ *
  *   @version $Revision: 1.1 $
  */
 
@@ -20,7 +20,9 @@ public:
    ~TauHists();
 
    void Init();
-   
+
+   void Scale(double scale);
+
    void Fill();
 
 }; // class TauHists

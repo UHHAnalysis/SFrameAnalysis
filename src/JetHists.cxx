@@ -20,27 +20,27 @@ void JetHists::Init()
     // book all histograms here
   Book( TH1F( "NJets", "number of jets", 13, -0.5, 12.5 ) );
   Book( TH1F( "NJets_ly", "number of jets", 13, -0.5, 12.5 ) );
-  
+
   Book( TH1F( "NJets30", "number of jets with p_{T} > 30 GeV", 15, -0.5, 14.5 ) );
   Book( TH1F( "NJets30_ly", "number of jets with p_{T} > 30 GeV", 15, -0.5, 14.5 ) );
-  
+
   Book( TH1F( "NJets50", "number of jets with p_{T} > 50 GeV", 10, -0.5, 9.5 ) );
   Book( TH1F( "NJets50_ly", "number of jets with p_{T} > 50 GeV", 10, -0.5, 9.5 ) );
-  
+
   Book( TH1F( "NJets100", "number of jets with p_{T} > 100 GeV", 8, -0.5, 7.5 ) );
   Book( TH1F( "NJets100_ly", "number of jets with p_{T} > 100 GeV", 8, -0.5, 7.5 ) );
-  
+
   double* logPtjet_bins  = MakeLogBinning(50, 30, 1500);
   double* logPtjet1_bins = MakeLogBinning(50, 100, 1500);
   double* logPtjet2_bins = MakeLogBinning(50, 30, 1000);
   double* logPtjet3_bins = MakeLogBinning(50, 20, 500);
-  double* logPtjet4_bins = MakeLogBinning(50, 20, 250); 
-  
+  double* logPtjet4_bins = MakeLogBinning(50, 20, 250);
+
   double* logMjet1_bins = MakeLogBinning(50, 0, 300);
   double* logMjet2_bins = MakeLogBinning(50, 0, 300);
   double* logMjet3_bins = MakeLogBinning(50, 0, 300);
   double* logMjet4_bins = MakeLogBinning(50, 0, 300);
-  
+
   Book( TH1F( "pt_lx"," p_{T} all jets", 50, logPtjet_bins));
   Book( TH1F( "pt_lxy"," p_{T} all jets", 50, logPtjet_bins));
 
@@ -66,44 +66,44 @@ void JetHists::Init()
   Book( TH1F( "pt_jet4_ly", "p_{T}^{jet 4} [GeV/c]", 50, logPtjet4_bins ) );
   Book( TH1F( "pt_jet4_lx", "p_{T}^{jet 4} [GeV/c]", 50, logPtjet4_bins ) );
   Book( TH1F( "pt_jet4_lxy", "p_{T}^{jet 4} [GeV/c]", 50, logPtjet4_bins ) );
-  
-    
+
+
   // jet etas
   Book( TH1F( "eta_1","#eta leading jet",100,-3,3));
   Book( TH1F( "eta_2","#eta 2nd jet",100,-3,3));
   Book( TH1F( "eta_3","#eta 3rd jet",100,-3,3));
   Book( TH1F( "eta_4","#eta 4th jet",100,-3,3));
-  
+
   // jet phis
   Book( TH1F( "phi_1","#phi leading jet",100,-M_PI,M_PI));
   Book( TH1F( "phi_2","#phi 2nd jet",100,-M_PI,M_PI));
   Book( TH1F( "phi_3","#phi 3rd jet",100,-M_PI,M_PI));
   Book( TH1F( "phi_4","#phi 4th jet",100,-M_PI,M_PI));
-  
+
   // jet mass
   Book( TH1F( "m_1", "M^{jet 1} [GeV/c^{2}]", 100, 0, 300) );
   Book( TH1F( "m_2", "M^{jet 2} [GeV/c^{2}]", 100, 0, 300) );
   Book( TH1F( "m_3", "M^{jet 3} [GeV/c^{2}]", 100, 0, 300) );
   Book( TH1F( "m_4", "M^{jet 4} [GeV/c^{2}]", 100, 0, 300) );
-  
+
     // Delta_R
   Book( TH1F( "deltaRmin_1", "#Delta R_{min}(first jet, nearest jet)", 40, 0, 2.0) );
   Book( TH1F( "deltaRmin_1_ly", "#Delta R_{min}(first jet, nearest jet)", 40, 0, 2.0) );
   Book( TH1F( "deltaRmin_2", "#Delta R_{min}(2nd jet, nearest jet)", 40, 0, 2.0) );
   Book( TH1F( "deltaRmin_2_ly", "#Delta R_{min}(2nd jet, nearest jet)", 40, 0, 2.0) );
-  
+
  // Delta_Phi
   Book( TH1F( "DeltaPhi_Jet1_Jet2", "#Delta#Phi(first jet, second jet)", 40, 0, 7) );
 
   // b-jets
   Book( TH1F( "NbJets", "number of bJets", 10, -0.5, 9.5 ) );
   Book( TH1F( "NbJets_ly", "number of bJets", 8, -0.5, 7.5 ) );
-  
+
   Book( TH1F( "pt_bJet_1_lx"," p_{T} leading b-jet", 50, logPtjet1_bins));
   Book( TH1F( "pt_bJet_1_lxy"," p_{T} leading b-jet", 50, logPtjet1_bins));
   Book( TH1F( "pt_bJet_2_lx"," p_{T} 2nd bJet", 50, logPtjet1_bins));
   Book( TH1F( "pt_bJet_2_lxy"," p_{T} 2nd bJet", 50, logPtjet1_bins));
-  
+
   Book( TH1F( "eta_bJet_1"," #eta leading bJet",100,-3,3));
   Book( TH1F( "eta_bJet_2"," #eta 2nd bJet",100,-3,3));
   Book( TH1F( "phi_bJet_1"," #phi leading bJet",100,-M_PI,M_PI));
@@ -124,6 +124,121 @@ void JetHists::Init()
 
 }
 
+void JetHists::Scale(double scale)
+{
+    Hist("NJets")->Scale(scale);
+    Hist("NJets_ly")->Scale(scale);
+    Hist("NJets30")->Scale(scale);
+    Hist("NJets30_ly")->Scale(scale);
+    Hist("NJets50")->Scale(scale);
+    Hist("NJets50_ly")->Scale(scale);
+    Hist("NJets100")->Scale(scale);
+    Hist("NJets100_ly")->Scale(scale);
+    Hist("pt_lx")->Scale(scale);
+    Hist("pt_lxy")->Scale(scale);
+    Hist("eta")->Scale(scale);
+    Hist("phi")->Scale(scale);
+    Hist("pt_binned")->Scale(scale);
+    Hist("pt_jet1")->Scale(scale);
+    Hist("pt_jet1_lx")->Scale(scale);
+    Hist("pt_jet1_lxy")->Scale(scale);
+    Hist("pt_jet1_ly")->Scale(scale);
+    Hist("pt_jet2")->Scale(scale);
+    Hist("pt_jet2_lx")->Scale(scale);
+    Hist("pt_jet2_ly")->Scale(scale);
+    Hist("pt_jet2_lxy")->Scale(scale);
+    Hist("pt_jet3")->Scale(scale);
+    Hist("pt_jet3_lx")->Scale(scale);
+    Hist("pt_jet3_ly")->Scale(scale);
+    Hist("pt_jet3_lxy")->Scale(scale);
+    Hist("pt_jet4")->Scale(scale);
+    Hist("pt_jet4_ly")->Scale(scale);
+    Hist("pt_jet4_lx")->Scale(scale);
+    Hist("pt_jet4_lxy")->Scale(scale);
+    Hist("eta_1")->Scale(scale);
+    Hist("eta_2")->Scale(scale);
+    Hist("eta_3")->Scale(scale);
+    Hist("eta_4")->Scale(scale);
+    Hist("phi_1")->Scale(scale);
+    Hist("phi_2")->Scale(scale);
+    Hist("phi_3")->Scale(scale);
+    Hist("phi_4")->Scale(scale);
+    Hist("m_1")->Scale(scale);
+    Hist("m_2")->Scale(scale);
+    Hist("m_3")->Scale(scale);
+    Hist("m_4")->Scale(scale);
+    Hist("deltaRmin_1")->Scale(scale);
+    Hist("deltaRmin_1_ly")->Scale(scale);
+    Hist("deltaRmin_2")->Scale(scale);
+    Hist("deltaRmin_2_ly")->Scale(scale);
+    Hist("DeltaPhi_Jet1_Jet2")->Scale(scale);
+    Hist("NbJets")->Scale(scale);
+    Hist("NbJets_ly")->Scale(scale);
+    Hist("pt_bJet_1_lx")->Scale(scale);
+    Hist("pt_bJet_1_lxy")->Scale(scale);
+    Hist("pt_bJet_2_lx")->Scale(scale);
+    Hist("pt_bJet_2_lxy")->Scale(scale);
+    Hist("eta_bJet_1")->Scale(scale);
+    Hist("eta_bJet_2")->Scale(scale);
+    Hist("phi_bJet_1")->Scale(scale);
+    Hist("phi_bJet_2")->Scale(scale);
+    Hist("bjet_tag")->Scale(scale);
+    Hist("InvMassJet1Jet2")->Scale(scale);
+    Hist("InvMassJet1Jet2_ly")->Scale(scale);
+    Hist("NSubBTags")->Scale(scale);
+    Hist("NAntiktBTags")->Scale(scale);
+    Hist("NSumBTags")->Scale(scale);
+    Hist("NSubBTags_ly")->Scale(scale);
+    Hist("NAntiktBTags_ly")->Scale(scale);
+    Hist("NSumBTags_ly")->Scale(scale);
+    Hist("deltar_Tau1_Jet1_ly")->Scale(scale);
+    Hist("deltar_Tau1_Muon1")->Scale(scale);
+    Hist("deltar_Tau1_Muon1_ly")->Scale(scale);
+    Hist("DeltaPhi_Tau_Muon")->Scale(scale);
+    Hist("DeltaPhi_Tau1_Jet1")->Scale(scale);
+    Hist("DeltaPhi_Taus_Jets")->Scale(scale);
+    Hist("MuonpT1_TaupT1")->Scale(scale);
+    Hist("MuonpT1_TaupT1_ly")->Scale(scale);
+    Hist("MuonpT1_TaupT1_binned")->Scale(scale);
+    Hist("MuonpT1_TaupT1_binned_ly")->Scale(scale);
+    Hist("MuonpT1_TaupT1_binned_lx")->Scale(scale);
+    Hist("MuonpT_TaupT")->Scale(scale);
+    Hist("MuonpT_TaupT_ly")->Scale(scale);
+    Hist("MuonpT_TaupT_binned")->Scale(scale);
+    Hist("MuonpT_TaupT_binned_ly")->Scale(scale);
+    Hist("MuonpT_TaupT_binned_lx")->Scale(scale);
+    Hist("max_InvMass")->Scale(scale);
+    Hist("max_InvMass_ly")->Scale(scale);
+    Hist("max_InvMass_binned")->Scale(scale);
+    Hist("max_InvMass_binned_lx")->Scale(scale);
+    Hist("max_InvMass_binned_ly")->Scale(scale);
+    Hist("max_InvMassTau")->Scale(scale);
+    Hist("max_InvMassTau_ly")->Scale(scale);
+    Hist("max_InvMassTau_binned")->Scale(scale);
+    Hist("max_InvMassTau_binned_lx")->Scale(scale);
+    Hist("max_InvMassTau_binned_ly")->Scale(scale);
+    Hist("tau_mass")->Scale(scale);
+    Hist("InvMass")->Scale(scale);
+    Hist("InvMass_ly")->Scale(scale);
+    Hist("InvMassMuTau")->Scale(scale);
+    Hist("InvMassMuTau_ly")->Scale(scale);
+    Hist("InvMassMuTau_binned")->Scale(scale);
+    Hist("InvMassMuTau_binned_lx")->Scale(scale);
+    Hist("InvMassMuTau_binned_ly")->Scale(scale);
+    Hist("InvMassTauJet1")->Scale(scale);
+    Hist("InvMassTauJet1_ly")->Scale(scale);
+    Hist("InvMassTauJet2")->Scale(scale);
+    Hist("InvMassTauJet2_ly")->Scale(scale);
+    Hist("NJets_Tau1_pT")->Scale(scale);
+    Hist("NJets_Tau_pT")->Scale(scale);
+    Hist("NJets_Tau_eta")->Scale(scale);
+    Hist("NJets_Tau_phi")->Scale(scale);
+    Hist("NJets_Tau_decaymode")->Scale(scale);
+    Hist("NJets_DeltaRTauNextJet")->Scale(scale);
+    Hist("PFParticles_NextJet")->Scale(scale);
+    Hist("NJets_NPFparticles")->Scale(scale);
+}
+
 void JetHists::Fill()
 {
     // important: get the event weight
@@ -139,7 +254,7 @@ void JetHists::Fill()
     int NJets30 = 0;
     int NJets50 = 0;
     int NJets100 = 0;
-    
+
     for (unsigned int i =0; i<bcc->jets->size(); ++i) {
         Jet jet =  bcc->jets->at(i);
         Hist("pt_lx") -> Fill(jet.pt(),weight );
@@ -151,7 +266,7 @@ void JetHists::Fill()
         if (jet.pt()>50) ++NJets50;
         if (jet.pt()>100) ++NJets100;
     }
-    
+
     Hist("NJets30")->Fill(NJets30, weight);
     Hist("NJets30_ly")->Fill(NJets30, weight);
     Hist("NJets50")->Fill(NJets50, weight);
@@ -189,10 +304,10 @@ void JetHists::Fill()
             }
         }
     }
-   
+
     if (bcc->jets->size()> 1)
      {
-      Jet jet1 =  bcc->jets->at(0);  
+      Jet jet1 =  bcc->jets->at(0);
       Jet jet2 =  bcc->jets->at(1);
       double deltaPhi = abs(jet1.phi() - jet2.phi());
       Hist("DeltaPhi_Jet1_Jet2") -> Fill(deltaPhi, weight);
@@ -228,13 +343,13 @@ void JetHists::Fill()
       Jet jet1 = bcc->jets->at(0);
       TLorentzVector Jet1;
       Jet1.SetPtEtaPhiE(jet1.pt() ,jet1.eta() ,jet1.phi() ,jet1.energy() );
-     
+
       Jet jet2 = bcc->jets->at(0);
       TLorentzVector Jet2;
       Jet2.SetPtEtaPhiE(jet2.pt() ,jet2.eta() ,jet2.phi() ,jet2.energy() );
       TLorentzVector Jet = Jet2 +Jet1;
       double InvMass = Jet.M();
-	      
+
       Hist("InvMassJet1Jet2")->Fill(InvMass, weight);
       Hist("InvMassJet1Jet2_ly")->Fill(InvMass, weight);
     }
@@ -243,7 +358,7 @@ void JetHists::Fill()
 
 double nsumbtags = calc->GetNSumBTags();
 double NSumBTags = nsumbtags;
-//Hist("NAntiktBTags")-> Fill(NAntiktBTags,weight);	
+//Hist("NAntiktBTags")-> Fill(NAntiktBTags,weight);
 //Hist("NAntiktBTags_ly")-> Fill(NAntiktBTags,weight);
 //Hist("NSubBTags")->Fill(NSubBTags,weight);
 //Hist("NSubBTags_ly")->Fill(NSubBTags,weight);

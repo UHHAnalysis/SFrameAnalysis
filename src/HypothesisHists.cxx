@@ -53,7 +53,7 @@ void HypothesisHists::Init()
   }
   Book( TH1F("Discriminator", name , 50, min,max) );
   Book( TH1F("Discriminator_2", name , 50, 0,10) );
-  Book( TH1F("Discriminator_3", name , 300, 0,30) );  
+  Book( TH1F("Discriminator_3", name , 300, 0,30) );
 
 
 
@@ -70,18 +70,57 @@ void HypothesisHists::Init()
   Book( TH2F("M_ttbar_rec_vs_ptrel_lepton","M_{t#bar{t}}^{rec} [GeV/c^{2}] vs p_{T}^{rel} [GeV/c]",100,0,3000,100,0,200));
 
   Book( TH2F("Pt_toplep_rec_vs_Pt_toplep_gen","P_{T}^{top,lep,rec} [GeV/c] vs P_{T}^{top,lep,gen} [GeV/c]",60, 0, 1200,60, 0, 1200));
-  Book( TH2F("Pt_tophad_rec_vs_Pt_tophad_gen","P_{T}^{top,had,rec} [GeV/c] vs P_{T}^{top,had,gen} [GeV/c]",60, 0, 1200,60, 0, 1200)); 
+  Book( TH2F("Pt_tophad_rec_vs_Pt_tophad_gen","P_{T}^{top,had,rec} [GeV/c] vs P_{T}^{top,had,gen} [GeV/c]",60, 0, 1200,60, 0, 1200));
   Book( TH2F("Pt_lepton_rec_vs_Pt_lepton_gen","P_{T}^{lepton,rec} [GeV/c] vs P_{T}^{lepton,gen} [GeV/c]",60, 0, 800,60, 0, 800));
-  Book( TH2F("Pt_blep_rec_vs_Pt_blep_gen","P_{T}^{blep,rec} [GeV/c] vs P_{T}^{blep,gen} [GeV/c]",60, 0, 800,60, 0, 800));  
-  Book( TH2F("Pt_neutrino_rec_vs_Pt_neutrino_gen","P_{T}^{#nu,rec} [GeV/c] vs P_{T}^{#nu,gen} [GeV/c]",60, 0, 800,60, 0, 800));  
+  Book( TH2F("Pt_blep_rec_vs_Pt_blep_gen","P_{T}^{blep,rec} [GeV/c] vs P_{T}^{blep,gen} [GeV/c]",60, 0, 800,60, 0, 800));
+  Book( TH2F("Pt_neutrino_rec_vs_Pt_neutrino_gen","P_{T}^{#nu,rec} [GeV/c] vs P_{T}^{#nu,gen} [GeV/c]",60, 0, 800,60, 0, 800));
 
   Book( TH2F("eta_toplep_rec_vs_eta_toplep_gen","#eta^{top,lep,rec} [GeV/c] vs #eta^{top,lep,gen} [GeV/c]",100,-5,5,100,-5,5));
-  Book( TH2F("eta_tophad_rec_vs_eta_tophad_gen","#eta^{top,had,rec} [GeV/c] vs #eta^{top,had,gen} [GeV/c]",100,-5,5,100,-5,5)); 
+  Book( TH2F("eta_tophad_rec_vs_eta_tophad_gen","#eta^{top,had,rec} [GeV/c] vs #eta^{top,had,gen} [GeV/c]",100,-5,5,100,-5,5));
   Book( TH2F("eta_lepton_rec_vs_eta_lepton_gen","#eta^{lepton,rec} [GeV/c] vs #eta^{lepton,gen} [GeV/c]",100,-5,5,100,-5,5));
-  Book( TH2F("eta_blep_rec_vs_eta_blep_gen","#eta^{blep,rec} [GeV/c] vs #eta^{blep,gen} [GeV/c]",100,-5,5,100,-5,5 ));  
-  Book( TH2F("eta_neutrino_rec_vs_eta_neutrino_gen","#eta^{#nu,rec} [GeV/c] vs #eta^{#nu,gen} [GeV/c]",100,-5,5,100,-5,5 )); 
+  Book( TH2F("eta_blep_rec_vs_eta_blep_gen","#eta^{blep,rec} [GeV/c] vs #eta^{blep,gen} [GeV/c]",100,-5,5,100,-5,5 ));
+  Book( TH2F("eta_neutrino_rec_vs_eta_neutrino_gen","#eta^{#nu,rec} [GeV/c] vs #eta^{#nu,gen} [GeV/c]",100,-5,5,100,-5,5 ));
 
 
+}
+
+void HypothesisHists::Scale(double scale)
+{
+    Hist("M_ttbar_rec")->Scale(scale);
+    Hist("M_ttbar_rec_ly")->Scale(scale);
+    Hist("M_ttbar_gen")->Scale(scale);
+    Hist("M_ttbar_gen_ly")->Scale(scale);
+    Hist("M_toplep_rec")->Scale(scale);
+    Hist("M_tophad_rec")->Scale(scale);
+    Hist("M_tophad_rec_1jet")->Scale(scale);
+    Hist("M_tophad_rec_2jet")->Scale(scale);
+    Hist("M_tophad_rec_3jet")->Scale(scale);
+    Hist("Pt_toplep_rec")->Scale(scale);
+    Hist("Pt_tophad_rec")->Scale(scale);
+    Hist("Pt_ttbar_rec")->Scale(scale);
+    Hist("Pt_ttbar_gen")->Scale(scale);
+    Hist("Pt_ttbar_rec_vs_Pt_ttbar_gen")->Scale(scale);
+    Hist("Discriminator")->Scale(scale);
+    Hist("Discriminator_2")->Scale(scale);
+    Hist("Discriminator_3")->Scale(scale);
+    Hist("Discriminator_vs_M_ttbar")->Scale(scale);
+    Hist("M_ttbar_rec_vs_M_ttbar_gen")->Scale(scale);
+    Hist("M_ttbar_gen_vs_M_ttbar_rec")->Scale(scale);
+    Hist("M_ttbar_resolution")->Scale(scale);
+    Hist("M_ttbar_rec_vs_pt_lepton")->Scale(scale);
+    Hist("M_ttbar_rec_vs_reliso_lepton")->Scale(scale);
+    Hist("M_ttbar_rec_vs_deltarmin_lepton")->Scale(scale);
+    Hist("M_ttbar_rec_vs_ptrel_lepton")->Scale(scale);
+    Hist("Pt_toplep_rec_vs_Pt_toplep_gen")->Scale(scale);
+    Hist("Pt_tophad_rec_vs_Pt_tophad_gen")->Scale(scale);
+    Hist("Pt_lepton_rec_vs_Pt_lepton_gen")->Scale(scale);
+    Hist("Pt_blep_rec_vs_Pt_blep_gen")->Scale(scale);
+    Hist("Pt_neutrino_rec_vs_Pt_neutrino_gen")->Scale(scale);
+    Hist("eta_toplep_rec_vs_eta_toplep_gen")->Scale(scale);
+    Hist("eta_tophad_rec_vs_eta_tophad_gen")->Scale(scale);
+    Hist("eta_lepton_rec_vs_eta_lepton_gen")->Scale(scale);
+    Hist("eta_blep_rec_vs_eta_blep_gen")->Scale(scale);
+    Hist("eta_neutrino_rec_vs_eta_neutrino_gen")->Scale(scale);
 }
 
 void HypothesisHists::Fill()
@@ -93,7 +132,7 @@ void HypothesisHists::Fill()
   ReconstructionHypothesis* hyp = m_discr->GetBestHypothesis();
 
   double mttbar_rec = 0;
-  if( (hyp->top_v4()+hyp->antitop_v4()).isTimelike() ) 
+  if( (hyp->top_v4()+hyp->antitop_v4()).isTimelike() )
     mttbar_rec = (hyp->top_v4()+hyp->antitop_v4()).M();
   else{
     mttbar_rec = sqrt( -(hyp->top_v4()+hyp->antitop_v4()).mass2());
@@ -139,7 +178,7 @@ void HypothesisHists::Fill()
   Hist("Pt_tophad_rec")->Fill( hyp->tophad_v4().Pt(),weight );
 
   Hist("Pt_ttbar_rec")->Fill ( ptttbar_rec, weight);
-  Hist("Pt_ttbar_gen")->Fill ( ptttbar_gen, weight); 
+  Hist("Pt_ttbar_gen")->Fill ( ptttbar_gen, weight);
   Hist("Pt_ttbar_rec_vs_Pt_ttbar_gen")->Fill(ptttbar_rec, ptttbar_gen);
 
   std::vector< Muon >* muons = calc->GetMuons();
@@ -188,17 +227,17 @@ void HypothesisHists::Fill()
       blep_pt_gen = calc->GetTTbarGen()->BLep().pt();
       blep_eta_gen = calc->GetTTbarGen()->BLep().eta();
       toplep_pt_gen = calc->GetTTbarGen()->TopLep().pt();
-      toplep_eta_gen = calc->GetTTbarGen()->TopLep().eta(); 
+      toplep_eta_gen = calc->GetTTbarGen()->TopLep().eta();
       tophad_pt_gen = calc->GetTTbarGen()->TopHad().pt();
-      tophad_eta_gen = calc->GetTTbarGen()->TopHad().eta(); 
-      
+      tophad_eta_gen = calc->GetTTbarGen()->TopHad().eta();
+
       Hist("Pt_tophad_rec_vs_Pt_tophad_gen")->Fill(hyp->tophad_v4().Pt(), tophad_pt_gen);
-      Hist("Pt_toplep_rec_vs_Pt_toplep_gen")->Fill(hyp->toplep_v4().Pt(), toplep_pt_gen); 
+      Hist("Pt_toplep_rec_vs_Pt_toplep_gen")->Fill(hyp->toplep_v4().Pt(), toplep_pt_gen);
       Hist("Pt_lepton_rec_vs_Pt_lepton_gen")->Fill(hyp->lepton().pt(), lep_pt_gen);
       Hist("Pt_neutrino_rec_vs_Pt_neutrino_gen")->Fill(hyp->neutrino_v4().Pt(), nu_pt_gen);
       Hist("Pt_blep_rec_vs_Pt_blep_gen")->Fill(calc->GetJets()->at( hyp->blep_index()).pt(), blep_pt_gen);
       Hist("eta_tophad_rec_vs_eta_tophad_gen")->Fill(hyp->tophad_v4().eta(), tophad_eta_gen);
-      Hist("eta_toplep_rec_vs_eta_toplep_gen")->Fill(hyp->toplep_v4().eta(), toplep_eta_gen); 
+      Hist("eta_toplep_rec_vs_eta_toplep_gen")->Fill(hyp->toplep_v4().eta(), toplep_eta_gen);
       Hist("eta_lepton_rec_vs_eta_lepton_gen")->Fill(hyp->lepton().eta(), lep_eta_gen);
       Hist("eta_neutrino_rec_vs_eta_neutrino_gen")->Fill(hyp->neutrino_v4().eta(), nu_eta_gen);
       Hist("eta_blep_rec_vs_eta_blep_gen")->Fill(calc->GetJets()->at( hyp->blep_index()).eta(), blep_eta_gen);
@@ -233,7 +272,7 @@ void HypothesisHists::Fill()
 	 (calc->GetRunNum()==206512 && calc->GetLumiBlock()==776 && calc->GetEventNum()==978745688 ) ||
 	 (calc->GetRunNum()==206598 && calc->GetLumiBlock()==18  && calc->GetEventNum()==15951290  ) ||
 	 (calc->GetRunNum()==207477 && calc->GetLumiBlock()==154 && calc->GetEventNum()==208407209 )){
-      
+
       if (event_old != calc->GetEventNum()){
 
 	cout << calc->GetRunNum() << ":" << calc->GetLumiBlock() << ":" << calc->GetEventNum() << std::endl;
@@ -257,12 +296,12 @@ void HypothesisHists::Fill()
     }
   }
   */
-  
+
   /*
   // check some high m_ttbar events
   if (calc->IsRealData()){
-    if (mttbar_rec>2500){   
-      if (event_old != calc->GetEventNum()){   
+    if (mttbar_rec>2500){
+      if (event_old != calc->GetEventNum()){
 	cout << "run: " << calc->GetRunNum() << "   lb: " << calc->GetLumiBlock() << "  event: " << calc->GetEventNum() << "   N(jets): " << calc->GetJets()->size() << std::endl;
 	cout << "mttbar = " << mttbar_rec << endl;
 	Muon muon = calc->GetMuons()->at(0);

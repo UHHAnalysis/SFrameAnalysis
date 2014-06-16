@@ -8,7 +8,7 @@ using namespace std;
 
 TauHists::TauHists(const char* name) : BaseHists(name)
 {
-  // named default constructor  
+  // named default constructor
 }
 
 TauHists::~TauHists()
@@ -111,9 +111,9 @@ void TauHists::Init()
   Book( TH1F( "againstMuonMedium2_2", "against muon medium", 2,0,2 ) );
   Book( TH1F( "againstMuonTight2_2", "against muon tight", 2,0,2 ) );
   Book( TH2F( "Jet1_Tau1_pT","1.Jet, 1.Tau",100,0,2000,100,0,2000));
-  Book( TH2F( "Jet1_Tau2_pT","1.Jet, 2.Tau",100,0,2000,100,0,2000));	
+  Book( TH2F( "Jet1_Tau2_pT","1.Jet, 2.Tau",100,0,2000,100,0,2000));
   Book( TH2F( "Jet2_Tau1_pT","2.Jet, 1.Tau",100,0,2000,100,0,2000));
-  Book( TH2F( "Jet2_Tau2_pT","2.Jet, 2.Tau",100,0,2000,100,0,2000));	 
+  Book( TH2F( "Jet2_Tau2_pT","2.Jet, 2.Tau",100,0,2000,100,0,2000));
   Book( TH2F( "Tau1_Tau2_pT","1.Jet, 2.Tau",100,0,2000,100,0,2000));
   Book( TH1F( "deltar_Tau_Jet", "#Deltar taus, jets  ", 50, 0,5));
   Book( TH1F( "deltar_Tau_Jet_ly", "#Deltar taus, jets  ", 50, 0,5));
@@ -156,7 +156,7 @@ void TauHists::Init()
   Book( TH1F( "InvMassMuTau_ly", "M(#mu #tau) if N_{#mu} = 1 & N_{#tau} = 1", 100, 0, 500) );
   Book( TH1F( "InvMassMuTau_binned", "M(#mu #tau) if N_{#mu} = 1 & N_{#tau} = 1", 4, bins2) );
   Book( TH1F( "InvMassMuTau_binned_lx", "M(#mu #tau) if N_{#mu} = 1 & N_{#tau} = 1", 4, bins2) );
-  Book( TH1F( "InvMassMuTau_binned_ly", "M(#mu #tau) if N_{#mu} = 1 & N_{#tau} = 1", 4, bins2) ); 
+  Book( TH1F( "InvMassMuTau_binned_ly", "M(#mu #tau) if N_{#mu} = 1 & N_{#tau} = 1", 4, bins2) );
   Book( TH1F( "InvMassTauJet1", "M(#tau first jet)", 100, 0, 500) );
   Book( TH1F( "InvMassTauJet1_ly", "M(#tau first jet)", 100, 0, 500) );
   Book( TH1F( "InvMassTauJet2", "M(#tau second jet)", 100, 0, 500) );
@@ -171,14 +171,166 @@ void TauHists::Init()
   Book( TH2F( "NJets_NPFparticles","number of jets, number pf PF particles in the nearest jet  to a tau",8,1.5,9.5,100,0,100));
  }
 
+void TauHists::Scale(double scale)
+{
+    Hist("number")->Scale(scale);
+    Hist("number_ly")->Scale(scale);
+    Hist("pT")->Scale(scale);
+    Hist("pT_ly")->Scale(scale);
+    Hist("eta")->Scale(scale);
+    Hist("eta_ly")->Scale(scale);
+    Hist("phi")->Scale(scale);
+    Hist("phi_ly")->Scale(scale);
+    Hist("charge")->Scale(scale);
+    Hist("energy")->Scale(scale);
+    Hist("energy_ly")->Scale(scale);
+    Hist("decayMode")->Scale(scale);
+    Hist("isolation_loose")->Scale(scale);
+    Hist("isolation_medium")->Scale(scale);
+    Hist("isolation_tight")->Scale(scale);
+    Hist("isolation_loose_3Hits")->Scale(scale);
+    Hist("isolation_medium_3Hits")->Scale(scale);
+    Hist("isolation_tight_3Hits")->Scale(scale);
+    Hist("isolation_loose_MVA")->Scale(scale);
+    Hist("isolation_medium_MVA")->Scale(scale);
+    Hist("isolation_tight_MVA")->Scale(scale);
+    Hist("isolation_loose_MVA2")->Scale(scale);
+    Hist("isolation_medium_MVA2")->Scale(scale);
+    Hist("isolation_tight_MVA2")->Scale(scale);
+    Hist("againstElectronLooseMVA3")->Scale(scale);
+    Hist("againstElectronMediumMVA3")->Scale(scale);
+    Hist("againstElectronTightMVA3")->Scale(scale);
+    Hist("againstElectronVTightMVA3")->Scale(scale);
+    Hist("againstMuonLoose2")->Scale(scale);
+    Hist("againstMuonMedium2")->Scale(scale);
+    Hist("againstMuonTight2")->Scale(scale);
+    Hist("invMass")->Scale(scale);
+    Hist("invMass_ly")->Scale(scale);
+    Hist("pT_1")->Scale(scale);
+    Hist("pT_1_ly")->Scale(scale);
+    Hist("pT_1_binned")->Scale(scale);
+    Hist("pT_1_binned_ly")->Scale(scale);
+    Hist("pT_1_binned_lx")->Scale(scale);
+    Hist("eta_1")->Scale(scale);
+    Hist("eta_1_ly")->Scale(scale);
+    Hist("phi_1")->Scale(scale);
+    Hist("phi_1_ly")->Scale(scale);
+    Hist("decayMode_1")->Scale(scale);
+    Hist("isolation_loose_1")->Scale(scale);
+    Hist("isolation_medium_1")->Scale(scale);
+    Hist("isolation_tight_1")->Scale(scale);
+    Hist("isolation_loose_3Hits_1")->Scale(scale);
+    Hist("isolation_medium_3Hits_1")->Scale(scale);
+    Hist("isolation_tight_3Hits_1")->Scale(scale);
+    Hist("isolation_loose_MVA_1")->Scale(scale);
+    Hist("isolation_medium_MVA_1")->Scale(scale);
+    Hist("isolation_tight_MVA_1")->Scale(scale);
+    Hist("isolation_loose_MVA2_1")->Scale(scale);
+    Hist("isolation_medium_MVA2_1")->Scale(scale);
+    Hist("isolation_tight_MVA2_1")->Scale(scale);
+    Hist("againstElectronLooseMVA3_1")->Scale(scale);
+    Hist("againstElectronMediumMVA3_1")->Scale(scale);
+    Hist("againstElectronTightMVA3_1")->Scale(scale);
+    Hist("againstElectronVTightMVA3_1")->Scale(scale);
+    Hist("againstMuonLoose2_1")->Scale(scale);
+    Hist("againstMuonMedium2_1")->Scale(scale);
+    Hist("againstMuonTight2_1")->Scale(scale);
+    Hist("pT_2")->Scale(scale);
+    Hist("pT_2_ly")->Scale(scale);
+    Hist("eta_2")->Scale(scale);
+    Hist("eta_2_ly")->Scale(scale);
+    Hist("phi_2")->Scale(scale);
+    Hist("phi_2_ly")->Scale(scale);
+    Hist("decayMode_2")->Scale(scale);
+    Hist("isolation_loose_2")->Scale(scale);
+    Hist("isolation_medium_2")->Scale(scale);
+    Hist("isolation_tight_2")->Scale(scale);
+    Hist("isolation_loose_3Hits_2")->Scale(scale);
+    Hist("isolation_medium_3Hits_2")->Scale(scale);
+    Hist("isolation_tight_3Hits_2")->Scale(scale);
+    Hist("isolation_loose_3Hits_2")->Scale(scale);
+    Hist("isolation_medium_3Hits_2")->Scale(scale);
+    Hist("isolation_tight_3Hits_2")->Scale(scale);
+    Hist("isolation_loose_MVA_2")->Scale(scale);
+    Hist("isolation_medium_MVA_2")->Scale(scale);
+    Hist("isolation_tight_MVA_2")->Scale(scale);
+    Hist("isolation_loose_MVA2_2")->Scale(scale);
+    Hist("isolation_medium_MVA2_2")->Scale(scale);
+    Hist("isolation_tight_MVA2_2")->Scale(scale);
+    Hist("againstElectronLooseMVA3_2")->Scale(scale);
+    Hist("againstElectronMediumMVA3_2")->Scale(scale);
+    Hist("againstElectronTightMVA3_2")->Scale(scale);
+    Hist("againstElectronVTightMVA3_2")->Scale(scale);
+    Hist("againstMuonLoose2_2")->Scale(scale);
+    Hist("againstMuonMedium2_2")->Scale(scale);
+    Hist("againstMuonTight2_2")->Scale(scale);
+    Hist("Jet1_Tau1_pT")->Scale(scale);
+    Hist("Jet1_Tau2_pT")->Scale(scale);
+    Hist("Jet2_Tau1_pT")->Scale(scale);
+    Hist("Jet2_Tau2_pT")->Scale(scale);
+    Hist("Tau1_Tau2_pT")->Scale(scale);
+    Hist("deltar_Tau_Jet")->Scale(scale);
+    Hist("deltar_Tau_Jet_ly")->Scale(scale);
+    Hist("deltar_Tau_nextJet")->Scale(scale);
+    Hist("deltar_Tau_nextJet_ly")->Scale(scale);
+    Hist("deltar_Tau1_Jet2")->Scale(scale);
+    Hist("deltar_Tau1_Jet1")->Scale(scale);
+    Hist("deltar_Tau1_Jet2_ly")->Scale(scale);
+    Hist("deltar_Tau1_Jet1_ly")->Scale(scale);
+    Hist("deltar_Tau1_Muon1")->Scale(scale);
+    Hist("deltar_Tau1_Muon1_ly")->Scale(scale);
+    Hist("DeltaPhi_Tau_Muon")->Scale(scale);
+    Hist("DeltaPhi_Tau1_Jet1")->Scale(scale);
+    Hist("DeltaPhi_Taus_Jets")->Scale(scale);
+    Hist("MuonpT1_TaupT1")->Scale(scale);
+    Hist("MuonpT1_TaupT1_ly")->Scale(scale);
+    Hist("MuonpT1_TaupT1_binned")->Scale(scale);
+    Hist("MuonpT1_TaupT1_binned_ly")->Scale(scale);
+    Hist("MuonpT1_TaupT1_binned_lx")->Scale(scale);
+    Hist("MuonpT_TaupT")->Scale(scale);
+    Hist("MuonpT_TaupT_ly")->Scale(scale);
+    Hist("MuonpT_TaupT_binned")->Scale(scale);
+    Hist("MuonpT_TaupT_binned_ly")->Scale(scale);
+    Hist("MuonpT_TaupT_binned_lx")->Scale(scale);
+    Hist("max_InvMass")->Scale(scale);
+    Hist("max_InvMass_ly")->Scale(scale);
+    Hist("max_InvMass_binned")->Scale(scale);
+    Hist("max_InvMass_binned_lx")->Scale(scale);
+    Hist("max_InvMass_binned_ly")->Scale(scale);
+    Hist("max_InvMassTau")->Scale(scale);
+    Hist("max_InvMassTau_ly")->Scale(scale);
+    Hist("max_InvMassTau_binned")->Scale(scale);
+    Hist("max_InvMassTau_binned_lx")->Scale(scale);
+    Hist("max_InvMassTau_binned_ly")->Scale(scale);
+    Hist("tau_mass")->Scale(scale);
+    Hist("InvMass")->Scale(scale);
+    Hist("InvMass_ly")->Scale(scale);
+    Hist("InvMassMuTau")->Scale(scale);
+    Hist("InvMassMuTau_ly")->Scale(scale);
+    Hist("InvMassMuTau_binned")->Scale(scale);
+    Hist("InvMassMuTau_binned_lx")->Scale(scale);
+    Hist("InvMassMuTau_binned_ly")->Scale(scale);
+    Hist("InvMassTauJet1")->Scale(scale);
+    Hist("InvMassTauJet1_ly")->Scale(scale);
+    Hist("InvMassTauJet2")->Scale(scale);
+    Hist("InvMassTauJet2_ly")->Scale(scale);
+    Hist("NJets_Tau1_pT")->Scale(scale);
+    Hist("NJets_Tau_pT")->Scale(scale);
+    Hist("NJets_Tau_eta")->Scale(scale);
+    Hist("NJets_Tau_phi")->Scale(scale);
+    Hist("NJets_Tau_decaymode")->Scale(scale);
+    Hist("NJets_DeltaRTauNextJet")->Scale(scale);
+    Hist("PFParticles_NextJet")->Scale(scale);
+    Hist("NJets_NPFparticles")->Scale(scale);
+}
 void TauHists::Fill()
 {
    // important: get the event weight
   EventCalc* calc = EventCalc::Instance();
   double weight = calc -> GetWeight();
-  
+
   BaseCycleContainer* bcc = calc->GetBaseCycleContainer();
-  
+
   int NTaus = bcc-> taus -> size();
   Hist("number")->Fill(NTaus, weight);
   Hist("number_ly")->Fill(NTaus, weight);
@@ -186,7 +338,7 @@ void TauHists::Fill()
 
   for(unsigned int i=0; i< bcc->taus->size(); ++i)
     {
-      
+
       Tau tau = bcc->taus->at(i);
       Hist("pT") -> Fill(tau.pt(), weight);
       Hist("pT_ly") -> Fill(tau.pt(), weight);
@@ -217,10 +369,10 @@ void TauHists::Fill()
       Hist("againstMuonLoose2") -> Fill(tau.againstMuonLoose2(), weight);
       Hist("againstMuonMedium2") -> Fill(tau.againstMuonMedium2(), weight);
       Hist("againstMuonTight2") -> Fill(tau.againstMuonTight2(), weight);
-      
+
     }
 
- 
+
     if (bcc->taus->size() > 0)
     {
       Tau tau = bcc->taus->at(0);
@@ -254,8 +406,8 @@ void TauHists::Fill()
       Hist("againstMuonLoose2_1") -> Fill(tau.againstMuonLoose2(), weight);
       Hist("againstMuonMedium2_1") -> Fill(tau.againstMuonMedium2(), weight);
       Hist("againstMuonTight2_1") -> Fill(tau.againstMuonTight2(), weight);
-      
-      
+
+
       if (bcc->taus->size() > 1 )
 	{
 	  Tau tau1 = bcc->taus->at(1);
@@ -285,12 +437,12 @@ void TauHists::Fill()
 	  Hist("againstMuonLoose2_2") -> Fill(tau.againstMuonLoose2(), weight);
 	  Hist("againstMuonMedium2_2") -> Fill(tau.againstMuonMedium2(), weight);
 	  Hist("againstMuonTight2_2") -> Fill(tau.againstMuonTight2(), weight);
-	  TH2F* h6 = (TH2F*)Hist("Tau1_Tau2_pT"); 
+	  TH2F* h6 = (TH2F*)Hist("Tau1_Tau2_pT");
 	  h6->Fill(tau.pt(),tau1.pt(),weight);
 	}
     }
-  
-  sort(bcc->taus->begin(), bcc->taus->end(), HigherPt()); 
+
+  sort(bcc->taus->begin(), bcc->taus->end(), HigherPt());
   if (bcc->taus->size() >= 2)
     {
       Tau tau1 = bcc->taus->at(0);
@@ -313,7 +465,7 @@ void TauHists::Fill()
       double deltaR = deltaRmin(&tau, jets);
       Hist("deltar_Tau_nextJet")-> Fill(deltaR,weight);
       Hist("deltar_Tau_nextJet_ly")-> Fill(deltaR,weight);
-      
+
       for(unsigned int j=0; j< bcc->jets->size(); ++j)
 	{
 	  Jet jet = bcc->jets->at(j);
@@ -325,13 +477,13 @@ void TauHists::Fill()
 	}
     }
 
-  sort(bcc->jets->begin(), bcc->jets->end(), HigherPt()); 
+  sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
   sort(bcc->taus->begin(), bcc->taus->end(), HigherPt());
   if (bcc->taus->size() > 0 && bcc->jets->size() > 0 )
     {
       Tau tau = bcc->taus->at(0);
       Jet jet = bcc->jets->at(0);
-      TH2F* h2 = (TH2F*)Hist("Jet1_Tau1_pT"); 
+      TH2F* h2 = (TH2F*)Hist("Jet1_Tau1_pT");
       h2->Fill(jet.pt(),tau.pt(),weight);
       double deltar_Tau1_Jet1 = jet.deltaR(tau);
       Hist ("deltar_Tau1_Jet1") -> Fill(deltar_Tau1_Jet1,weight);
@@ -341,18 +493,18 @@ void TauHists::Fill()
       if (bcc->taus->size() > 1 )
 	{
 	  Tau tau1 = bcc->taus->at(1);
-	  TH2F* h3 = (TH2F*)Hist("Jet1_Tau2_pT"); 
+	  TH2F* h3 = (TH2F*)Hist("Jet1_Tau2_pT");
 	  h3->Fill(jet.pt(),tau1.pt(),weight);
 	}
     }
-  
+
   if (bcc->taus->size() > 0 && bcc->jets->size() > 0 )
     {
       if (bcc->jets->size() > 1 )
 	{
 	  Tau tau = bcc->taus->at(0);
 	  Jet jet = bcc->jets->at(1);
-	  TH2F* h4 = (TH2F*)Hist("Jet2_Tau1_pT"); 
+	  TH2F* h4 = (TH2F*)Hist("Jet2_Tau1_pT");
 	  h4->Fill(jet.pt(),tau.pt(),weight);
 	  double deltar_Tau1_Jet2 = jet.deltaR(tau);
 	  Hist ("deltar_Tau1_Jet2") -> Fill(deltar_Tau1_Jet2,weight);
@@ -360,13 +512,13 @@ void TauHists::Fill()
 	  if (bcc->taus->size() > 1 )
 	    {
 	      Tau tau1 = bcc->taus->at(1);
-	      TH2F* h5 = (TH2F*)Hist("Jet2_Tau2_pT"); 
+	      TH2F* h5 = (TH2F*)Hist("Jet2_Tau2_pT");
 	      h5->Fill(jet.pt(),tau1.pt(),weight);
 	    }
 	}
     }
 
-  
+
 
   if (bcc->taus->size() > 0 && bcc->muons->size() > 0 )
     {
@@ -383,7 +535,7 @@ void TauHists::Fill()
 	  double deltaPhi = abs(tau.phi() - muon.phi());
 	  Hist("DeltaPhi_Tau_Muon") -> Fill(deltaPhi, weight);
     }
-  
+
   for(unsigned int i=0; i< bcc->taus->size(); ++i)
     {
       Tau tau = bcc->taus->at(i);
@@ -422,7 +574,7 @@ void TauHists::Fill()
       Hist("max_InvMass_binned_lx")->Fill(max_InvMass, weight);
       Hist("max_InvMass_binned_ly")->Fill(max_InvMass, weight);
     }
-  
+
    if (bcc->taus->size() > 1)
     {
       double max_InvMass =0;
@@ -454,13 +606,13 @@ void TauHists::Fill()
       Muon muon = bcc->muons->at(0);
       TLorentzVector Mu;
       Mu.SetPtEtaPhiE(muon.pt() ,muon.eta() ,muon.phi() ,muon.energy() );
-	  
+
       Tau tau = bcc->taus->at(0);
       TLorentzVector Tau;
       Tau.SetPtEtaPhiE(tau.pt() ,tau.eta() ,tau.phi() ,tau.energy() );
       TLorentzVector DiLepton = Tau +Mu;
       double InvMass = DiLepton.M();
-	      
+
       Hist("InvMassMuTau")->Fill(InvMass, weight);
       Hist("InvMassMuTau_ly")->Fill(InvMass, weight);
       Hist("InvMassMuTau_binned")->Fill(InvMass, weight);
@@ -480,13 +632,13 @@ void TauHists::Fill()
 	  Tau.SetPtEtaPhiE(tau.pt() ,tau.eta() ,tau.phi() ,tau.energy() );
 	  TLorentzVector DiLepton = Tau +Mu;
 	  double InvMass = DiLepton.M();
-	  
+
 	  Hist("InvMass")->Fill(InvMass, weight);
 	  Hist("InvMass_ly")->Fill(InvMass, weight);
 	}
     }
 
-  
+
   if (bcc->taus->size() > 0 && bcc->jets->size() > 0)
     {
       Tau tau = bcc->taus->at(0);
@@ -498,7 +650,7 @@ void TauHists::Fill()
       Jet1.SetPtEtaPhiE(jet1.pt() ,jet1.eta() ,jet1.phi() ,jet1.energy() );
       TLorentzVector Jet1Tau = Jet1 +Tau;
       double InvMass = Jet1Tau.M();
-	      
+
       Hist("InvMassTauJet1")->Fill(InvMass, weight);
       Hist("InvMassTauJet1_ly")->Fill(InvMass, weight);
 
@@ -509,36 +661,36 @@ void TauHists::Fill()
 	  Jet2.SetPtEtaPhiE(jet2.pt() ,jet2.eta() ,jet2.phi() ,jet2.energy() );
 	  TLorentzVector Jet2Tau = Jet2 +Tau;
 	  double InvMass = Jet2Tau.M();
-	      
+
 	  Hist("InvMassTauJet2")->Fill(InvMass, weight);
 	  Hist("InvMassTauJet2_ly")->Fill(InvMass, weight);
-	} 
+	}
     }
   if (bcc->taus->size() > 0)
     {
       int Njets = bcc->jets->size();
       Tau tau1 = bcc->taus->at(0);
-      TH2F* h1 = (TH2F*)Hist("NJets_Tau1_pT"); 
+      TH2F* h1 = (TH2F*)Hist("NJets_Tau1_pT");
       h1->Fill(Njets,tau1.pt(),weight);
       for (unsigned int i =0; i<bcc->taus->size(); ++i)
 	{
 	  Tau tau = bcc->taus->at(i);
-	  TH2F* h2 = (TH2F*)Hist("NJets_Tau_pT"); 
+	  TH2F* h2 = (TH2F*)Hist("NJets_Tau_pT");
 	  h2->Fill(Njets,tau.pt(),weight);
-	  TH2F* h3 = (TH2F*)Hist("NJets_Tau_eta"); 
+	  TH2F* h3 = (TH2F*)Hist("NJets_Tau_eta");
 	  h3->Fill(Njets,tau.eta(),weight);
-	  TH2F* h4 = (TH2F*)Hist("NJets_Tau_phi"); 
+	  TH2F* h4 = (TH2F*)Hist("NJets_Tau_phi");
 	  h4->Fill(Njets,tau.phi(),weight);
-	  TH2F* h5 = (TH2F*)Hist("NJets_Tau_decaymode"); 
+	  TH2F* h5 = (TH2F*)Hist("NJets_Tau_decaymode");
 	  h5->Fill(Njets,tau.decayMode(),weight);
 	  std::vector<Jet> *jets = calc->GetJets();
           double deltaR = deltaRmin(&tau, jets);
-	  TH2F* h6 = (TH2F*)Hist("NJets_DeltaRTauNextJet"); 
+	  TH2F* h6 = (TH2F*)Hist("NJets_DeltaRTauNextJet");
 	  h6->Fill(Njets,deltaR,weight);
 	}
     }
-  
-  
+
+
   // if (bcc->taus->size() > 0 && bcc->jets->size() > 0)
 //     {
 //       int Njets = bcc->jets->size();
@@ -553,7 +705,7 @@ void TauHists::Fill()
 // 	       double deltaR = tau.deltaR(p);
 // 	       if (deltaR < 0.5)  N_PFparticles = N_PFparticles +1;
 // 	     }
-// 	  TH2F* h7 = (TH2F*)Hist("NJets_NPFparticles"); 
+// 	  TH2F* h7 = (TH2F*)Hist("NJets_NPFparticles");
 // 	  h7->Fill(Njets,N_PFparticles,weight);
 // 	  Hist("PFParticles_NextJet")->Fill(N_PFparticles, weight);
 // 	}

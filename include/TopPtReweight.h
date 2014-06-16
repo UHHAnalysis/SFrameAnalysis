@@ -21,6 +21,8 @@ public:
 
     ///return the weighted correction factor
     double GetScaleWeight();
+    double GetScalePlus();
+    double GetScaleMinus();
 
     //return the average of the weights produced
     double GetAverageWeight();

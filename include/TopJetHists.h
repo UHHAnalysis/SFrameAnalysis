@@ -6,7 +6,7 @@
 /**
  *   Class for booking and filling TopJet histograms
  *
- *   
+ *
  *   @version $Revision: 1.1 $
  */
 
@@ -20,6 +20,8 @@ public:
    ~TopJetHists();
 
    void Init();
+
+   void Scale(double scale);
 
    void Fill();
 }; // class TopJetHists

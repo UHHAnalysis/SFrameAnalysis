@@ -20,7 +20,7 @@ MuonHists::~MuonHists()
 void MuonHists::Init()
 {
     // book all histograms here
-  
+
   Book( TH1F( "number","number of muons",5,-0.5,4.5));
   Book( TH1F( "number_ly","number of muons",5,-0.5,4.5));
   Book( TH1F( "pT","p_{T} muon [GeV]",100,0,500));
@@ -87,7 +87,73 @@ void MuonHists::Init()
   Book( TH1F( "charge_2","charge 2nd muon",3,-1.5,1.5));
 }
 
-
+void MuonHists::Scale(double scale)
+{
+    Hist("number")->Scale(scale);
+    Hist("number_ly")->Scale(scale);
+    Hist("pT")->Scale(scale);
+    Hist("pT_ly")->Scale(scale);
+    Hist("eta")->Scale(scale);
+    Hist("eta_ly")->Scale(scale);
+    Hist("phi")->Scale(scale);
+    Hist("phi_ly")->Scale(scale);
+    Hist("isolation")->Scale(scale);
+    Hist("isolation_ly")->Scale(scale);
+    Hist("pT_1")->Scale(scale);
+    Hist("pT_1_ly")->Scale(scale);
+    Hist("pT_2")->Scale(scale);
+    Hist("pT_2_ly")->Scale(scale);
+    Hist("eta_1")->Scale(scale);
+    Hist("eta_1_ly")->Scale(scale);
+    Hist("eta_2")->Scale(scale);
+    Hist("eta_2_ly")->Scale(scale);
+    Hist("phi_1")->Scale(scale);
+    Hist("phi_1_ly")->Scale(scale);
+    Hist("phi_2")->Scale(scale);
+    Hist("phi_2_ly")->Scale(scale);
+    Hist("isolation_1")->Scale(scale);
+    Hist("isolation_1_ly")->Scale(scale);
+    Hist("isolation_2")->Scale(scale);
+    Hist("isolation_2_ly")->Scale(scale);
+    Hist("deltar_Muon_Jet")->Scale(scale);
+    Hist("deltar_Muon_Jet_ly")->Scale(scale);
+    Hist("deltar_Muon_nextJet")->Scale(scale);
+    Hist("deltar_Muon_nextJet_ly")->Scale(scale);
+    Hist("deltar_Muon1_Jet2")->Scale(scale);
+    Hist("deltar_Muon1_Jet1")->Scale(scale);
+    Hist("deltar_Muon1_Jet2_ly")->Scale(scale);
+    Hist("deltar_Muon1_Jet1_ly")->Scale(scale);
+    Hist("deltar_Muon1_Muon1")->Scale(scale);
+    Hist("deltar_Muon1_Muon1_ly")->Scale(scale);
+    Hist("DeltaPhi_Muon1_Jet1")->Scale(scale);
+    Hist("DeltaPhi_Muons_Jets")->Scale(scale);
+    Hist("ptrel")->Scale(scale);
+    Hist("deltaRmin")->Scale(scale);
+    Hist("ptrel_ly")->Scale(scale);
+    Hist("deltaRmin_ly")->Scale(scale);
+    Hist("deltaRmin_vs_ptrel")->Scale(scale);
+    Hist("ptrel_1")->Scale(scale);
+    Hist("deltaRmin_1")->Scale(scale);
+    Hist("ptrel_1_ly")->Scale(scale);
+    Hist("deltaRmin_1_ly")->Scale(scale);
+    Hist("deltaRmin_vs_ptrel_1")->Scale(scale);
+    Hist("ptrel_2")->Scale(scale);
+    Hist("deltaRmin_2")->Scale(scale);
+    Hist("ptrel_2_ly")->Scale(scale);
+    Hist("deltaRmin_2_ly")->Scale(scale);
+    Hist("deltaRmin_vs_ptrel_2")->Scale(scale);
+    Hist("MaxInvMass")->Scale(scale);
+    Hist("MaxInvMass_ly")->Scale(scale);
+    Hist("InvMass")->Scale(scale);
+    Hist("InvMass_ly")->Scale(scale);
+    Hist("InvMassMuJet1")->Scale(scale);
+    Hist("InvMassMuJet1_ly")->Scale(scale);
+    Hist("InvMassMuJet2")->Scale(scale);
+    Hist("InvMassMuJet2_ly")->Scale(scale);
+    Hist("charge")->Scale(scale);
+    Hist("charge_1")->Scale(scale);
+    Hist("charge_2")->Scale(scale);
+}
 void MuonHists::Fill()
 {
     // important: get the event weight
@@ -166,7 +232,7 @@ void MuonHists::Fill()
     }
 
 
-     
+
 if (bcc->muons->size() > 1)
     {
       double max_InvMass =0;
@@ -222,7 +288,7 @@ for(unsigned int i=0; i< bcc->muons->size(); ++i)
       double deltaR = deltaRmin(&muon, jets);
       Hist("deltar_Muon_nextJet")-> Fill(deltaR,weight);
       Hist("deltar_Muon_nextJet_ly")-> Fill(deltaR,weight);
-      
+
       for(unsigned int j=0; j< bcc->jets->size(); ++j)
 	{
 	  Jet jet = bcc->jets->at(j);
@@ -234,7 +300,7 @@ for(unsigned int i=0; i< bcc->muons->size(); ++i)
 	}
     }
 
-  sort(bcc->jets->begin(), bcc->jets->end(), HigherPt()); 
+  sort(bcc->jets->begin(), bcc->jets->end(), HigherPt());
   sort(bcc->muons->begin(), bcc->muons->end(), HigherPt());
   if (bcc->muons->size() > 0 && bcc->jets->size() > 0 )
     {
@@ -260,13 +326,13 @@ for(unsigned int i=0; i< bcc->muons->size(); ++i)
       Muon muon = bcc->muons->at(0);
       TLorentzVector Mu;
       Mu.SetPtEtaPhiE(muon.pt() ,muon.eta() ,muon.phi() ,muon.energy() );
-	  
+
       Jet jet1 = bcc->jets->at(0);
       TLorentzVector Jet1;
       Jet1.SetPtEtaPhiE(jet1.pt() ,jet1.eta() ,jet1.phi() ,jet1.energy() );
       TLorentzVector Jet1Mu = Jet1 +Mu;
       double InvMass = Jet1Mu.M();
-	      
+
       Hist("InvMassMuJet1")->Fill(InvMass, weight);
       Hist("InvMassMuJet1_ly")->Fill(InvMass, weight);
 
@@ -277,11 +343,11 @@ for(unsigned int i=0; i< bcc->muons->size(); ++i)
 	  Jet2.SetPtEtaPhiE(jet2.pt() ,jet2.eta() ,jet2.phi() ,jet2.energy() );
 	  TLorentzVector Jet2Mu = Jet2 +Mu;
 	  double InvMass = Jet2Mu.M();
-	      
+
 	  Hist("InvMassMuJet2")->Fill(InvMass, weight);
 	  Hist("InvMassMuJet2_ly")->Fill(InvMass, weight);
 	}
-      
+
     }
 
 

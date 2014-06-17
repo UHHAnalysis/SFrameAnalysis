@@ -7,7 +7,7 @@
 /**
  *   Class for booking and filling electron histograms
  *
- *   
+ *
  *   @version $Revision: 1.1 $
  */
 
@@ -21,6 +21,8 @@ public:
    ~ElectronHists();
 
    void Init();
+
+   void Scale(double scale);
 
    void Fill();
 

@@ -69,6 +69,53 @@ void ElectronHists::Init()
 
 }
 
+void ElectronHists::Scale(double scale)
+{
+    Hist("number")->Scale(scale);
+    Hist("number_ly")->Scale(scale);
+    Hist("pt")->Scale(scale);
+    Hist("pt_ly")->Scale(scale);
+    Hist("eta")->Scale(scale);
+    Hist("eta_ly")->Scale(scale);
+    Hist("phi")->Scale(scale);
+    Hist("phi_ly")->Scale(scale);
+    Hist("isolation")->Scale(scale);
+    Hist("isolation_ly")->Scale(scale);
+    Hist("pt_1")->Scale(scale);
+    Hist("pt_1_ly")->Scale(scale);
+    Hist("pt_2")->Scale(scale);
+    Hist("pt_2_ly")->Scale(scale);
+    Hist("eta_1")->Scale(scale);
+    Hist("eta_1_ly")->Scale(scale);
+    Hist("eta_2")->Scale(scale);
+    Hist("eta_2_ly")->Scale(scale);
+    Hist("phi_1")->Scale(scale);
+    Hist("phi_1_ly")->Scale(scale);
+    Hist("phi_2")->Scale(scale);
+    Hist("phi_2_ly")->Scale(scale);
+    Hist("isolation_1")->Scale(scale);
+    Hist("isolation_1_ly")->Scale(scale);
+    Hist("isolation_2")->Scale(scale);
+    Hist("isolation_2_ly")->Scale(scale);
+    Hist("ptrel")->Scale(scale);
+    Hist("deltaRmin")->Scale(scale);
+    Hist("ptrel_ly")->Scale(scale);
+    Hist("deltaRmin_ly")->Scale(scale);
+    Hist("deltaRmin_vs_ptrel")->Scale(scale);
+    Hist("ptrel_1")->Scale(scale);
+    Hist("deltaRmin_1")->Scale(scale);
+    Hist("ptrel_1_ly")->Scale(scale);
+    Hist("deltaRmin_1_ly")->Scale(scale);
+    Hist("deltaRmin_vs_ptrel_1")->Scale(scale);
+    Hist("ptrel_2")->Scale(scale);
+    Hist("deltaRmin_2")->Scale(scale);
+    Hist("ptrel_2_ly")->Scale(scale);
+    Hist("deltaRmin_2_ly")->Scale(scale);
+    Hist("deltaRmin_vs_ptrel_2")->Scale(scale);
+    Hist("charge")->Scale(scale);
+    Hist("charge_1")->Scale(scale);
+    Hist("charge_2")->Scale(scale);
+}
 
 void ElectronHists::Fill()
 {

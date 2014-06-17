@@ -15,8 +15,10 @@ public:
      * constructor
      *
      */
-    TopPtReweight();
     ///Default destructor
+    TopPtReweight();
+    //Constructor with predefined average weight
+    TopPtReweight(double average);
     ~TopPtReweight();
 
     ///return the weighted correction factor
@@ -28,6 +30,7 @@ public:
     double GetAverageWeight();
 
 private:
+    bool m_UpdateWeight;
     int m_NumWeights;
     double m_AverageWeight;
 };

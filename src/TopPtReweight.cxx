@@ -3,6 +3,12 @@
 TopPtReweight::TopPtReweight() {
     m_AverageWeight = 0.0;
     m_NumWeights = 0;
+    m_UpdateWeight = true;
+}
+
+TopPtReweight::TopPtReweight(double average) {
+    m_AverageWeight = average;
+    m_UpdateWeight = false;
 }
 
 TopPtReweight::~TopPtReweight() {
@@ -29,8 +35,10 @@ double TopPtReweight::GetScaleWeight()
       double wtop2 = exp(0.156-0.00137*toppt2);
 
       scale_factor = sqrt(wtop1*wtop2);
-      m_AverageWeight = ((m_AverageWeight * m_NumWeights) + scale_factor) / (m_NumWeights + 1);
-      m_NumWeights += 1;
+      if(m_UpdateWeight) {
+        m_AverageWeight = ((m_AverageWeight * m_NumWeights) + scale_factor) / (m_NumWeights + 1);
+        m_NumWeights += 1;
+      }
     }
     //std::cout<<"sf from TopPtReweight: "<<scale_factor<<std::endl;
     return scale_factor;
@@ -55,8 +63,10 @@ double TopPtReweight::GetScalePlus()
       double wtop2 = exp(0.156-0.00137*toppt2);
 
       scale_factor = wtop1*wtop2;
-      m_AverageWeight = ((m_AverageWeight * m_NumWeights) + scale_factor) / (m_NumWeights + 1);
-      m_NumWeights += 1;
+      if(m_UpdateWeight) {
+        m_AverageWeight = ((m_AverageWeight * m_NumWeights) + scale_factor) / (m_NumWeights + 1);
+        m_NumWeights += 1;
+      }
     }
     //std::cout<<"sf from TopPtReweight: "<<scale_factor<<std::endl;
     return scale_factor;
@@ -64,8 +74,10 @@ double TopPtReweight::GetScalePlus()
 
 double TopPtReweight::GetScaleMinus()
 {
+    EventCalc* calc = EventCalc::Instance();
+
     double scale_factor = 1.;
-    if(!calc->IsRealData())
+    if(!calc->IsRealData() && m_UpdateWeight)
     {
       m_AverageWeight = ((m_AverageWeight * m_NumWeights) + scale_factor) / (m_NumWeights + 1);
       m_NumWeights += 1;
@@ -79,7 +91,3 @@ double TopPtReweight::GetAverageWeight()
     return m_AverageWeight;
 }
 
-double TopPtReweight::GetAverageWeight()
-{
-    return m_AverageWeight;
-}

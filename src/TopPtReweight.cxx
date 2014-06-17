@@ -64,6 +64,8 @@ double TopPtReweight::GetScalePlus()
 
 double TopPtReweight::GetScaleMinus()
 {
+    EventCalc* calc = EventCalc::Instance();
+
     double scale_factor = 1.;
     if(!calc->IsRealData())
     {
@@ -79,7 +81,3 @@ double TopPtReweight::GetAverageWeight()
     return m_AverageWeight;
 }
 
-double TopPtReweight::GetAverageWeight()
-{
-    return m_AverageWeight;
-}

@@ -8,12 +8,14 @@ TopPtReweight::TopPtReweight() {
 
 TopPtReweight::TopPtReweight(double average) {
     m_AverageWeight = average;
+    m_NumWeights = 1;
     m_UpdateWeight = false;
 }
 
 TopPtReweight::~TopPtReweight() {
     std::cout << "TopPtReweight Destructor()" << std::endl;
     std::cout << " TopPtReweight :: Average Weight = " << m_AverageWeight << std::endl;
+    std::cout << " TopPtReweight :: NumWeights = " << m_NumWeights << std::endl;
 }
 
 double TopPtReweight::GetScaleWeight()

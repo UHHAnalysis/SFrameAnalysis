@@ -22,6 +22,7 @@ public:
     ~TopPtReweight();
 
     ///return the weighted correction factor
+    double ReturnWeight(double weight);
     double GetScaleWeight();
     double GetScalePlus();
     double GetScaleMinus();
@@ -29,10 +30,20 @@ public:
     //return the average of the weights produced
     double GetAverageWeight();
 
+    //enables the smooth turn off
+    bool EnableSmoothTurnOff();
+
+    //disables SF above pT=400
+    bool EnableTurnOff();
+
 private:
+    bool m_SmoothTurnOff;
+    bool m_TurnOff;
     bool m_UpdateWeight;
     int m_NumWeights;
     double m_AverageWeight;
+    TF1* m_Function;
+    double scale();
 };
 
 #endif

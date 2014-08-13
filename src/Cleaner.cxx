@@ -922,7 +922,7 @@ void Cleaner::TauCleaner_noIso(double ptmin, double etamax)
       if(tau.pt()>ptmin) {
          if(fabs(tau.eta())<etamax) {
             if(bcc->taus->at(i).decayModeFinding()) {
-               if(bcc->taus->at(i).againstElectronTightMVA3()) {
+               if(bcc->taus->at(i).againstElectronTightMVA5()) {
                   if(bcc->taus->at(i).againstMuonTight2()) {
                      double deltaRmin = 100;
                      for(unsigned int k=0; k<bcc->muons->size(); ++k) 
@@ -959,7 +959,7 @@ void Cleaner::TauCleaner(double ptmin, double etamax)
   std::vector<Tau> good_taus;
   for(unsigned int i=0; i<bcc->taus->size(); ++i) {
     Tau tau = bcc->taus->at(i);
-    if(bcc->taus->at(i).byMediumCombinedIsolationDeltaBetaCorr()) {
+    if(bcc->taus->at(i).byMediumCombinedIsolationDeltaBetaCorr3Hits()) {
       good_taus.push_back(tau);
     }
   }
@@ -981,7 +981,7 @@ void Cleaner::TauCleanerHalil(double ptmin, double etamax)
       if(tau.pt()>ptmin) {
          if(fabs(tau.eta())<etamax) {
             if(bcc->taus->at(i).decayModeFinding()) {
-               if(bcc->taus->at(i).againstElectronTightMVA3()) {
+               if(bcc->taus->at(i).againstElectronTightMVA5()) {
                   if(bcc->taus->at(i).againstMuonTight2()) {
                      if (bcc->taus->at(i).byTightCombinedIsolationDeltaBetaCorr3Hits())
                         {

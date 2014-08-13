@@ -65,7 +65,7 @@ void TauEffiCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SErr
  
   //produce clean tau collection
   for(unsigned int i=0; i<bcc.taus->size(); ++i){
-    if(!bcc.taus->at(i).decayModeFinding() || !bcc.taus->at(i).byLooseCombinedIsolationDeltaBetaCorr() /*||  !bcc.taus->at(i).againstElectronTight() ||  !bcc.taus->at(i).againstMuonTight()*/){
+    if(!bcc.taus->at(i).decayModeFinding() || !bcc.taus->at(i).byLooseCombinedIsolationDeltaBetaCorr3Hits() /*||  !bcc.taus->at(i).againstElectronTight() ||  !bcc.taus->at(i).againstMuonTight()*/){
       bcc.taus->erase(bcc.taus->begin()+i);
       i--;
     }

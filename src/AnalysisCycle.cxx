@@ -42,6 +42,8 @@ AnalysisCycle::AnalysisCycle()
     m_jes_unc_top = NULL;
     m_jes_unc_sub = NULL;
 
+
+
     m_sys_unc = e_None;
     m_sys_var = e_Default;
     m_actual_run=-99999;
@@ -51,6 +53,14 @@ AnalysisCycle::AnalysisCycle()
     m_writeTTbarReco = false;
     m_readCommonInfo = true;
     m_channel = "inclusive_LQ";
+    
+    m_writeNewJets = false;
+    m_writeNewTopJets = false;
+    m_writeNewTopTagJets = false; 
+    m_writeNewPrunedJets = false; 
+    m_writeNewHiggsTagJets = false; 
+
+    m_fjet = new FJet();
 
     // declare variables for lumi file
     DeclareProperty( "LumiFilePath" , m_lumifile_path);
@@ -81,6 +91,7 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "readTTbarReco", m_readTTbarReco);
     DeclareProperty( "writeTTbarReco", m_writeTTbarReco);
     DeclareProperty( "readCommonInfo", m_readCommonInfo);
+    DeclareProperty( "writeNewJetCollection", m_writeNewJetCollection);
 
     // steerable properties for the jec
     DeclareProperty( "JECFileLocation" , m_JECFileLocation);
@@ -356,6 +367,27 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
     }
 
     // if (m_LQannel_OS == "True" || m_LQChannel_OS == "true" ||m_LQChannel_OS == "TRUE") m_channel_OS = true;
+
+    // jet collections to b ere-created
+    for(unsigned int i=0; i< m_writeNewJetCollection.size(); i++){
+      m_logger << INFO << "Creating new jets for " <<  m_writeNewJetCollection[i] << SLogger::endmsg;
+      if(m_writeNewJetCollection[i]=="TopJetCollection") m_writeNewTopJets=true;
+      else if(m_writeNewJetCollection[i]=="TopTagJetCollection") m_writeNewTopTagJets=true;
+      else if(m_writeNewJetCollection[i]=="PrunedJetCollection") m_writeNewPrunedJets=true;
+      else if(m_writeNewJetCollection[i]=="HiggsTagJetCollection") m_writeNewHiggsTagJets=true;
+      else if(m_writeNewJetCollection[i]=="JetCollection") m_writeNewJets=true;
+      else m_logger << ERROR << "Unknow option to create new jet collection: " <<  m_writeNewJetCollection[i] << SLogger::endmsg;
+    }
+    if(m_writeNewJets && m_JetCollection.size()==0)  m_logger << ERROR << "No JetCollection name specified in input file to store new jet collection." << SLogger::endmsg;
+    if(m_writeNewTopJets && m_TopJetCollection.size()==0)  m_logger << ERROR << "No TopJetCollection name specified in input file to store new jet collection." << SLogger::endmsg;
+    if(m_writeNewTopTagJets && m_TopTagJetCollection.size()==0)  m_logger << ERROR << "No TopTagJetCollection name specified in input file to store new jet collection." << SLogger::endmsg;
+    if(m_writeNewPrunedJets && m_PrunedJetCollection.size()==0)  m_logger << ERROR << "No PrunedJetCollection name specified in input file to store new jet collection." << SLogger::endmsg;
+    if(m_writeNewHiggsTagJets && m_HiggsTagJetCollection.size()==0)  m_logger << ERROR << "No HiggsTagJetCollection name specified in input file to store new jet collection." << SLogger::endmsg;
+    if(m_writeNewJetCollection.size()>0 && m_PFParticleCollection.size()==0){
+      m_logger << ERROR << "No PFParticleCollection name specified in input file. Needed to create new jet collection." << SLogger::endmsg;
+    }
+
+
 
     // output Ntuple
     if (inputData.GetTrees(STreeType::OutputSimpleTree)) {
@@ -706,6 +738,7 @@ void AnalysisCycle::EndInputData( const SInputData& ) throw( SError )
     ResetSelectionStats();
 
     delete m_lsf;
+    delete m_jsf;
     delete m_pdfweights;
     delete m_puwp;
     delete m_trig;
@@ -739,16 +772,16 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     if(m_ElectronCollection.size()>0) ConnectVariable( "AnalysisTree", m_ElectronCollection.c_str(), m_bcc.electrons);
     if(m_MuonCollection.size()>0) ConnectVariable( "AnalysisTree", m_MuonCollection.c_str(), m_bcc.muons);
     if(m_TauCollection.size()>0) ConnectVariable( "AnalysisTree", m_TauCollection.c_str(), m_bcc.taus);
-    if(m_JetCollection.size()>0) ConnectVariable( "AnalysisTree", m_JetCollection.c_str(), m_bcc.jets);
+    if(m_JetCollection.size()>0 && !m_writeNewJets) ConnectVariable( "AnalysisTree", m_JetCollection.c_str(), m_bcc.jets);
     if(m_addGenInfo && m_GenJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenJetCollection.c_str(), m_bcc.genjets);
     if(m_PhotonCollection.size()>0) ConnectVariable( "AnalysisTree", m_PhotonCollection.c_str(), m_bcc.photons);
     if(m_METName.size()>0) ConnectVariable( "AnalysisTree", m_METName.c_str(), m_bcc.met);
     if(m_PrimaryVertexCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrimaryVertexCollection.c_str() , m_bcc.pvs);
-    if(m_TopJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollection.c_str(), m_bcc.topjets);
+    if(m_TopJetCollection.size()>0 && !m_writeNewTopJets) ConnectVariable( "AnalysisTree", m_TopJetCollection.c_str(), m_bcc.topjets);
     if(m_addGenInfo && m_TopJetCollectionGen.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollectionGen.c_str() , m_bcc.topjetsgen);
-    if(m_PrunedJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrunedJetCollection.c_str() , m_bcc.prunedjets);
-    if(m_TopTagJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_TopTagJetCollection.c_str(), m_bcc.toptagjets);
-    if(m_HiggsTagJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_HiggsTagJetCollection.c_str(), m_bcc.higgstagjets);
+    if(m_PrunedJetCollection.size()>0 && !m_writeNewPrunedJets) ConnectVariable( "AnalysisTree", m_PrunedJetCollection.c_str() , m_bcc.prunedjets);
+    if(m_TopTagJetCollection.size()>0 && !m_writeNewTopTagJets) ConnectVariable( "AnalysisTree", m_TopTagJetCollection.c_str(), m_bcc.toptagjets);
+    if(m_HiggsTagJetCollection.size()>0 && !m_writeNewHiggsTagJets) ConnectVariable( "AnalysisTree", m_HiggsTagJetCollection.c_str(), m_bcc.higgstagjets);
     if(m_addGenInfo && m_GenParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_GenParticleCollection.c_str() , m_bcc.genparticles);
     if(m_PFParticleCollection.size()>0) ConnectVariable( "AnalysisTree", m_PFParticleCollection.c_str() , m_bcc.pfparticles);
     if(m_addGenInfo && m_readCommonInfo) ConnectVariable( "AnalysisTree", "genInfo" , m_bcc.genInfo);
@@ -768,6 +801,13 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
         ConnectVariable( "AnalysisTree" ,"beamspot_y0", m_bcc.beamspot_y0);
         ConnectVariable( "AnalysisTree" ,"beamspot_z0", m_bcc.beamspot_z0);
     }
+
+
+    if(m_writeNewJets){ std::vector< Jet >* jets = new std::vector<Jet>; m_bcc.jets=jets;}
+    if(m_writeNewTopJets){ std::vector< TopJet >* jets = new std::vector<TopJet>; m_bcc.topjets=jets;}
+    if(m_writeNewTopTagJets){ std::vector< TopJet >* jets = new std::vector<TopJet>; m_bcc.toptagjets=jets;}
+    if(m_writeNewPrunedJets){ std::vector< TopJet >* jets = new std::vector<TopJet>; m_bcc.prunedjets=jets;}
+    if(m_writeNewHiggsTagJets){ std::vector< TopJet >* jets = new std::vector<TopJet>; m_bcc.higgstagjets=jets;}
 
     //if(m_caTopTagGen.size()>0) ConnectVariable("AnalysisTree", m_caTopTagGen.c_str(), m_bcc.topjets);
 
@@ -809,6 +849,77 @@ void AnalysisCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SEr
 
     // store the weight (lumiweight) in the eventcalc class and use it
     calc -> ProduceWeight(weight);
+
+
+
+    // produce new jet collections
+    if(m_writeNewJetCollection.size()>0){
+      std::vector<Jet*> jets;
+      std::vector<Particle*> parts;
+      std::vector<PFParticle*> pfparts; 
+      for(unsigned int i=0; i< m_bcc.pfparticles->size(); ++i){
+	//the choice for the input to the jet clustering is not perfect, but we have no access to information from PAT top projections here
+	if(m_bcc.pfparticles->at(i).charge()==0 || m_bcc.pfparticles->at(i).fromPV()){
+	//if(!(m_bcc.pfparticles->at(i).particleID()==PFParticle::eX)){
+	//if(m_bcc.pfparticles->at(i).isJetParticle()){
+	  parts.push_back( &m_bcc.pfparticles->at(i));
+	  pfparts.push_back( &m_bcc.pfparticles->at(i));	  
+	  // std::cout << "im Jet: " << m_bcc.pfparticles->at(i).particleID() << "  " << m_bcc.pfparticles->at(i).fromPV() << "  " << m_bcc.pfparticles->at(i).charge() << "  "  <<m_bcc.pfparticles->at(i).eta() << "  "  <<m_bcc.pfparticles->at(i).pt() << std::endl;
+	}
+	//else
+	  //std::cout << "nicht im Jet: " << m_bcc.pfparticles->at(i).particleID() << "  " << m_bcc.pfparticles->at(i).fromPV() << "  " << m_bcc.pfparticles->at(i).charge() <<"  "  <<m_bcc.pfparticles->at(i).eta() <<  "  "  <<m_bcc.pfparticles->at(i).pt() << std::endl;
+
+      }
+
+      //m_fjet->SetAreaType(fastjet::active_area );
+      //the area calculation gives different results compared to jets from PAT
+      m_fjet->CalculateArea();
+      if(m_writeNewJets){
+	m_fjet->SetJetAlgorithm(fastjet::antikt_algorithm);
+	m_fjet->SetRadius(0.4);
+	m_bcc.jets->clear();
+	jets.clear();
+	m_fjet->FindJets(parts, jets);
+	for(unsigned int i =0; i<jets.size(); i++){
+	  m_bcc.jets->push_back( *(jets[i]) );
+	  m_bcc.jets->at(i).set_JEC_factor_raw(1.);
+	  // std::cout << m_bcc.jets->at(i).pt() << "   " << m_bcc.jets->at(i).eta() << std::endl;
+	  m_bcc.jets->at(i).fill_PF_variables(pfparts);
+	}
+      }
+      if(m_writeNewTopJets){
+	m_fjet->SetJetAlgorithm(fastjet::cambridge_algorithm);
+	m_fjet->SetRadius(0.8);
+	m_bcc.topjets->clear();
+	jets.clear();
+	m_fjet->FindJets(parts, jets);
+	for(unsigned int i =0; i<jets.size(); i++){
+	  TopJet tjet = *(jets[i]);   
+	  m_bcc.topjets->push_back( tjet );
+	}
+	//top-tagging variables?
+      }
+      if(m_writeNewTopTagJets){
+	m_fjet->SetJetAlgorithm(fastjet::cambridge_algorithm);
+	m_fjet->SetRadius(1.5);
+	m_logger << WARNING << "Writing new TopTagJets not yet implemented" << SLogger::endmsg;
+      }
+      if(m_writeNewPrunedJets){
+	m_fjet->SetJetAlgorithm(fastjet::cambridge_algorithm);
+	m_fjet->SetRadius(0.8);
+	m_logger << WARNING << "Writing new PrunedJets not yet implemented" << SLogger::endmsg;
+      }
+      if(m_writeNewHiggsTagJets){
+	m_fjet->SetJetAlgorithm(fastjet::cambridge_algorithm);
+	m_fjet->SetRadius(1.2);//correct ?
+	m_logger << WARNING << "Writing new HiggsTagJets not yet implemented" << SLogger::endmsg;
+      }
+
+      for(unsigned int i =0; i<jets.size(); i++){
+	delete jets[i];
+      }
+    }
+
 
 
     // apply energy shift of tau candidates for uncertainty

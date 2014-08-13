@@ -12,6 +12,7 @@
 #include "SFrameTools/include/BaseHists.h"
 #include "SFrameTools/include/MCDataScaleFactors.h"
 #include "SFrameTools/include/PDFWeights.h"
+#include "SFrameTools/include/FJet.h"
 
 #include "SFrameTools/JetMETObjects/interface/FactorizedJetCorrector.h"
 #include "SFrameTools/JetMETObjects/interface/JetCorrectorParameters.h"
@@ -224,6 +225,13 @@ private:
   bool m_readTTbarReco;
   bool m_readCommonInfo;
 
+  std::vector<std::string> m_writeNewJetCollection;
+  bool m_writeNewJets;
+  bool m_writeNewTopJets;
+  bool m_writeNewTopTagJets; 
+  bool m_writeNewPrunedJets; 
+  bool m_writeNewHiggsTagJets; 
+
   //steering for MC-data correction weights
   std::vector<std::string> m_leptonweights;
    
@@ -256,6 +264,9 @@ private:
   // list of the histogram collections
   std::vector<BaseHists*> m_histcollections;
 
+  // fastjet algorithm
+  FJet* m_fjet;
+
   // important: the container with all variables
   BaseCycleContainer m_bcc;
  
@@ -263,6 +274,7 @@ private:
   int m_actual_run;
   
   TH1D * nprocessed;
+
 
   // Macro adding the functions for dictionary generation
   ClassDef( AnalysisCycle, 0 );

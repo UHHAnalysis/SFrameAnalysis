@@ -925,16 +925,21 @@ void Cleaner::TauCleaner_noIso(double ptmin, double etamax)
                if(bcc->taus->at(i).againstElectronTightMVA5()) {
                   if(bcc->taus->at(i).againstMuonTight2()) {
                      double deltaRmin = 100;
-                     for(unsigned int k=0; k<bcc->muons->size(); ++k) 
-                        {
+		     if(bcc->muons){
+		       for(unsigned int k=0; k<bcc->muons->size(); ++k) 
+			 {
                            Muon muon = bcc->muons->at(k);
                            double deltaR = muon.deltaR(tau);
                            if (deltaR < deltaRmin) deltaRmin = deltaR;
-                        }
-                     if (deltaRmin > 0.5)
-                        {
+			 }
+		       if (deltaRmin > 0.5)
+			 {
                            good_taus.push_back(tau);
-                        }
+			 }
+		     }
+		     else{
+		       good_taus.push_back(tau);
+		     }
                   }
                }
             }

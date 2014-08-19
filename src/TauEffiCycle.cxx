@@ -1,6 +1,7 @@
 // $Id: TauEffiCycle.cxx,v 1.1 2012/04/23 14:53:22 peiffer Exp $
 
 #include "include/TauEffiCycle.h"
+#include "include/Cleaner.h"
 #include "TGraphAsymmErrors.h"
 
 ClassImp( TauEffiCycle );
@@ -55,7 +56,7 @@ void TauEffiCycle::EndInputData( const SInputData& ) throw( SError ) {
 void TauEffiCycle::BeginInputFile( const SInputData& ) throw( SError ) {
 
   ConnectVariable( "AnalysisTree", "GenParticles" , bcc.genparticles);
-  ConnectVariable( "AnalysisTree", "selectedPatTausPFlow" , bcc.taus); 
+  ConnectVariable( "AnalysisTree", "slimmedTaus" , bcc.taus); 
 
   return;
 
@@ -64,17 +65,15 @@ void TauEffiCycle::BeginInputFile( const SInputData& ) throw( SError ) {
 void TauEffiCycle::ExecuteEvent( const SInputData&, Double_t weight) throw( SError ) {
  
   //produce clean tau collection
-  for(unsigned int i=0; i<bcc.taus->size(); ++i){
-    if(!bcc.taus->at(i).decayModeFinding() || !bcc.taus->at(i).byLooseCombinedIsolationDeltaBetaCorr3Hits() /*||  !bcc.taus->at(i).againstElectronTight() ||  !bcc.taus->at(i).againstMuonTight()*/){
-      bcc.taus->erase(bcc.taus->begin()+i);
-      i--;
-    }
-  }
+  Cleaner cleaner(&bcc);
+  cleaner.TauCleaner(30,2.5);
   
   for(unsigned int i=0; i<bcc.genparticles->size(); ++i){
     GenParticle genp = bcc.genparticles->at(i);
     if(abs(genp.pdgId())!=15) continue;
     if(fabs(genp.eta())>2.5) continue;
+    //take only taus from matrix element
+    if(genp.status()!=23) continue;
 
     Hist("pt_gentau_hist")->Fill(genp.pt(),weight);
 

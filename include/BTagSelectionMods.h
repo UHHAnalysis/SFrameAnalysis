@@ -4,6 +4,7 @@
 
 #include "SFrameTools/include/Objects.h"
 #include "SFrameTools/include/Utils.h"
+#include "SFrameTools/include/SubJetTagger.h"
 #include "SFrameTools/include/BaseCycleContainer.h"
 #include "SFrameTools/include/Selection.h"
 #include "SFrameTools/include/EventCalc.h"
@@ -74,11 +75,7 @@ class NCMSSubBTagSelection: public SelectionModule{
   int m_min_nsubjetbtag;
   int m_max_nsubjetbtag;
   E_BtagType m_type;
-  double m_nsubjettiness;
-  
+  CMSTopTagger toptagger;
 };
-
-
-
 
 #endif //BTagSelectionMods_H

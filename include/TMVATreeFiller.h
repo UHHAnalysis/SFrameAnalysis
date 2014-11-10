@@ -88,6 +88,7 @@ private:
    Int_t m_nsubs;       // number of sub-jets
    Bool_t m_HEPTopTag;  // tag from HEP Top Tagger
    Bool_t m_CMSTopTag;  // tag from CMS Top Tagger
+   Bool_t m_CMSTopTag_withTau32;  // tag from CMS Top Tagger with cut on N-subjettiness tau3/tau2<0.7
 
    Double_t m_sub1_px;       // px of subjet 1
    Double_t m_sub1_py;       // py of subjet 1

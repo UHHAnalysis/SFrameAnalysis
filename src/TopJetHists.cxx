@@ -1,4 +1,5 @@
 #include "SFrameTools/include/EventCalc.h"
+#include "SFrameTools/include/SubJetTagger.h"
 #include "include/TopJetHists.h"
 #include <iostream>
 
@@ -187,6 +188,8 @@ void TopJetHists::Fill()
   Hist("NTopJets")->Fill(NTopJets, weight);
   Hist("NTopJets_ly")->Fill(NTopJets, weight);
 
+  CMSTopTagger toptag;
+
   for (unsigned int i =0; i<bcc->topjets->size(); ++i)
     {
       TopJet topjet =  bcc->topjets->at(i);
@@ -199,10 +202,11 @@ void TopJetHists::Fill()
       Hist("phi") -> Fill(topjet.phi(), weight);
       Hist("phi_ly") -> Fill(topjet.phi(), weight);
 
-      double mmin=0;
-      double mjet=0;
-      int nsubjets=0;
-      TopTag(topjet,mjet,nsubjets,mmin);
+      toptag.Tag(topjet);
+      std::map<string,double> tagvars = toptag.TagVar();
+      double mmin = tagvars["mmin"];
+      double mjet = tagvars["mjet"];
+      int nsubjets = tagvars["nsubjets"];
 
       Hist( "MJet" )->Fill( mjet, weight );
       Hist( "MJet_ly" )->Fill( mjet, weight );
@@ -242,10 +246,12 @@ void TopJetHists::Fill()
 	  TString hname_phi_ly = TString::Format("phi_%d_ly", i+1);
 	  Hist(hname_phi_ly)->Fill(topjet.phi(),weight);
 
-	  double mmin=0;
-	  double mjet=0;
-	  int nsubjets=0;
-	  TopTag(topjet,mjet,nsubjets,mmin);
+	  toptag.Tag(topjet);
+	  std::map<string,double> tagvars = toptag.TagVar();
+	  double mmin = tagvars["mmin"];
+	  double mjet = tagvars["mjet"];
+	  int nsubjets = tagvars["nsubjets"];
+      
 	  TString hname_MJet = TString::Format("MJet_%d", i+1);
 	  Hist(hname_MJet )->Fill( mjet, weight );
 	  TString hname_MJet_ly = TString::Format("MJet_%d_ly", i+1);

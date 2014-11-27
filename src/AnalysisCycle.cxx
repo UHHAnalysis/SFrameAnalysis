@@ -72,6 +72,7 @@ AnalysisCycle::AnalysisCycle()
     DeclareProperty( "METName", m_METName );
     DeclareProperty( "TopJetCollection", m_TopJetCollection );
     DeclareProperty( "TopJetCollectionGen", m_TopJetCollectionGen );
+    DeclareProperty( "GenJetCollectionWithParts", m_GenJetCollectionWithParts );
     DeclareProperty( "PrunedJetCollection", m_PrunedJetCollection );
     DeclareProperty( "TopTagJetCollection", m_TopTagJetCollection );
     DeclareProperty( "HiggsTagJetCollection", m_HiggsTagJetCollection );
@@ -381,6 +382,7 @@ void AnalysisCycle::BeginInputData( const SInputData& inputData) throw( SError )
 	if(m_TopTagJetCollection.size()>0) DeclareVariable(m_output_toptagjets, m_TopTagJetCollection.c_str());
 	if(m_HiggsTagJetCollection.size()>0) DeclareVariable(m_output_higgstagjets, m_HiggsTagJetCollection.c_str());
         if(m_addGenInfo && m_TopJetCollectionGen.size()>0) DeclareVariable(m_output_topjetsgen, m_TopJetCollectionGen.c_str());
+       	if(m_addGenInfo && m_GenJetCollectionWithParts.size()>0) DeclareVariable(m_output_genjetswithparts, m_GenJetCollectionWithParts.c_str());
         if(m_PrunedJetCollection.size()>0) DeclareVariable(m_output_prunedjets, m_PrunedJetCollection.c_str());
         if(m_addGenInfo && m_GenParticleCollection.size()>0) DeclareVariable(m_output_genparticles, m_GenParticleCollection.c_str());
         if(m_PFParticleCollection.size()>0) DeclareVariable(m_output_pfparticles, m_PFParticleCollection.c_str());
@@ -746,6 +748,7 @@ void AnalysisCycle::BeginInputFile( const SInputData& ) throw( SError )
     if(m_PrimaryVertexCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrimaryVertexCollection.c_str() , m_bcc.pvs);
     if(m_TopJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollection.c_str(), m_bcc.topjets);
     if(m_addGenInfo && m_TopJetCollectionGen.size()>0) ConnectVariable( "AnalysisTree", m_TopJetCollectionGen.c_str() , m_bcc.topjetsgen);
+    if(m_addGenInfo && m_GenJetCollectionWithParts.size()>0)  ConnectVariable( "AnalysisTree", m_GenJetCollectionWithParts.c_str() , m_bcc.genjetswithparts);
     if(m_PrunedJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_PrunedJetCollection.c_str() , m_bcc.prunedjets);
     if(m_TopTagJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_TopTagJetCollection.c_str(), m_bcc.toptagjets);
     if(m_HiggsTagJetCollection.size()>0) ConnectVariable( "AnalysisTree", m_HiggsTagJetCollection.c_str(), m_bcc.higgstagjets);
@@ -1046,6 +1049,7 @@ void AnalysisCycle::WriteOutputTree() throw( SError)
     m_output_pvs.clear();
     m_output_topjets.clear();
     m_output_topjetsgen.clear();
+    m_output_genjetswithparts.clear();
     m_output_prunedjets.clear();
     m_output_toptagjets.clear();
     m_output_higgstagjets.clear();
@@ -1067,6 +1071,8 @@ void AnalysisCycle::WriteOutputTree() throw( SError)
     if(m_TopTagJetCollection.size()>0) m_output_toptagjets=*m_bcc.toptagjets;
     if(m_HiggsTagJetCollection.size()>0) m_output_higgstagjets=*m_bcc.higgstagjets;
     if(m_addGenInfo && m_TopJetCollectionGen.size()>0) m_output_topjetsgen=*m_bcc.topjetsgen;
+    if(m_addGenInfo && m_GenJetCollectionWithParts.size()>0) m_output_genjetswithparts=*m_bcc.genjetswithparts;
+
     if(m_PrunedJetCollection.size()>0) m_output_prunedjets=*m_bcc.prunedjets;
     if(m_addGenInfo && m_GenParticleCollection.size()>0) m_output_genparticles=*m_bcc.genparticles;
     if(m_PFParticleCollection.size()>0) m_output_pfparticles=*m_bcc.pfparticles;

@@ -5,6 +5,7 @@
 #include "UHHAnalysis/NtupleWriter/interface/Nsubjettiness.h"
 #include "UHHAnalysis/NtupleWriter/interface/QjetsPlugin.h"
 #include "fastjet/tools/Pruner.hh"
+#include "SFrameTools/include/SubJetTagger.h"
 
 #include <iostream>
 
@@ -119,8 +120,9 @@ void TMVATreeFiller::Init()
   
   m_tree->Branch("TopJet_HEPTopTag", &m_HEPTopTag, "HEPTopTag/O");
   m_tree->Branch("TopJet_CMSTopTag", &m_CMSTopTag, "CMSTopTag/O");
+  m_tree->Branch("TopJet_CMSTopTag_withTau32", &m_CMSTopTag_withTau32, "CMSTopTag_withTau32/O");
 
-   m_tree->Branch("dR1", &m_dR1, "dR1/D");
+  m_tree->Branch("dR1", &m_dR1, "dR1/D");
   m_tree->Branch("dR2", &m_dR2, "dR2/D");
   m_tree->Branch("dR3", &m_dR3, "dR3/D");
 
@@ -200,7 +202,9 @@ void TMVATreeFiller::Fill()
     Hist("DR_top")-> Fill(DR1,weight);
     Hist("DR_atop")-> Fill(DR2,weight);
 
-    double djb, djq1, djq2;
+    double djb=-1;
+    double djq1=-1;
+    double djq2=-1;
 
     if (DR1<0.7){
       if (geninfo.IsTopHadronicDecay()){
@@ -396,6 +400,7 @@ void TMVATreeFiller::ClearVariables()
 
   m_HEPTopTag = false;
   m_CMSTopTag = false;
+  m_CMSTopTag_withTau32 = false;
 
   m_number_of_constituents = 0;
   m_number_of_constituents = 0;
@@ -494,9 +499,13 @@ void TMVATreeFiller::FillTopJetProperties(TopJet topjet, GenParticle topquark)
   m_HEPTopTag = HepTopTag(topjet);
 
   // CMS TopTag
-  double dum1, dum2;
-  int idum;
-  m_CMSTopTag = TopTag(topjet, dum1, idum, dum2);
+  CMSTopTagger toptag;
+  toptag.SetTau32Cut(double_infinity());
+  CMSTopTagger toptag_withTau32;
+  toptag_withTau32.SetTau32Cut(0.7);
+
+  m_CMSTopTag = toptag_withTau32.Tag(topjet);  
+  m_CMSTopTag_withTau32 = toptag_withTau32.Tag(topjet);
   
 
   LorentzVector allsubjets(0,0,0,0);

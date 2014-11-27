@@ -53,13 +53,12 @@ sprintf(s, "%d <= N(Sum B-Tags) <= %d", m_min_nsumbtags, m_max_nsumbtags);
 return s;
 }
 
-NCMSSubBTagSelection::NCMSSubBTagSelection(int min_ntoptag, int max_ntoptag=int_infinity(), int min_nbtag, int max_nbtag, E_BtagType type, double nsubjettiness){
+NCMSSubBTagSelection::NCMSSubBTagSelection(int min_ntoptag, int max_ntoptag=int_infinity(), int min_nbtag, int max_nbtag, E_BtagType type, double nsubjettiness): toptagger(50., 140., 250., nsubjettiness){
   m_min_ntoptag=min_ntoptag;
   m_max_ntoptag=max_ntoptag;
   m_min_nsubjetbtag = min_nbtag;
   m_max_nsubjetbtag = max_nbtag;
   m_type = type;
-  m_nsubjettiness = nsubjettiness;
 }
 
 bool NCMSSubBTagSelection::pass(BaseCycleContainer *bcc){
@@ -69,8 +68,9 @@ bool NCMSSubBTagSelection::pass(BaseCycleContainer *bcc){
   double mjet=0;
   int nsubjets=0;
   for(unsigned int i=0; i< bcc->topjets->size(); ++i){
-    TopJet topjet =  bcc->topjets->at(i);
-    if(TopTag(topjet,mjet,nsubjets,mmin) && subJetBTag(topjet, m_type)>=1 && topjet.tau3()/topjet.tau2()<= m_nsubjettiness) nsubjetbtag++;  
+    const TopJet & topjet =  bcc->topjets->at(i);
+    if(!toptagger.Tag(topjet)) continue; // note: nsubjettiness cut part of toptagger
+    if(subJetBTag(topjet, m_type)>=1) nsubjetbtag++;  
   }
   if(nsubjetbtag<m_min_nsubjetbtag) return false;
   if(nsubjetbtag>m_max_nsubjetbtag) return false;

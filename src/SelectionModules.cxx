@@ -26,6 +26,10 @@ std::string TriggerSelection::description()
     return "Trigger: "+m_name;
 }
 
+// As TopTagOverlapSelection is deprecated as well, do not need to warn about deprecated use of TopTagOverlapSelection itself:
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 TopTagOverlapSelection::TopTagOverlapSelection(double delR_Lep_TopTag, double delR_Jet_TopTag)
 {
   m_delR_Lep_TopTag=delR_Lep_TopTag;
@@ -64,6 +68,8 @@ std::string TopTagOverlapSelection::description()
 
     return s;
 }
+
+#pragma GCC diagnostic pop
 
 RazorSelection::RazorSelection(HypothesisDiscriminator *discr, double mrazor, double mrazorT)
 {
@@ -157,6 +163,9 @@ TopTagAntiktJetSelection::TopTagAntiktJetSelection(unsigned int min_TopTag, unsi
   m_min_distance=min_distance;             
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 bool TopTagAntiktJetSelection::pass(BaseCycleContainer *bcc){
 
   if(bcc->jets->size() < m_min_Jets || bcc->jets->size()> m_max_Jets ) return false;
@@ -189,6 +198,8 @@ bool TopTagAntiktJetSelection::pass(BaseCycleContainer *bcc){
 
   return false;
 }
+
+#pragma GCC diagnostic pop
 
 std::string TopTagAntiktJetSelection::description(){
   char s[100];
@@ -246,6 +257,8 @@ NTopTagSelection::NTopTagSelection(int min_ntoptag, int max_ntoptag)
     m_max_ntoptag=max_ntoptag;
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 bool NTopTagSelection::pass(BaseCycleContainer *bcc)
 {
 
@@ -265,6 +278,8 @@ bool NTopTagSelection::pass(BaseCycleContainer *bcc)
     return true;
 
 }
+
+#pragma GCC diagnostic pop
 
 std::string NTopTagSelection::description()
 {

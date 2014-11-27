@@ -1072,7 +1072,6 @@ void AnalysisCycle::WriteOutputTree() throw( SError)
     if(m_HiggsTagJetCollection.size()>0) m_output_higgstagjets=*m_bcc.higgstagjets;
     if(m_addGenInfo && m_TopJetCollectionGen.size()>0) m_output_topjetsgen=*m_bcc.topjetsgen;
     if(m_addGenInfo && m_GenJetCollectionWithParts.size()>0) m_output_genjetswithparts=*m_bcc.genjetswithparts;
-
     if(m_PrunedJetCollection.size()>0) m_output_prunedjets=*m_bcc.prunedjets;
     if(m_addGenInfo && m_GenParticleCollection.size()>0) m_output_genparticles=*m_bcc.genparticles;
     if(m_PFParticleCollection.size()>0) m_output_pfparticles=*m_bcc.pfparticles;

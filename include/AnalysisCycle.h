@@ -218,8 +218,6 @@ private:
   std::string m_HiggsTagJetCollection;
   std::string m_TopJetCollectionGen;
   std::string m_GenJetCollectionWithParts;
-
-
   std::string m_PrunedJetCollection;
   std::string m_GenParticleCollection;
   std::string m_PFParticleCollection;
